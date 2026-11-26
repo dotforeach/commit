@@ -1,0 +1,59 @@
+<ng-container *transloco="let t; prefix: 'savings'">
+  <h2 mat-dialog-title>{{ t('deposits.newTitle') }}</h2>
+  <form [formGroup]="form" (ngSubmit)="save()">
+    <mat-dialog-content class="fields">
+      <mat-form-field>
+        <mat-label>{{ t('deposits.institution') }}</mat-label>
+        <input matInput formControlName="institution" [placeholder]="t('deposits.institutionPlaceholder')" cdkFocusInitial />
+      </mat-form-field>
+      <div class="row">
+        <mat-form-field>
+          <mat-label>{{ t('deposits.principal') }}</mat-label>
+          <input matInput formControlName="principal" inputmode="decimal" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{ t('deposits.rate') }}</mat-label>
+          <input matInput formControlName="rate" inputmode="decimal" />
+          <span matTextSuffix>%</span>
+        </mat-form-field>
+      </div>
+      <mat-form-field>
+        <mat-label>{{ t('deposits.account') }}</mat-label>
+        <mat-select formControlName="accountId">
+          @for (a of accounts(); track a.id) {
+            <mat-option [value]="a.id">{{ a.name }} · {{ a.currency }}</mat-option>
+          }
+        </mat-select>
+        <mat-hint>{{ t('deposits.accountHint') }}</mat-hint>
+      </mat-form-field>
+      <div class="row">
+        <mat-form-field>
+          <mat-label>{{ t('deposits.start') }}</mat-label>
+          <input matInput [matDatepicker]="s" formControlName="startDate" />
+          <mat-datepicker-toggle matIconSuffix [for]="s" />
+          <mat-datepicker #s />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{ t('deposits.maturity') }}</mat-label>
+          <input matInput [matDatepicker]="m" formControlName="maturityDate" />
+          <mat-datepicker-toggle matIconSuffix [for]="m" />
+          <mat-datepicker #m />
+        </mat-form-field>
+      </div>
+      @if (invalidDates()) {
+        <p class="error">{{ t('errors.dates') }}</p>
+      }
+      @if (projection(); as p) {
+        <p class="projection" data-testid="deposit-projection">{{ t('deposits.projection', { days: p.days, interest: p.interest, total: p.total }) }}</p>
+      }
+      <mat-checkbox formControlName="autoRenew">{{ t('deposits.autoRenew') }}</mat-checkbox>
+      @if (error(); as key) {
+        <p class="error" role="alert">{{ t(key) }}</p>
+      }
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button type="button" mat-dialog-close>{{ t('cancel') }}</button>
+      <button mat-flat-button type="submit" [disabled]="form.invalid || invalidDates()">{{ t('deposits.create') }}</button>
+    </mat-dialog-actions>
+  </form>
+</ng-container>

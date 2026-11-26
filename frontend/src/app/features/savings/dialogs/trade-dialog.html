@@ -1,0 +1,91 @@
+<ng-container *transloco="let t; prefix: 'savings'">
+  <h2 mat-dialog-title>{{ t('investments.newTrade') }}</h2>
+  <form [formGroup]="form" (ngSubmit)="save()">
+    <mat-dialog-content class="fields">
+      @if (accounts().length === 0) {
+        <p class="error" role="alert">{{ t('investments.noAccount') }}</p>
+      }
+      <mat-form-field>
+        <mat-label>{{ t('investments.type') }}</mat-label>
+        <mat-select formControlName="type">
+          @for (ty of types; track ty) {
+            <mat-option [value]="ty">{{ t('investments.types.' + ty) }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <div class="row">
+        <mat-form-field>
+          <mat-label>{{ t('investments.account') }}</mat-label>
+          <mat-select formControlName="accountId">
+            @for (a of accounts(); track a.id) {
+              <mat-option [value]="a.id">{{ a.name }} · {{ a.currency }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{ t('investments.asset') }}</mat-label>
+          <mat-select formControlName="assetId">
+            <mat-option value="">{{ t('investments.newAsset') }}</mat-option>
+            @for (a of assets(); track a.id) {
+              <mat-option [value]="a.id">{{ a.symbol }} · {{ a.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+      @if (creatingAsset()) {
+        <div class="row">
+          <mat-form-field>
+            <mat-label>{{ t('investments.symbol') }}</mat-label>
+            <input matInput formControlName="newSymbol" [placeholder]="t('investments.symbolPlaceholder')" />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{ t('investments.assetName') }}</mat-label>
+            <input matInput formControlName="newName" />
+          </mat-form-field>
+        </div>
+        <mat-form-field>
+          <mat-label>{{ t('investments.class') }}</mat-label>
+          <mat-select formControlName="newClass">
+            @for (c of classes; track c) {
+              <mat-option [value]="c">{{ t('investments.classes.' + c) }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      }
+      <div class="row">
+        @if (!incomeLike()) {
+          <mat-form-field>
+            <mat-label>{{ t('investments.quantity') }}</mat-label>
+            <input matInput formControlName="quantity" inputmode="decimal" />
+          </mat-form-field>
+        }
+        <mat-form-field>
+          <mat-label>{{ incomeLike() ? t('investments.amount') : t('investments.unitPrice') }}</mat-label>
+          <input matInput formControlName="unitPrice" inputmode="decimal" />
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field>
+          <mat-label>{{ t('investments.fees') }}</mat-label>
+          <input matInput formControlName="fees" inputmode="decimal" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{ t('investments.date') }}</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="date" />
+          <mat-datepicker-toggle matIconSuffix [for]="picker" />
+          <mat-datepicker #picker />
+        </mat-form-field>
+      </div>
+      @if (cash(); as c) {
+        <p class="projection" data-testid="trade-cash">{{ t('investments.cash.' + type(), { amount: c }) }}</p>
+      }
+      @if (error(); as key) {
+        <p class="error" role="alert">{{ t(key) }}</p>
+      }
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button type="button" mat-dialog-close>{{ t('cancel') }}</button>
+      <button mat-flat-button type="submit" [disabled]="form.invalid || busy() || accounts().length === 0">{{ t('save') }}</button>
+    </mat-dialog-actions>
+  </form>
+</ng-container>

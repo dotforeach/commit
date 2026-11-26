@@ -130,6 +130,7 @@ export class TransactionsService {
         await tx.cardInstallment.updateMany({ where: { planId: plan.id, deletedAt: null }, data: { deletedAt: now } });
       }
       await tx.debtPayment.updateMany({ where: { transactionId: id, deletedAt: null }, data: { deletedAt: now } });
+      await tx.investmentTransaction.updateMany({ where: { cashTransactionId: id, deletedAt: null }, data: { deletedAt: now } });
       await tx.transaction.updateMany({
         where: row.transferGroupId
           ? { householdId, transferGroupId: row.transferGroupId, deletedAt: null }

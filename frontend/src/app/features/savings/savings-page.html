@@ -1,0 +1,172 @@
+<ng-container *transloco="let t; prefix: 'savings'">
+  <section class="page">
+    <header class="head">
+      <div>
+        <h2>{{ t('title') }}</h2>
+        <p class="subtitle">{{ t('subtitle') }}</p>
+      </div>
+    </header>
+    @if (loading()) {
+      <mat-progress-bar mode="indeterminate" />
+    }
+    @if (loadError()) {
+      <p class="error" role="alert">{{ t('errors.load') }}</p>
+    }
+
+    <mat-tab-group mat-stretch-tabs="false" animationDuration="0ms">
+      <!-- Metas -->
+      <mat-tab [label]="t('tabs.goals')">
+        <div class="tab">
+          @if (household.canWrite()) {
+            <button mat-flat-button (click)="newGoal()"><mat-icon fontSet="material-symbols-outlined">add</mat-icon>{{ t('goals.new') }}</button>
+          }
+          @if (!loading() && goals().length === 0) {
+            <p class="hint">{{ t('goals.empty') }}</p>
+          }
+          @for (g of goals(); track g.goal.id) {
+            <mat-card appearance="outlined" class="item" [attr.data-goal]="g.goal.name">
+              <mat-card-header>
+                <mat-icon mat-card-avatar fontSet="material-symbols-outlined" aria-hidden="true">{{ g.goal.kind === 'EMERGENCY_FUND' ? 'health_and_safety' : g.goal.kind === 'RETIREMENT' ? 'elderly' : 'flag' }}</mat-icon>
+                <mat-card-title>{{ g.goal.name }}</mat-card-title>
+                <mat-card-subtitle>
+                  {{ t('goals.kinds.' + g.goal.kind) }}
+                  @if (g.goal.accountId) {
+                    · {{ t('goals.linked', { account: accountName(g.goal.accountId) }) }}
+                  }
+                </mat-card-subtitle>
+              </mat-card-header>
+              <mat-card-content>
+                <div class="bar-head">
+                  <span data-testid="goal-current">{{ money(g.current, g.goal.currency) }} / {{ money(g.goal.targetAmount, g.goal.currency) }}</span>
+                  <span>{{ pct(g.progress.ratio) }}%</span>
+                </div>
+                <mat-progress-bar mode="determinate" [value]="pct(g.progress.ratio)" />
+                <p class="meta" data-testid="goal-plan">
+                  @if (g.progress.reached) {
+                    {{ t('goals.reached') }}
+                  } @else if (g.progress.monthlyNeeded !== null) {
+                    {{ t('goals.monthly', { amount: money(g.progress.monthlyNeeded, g.goal.currency), months: g.progress.monthsLeft }) }}
+                  } @else {
+                    {{ t('goals.remaining', { amount: money(g.progress.remaining, g.goal.currency) }) }}
+                  }
+                </p>
+              </mat-card-content>
+              @if (household.canWrite()) {
+                <mat-card-actions align="end">
+                  @if (!g.goal.accountId) {
+                    <button mat-button (click)="contribute(g.goal)">{{ t('goals.contribute') }}</button>
+                  }
+                  <button mat-button (click)="editGoal(g.goal)">{{ t('edit') }}</button>
+                  <button mat-button (click)="removeGoal(g.goal)">{{ t('delete') }}</button>
+                </mat-card-actions>
+              }
+            </mat-card>
+          }
+        </div>
+      </mat-tab>
+
+      <!-- Plazos fijos -->
+      <mat-tab [label]="t('tabs.deposits')">
+        <div class="tab">
+          @if (household.canWrite()) {
+            <button mat-flat-button (click)="newDeposit()"><mat-icon fontSet="material-symbols-outlined">add</mat-icon>{{ t('deposits.new') }}</button>
+          }
+          @if (!loading() && deposits().length === 0) {
+            <p class="hint">{{ t('deposits.empty') }}</p>
+          }
+          @for (x of deposits(); track x.deposit.id) {
+            <mat-card appearance="outlined" class="item" [attr.data-deposit]="x.deposit.institution" [class.done]="x.deposit.status !== 'ACTIVE'">
+              <mat-card-header>
+                <mat-icon mat-card-avatar fontSet="material-symbols-outlined" aria-hidden="true">account_balance</mat-icon>
+                <mat-card-title>{{ x.deposit.institution }} · {{ money(x.deposit.principal, x.deposit.currency) }}</mat-card-title>
+                <mat-card-subtitle>
+                  {{ t('deposits.rateLine', { rate: (+x.deposit.annualRate * 100).toFixed(2).replace('.00', ''), days: x.p.days }) }} ·
+                  {{ t('deposits.maturesOn', { date: (x.deposit.maturityDate | date: 'd/M/y' : 'UTC') }) }}
+                </mat-card-subtitle>
+              </mat-card-header>
+              <mat-card-content>
+                @if (x.deposit.status === 'ACTIVE') {
+                  <p data-testid="deposit-line">
+                    {{ t('deposits.expected', { interest: money(x.p.interest, x.deposit.currency), total: money(x.p.total, x.deposit.currency) }) }}
+                    · {{ x.p.matured ? t('deposits.ready') : t('deposits.daysLeft', { n: x.p.daysLeft }) }}
+                  </p>
+                } @else {
+                  <p class="meta">{{ t('deposits.statuses.' + x.deposit.status) }}</p>
+                }
+              </mat-card-content>
+              @if (household.canWrite()) {
+                <mat-card-actions align="end">
+                  @if (x.deposit.status === 'ACTIVE') {
+                    <button mat-flat-button (click)="collect(x.deposit)">{{ t('deposits.collect') }}</button>
+                  }
+                  <button mat-button (click)="removeDeposit(x.deposit)">{{ t('delete') }}</button>
+                </mat-card-actions>
+              }
+            </mat-card>
+          }
+        </div>
+      </mat-tab>
+
+      <!-- Inversiones -->
+      <mat-tab [label]="t('tabs.investments')">
+        <div class="tab">
+          @if (household.canWrite()) {
+            <button mat-flat-button (click)="newTrade()"><mat-icon fontSet="material-symbols-outlined">add</mat-icon>{{ t('investments.newTrade') }}</button>
+          }
+          @if (!loading() && holdings().length === 0) {
+            <p class="hint">{{ t('investments.empty') }}</p>
+          }
+          @if (holdings().length > 0) {
+            <table class="holdings">
+              <thead>
+                <tr>
+                  <th>{{ t('investments.asset') }}</th><th>{{ t('investments.quantity') }}</th><th>{{ t('investments.avgCost') }}</th>
+                  <th>{{ t('investments.value') }}</th><th>{{ t('investments.unrealized') }}</th><th>{{ t('investments.realized') }}</th><th></th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (h of holdings(); track h.assetId) {
+                  <tr [attr.data-holding]="h.asset.symbol">
+                    <td><strong>{{ h.asset.symbol }}</strong><br /><span class="meta">{{ h.asset.name }}</span></td>
+                    <td>{{ qty(h.quantity) }}</td>
+                    <td>{{ money(h.avgCost, h.asset.currency) }}</td>
+                    <td data-testid="holding-value">{{ h.marketValue === null ? t('investments.noPrice') : money(h.marketValue, h.asset.currency) }}</td>
+                    <td data-testid="holding-unrealized" [class.pos]="(h.unrealized ?? 0) > 0" [class.neg]="(h.unrealized ?? 0) < 0">
+                      {{ h.unrealized === null ? '—' : money(h.unrealized, h.asset.currency) }}
+                    </td>
+                    <td data-testid="holding-realized">{{ money(h.realized + h.income, h.asset.currency) }}</td>
+                    <td>
+                      @if (household.canWrite()) {
+                        <button mat-button (click)="updatePrice(h.assetId, h.asset.currency)">{{ t('investments.updatePrice') }}</button>
+                      }
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+            <p class="meta">{{ t('investments.note') }}</p>
+          }
+          @if (recentTrades().length > 0) {
+            <h3 class="section">{{ t('investments.recent') }}</h3>
+            <ul class="list">
+              @for (tr of recentTrades(); track tr.id) {
+                <li class="account" [attr.data-trade]="tr.type + ' ' + assetSymbol(tr.assetId)">
+                  <div class="info">
+                    <span class="name">{{ t('investments.types.' + tr.type) }} · {{ assetSymbol(tr.assetId) }}</span>
+                    <span class="meta">{{ tr.date | date: 'd/M/y' : 'UTC' }} · {{ accountName(tr.accountId) }}</span>
+                  </div>
+                  <span>{{ tr.quantity }} × {{ tr.unitPrice }}</span>
+                  @if (household.canWrite()) {
+                    <button mat-icon-button (click)="removeTrade(tr)" [attr.aria-label]="t('delete')">
+                      <mat-icon fontSet="material-symbols-outlined">delete</mat-icon>
+                    </button>
+                  }
+                </li>
+              }
+            </ul>
+          }
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </section>
+</ng-container>

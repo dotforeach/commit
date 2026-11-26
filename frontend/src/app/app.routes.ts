@@ -59,5 +59,10 @@ export const routes: Routes = [
     canActivate: [authGuard, unlockedGuard],
     loadChildren: () => import('./features/debts/debts.routes').then((m) => m.DEBTS_ROUTES),
   },
+  {
+    path: 'ahorro',
+    canActivate: [authGuard, unlockedGuard],
+    loadChildren: () => import('./features/savings/savings.routes').then((m) => m.SAVINGS_ROUTES),
+  },
   { path: '**', redirectTo: 'inicio' },
 ];

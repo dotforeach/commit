@@ -178,7 +178,8 @@
     "transactions": "Movimientos",
     "recurring": "Recurrentes",
     "budget": "Presupuesto",
-    "debts": "Deudas"
+    "debts": "Deudas",
+    "savings": "Ahorro"
   },
   "accounts": {
     "title": "Cuentas",
@@ -664,6 +665,164 @@
       "conflict": "La deuda cambió en otro dispositivo. Cerrá y volvé a abrirla.",
       "load": "No pudimos cargar tus deudas.",
       "generic": "No pudimos guardar los cambios. Probá de nuevo."
+    }
+  },
+  "savings": {
+    "title": "Ahorro e inversiones",
+    "subtitle": "Tus metas, el fondo de emergencia, plazos fijos e inversiones.",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "date": "Fecha",
+    "tabs": {
+      "goals": "Metas",
+      "deposits": "Plazos fijos",
+      "investments": "Inversiones"
+    },
+    "fields": {
+      "currency": "Moneda"
+    },
+    "goals": {
+      "new": "Nueva meta",
+      "newTitle": "Nueva meta",
+      "editTitle": "Editar meta",
+      "kind": "Tipo",
+      "name": "Nombre",
+      "namePlaceholder": "Ej.: Vacaciones en la costa",
+      "kinds": {
+        "EMERGENCY_FUND": "Fondo de emergencia",
+        "SAVINGS_GOAL": "Meta de ahorro",
+        "RETIREMENT": "Retiro"
+      },
+      "months": "Meses de gastos a cubrir",
+      "monthsHint": "Lo habitual es entre 3 y 6 meses.",
+      "useSuggestion": "Usar {{amount}} (tu gasto promedio es {{avg}} por mes)",
+      "target": "Monto objetivo",
+      "targetDate": "Fecha objetivo (opcional)",
+      "account": "Cuenta donde está la plata (opcional)",
+      "noAccount": "Ninguna: cargo aportes a mano",
+      "accountHint": "Si elegís una cuenta, el avance es su saldo real.",
+      "linked": "en {{account}}",
+      "monthly": "Ahorrá {{amount}} por mes durante {{months}} meses para llegar",
+      "remaining": "Te faltan {{amount}}",
+      "reached": "¡Meta cumplida! 🎉",
+      "contribute": "Aportar",
+      "contributeTitle": "Aporte a {{name}}",
+      "contributeAmount": "Monto (negativo para retirar)",
+      "note": "Nota (opcional)",
+      "contributed": "Aporte registrado",
+      "empty": "Todavía no tenés metas. Empezá por un fondo de emergencia: es lo primero que te protege.",
+      "deleteTitle": "Eliminar meta",
+      "deleteMessage": "¿Eliminar «{{name}}»? Tu plata no se toca.",
+      "deleted": "Meta eliminada"
+    },
+    "deposits": {
+      "new": "Nuevo plazo fijo",
+      "newTitle": "Constituir plazo fijo",
+      "institution": "Banco",
+      "institutionPlaceholder": "Ej.: Banco Provincia",
+      "principal": "Capital",
+      "rate": "TNA",
+      "account": "Sale de la cuenta",
+      "accountHint": "Se descuenta como ajuste (no cuenta como gasto en tu presupuesto).",
+      "start": "Constitución",
+      "maturity": "Vencimiento",
+      "projection": "En {{days}} días ganás {{interest}}: cobrás {{total}}",
+      "autoRenew": "Renovación automática",
+      "create": "Constituir",
+      "rateLine": "TNA {{rate}}% · {{days}} días",
+      "maturesOn": "vence el {{date}}",
+      "expected": "Interés estimado {{interest}} · cobrás {{total}}",
+      "daysLeft": "faltan {{n}} días",
+      "ready": "¡ya vencido, podés cobrarlo!",
+      "collect": "Cobrar",
+      "collectTitle": "Cobrar plazo fijo de {{institution}}",
+      "collectMessage": "Vuelven {{principal}} a tu cuenta. Confirmá el interés que te acreditaron.",
+      "interestReceived": "Interés acreditado",
+      "collected": "Plazo fijo cobrado",
+      "txOpen": "Plazo fijo {{institution}}",
+      "txCollect": "Cobro plazo fijo {{institution}}",
+      "statuses": {
+        "ACTIVE": "Activo",
+        "MATURED": "Cobrado",
+        "RENEWED": "Renovado",
+        "CANCELLED": "Cancelado"
+      },
+      "empty": "No tenés plazos fijos cargados.",
+      "deleteTitle": "Eliminar plazo fijo",
+      "deleteMessage": "¿Eliminar el plazo fijo de {{name}}? Los movimientos ya registrados se conservan.",
+      "deleted": "Plazo fijo eliminado"
+    },
+    "investments": {
+      "newTrade": "Nueva operación",
+      "type": "Operación",
+      "account": "Cuenta de inversión",
+      "asset": "Activo",
+      "newAsset": "＋ Activo nuevo",
+      "symbol": "Símbolo",
+      "symbolPlaceholder": "Ej.: AAPL, AL30, BTC",
+      "assetName": "Nombre",
+      "class": "Clase",
+      "quantity": "Cantidad",
+      "unitPrice": "Precio unitario",
+      "amount": "Monto",
+      "fees": "Comisiones",
+      "date": "Fecha",
+      "types": {
+        "BUY": "Compra",
+        "SELL": "Venta",
+        "DIVIDEND": "Dividendo",
+        "INTEREST": "Interés/renta",
+        "FEE": "Comisión"
+      },
+      "classes": {
+        "STOCK": "Acción",
+        "CEDEAR": "CEDEAR",
+        "BOND": "Bono",
+        "ETF": "ETF",
+        "MUTUAL_FUND": "FCI",
+        "CRYPTO": "Cripto",
+        "STABLECOIN": "Stablecoin",
+        "REAL_ESTATE": "Inmueble",
+        "OTHER": "Otro"
+      },
+      "cash": {
+        "BUY": "Sale {{amount}} de la cuenta",
+        "SELL": "Entran {{amount}} a la cuenta",
+        "DIVIDEND": "Entran {{amount}} (ingreso)",
+        "INTEREST": "Entran {{amount}} (ingreso)",
+        "FEE": "Sale {{amount}} de la cuenta"
+      },
+      "tx": {
+        "BUY": "Compra {{symbol}}",
+        "SELL": "Venta {{symbol}}",
+        "DIVIDEND": "Dividendo {{symbol}}",
+        "INTEREST": "Renta {{symbol}}",
+        "FEE": "Comisión {{symbol}}"
+      },
+      "noAccount": "Necesitás una cuenta de tipo Inversiones (broker o exchange) en la sección Cuentas.",
+      "avgCost": "Costo prom.",
+      "value": "Valor actual",
+      "unrealized": "Gan./pérd. no realizada",
+      "realized": "Realizada + renta",
+      "noPrice": "sin precio",
+      "updatePrice": "Actualizar precio",
+      "priceTitle": "Precio de {{symbol}}",
+      "price": "Precio ({{currency}})",
+      "priceSaved": "Precio guardado",
+      "note": "Valores estimados con el último precio que cargaste. Pronto, cotizaciones automáticas.",
+      "recent": "Últimas operaciones",
+      "empty": "No tenés inversiones cargadas.",
+      "deleteTitle": "Eliminar operación",
+      "deleteMessage": "¿Eliminar esta operación de {{name}}? También se borra su movimiento de efectivo.",
+      "deleted": "Operación eliminada"
+    },
+    "errors": {
+      "load": "No pudimos cargar tus ahorros.",
+      "generic": "No pudimos guardar los cambios. Probá de nuevo.",
+      "dates": "El vencimiento tiene que ser posterior a la constitución.",
+      "asset": "Elegí un activo o completá símbolo y nombre del nuevo."
     }
   }
 }

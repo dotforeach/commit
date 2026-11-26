@@ -53,3 +53,16 @@ mat-option mat-icon {
   flex-direction: column;
   margin: 4px 0 8px;
 }
+
+.projection {
+  margin: 0 0 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: var(--mat-sys-secondary-container);
+  color: var(--mat-sys-on-secondary-container);
+}
+
+.suggest {
+  align-self: flex-start;
+  margin-bottom: 8px;
+}

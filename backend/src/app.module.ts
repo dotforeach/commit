@@ -6,6 +6,9 @@ import { AccountsModule } from './accounts/accounts.module.js';
 import { AuthModule } from './auth/auth.module.js';
 import { BudgetsModule } from './budgets/budgets.module.js';
 import { DebtsModule } from './debts/debts.module.js';
+import { DepositsModule } from './deposits/deposits.js';
+import { GoalsModule } from './goals/goals.js';
+import { InvestmentsModule } from './investments/investments.js';
 import { InstallmentsModule } from './installments/installments.module.js';
 import { CategoriesModule } from './categories/categories.module.js';
 import { RecurringModule } from './recurring/recurring.module.js';
@@ -32,6 +35,9 @@ import { RedisModule } from './redis/redis.module.js';
     BudgetsModule,
     DebtsModule,
     InstallmentsModule,
+    GoalsModule,
+    DepositsModule,
+    InvestmentsModule,
   ],
   providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }],
 })

@@ -30,9 +30,9 @@
     "semantic_hash": ""
   },
   "backend/src/app.module.ts": {
-    "mtime": 1795715092.8849654,
-    "seen": 1795715287.270717,
-    "ast_hash": "5ee71443ecf1eca7d5ac55f874f46462",
+    "mtime": 1795716219.3082209,
+    "seen": 1795716833.5852401,
+    "ast_hash": "302a389eccc498f99fca24d59ec992af",
     "semantic_hash": ""
   },
   "backend/src/config/env.schema.ts": {
@@ -162,9 +162,9 @@
     "semantic_hash": ""
   },
   "frontend/src/app/app.routes.ts": {
-    "mtime": 1795715724.3792787,
-    "seen": 1795715953.7384589,
-    "ast_hash": "eb8bde1384a04500ca76e1f3650e15e3",
+    "mtime": 1795716510.5479195,
+    "seen": 1795716833.585304,
+    "ast_hash": "1ff8d7f861e4979db5b795561db75e16",
     "semantic_hash": ""
   },
   "frontend/src/app/app.spec.ts": {
@@ -216,9 +216,9 @@
     "semantic_hash": ""
   },
   "frontend/src/app/app.html": {
-    "mtime": 1795715724.3793633,
-    "seen": 1795715953.738517,
-    "ast_hash": "bbb430fdb91485f5ccdc66122c0e3261",
+    "mtime": 1795716510.548009,
+    "seen": 1795716833.5853682,
+    "ast_hash": "560b390225759a567e50ba3f51caa01d",
     "semantic_hash": ""
   },
   "frontend/src/index.html": {
@@ -228,9 +228,9 @@
     "semantic_hash": ""
   },
   "frontend/public/i18n/es.json": {
-    "mtime": 1795715724.3800333,
-    "seen": 1795715953.7384572,
-    "ast_hash": "79fdee7bf0c01121d59b0b14771da40a",
+    "mtime": 1795716510.548836,
+    "seen": 1795716833.585303,
+    "ast_hash": "09d63fb9a5c91b0025024124b4eaf8a9",
     "semantic_hash": ""
   },
   "frontend/src/app/core/i18n/transloco-loader.ts": {
@@ -756,9 +756,9 @@
     "semantic_hash": ""
   },
   "backend/src/transactions/transactions.service.ts": {
-    "mtime": 1795715122.3741474,
-    "seen": 1795715287.270748,
-    "ast_hash": "fbc42a153f1757ed5e58399c4040cba4",
+    "mtime": 1795716219.3083372,
+    "seen": 1795716833.585275,
+    "ast_hash": "cb4390d6a86de981b5b2184975f4a021",
     "semantic_hash": ""
   },
   "backend/test/transactions.e2e-spec.ts": {
@@ -1221,6 +1221,132 @@
     "mtime": 1795715626.124362,
     "seen": 1795715953.738525,
     "ast_hash": "06030700fcc03a6519eedd53243b71a3",
+    "semantic_hash": ""
+  },
+  "backend/src/common/encrypted.ts": {
+    "mtime": 1795716158.6328914,
+    "seen": 1795716833.585252,
+    "ast_hash": "dd273dee86dfd9801b42b97f1a3e08c6",
+    "semantic_hash": ""
+  },
+  "backend/src/deposits/deposits.ts": {
+    "mtime": 1795716187.6566668,
+    "seen": 1795716833.585259,
+    "ast_hash": "8dcb909f95c8ba21088fad7e30593eaa",
+    "semantic_hash": ""
+  },
+  "backend/src/goals/goals.ts": {
+    "mtime": 1795716158.6348422,
+    "seen": 1795716833.585259,
+    "ast_hash": "032564193182a4fac507b7036539d32b",
+    "semantic_hash": ""
+  },
+  "backend/src/investments/investments.ts": {
+    "mtime": 1795716806.9402032,
+    "seen": 1795716833.5852659,
+    "ast_hash": "e2de75499f1f796d58e419c08e43e31f",
+    "semantic_hash": ""
+  },
+  "backend/test/savings.e2e-spec.ts": {
+    "mtime": 1795716244.969718,
+    "seen": 1795716833.585286,
+    "ast_hash": "08c0a249be55c8c5e69f3ff3f46b8a66",
+    "semantic_hash": ""
+  },
+  "frontend/e2e/savings.e2e.ts": {
+    "mtime": 1795716551.285928,
+    "seen": 1795716833.5852978,
+    "ast_hash": "1364538480783d9d282238f6a0a3c80d",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/savings/dialogs/amount-dialog.ts": {
+    "mtime": 1795716434.5485015,
+    "seen": 1795716833.5853498,
+    "ast_hash": "e94773b807c053ef048bfae911de4c77",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/savings/dialogs/deposit-dialog.ts": {
+    "mtime": 1795716434.5486126,
+    "seen": 1795716833.5853498,
+    "ast_hash": "8fe6b22ce7cb359a6357ea8a761bd0f7",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/savings/dialogs/goal-dialog.ts": {
+    "mtime": 1795716376.388922,
+    "seen": 1795716833.585351,
+    "ast_hash": "ff65fb5bf1b4e6f21801e1bc0ba7478e",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/savings/dialogs/trade-dialog.ts": {
+    "mtime": 1795716434.520643,
+    "seen": 1795716833.585352,
+    "ast_hash": "4ac346514854bb7ed491cece13d8ad9c",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/savings/savings-format.ts": {
+    "mtime": 1795716434.518587,
+    "seen": 1795716833.585352,
+    "ast_hash": "4f0bdb714557eab512a598ec63e8bda5",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/savings/savings-math.spec.ts": {
+    "mtime": 1795716287.955969,
+    "seen": 1795716833.585353,
+    "ast_hash": "f02683fcf6af58a2b2d9807122d849fc",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/savings/savings-math.ts": {
+    "mtime": 1795716287.9540496,
+    "seen": 1795716833.585353,
+    "ast_hash": "c88735ded7a47a216085b598bf6a818e",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/savings/savings-page.ts": {
+    "mtime": 1795716510.5102372,
+    "seen": 1795716833.585354,
+    "ast_hash": "7c31eb8f10c6d8784de63efd9cdb96f1",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/savings/savings.models.ts": {
+    "mtime": 1795716333.8721914,
+    "seen": 1795716833.585354,
+    "ast_hash": "e650359e38b47bcb0721accfa67f6a97",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/savings/savings.routes.ts": {
+    "mtime": 1795716510.5477285,
+    "seen": 1795716833.585355,
+    "ast_hash": "5c866f573c651e2332308f41522740ee",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/savings/savings.service.ts": {
+    "mtime": 1795716333.8744211,
+    "seen": 1795716833.585355,
+    "ast_hash": "d8fce918b42dbc073f69c46eabb688f8",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/savings/dialogs/deposit-dialog.html": {
+    "mtime": 1795716434.5165088,
+    "seen": 1795716833.5853791,
+    "ast_hash": "036de9aa8b63a7534113b25118ff1c55",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/savings/dialogs/goal-dialog.html": {
+    "mtime": 1795716376.3918772,
+    "seen": 1795716833.58538,
+    "ast_hash": "8fda7629eea309f5b83a87b5796da154",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/savings/dialogs/trade-dialog.html": {
+    "mtime": 1795716434.5224936,
+    "seen": 1795716833.58538,
+    "ast_hash": "d61350a8f5e82ab432c89bca01b5ca75",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/savings/savings-page.html": {
+    "mtime": 1795716510.512481,
+    "seen": 1795716833.585381,
+    "ast_hash": "9cc4039a268bde85fae9bb89dde6593f",
     "semantic_hash": ""
   },
   "backend/pnpm-lock.yaml": {

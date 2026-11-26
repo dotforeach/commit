@@ -1,0 +1,57 @@
+@use '../accounts/accounts-page';
+
+.tab {
+  padding: 16px 0;
+}
+
+.item {
+  margin: 12px 0;
+
+  &.done {
+    opacity: 0.65;
+  }
+}
+
+.bar-head {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  font-variant-numeric: tabular-nums;
+}
+
+.hint {
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.section {
+  margin: 24px 0 8px;
+  font: var(--mat-sys-title-small);
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.holdings {
+  width: 100%;
+  margin-top: 16px;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+
+  th,
+  td {
+    padding: 8px;
+    text-align: right;
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
+  }
+
+  th:first-child,
+  td:first-child {
+    text-align: left;
+  }
+}
+
+.pos {
+  color: #2e7d32;
+}
+
+.neg {
+  color: var(--mat-sys-error);
+}
