@@ -23,7 +23,9 @@ import { DepositDialog } from './dialogs/deposit-dialog';
 import { GoalDialog } from './dialogs/goal-dialog';
 import { TradeDialog } from './dialogs/trade-dialog';
 import { toMoneyString } from './savings-format';
-import { computeHoldings, depositProjection, goalProgress } from './savings-math';
+import { NetWorthService } from '../networth/net-worth.service';
+import { RatesService } from '../rates/rates.service';
+import { depositProjection, goalProgress } from './savings-math';
 import type { Deposit, Goal, InvestmentTrade } from './savings.models';
 import { SavingsService } from './savings.service';
 
@@ -44,6 +46,7 @@ export class SavingsPage implements OnInit {
   private readonly snack = inject(MatSnackBar);
   private readonly transloco = inject(TranslocoService);
   private readonly injector = inject(Injector);
+  private readonly rates = inject(RatesService);
 
   readonly loading = signal(true);
   readonly loadError = signal(false);
@@ -68,19 +71,15 @@ export class SavingsPage implements OnInit {
       .sort((a, b) => Number(b.deposit.status === 'ACTIVE') - Number(a.deposit.status === 'ACTIVE') || a.deposit.maturityDate.localeCompare(b.deposit.maturityDate)),
   );
 
-  readonly holdings = computed(() => {
-    const trades = this.savings.trades().map((t) => ({ assetId: t.assetId, type: t.type, date: t.date, quantity: Number(t.quantity), unitPrice: Number(t.unitPrice), fees: Number(t.fees) }));
-    return computeHoldings(trades, (id) => {
-      const p = this.savings.lastPrice(id);
-      return p ? Number(p.price) : null;
-    }).map((h) => ({ ...h, asset: this.savings.assets().find((a) => a.id === h.assetId)! }));
-  });
+  private readonly netWorth = inject(NetWorthService);
+  /** Tenencias con el último precio (manual, o automático para cripto). */
+  readonly holdings = computed(() => this.netWorth.holdings().map((h) => ({ ...h, asset: this.savings.assets().find((a) => a.id === h.assetId)! })));
 
   readonly recentTrades = computed(() => [...this.savings.trades()].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 15));
 
   async ngOnInit() {
     try {
-      await Promise.all([this.accounts.load(), this.categories.ensureLoaded(), this.transactions.ensureLoaded(), this.savings.ensureLoaded()]);
+      await Promise.all([this.accounts.load(), this.categories.ensureLoaded(), this.transactions.ensureLoaded(), this.savings.ensureLoaded(), this.rates.ensureLoaded()]);
     } catch {
       this.loadError.set(true);
     } finally {

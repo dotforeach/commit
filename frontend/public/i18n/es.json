@@ -102,6 +102,23 @@
       "over": "{{n}} categorías se pasaron del presupuesto",
       "warning": "{{n}} categorías están cerca del límite",
       "open": "Ver presupuesto"
+    },
+    "netWorth": {
+      "title": "Patrimonio neto",
+      "subtitle": "Lo que tenés menos lo que debés, en tu moneda principal (dólar {{usd}}).",
+      "usd": {
+        "mep": "MEP",
+        "official": "Oficial",
+        "blue": "Blue",
+        "ccl": "CCL",
+        "card": "Tarjeta",
+        "crypto": "Cripto",
+        "wholesale": "Mayorista",
+        "market": "Mercado"
+      },
+      "detail": "Tenés {{assets}} · Debés {{liabilities}}",
+      "missing": "{{n}} partidas sin cotización no se sumaron.",
+      "rates": "Cotizaciones"
     }
   },
   "categories": {
@@ -460,7 +477,7 @@
     "spentOf": "Gastaste {{spent}} de {{total}}",
     "unassigned": "Te quedan {{amount}} por asignar",
     "overAssigned": "Asignaste {{amount}} más de lo que ingresa",
-    "otherCurrency": "{{n}} gastos en otras monedas no se cuentan en este presupuesto en {{currency}}.",
+    "otherCurrency": "{{n}} gastos en otras monedas no se pudieron convertir a {{currency}} (falta cotización).",
     "groupsTitle": "Regla 50/30/20",
     "groups": {
       "NEEDS": "Necesidades",
@@ -637,7 +654,7 @@
       "order": "Orden",
       "stuck": "Con estos pagos no alcanzás a cubrir los intereses.",
       "saves": "La avalancha te ahorra {{amount}} en intereses.",
-      "skipped": "{{n}} deudas en otras monedas no entran en el cálculo en {{currency}}.",
+      "skipped": "{{n}} deudas en otras monedas no entran (falta cotización a {{currency}}).",
       "snowball": {
         "name": "Bola de nieve",
         "help": "Primero la de menor saldo: victorias rápidas que motivan."
@@ -824,5 +841,34 @@
       "dates": "El vencimiento tiene que ser posterior a la constitución.",
       "asset": "Elegí un activo o completá símbolo y nombre del nuevo."
     }
+  },
+  "rates": {
+    "title": "Cotizaciones",
+    "subtitle": "Se actualizan solas cada hora. Las que cargues vos tienen prioridad.",
+    "usd": {
+      "mep": "MEP",
+      "official": "Oficial",
+      "blue": "Blue",
+      "ccl": "CCL",
+      "card": "Tarjeta",
+      "crypto": "Cripto",
+      "wholesale": "Mayorista",
+      "market": "Mercado"
+    },
+    "dollarTitle": "Dólar para convertir",
+    "dollarHelp": "El que se usa para pasar dólares a pesos en patrimonio, presupuesto y deudas.",
+    "othersTitle": "Otras monedas y cripto",
+    "manualTitle": "Mis cotizaciones",
+    "manualHelp": "Por ejemplo, el dólar al que compraste vos. Se usan antes que las automáticas.",
+    "from": "De",
+    "to": "A",
+    "type": "Tipo",
+    "rate": "Valor",
+    "add": "Agregar",
+    "remove": "Eliminar",
+    "saved": "Tipo de dólar actualizado",
+    "manualSaved": "Cotización guardada",
+    "noData": "Todavía no hay cotizaciones: el servidor las trae en unos minutos.",
+    "sources": "Fuentes: DolarApi (dolarapi.com) y CoinGecko. No reciben ningún dato tuyo."
   }
 }

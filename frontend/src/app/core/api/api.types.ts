@@ -34,6 +34,7 @@ export interface MeHousehold {
   baseCurrency: string;
   isPersonal: boolean;
   currentKeyVersion: number;
+  usdRateType: string;
   payload: string;
   keyVersion: number;
   role: 'OWNER' | 'ADMIN' | 'MEMBER' | 'VIEWER';

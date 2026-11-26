@@ -1,0 +1,87 @@
+<ng-container *transloco="let t; prefix: 'rates'">
+  <section class="page">
+    <h2>{{ t('title') }}</h2>
+    <p class="subtitle">{{ t('subtitle') }}</p>
+
+    <mat-card appearance="outlined" class="block">
+      <mat-card-header><mat-card-title>{{ t('dollarTitle') }}</mat-card-title><mat-card-subtitle>{{ t('dollarHelp') }}</mat-card-subtitle></mat-card-header>
+      <mat-card-content>
+        <mat-radio-group [value]="rates.usdRateType()" (change)="setUsd($event.value)" [disabled]="!household.canWrite()" class="dollars" [attr.aria-label]="t('dollarTitle')">
+          @for (d of dollar(); track d.type) {
+            <mat-radio-button [value]="d.type" [attr.data-usd]="d.type">
+              <span class="label">{{ t('usd.' + d.type) }}</span>
+              <span class="value">{{ money(d.rate, 'ARS') }}</span>
+            </mat-radio-button>
+          }
+        </mat-radio-group>
+        @if (!loading() && dollar().length === 0) {
+          <p class="meta">{{ t('noData') }}</p>
+        }
+      </mat-card-content>
+    </mat-card>
+
+    @if (others().length > 0) {
+      <mat-card appearance="outlined" class="block">
+        <mat-card-header><mat-card-title>{{ t('othersTitle') }}</mat-card-title></mat-card-header>
+        <mat-card-content>
+          <ul class="rows">
+            @for (r of others(); track r.base + r.quote + r.provider) {
+              <li><span>1 {{ r.base }}</span><span>{{ money(r.rate, r.quote) }}</span><span class="meta">{{ r.provider }} · {{ r.date | date: 'd/M' : 'UTC' }}</span></li>
+            }
+          </ul>
+        </mat-card-content>
+      </mat-card>
+    }
+
+    <mat-card appearance="outlined" class="block">
+      <mat-card-header><mat-card-title>{{ t('manualTitle') }}</mat-card-title><mat-card-subtitle>{{ t('manualHelp') }}</mat-card-subtitle></mat-card-header>
+      <mat-card-content>
+        @if (household.canWrite()) {
+          <form [formGroup]="form" (ngSubmit)="addManual()" class="manual">
+            <mat-form-field>
+              <mat-label>{{ t('from') }}</mat-label>
+              <mat-select formControlName="base">
+                @for (c of currencies.list.value(); track c.code) {
+                  <mat-option [value]="c.code">{{ c.code }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>{{ t('to') }}</mat-label>
+              <mat-select formControlName="quote">
+                @for (c of currencies.list.value(); track c.code) {
+                  <mat-option [value]="c.code">{{ c.code }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>{{ t('type') }}</mat-label>
+              <mat-select formControlName="rateType">
+                @for (u of usdTypes; track u) {
+                  <mat-option [value]="u">{{ t('usd.' + u) }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>{{ t('rate') }}</mat-label>
+              <input matInput formControlName="rate" inputmode="decimal" />
+            </mat-form-field>
+            <button mat-flat-button type="submit" [disabled]="form.invalid">{{ t('add') }}</button>
+          </form>
+        }
+        <ul class="rows">
+          @for (m of rates.manualRates(); track m.id) {
+            <li [attr.data-manual]="m.base + '/' + m.quote">
+              <span>1 {{ m.base }} ({{ t('usd.' + m.rateType) }})</span><span>{{ money(m.rate, m.quote) }}</span>
+              <span class="meta">{{ m.date | date: 'd/M/y' : 'UTC' }}</span>
+              @if (household.canWrite()) {
+                <button mat-icon-button (click)="removeManual(m)" [attr.aria-label]="t('remove')"><mat-icon fontSet="material-symbols-outlined">delete</mat-icon></button>
+              }
+            </li>
+          }
+        </ul>
+      </mat-card-content>
+    </mat-card>
+    <p class="meta">{{ t('sources') }}</p>
+  </section>
+</ng-container>

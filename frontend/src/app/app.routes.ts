@@ -64,5 +64,10 @@ export const routes: Routes = [
     canActivate: [authGuard, unlockedGuard],
     loadChildren: () => import('./features/savings/savings.routes').then((m) => m.SAVINGS_ROUTES),
   },
+  {
+    path: 'cotizaciones',
+    canActivate: [authGuard, unlockedGuard],
+    loadComponent: () => import('./features/rates/rates-page').then((m) => m.RatesPage),
+  },
   { path: '**', redirectTo: 'inicio' },
 ];

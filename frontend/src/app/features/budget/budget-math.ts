@@ -36,7 +36,7 @@ export interface BudgetProgress {
   /** Gastos del mes (en la moneda del presupuesto) en categorías sin presupuesto o sin categoría. */
   unbudgetedSpent: string;
   unbudgeted: { categoryId: string | null; spent: string }[];
-  /** Cuántos gastos del mes quedaron afuera por estar en otra moneda. */
+  /** Cuántos gastos del mes en otra moneda quedaron afuera por falta de cotización. */
   otherCurrencyCount: number;
   /** Solo 50/30/20. */
   groups: GroupProgress[] | null;
@@ -50,6 +50,8 @@ export interface BudgetContext {
   categoriesById: Map<string, Category>;
   /** Todos los presupuestos (para calcular arrastres). */
   budgets: Budget[];
+  /** Conversión de montos a la moneda del presupuesto (si no hay cotización, devuelve null). */
+  convert?: (amount: string, from: string, to: string) => string | null;
 }
 
 const ym = (year: number, month: number) => `${year}-${String(month).padStart(2, '0')}`;
@@ -65,12 +67,18 @@ function monthlySpending(ctx: BudgetContext, year: number, month: number, curren
   let otherCurrencyCount = 0;
   for (const t of ctx.transactions) {
     if (t.type !== 'EXPENSE' || !t.date.startsWith(key)) continue;
-    if (ctx.currencyOfAccount(t.accountId) !== currency) {
-      otherCurrencyCount++;
-      continue;
+    const from = ctx.currencyOfAccount(t.accountId);
+    let amount = t.amount;
+    if (from !== currency) {
+      const converted = from && ctx.convert ? ctx.convert(t.amount, from, currency) : null;
+      if (converted === null) {
+        otherCurrencyCount++;
+        continue;
+      }
+      amount = converted;
     }
     const list = byCategory.get(t.categoryId) ?? [];
-    list.push(t.amount);
+    list.push(amount);
     byCategory.set(t.categoryId, list);
   }
   const totals = new Map<string | null, string>();

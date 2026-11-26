@@ -42,3 +42,22 @@
     }
   }
 }
+
+.networth {
+  margin: 16px 0;
+
+  .nw-total {
+    margin: 4px 0;
+    font: var(--mat-sys-display-small);
+    font-variant-numeric: tabular-nums;
+
+    &.neg {
+      color: var(--mat-sys-error);
+    }
+  }
+
+  .meta {
+    margin: 4px 0;
+    color: var(--mat-sys-on-surface-variant);
+  }
+}

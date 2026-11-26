@@ -7,6 +7,8 @@ export const envSchema = z.object({
   REDIS_URL: z.url(),
   /** Firma de los access tokens (HS256): al menos 32 bytes. `openssl rand -base64 48` */
   JWT_SECRET: z.string().min(32),
+  /** Actualización automática de cotizaciones (BullMQ). false en tests o sin red. */
+  RATES_REFRESH: z.stringbool().default(true),
   CORS_ORIGINS: z
     .string()
     .default('http://localhost:4200')

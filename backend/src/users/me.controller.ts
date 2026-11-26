@@ -79,6 +79,7 @@ export class MeController {
         baseCurrency: household.baseCurrency,
         isPersonal: household.isPersonal,
         currentKeyVersion: household.currentKeyVersion,
+        usdRateType: household.usdRateType,
         payload: toBase64(household.payload),
         keyVersion: household.keyVersion,
         role,

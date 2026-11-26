@@ -17,9 +17,12 @@ import { CategoriesService } from '../categories/categories.service';
 import { PendingList } from '../recurring/pending-list/pending-list';
 import { RecurringService } from '../recurring/recurring.service';
 import { computeBudget } from '../budget/budget-math';
+import { NetWorthService } from '../networth/net-worth.service';
+import { RatesService } from '../rates/rates.service';
 import { BudgetsService } from '../budget/budgets.service';
 import { CurrenciesService } from '../../core/currencies/currencies.service';
 import { formatMoney, ratioOf } from '../../core/money/decimal';
+import { toMoneyString } from '../savings/savings-format';
 import { TransactionsService } from '../transactions/transactions.service';
 
 @Component({
@@ -40,6 +43,8 @@ export class Home implements OnInit {
   private readonly snack = inject(MatSnackBar);
   private readonly budgets = inject(BudgetsService);
   private readonly currencies = inject(CurrenciesService);
+  private readonly rates = inject(RatesService);
+  private readonly netWorthService = inject(NetWorthService);
   private readonly transloco = inject(TranslocoService);
 
   readonly me = this.session.me;
@@ -74,6 +79,7 @@ export class Home implements OnInit {
       currencyOfAccount: (id) => accounts.find((a) => a.id === id)?.currency,
       categoriesById: this.categories.byId(),
       budgets: this.budgets.budgets(),
+      convert: (amount, from, to) => this.rates.converter().convert(amount, from, to),
     });
     const currency = this.currencies.get(b.currency);
     return {
@@ -85,10 +91,18 @@ export class Home implements OnInit {
     };
   });
 
+  /** Patrimonio neto en la moneda principal (estimado con las cotizaciones). */
+  readonly netWorth = computed(() => {
+    const nw = this.netWorthService.netWorth();
+    const c = this.currencies.get(nw.currency);
+    const f = (n: number) => formatMoney(toMoneyString(n), c);
+    return { total: f(nw.total), assets: f(nw.assets), liabilities: f(nw.liabilities), missing: nw.missing, usd: this.rates.usdRateType(), negative: nw.total < 0 };
+  });
+
   /** Al entrar: registra los recurrentes automáticos vencidos y deja visibles los pendientes. */
   async ngOnInit() {
     try {
-      await Promise.all([this.accounts.load(), this.categories.ensureLoaded(), this.transactions.ensureLoaded(), this.budgets.ensureLoaded()]);
+      await Promise.all([this.accounts.load(), this.categories.ensureLoaded(), this.transactions.ensureLoaded(), this.budgets.ensureLoaded(), this.netWorthService.ensureLoaded()]);
       const created = await this.recurring.processDue();
       if (created > 0) this.snack.open(this.transloco.translate('recurring.autoPosted', { n: created }), undefined, { duration: 4000 });
     } catch {

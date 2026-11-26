@@ -19,6 +19,7 @@ import { RecurringService } from '../recurring/recurring.service';
 import { TransactionsService } from '../transactions/transactions.service';
 import { BudgetDialog, type BudgetDialogData } from './budget-dialog/budget-dialog';
 import { computeBudget } from './budget-math';
+import { RatesService } from '../rates/rates.service';
 import { BudgetsService } from './budgets.service';
 
 @Component({
@@ -35,6 +36,7 @@ export class BudgetPage implements OnInit {
   private readonly transactions = inject(TransactionsService);
   private readonly recurring = inject(RecurringService);
   private readonly currencies = inject(CurrenciesService);
+  private readonly rates = inject(RatesService);
   private readonly dialog = inject(MatDialog);
   private readonly snack = inject(MatSnackBar);
   private readonly transloco = inject(TranslocoService);
@@ -59,6 +61,7 @@ export class BudgetPage implements OnInit {
       currencyOfAccount: (id) => accounts.find((a) => a.id === id)?.currency,
       categoriesById: this.categories.byId(),
       budgets: this.budgets.budgets(),
+      convert: (amount, from, to) => this.rates.converter().convert(amount, from, to),
     });
   });
 
@@ -70,6 +73,7 @@ export class BudgetPage implements OnInit {
         this.transactions.ensureLoaded(),
         this.budgets.ensureLoaded(),
         this.recurring.ensureLoaded(),
+        this.rates.ensureLoaded(),
       ]);
       await this.recurring.processDue();
     } catch {

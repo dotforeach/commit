@@ -1,5 +1,8 @@
+import { BullModule } from '@nestjs/bullmq';
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import type { Env } from './config/env.schema.js';
+import { RatesModule } from './rates/rates.module.js';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { AccountsModule } from './accounts/accounts.module.js';
@@ -24,6 +27,16 @@ import { RedisModule } from './redis/redis.module.js';
     ConfigModule.forRoot({ isGlobal: true, validationSchema: envSchema }),
     PrismaModule,
     RedisModule,
+    // BullMQ usa su propia conexión a Redis (los workers necesitan maxRetriesPerRequest: null).
+    BullModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (config: ConfigService<Env, true>) => {
+        const url = new URL(config.get('REDIS_URL', { infer: true }));
+        return {
+          connection: { host: url.hostname, port: Number(url.port || 6379), password: decodeURIComponent(url.password) || undefined, maxRetriesPerRequest: null },
+        };
+      },
+    }),
     AuthModule, // su guard global corre antes que el throttler
     ThrottlerModule.forRoot({ throttlers: [{ ttl: 60_000, limit: 300 }] }),
     HealthModule,
@@ -38,6 +51,7 @@ import { RedisModule } from './redis/redis.module.js';
     GoalsModule,
     DepositsModule,
     InvestmentsModule,
+    RatesModule,
   ],
   providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }],
 })

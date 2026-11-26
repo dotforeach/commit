@@ -4,6 +4,24 @@
 
     <app-pending-list />
 
+    <mat-card appearance="outlined" class="networth" data-testid="net-worth">
+      <mat-card-header>
+        <mat-icon mat-card-avatar fontSet="material-symbols-outlined" aria-hidden="true">account_balance</mat-icon>
+        <mat-card-title>{{ t('netWorth.title') }}</mat-card-title>
+        <mat-card-subtitle>{{ t('netWorth.subtitle', { usd: t('netWorth.usd.' + netWorth().usd) }) }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="nw-total" [class.neg]="netWorth().negative" data-testid="net-worth-total">{{ netWorth().total }}</p>
+        <p class="meta">{{ t('netWorth.detail', { assets: netWorth().assets, liabilities: netWorth().liabilities }) }}</p>
+        @if (netWorth().missing.length > 0) {
+          <p class="meta">{{ t('netWorth.missing', { n: netWorth().missing.length }) }}</p>
+        }
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <a mat-button routerLink="/cotizaciones">{{ t('netWorth.rates') }}</a>
+      </mat-card-actions>
+    </mat-card>
+
     @if (budgetSummary(); as b) {
       <mat-card appearance="outlined" class="budget" data-testid="home-budget">
         <mat-card-header>

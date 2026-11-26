@@ -102,6 +102,8 @@ model Household {
   baseCurrency      String   @db.VarChar(10)
   isPersonal        Boolean  @default(false)
   currentKeyVersion Int      @default(1)
+  /// Tipo de cambio para convertir USD↔moneda base (no es sensible: es una preferencia).
+  usdRateType       String   @default("mep") @db.VarChar(20)
   payload           Bytes
   keyVersion        Int
   createdAt         DateTime @default(now()) @db.Timestamptz

@@ -121,4 +121,12 @@ describe('computeBudget', () => {
     const b = budget(11, [item('super', '600000'), item('salidas', '150000')], { method: 'ENVELOPE', expectedIncome: '800000' });
     expect(computeBudget(b, ctx([], [b])).unassigned).toBe('50000');
   });
+
+  it('convierte los gastos en otras monedas cuando hay cotización', () => {
+    const b = budget(11, [item('super', '100000')]);
+    const c = ctx([expense('super', '50', '2026-11-12', 'usd'), expense('super', '1000', '2026-11-13')], [b]);
+    const p = computeBudget(b, { ...c, convert: (a, from) => (from === 'USD' ? String(Number(a) * 1665) : null) });
+    expect(p.items[0].spent).toBe('84250'); // 50 × 1665 + 1000
+    expect(p.otherCurrencyCount).toBe(0);
+  });
 });

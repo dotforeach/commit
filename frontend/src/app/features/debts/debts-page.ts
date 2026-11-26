@@ -28,6 +28,7 @@ import { frenchPayment, simulatePayoff, toMoney } from './debt-math';
 import { DebtDialog } from './debt-dialog/debt-dialog';
 import type { Debt } from './debt.model';
 import { DebtsService } from './debts.service';
+import { RatesService } from '../rates/rates.service';
 import { PaymentDialog } from './payment-dialog/payment-dialog';
 import { ScheduleDialog } from './schedule-dialog/schedule-dialog';
 
@@ -61,6 +62,7 @@ export class DebtsPage implements OnInit {
   private readonly snack = inject(MatSnackBar);
   private readonly transloco = inject(TranslocoService);
   private readonly injector = inject(Injector);
+  private readonly rates = inject(RatesService);
 
   readonly loading = signal(true);
   readonly loadError = signal(false);
@@ -72,14 +74,15 @@ export class DebtsPage implements OnInit {
   /** Estrategia: solo deudas activas en la moneda principal del hogar (no se mezclan monedas). */
   readonly strategy = computed(() => {
     const base = this.household.baseCurrency();
-    const debts = this.active()
-      .filter((d) => d.currency === base)
-      .map((d) => ({
-        id: d.id,
-        balance: Number(this.debts.balance(d)),
-        annualRate: Number(d.annualRate ?? 0),
-        minimumPayment: Number(d.minimumPayment ?? (d.termMonths ? frenchPayment(Number(d.originalAmount), Number(d.annualRate ?? 0), d.termMonths) : 0)),
-      }))
+    const converter = this.rates.converter();
+    // Las deudas en otra moneda se convierten a la principal (si hay cotización).
+    const convertible = this.active().filter((d) => converter.rate(d.currency, base) !== null);
+    const debts = convertible
+      .map((d) => {
+        const r = converter.rate(d.currency, base)!;
+        const min = Number(d.minimumPayment ?? (d.termMonths ? frenchPayment(Number(d.originalAmount), Number(d.annualRate ?? 0), d.termMonths) : 0));
+        return { id: d.id, balance: Number(this.debts.balance(d)) * r, annualRate: Number(d.annualRate ?? 0), minimumPayment: min * r };
+      })
       .filter((d) => d.balance > 0);
     if (debts.length < 2) return null;
     const extra = Number(parseDecimalInput(this.extra()) ?? '0');
@@ -88,7 +91,7 @@ export class DebtsPage implements OnInit {
     const name = (id: string) => this.debts.debts().find((d) => d.id === id)?.name ?? '';
     return {
       currency: base,
-      skipped: this.active().filter((d) => d.currency !== base).length,
+      skipped: this.active().length - convertible.length,
       snowball: { ...snowball, order: snowball.payoff.map((p) => name(p.id)) },
       avalanche: { ...avalanche, order: avalanche.payoff.map((p) => name(p.id)) },
       saves: toMoney(Math.max(snowball.totalInterest - avalanche.totalInterest, 0)),
@@ -124,6 +127,7 @@ export class DebtsPage implements OnInit {
         this.transactions.ensureLoaded(),
         this.debts.ensureLoaded(),
         this.installments.ensureLoaded(),
+        this.rates.ensureLoaded(),
       ]);
     } catch {
       this.loadError.set(true);

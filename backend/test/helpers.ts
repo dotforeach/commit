@@ -49,11 +49,10 @@ export function buildRegistration(email = `test-${randomUUID()}@example.com`) {
 }
 
 /** App de test con la misma configuración que main.ts y un hash de contraseña rápido. */
-export async function createTestApp(): Promise<INestApplication> {
-  const moduleRef = await Test.createTestingModule({ imports: [AppModule] })
-    .overrideProvider(PasswordHasher)
-    .useValue(new PasswordHasher({ logN: 10 }))
-    .compile();
+export async function createTestApp(configure?: (b: ReturnType<typeof Test.createTestingModule>) => ReturnType<typeof Test.createTestingModule>): Promise<INestApplication> {
+  let builder = Test.createTestingModule({ imports: [AppModule] });
+  if (configure) builder = configure(builder);
+  const moduleRef = await builder.overrideProvider(PasswordHasher).useValue(new PasswordHasher({ logN: 10 })).compile();
   const app = moduleRef.createNestApplication();
   app.use(cookieParser());
   app.useGlobalPipes(new StandardSchemaValidationPipe());
