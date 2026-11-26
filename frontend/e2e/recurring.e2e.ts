@@ -85,10 +85,10 @@ test('recurrentes: automático se pone al día, con confirmación se confirma u 
   await page.getByRole('menuitem', { name: 'Reanudar' }).click();
   await expect(sueldo).toContainText(`Próximo: ${firstOfMonth(1)}`);
 
-  // Recargar y volver a entrar: el inicio reprocesa recurrentes, pero no duplica nada.
+  // Recargar y volver a entrar: vuelve a Recurrentes, que reprocesa las reglas, pero no duplica nada.
   await page.reload();
   await unlock(page, passphrase);
-  await expect(page).toHaveURL(/\/inicio$/, { timeout: 15_000 });
+  await expect(page).toHaveURL(/\/recurrentes$/, { timeout: 15_000 });
   await page.getByRole('link', { name: 'Cuentas' }).click();
   await expect(page.locator('li[data-account="Banco"] .value')).toHaveText('$ 2.372.500,00', { timeout: 15_000 });
 });

@@ -9,6 +9,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router, RouterLink } from '@angular/router';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { AuthService } from '../../../core/auth/auth.service';
+import { takeReturnUrl } from '../../../core/auth/guards';
 import { KeyVaultService, WrongPassphraseError } from '../../../core/crypto/key-vault.service';
 import { SessionService } from '../../../core/session/session.service';
 
@@ -46,7 +47,7 @@ export class Unlock {
       const me = this.session.me() ?? (await this.session.load());
       await this.vault.unlockWithPassphrase(me, this.form.controls.passphrase.value);
       this.form.reset();
-      await this.router.navigate(['/inicio']);
+      await this.router.navigateByUrl(takeReturnUrl() ?? '/inicio');
     } catch (e) {
       this.error.set(e instanceof WrongPassphraseError ? 'errors.wrongPassphrase' : 'errors.generic');
     } finally {

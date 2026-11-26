@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, effect, inject, signal } from '@angular/core';
+import { Injectable, effect, inject, signal, untracked } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { v7 as uuidv7 } from 'uuid';
 import { KeyVaultService } from '../../core/crypto/key-vault.service';
@@ -40,10 +40,12 @@ export class SavingsService {
   constructor() {
     const vault = inject(KeyVaultService);
     effect(() => {
-      if (!vault.isUnlocked()) {
+      // Al bloquear o cambiar de hogar, los datos descifrados no quedan en memoria.
+      vault.generation();
+      untracked(() => {
         for (const s of [this.goals, this.deposits, this.assets, this.prices, this.trades]) (s as ReturnType<typeof signal<unknown[]>>).set([]);
         this.loaded = false;
-      }
+      });
     });
   }
 

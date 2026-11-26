@@ -13,11 +13,15 @@ export class HouseholdContextService {
   private readonly session = inject(SessionService);
   private readonly vault = inject(KeyVaultService);
 
+  /** Hogar activo: el elegido por el usuario, o el primero donde tiene acceso (p. ej. si lo quitaron del elegido). */
   readonly household = computed(() => {
     const me = this.session.me();
     if (!me) return null;
-    return me.households.find((h) => h.id === me.user.defaultHouseholdId && h.status === 'ACTIVE') ?? null;
+    const active = me.households.filter((h) => h.status === 'ACTIVE');
+    return active.find((h) => h.id === me.user.defaultHouseholdId) ?? active.find((h) => h.isPersonal) ?? active[0] ?? null;
   });
+
+  readonly households = computed(() => this.session.me()?.households ?? []);
 
   readonly householdId = computed(() => this.household()?.id ?? null);
   readonly baseCurrency = computed(() => this.household()?.baseCurrency ?? 'ARS');

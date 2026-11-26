@@ -3,8 +3,9 @@ import type { MeResponse } from '../api/api.types';
 import { openPrivateKeys, sealPrivateKeys, wipeIdentity, type Identity } from './identity';
 import { DEFAULT_KDF_PARAMS, deriveKeyFromPassphrase, randomSalt } from './kdf';
 import { signKeyUpdate } from './key-update';
+import { keyFingerprint } from './fingerprint';
 import { recoveryKeyFromPhrase } from './recovery-phrase';
-import { unwrapHouseholdKey } from './member-key';
+import { generateHouseholdKey, unwrapHouseholdKey, wrapHouseholdKey } from './member-key';
 import { fromBase64, getSodium, toBase64 } from './sodium';
 
 export class WrongPassphraseError extends Error {
@@ -37,6 +38,14 @@ export class KeyVaultService {
   private householdKeys = new Map<string, Map<number, Uint8Array>>();
 
   readonly isUnlocked = computed(() => this.identity() !== null);
+  /** Sube al bloquear o al cambiar de hogar: los servicios descartan los datos descifrados. */
+  private readonly gen = signal(0);
+  readonly generation = this.gen.asReadonly();
+
+  /** Descarta los datos descifrados en memoria (p. ej. al cambiar de hogar), sin bloquear. */
+  resetData() {
+    this.gen.update((g) => g + 1);
+  }
 
   async unlockWithPassphrase(me: MeResponse, passphrase: string): Promise<void> {
     const identity = await this.openWithPassphrase(me, passphrase);
@@ -98,6 +107,50 @@ export class KeyVaultService {
     };
   }
 
+  /** Vuelve a abrir las claves de los hogares (p. ej. tras una rotación o al recibir acceso a uno nuevo). */
+  async reloadHouseholdKeys(me: MeResponse): Promise<void> {
+    const identity = this.identity();
+    if (identity) await this.loadHouseholdKeys(me, identity);
+  }
+
+  /** Mi huella (para que otro miembro la verifique antes de darme acceso). */
+  async myFingerprint(): Promise<string | null> {
+    const identity = this.identity();
+    return identity ? keyFingerprint(identity.boxPublicKey, identity.signPublicKey) : null;
+  }
+
+  /** Envuelve TODAS las versiones de la clave de un hogar para otro miembro, firmadas por mí. */
+  async wrapAllVersionsFor(householdId: string, recipientUserId: string, recipientPublicKey: Uint8Array) {
+    const identity = this.requireIdentity();
+    const versions = this.householdKeys.get(householdId);
+    if (!versions || versions.size === 0) throw new Error('No tengo las claves de este hogar');
+    return Promise.all(
+      [...versions.entries()].map(async ([version, householdKey]) => {
+        const w = await wrapHouseholdKey({ householdKey, householdId, version, recipientUserId, recipientPublicKey, signer: identity });
+        return { version, wrappedKey: await toBase64(w.wrappedKey), signature: await toBase64(w.signature) };
+      }),
+    );
+  }
+
+  /** Genera la versión nueva de la clave del hogar y la envuelve para cada miembro activo. */
+  async rotationFor(householdId: string, version: number, members: { userId: string; publicKey: Uint8Array }[]) {
+    const identity = this.requireIdentity();
+    const householdKey = await generateHouseholdKey();
+    const memberKeys = await Promise.all(
+      members.map(async (m) => {
+        const w = await wrapHouseholdKey({ householdKey, householdId, version, recipientUserId: m.userId, recipientPublicKey: m.publicKey, signer: identity });
+        return { userId: m.userId, wrappedKey: await toBase64(w.wrappedKey), signature: await toBase64(w.signature) };
+      }),
+    );
+    return { version, memberKeys };
+  }
+
+  private requireIdentity(): Identity {
+    const identity = this.identity();
+    if (!identity) throw new Error('La bóveda está bloqueada');
+    return identity;
+  }
+
   private async expectedPublicKeys(me: MeResponse) {
     return {
       boxPublicKey: await fromBase64(me.keys.publicKey),
@@ -124,6 +177,7 @@ export class KeyVaultService {
     for (const versions of this.householdKeys.values()) for (const key of versions.values()) s.memzero(key);
     this.householdKeys = new Map();
     this.identity.set(null);
+    this.gen.update((g) => g + 1);
   }
 
   private async loadHouseholdKeys(me: MeResponse, identity: Identity) {

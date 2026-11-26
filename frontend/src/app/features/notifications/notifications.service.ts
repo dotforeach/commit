@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, computed, effect, inject, signal } from '@angular/core';
+import { Injectable, computed, effect, inject, signal, untracked } from '@angular/core';
 import { SwPush } from '@angular/service-worker';
 import { firstValueFrom } from 'rxjs';
 import { KeyVaultService } from '../../core/crypto/key-vault.service';
@@ -43,7 +43,9 @@ export class NotificationsService {
   constructor() {
     const vault = inject(KeyVaultService);
     effect(() => {
-      if (!vault.isUnlocked()) this.items.set([]);
+      // Al bloquear o cambiar de hogar, los datos descifrados no quedan en memoria.
+      vault.generation();
+      untracked(() => this.items.set([]));
     });
     if (this.swPush.isEnabled) this.swPush.subscription.subscribe((s) => this.pushEnabled.set(!!s));
   }

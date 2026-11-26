@@ -1,0 +1,113 @@
+<ng-container *transloco="let t; prefix: 'household'">
+  <section class="page">
+    <h2>{{ t('title', { name: names().get(hh.householdId() ?? '') ?? '' }) }}</h2>
+    <p class="subtitle">{{ t('subtitle') }}</p>
+
+    <mat-card appearance="outlined" class="block">
+      <mat-card-header><mat-card-title>{{ t('membersTitle') }}</mat-card-title></mat-card-header>
+      <mat-card-content>
+        <ul class="members">
+          @for (m of members(); track m.userId) {
+            <li [attr.data-member]="m.email">
+              <mat-icon fontSet="material-symbols-outlined" aria-hidden="true">{{ m.status === 'ACTIVE' ? 'person' : 'hourglass_top' }}</mat-icon>
+              <div class="info">
+                <span class="name">{{ m.displayName }} @if (m.userId === myId()) { <span class="meta">({{ t('you') }})</span> }</span>
+                <span class="meta">{{ m.email }} · {{ t('roles.' + m.role) }}{{ m.status === 'PENDING_KEY' ? ' · ' + t('pending') : '' }}</span>
+                @if (m.status === 'PENDING_KEY' && m.fingerprint) {
+                  <span class="fp" data-testid="member-fingerprint">{{ m.fingerprint }}</span>
+                }
+              </div>
+              @if (isAdmin() && m.userId !== myId() && m.role !== 'OWNER') {
+                @if (m.status === 'PENDING_KEY') {
+                  <button mat-flat-button (click)="grant(m)" [disabled]="busy()">{{ t('grant') }}</button>
+                } @else {
+                  <mat-form-field subscriptSizing="dynamic" class="role">
+                    <mat-label>{{ t('role') }}</mat-label>
+                    <mat-select [value]="m.role" (selectionChange)="setRole(m, $event.value)">
+                      @for (r of ['ADMIN', 'MEMBER', 'VIEWER']; track r) {
+                        <mat-option [value]="r">{{ t('roles.' + r) }}</mat-option>
+                      }
+                    </mat-select>
+                  </mat-form-field>
+                }
+                <button mat-icon-button (click)="remove(m)" [attr.aria-label]="t('remove', { name: m.displayName })" [disabled]="busy()">
+                  <mat-icon fontSet="material-symbols-outlined">person_remove</mat-icon>
+                </button>
+              }
+            </li>
+          }
+        </ul>
+        <p class="meta">{{ t('myFingerprint') }} <span class="fp" data-testid="my-fingerprint">{{ myFingerprint() }}</span></p>
+      </mat-card-content>
+      @if (!isAdmin() || hh.household()?.role !== 'OWNER') {
+        @if (hh.household()?.role !== 'OWNER') {
+          <mat-card-actions align="end"><button mat-button (click)="leave()">{{ t('leave') }}</button></mat-card-actions>
+        }
+      }
+    </mat-card>
+
+    @if (isAdmin()) {
+      <mat-card appearance="outlined" class="block">
+        <mat-card-header>
+          <mat-card-title>{{ t('inviteTitle') }}</mat-card-title>
+          <mat-card-subtitle>{{ t('inviteHelp') }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <form [formGroup]="form" (ngSubmit)="invite()" class="invite">
+            <mat-form-field>
+              <mat-label>{{ t('email') }}</mat-label>
+              <input matInput type="email" formControlName="email" />
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>{{ t('role') }}</mat-label>
+              <mat-select formControlName="role">
+                @for (r of ['ADMIN', 'MEMBER', 'VIEWER']; track r) {
+                  <mat-option [value]="r">{{ t('roles.' + r) }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            <button mat-flat-button type="submit" [disabled]="form.invalid || busy()">{{ t('createLink') }}</button>
+          </form>
+          @if (link(); as l) {
+            <div class="link">
+              <input readonly [value]="l" data-testid="invite-link" [attr.aria-label]="t('link')" />
+              <button mat-stroked-button (click)="copyLink()">{{ t('copy') }}</button>
+            </div>
+            <p class="meta">{{ t('linkHelp') }}</p>
+          }
+          @if (invitations().length > 0) {
+            <ul class="members">
+              @for (i of invitations(); track i.id) {
+                <li>
+                  <div class="info"><span>{{ i.email }}</span><span class="meta">{{ t('roles.' + i.role) }}</span></div>
+                  <button mat-button (click)="revoke(i)">{{ t('revoke') }}</button>
+                </li>
+              }
+            </ul>
+          }
+        </mat-card-content>
+      </mat-card>
+    }
+
+    @if (others().length > 0) {
+      <mat-card appearance="outlined" class="block">
+        <mat-card-header><mat-card-title>{{ t('otherTitle') }}</mat-card-title></mat-card-header>
+        <mat-card-content>
+          <ul class="members">
+            @for (h of others(); track h.id) {
+              <li [attr.data-household]="names().get(h.id) ?? h.id">
+                <div class="info">
+                  <span class="name">{{ names().get(h.id) ?? t('noAccessYet') }}</span>
+                  <span class="meta">{{ t('roles.' + h.role) }}{{ h.status === 'PENDING_KEY' ? ' · ' + t('pending') : '' }}</span>
+                </div>
+                @if (h.status === 'ACTIVE') {
+                  <button mat-stroked-button (click)="switchTo(h.id)" [disabled]="busy()">{{ t('use') }}</button>
+                }
+              </li>
+            }
+          </ul>
+        </mat-card-content>
+      </mat-card>
+    }
+  </section>
+</ng-container>

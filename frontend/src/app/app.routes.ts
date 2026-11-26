@@ -85,5 +85,15 @@ export const routes: Routes = [
     canActivate: [authGuard, unlockedGuard],
     loadComponent: () => import('./features/settings/settings-page').then((m) => m.SettingsPage),
   },
+  {
+    path: 'hogar',
+    canActivate: [authGuard, unlockedGuard],
+    loadComponent: () => import('./features/household/household-page').then((m) => m.HouseholdPage),
+  },
+  {
+    path: 'unirme',
+    canActivate: [authGuard, unlockedGuard],
+    loadComponent: () => import('./features/household/join-page').then((m) => m.JoinPage),
+  },
   { path: '**', redirectTo: 'inicio' },
 ];

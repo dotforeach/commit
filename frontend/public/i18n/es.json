@@ -3,7 +3,72 @@
     "name": "Finanzas 0→100"
   },
   "household": {
-    "personalName": "Finanzas de {{name}}"
+    "personalName": "Finanzas de {{name}}",
+    "title": "Mi hogar · {{name}}",
+    "subtitle": "Compartí tus finanzas con tu pareja o tu familia. Cada persona usa su propia cuenta y su propia clave.",
+    "membersTitle": "Miembros",
+    "you": "vos",
+    "pending": "esperando acceso",
+    "roles": {
+      "OWNER": "Dueño",
+      "ADMIN": "Administrador",
+      "MEMBER": "Miembro",
+      "VIEWER": "Solo lectura"
+    },
+    "role": "Rol",
+    "grant": "Dar acceso",
+    "remove": "Quitar a {{name}}",
+    "leave": "Salir de este hogar",
+    "myFingerprint": "Tu huella:",
+    "inviteTitle": "Invitar a alguien",
+    "inviteHelp": "Generá un link de un solo uso (vence en 7 días) y compartilo por WhatsApp o por donde quieras.",
+    "email": "Email de la persona",
+    "createLink": "Crear link",
+    "link": "Link de invitación",
+    "copy": "Copiar",
+    "copied": "Link copiado",
+    "linkHelp": "La persona tiene que entrar con una cuenta con ese email. Cuando acepte, verificá su huella y dale acceso.",
+    "revoke": "Revocar",
+    "otherTitle": "Tus otros hogares",
+    "use": "Usar este hogar",
+    "noAccessYet": "(todavía sin acceso)",
+    "cancel": "Cancelar",
+    "grantDialog": {
+      "title": "Dar acceso a {{name}}",
+      "message": "Pedile que te diga la huella que ve en su pantalla. Tiene que ser exactamente: {{fingerprint}}. Si no coincide, no le des acceso.",
+      "confirm": "Coincide, dar acceso"
+    },
+    "removeDialog": {
+      "title": "Quitar miembro",
+      "message": "¿Quitar a {{name}}? Se cambia la clave del hogar: lo que se cargue de ahora en más no lo va a poder leer.",
+      "confirm": "Quitar"
+    },
+    "leaveDialog": {
+      "title": "Salir del hogar",
+      "message": "Vas a dejar de ver las finanzas de este hogar.",
+      "confirm": "Salir"
+    },
+    "granted": "Acceso otorgado",
+    "roleChanged": "Rol actualizado",
+    "removed": "Miembro quitado y clave del hogar renovada",
+    "left": "Saliste del hogar",
+    "switched": "Cambiaste de hogar",
+    "error": "No pudimos completar la acción. Probá de nuevo.",
+    "join": {
+      "title": "Unirte a un hogar",
+      "intro": "Te invitaron a compartir las finanzas de un hogar. Al aceptar, un administrador tiene que darte acceso.",
+      "accept": "Aceptar invitación",
+      "home": "Ir al inicio",
+      "pending": "¡Listo! Ahora un administrador tiene que darte acceso. Va a verificar tu huella:",
+      "fingerprint": "Tu huella:",
+      "errors": {
+        "missing": "El link no tiene invitación.",
+        "invalid": "La invitación no existe, ya se usó o venció.",
+        "otherEmail": "Esta invitación es para otro email.",
+        "already": "Ya sos miembro de este hogar.",
+        "generic": "No pudimos aceptar la invitación."
+      }
+    }
   },
   "register": {
     "title": "Crear cuenta",
