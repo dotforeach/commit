@@ -168,7 +168,8 @@
     "home": "Inicio",
     "accounts": "Cuentas",
     "lock": "Bloquear",
-    "transactions": "Movimientos"
+    "transactions": "Movimientos",
+    "recurring": "Recurrentes"
   },
   "accounts": {
     "title": "Cuentas",
@@ -312,6 +313,117 @@
       "noAccounts": "Primero creá una cuenta en la sección Cuentas.",
       "conflict": "El movimiento cambió en otro dispositivo. Cerrá y volvé a abrirlo.",
       "load": "No pudimos cargar tus movimientos.",
+      "generic": "No pudimos guardar los cambios. Probá de nuevo."
+    },
+    "fromRecurring": "Generado por un recurrente"
+  },
+  "recurring": {
+    "title": "Recurrentes",
+    "subtitle": "Sueldo, alquiler, servicios y suscripciones: se cargan solos o te piden confirmación.",
+    "new": "Nuevo recurrente",
+    "edit": "Editar",
+    "pause": "Pausar",
+    "resume": "Reanudar",
+    "delete": "Eliminar",
+    "actions": "Acciones de {{description}}",
+    "auto": "automático",
+    "withConfirm": "con confirmación",
+    "next": "Próximo: {{date}}",
+    "pausedTitle": "Pausados",
+    "paused": "Recurrente pausado",
+    "resumed": "Recurrente reanudado: sigue desde hoy",
+    "deleted": "Recurrente eliminado",
+    "autoPosted": "Se registraron {{n}} movimientos recurrentes",
+    "needAccount": "Para crear recurrentes primero creá una cuenta.",
+    "goToAccounts": "Ir a Cuentas",
+    "empty": {
+      "title": "Todavía no tenés recurrentes",
+      "body": "Empezá por tu sueldo y tus gastos fijos: alquiler, expensas, servicios, suscripciones."
+    },
+    "types": {
+      "EXPENSE": "Gasto",
+      "INCOME": "Ingreso"
+    },
+    "frequencies": {
+      "MONTHLY": "Mensual",
+      "WEEKLY": "Semanal",
+      "DAILY": "Diaria",
+      "YEARLY": "Anual"
+    },
+    "schedule": {
+      "every": {
+        "MONTHLY": "Todos los meses",
+        "WEEKLY": "Todas las semanas",
+        "DAILY": "Todos los días",
+        "YEARLY": "Todos los años"
+      },
+      "everyN": {
+        "MONTHLY": "Cada {{n}} meses",
+        "WEEKLY": "Cada {{n}} semanas",
+        "DAILY": "Cada {{n}} días",
+        "YEARLY": "Cada {{n}} años"
+      },
+      "onDay": "el día {{day}}"
+    },
+    "deleteDialog": {
+      "title": "Eliminar recurrente",
+      "message": "¿Eliminar «{{description}}»? Los movimientos que ya generó se conservan.",
+      "confirm": "Eliminar",
+      "cancel": "Cancelar"
+    },
+    "dialog": {
+      "newTitle": "Nuevo recurrente",
+      "editTitle": "Editar recurrente",
+      "type": "Tipo",
+      "cancel": "Cancelar",
+      "save": "Guardar"
+    },
+    "fields": {
+      "description": "Descripción",
+      "descriptionPlaceholder": {
+        "EXPENSE": "Ej.: Alquiler",
+        "INCOME": "Ej.: Sueldo"
+      },
+      "amount": "Monto",
+      "amountHint": "Si varía (luz, gas), poné el estimado y confirmalo cada mes.",
+      "account": "Cuenta",
+      "category": "Categoría",
+      "noCategory": "Sin categoría",
+      "frequency": "Frecuencia",
+      "interval": "Cada",
+      "intervalHint": {
+        "MONTHLY": "meses",
+        "WEEKLY": "semanas",
+        "DAILY": "días",
+        "YEARLY": "años"
+      },
+      "dayOfMonth": "Día del mes",
+      "dayOfMonthHint": "Si el mes es más corto, cae el último día.",
+      "startDate": "Desde",
+      "endDate": "Hasta (opcional)",
+      "endDateHint": "Ej.: la última cuota.",
+      "mode": "Cómo se registra",
+      "auto": "Registrarlo automáticamente",
+      "confirm": "Pedirme confirmación (puedo ajustar el monto)",
+      "isSalary": "Es mi sueldo"
+    },
+    "pending": {
+      "title": "Para confirmar",
+      "subtitle": "Recurrentes que vencieron. Ajustá el monto si cambió.",
+      "expected": "estimado {{amount}}",
+      "more": "{{n}} más después",
+      "amount": "Monto",
+      "confirm": "Confirmar",
+      "skip": "Omitir",
+      "confirmed": "Movimiento registrado",
+      "skipped": "Ocurrencia omitida"
+    },
+    "errors": {
+      "decimal": "Monto inválido. Ej.: 1.234,56",
+      "positive": "El monto tiene que ser mayor a cero.",
+      "endBeforeStart": "La fecha de fin no puede ser anterior a la de inicio.",
+      "conflict": "La regla cambió en otro dispositivo. Cerrá y volvé a abrirla.",
+      "load": "No pudimos cargar tus recurrentes.",
       "generic": "No pudimos guardar los cambios. Probá de nuevo."
     }
   }

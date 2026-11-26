@@ -113,6 +113,14 @@ export class TransactionsService {
     ]);
   }
 
+  /** Incorpora movimientos que creó otro flujo (p. ej. ocurrencias de recurrentes). */
+  async ingest(dtos: TransactionDto[]): Promise<void> {
+    if (!this.loaded) return; // se verán en la próxima carga completa
+    const added = await Promise.all(dtos.map((dto) => this.decrypt(dto)));
+    const ids = new Set(added.map((t) => t.id));
+    this.state.update((list) => [...list.filter((t) => !ids.has(t.id)), ...added]);
+  }
+
   /** Borra un movimiento (o la transferencia entera). */
   async remove(t: Transaction): Promise<void> {
     await firstValueFrom(this.http.delete(`${this.base()}/${t.id}`, { params: { expectedRevision: t.revision } }));
@@ -165,6 +173,7 @@ export class TransactionsService {
       date: dto.date,
       transferGroupId: dto.transferGroupId,
       createdById: dto.createdById,
+      recurringRuleId: dto.recurringRuleId,
       revision: dto.revision,
     };
   }

@@ -16,6 +16,7 @@ export interface TransactionDto {
   status: 'PENDING' | 'CLEARED';
   date: string; // YYYY-MM-DD
   transferGroupId: string | null;
+  recurringRuleId: string | null;
   createdById: string;
   payload: string;
   keyVersion: number;
@@ -31,6 +32,7 @@ export interface Transaction extends TransactionPayload {
   status: 'PENDING' | 'CLEARED';
   date: string;
   transferGroupId: string | null;
+  recurringRuleId?: string | null;
   createdById: string;
   revision: string;
 }

@@ -1,0 +1,37 @@
+<ng-container *transloco="let t; prefix: 'recurring.pending'">
+  @if (recurring.pending().length > 0) {
+    <mat-card appearance="outlined" class="pending" data-testid="pending">
+      <mat-card-header>
+        <mat-icon mat-card-avatar fontSet="material-symbols-outlined" aria-hidden="true">pending_actions</mat-icon>
+        <mat-card-title>{{ t('title') }}</mat-card-title>
+        <mat-card-subtitle>{{ t('subtitle') }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <ul>
+          @for (p of recurring.pending(); track p.rule.id) {
+            <li [attr.data-pending]="p.rule.description">
+              <div class="info">
+                <span class="name">{{ p.rule.description }}</span>
+                <span class="meta">
+                  {{ p.date | date: 'd/M/y' : 'UTC' }} · {{ t('expected', { amount: money(p) }) }}
+                  @if (p.more > 0) {
+                    · {{ t('more', { n: p.more }) }}
+                  }
+                </span>
+              </div>
+              @if (household.canWrite()) {
+                <mat-form-field subscriptSizing="dynamic" class="amount">
+                  <mat-label>{{ t('amount') }}</mat-label>
+                  <span matTextPrefix>{{ currencySymbol(p) }}&nbsp;</span>
+                  <input matInput inputmode="decimal" [ngModel]="amountFor(p)" (ngModelChange)="setAmount(p, $event)" />
+                </mat-form-field>
+                <button mat-button (click)="skip(p)" [disabled]="busy() !== null">{{ t('skip') }}</button>
+                <button mat-flat-button (click)="confirm(p)" [disabled]="busy() !== null || !valid(p)">{{ t('confirm') }}</button>
+              }
+            </li>
+          }
+        </ul>
+      </mat-card-content>
+    </mat-card>
+  }
+</ng-container>

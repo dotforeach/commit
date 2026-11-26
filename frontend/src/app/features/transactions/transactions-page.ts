@@ -20,6 +20,7 @@ import { confirmDialog } from '../../shared/confirm-dialog/confirm-dialog';
 import { AccountsService } from '../accounts/accounts.service';
 import { CategoriesService } from '../categories/categories.service';
 import { totalsByCurrency } from './ledger';
+import { RecurringService } from '../recurring/recurring.service';
 import { TransactionDialog } from './transaction-dialog/transaction-dialog';
 import type { LedgerEntry, Transaction } from './transaction.model';
 import { TransactionsService } from './transactions.service';
@@ -60,6 +61,7 @@ export class TransactionsPage implements OnInit {
   private readonly transloco = inject(TranslocoService);
   /** El injector de la ruta tiene los providers del datepicker (DATE_PROVIDERS); MatDialog usaría el raíz. */
   private readonly injector = inject(Injector);
+  private readonly recurring = inject(RecurringService);
 
   readonly month = signal(monthOf(todayIso()));
   readonly accountFilter = signal<string>('');
@@ -95,6 +97,7 @@ export class TransactionsPage implements OnInit {
   async ngOnInit() {
     try {
       await Promise.all([this.accounts.load(), this.categories.ensureLoaded(), this.transactions.ensureLoaded()]);
+      await this.recurring.processDue();
     } catch {
       this.loadError.set(true);
     }

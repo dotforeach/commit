@@ -1,0 +1,15 @@
+@use '../accounts/accounts-page';
+
+.section {
+  margin: 24px 0 4px;
+  font: var(--mat-sys-title-small);
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.pos {
+  color: #2e7d32;
+}
+
+.hint {
+  color: var(--mat-sys-on-surface-variant);
+}

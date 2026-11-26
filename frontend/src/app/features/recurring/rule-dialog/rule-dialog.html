@@ -1,0 +1,112 @@
+<ng-container *transloco="let t; prefix: 'recurring'">
+  <h2 mat-dialog-title>{{ editing ? t('dialog.editTitle') : t('dialog.newTitle') }}</h2>
+  <form [formGroup]="form" (ngSubmit)="save()">
+    <mat-dialog-content class="fields">
+      <mat-button-toggle-group formControlName="type" class="mode" [attr.aria-label]="t('dialog.type')">
+        <mat-button-toggle value="EXPENSE">{{ t('types.EXPENSE') }}</mat-button-toggle>
+        <mat-button-toggle value="INCOME">{{ t('types.INCOME') }}</mat-button-toggle>
+      </mat-button-toggle-group>
+
+      <mat-form-field>
+        <mat-label>{{ t('fields.description') }}</mat-label>
+        <input matInput formControlName="description" [placeholder]="t('fields.descriptionPlaceholder.' + type())" cdkFocusInitial />
+      </mat-form-field>
+
+      <div class="row">
+        <mat-form-field>
+          <mat-label>{{ t('fields.amount') }}</mat-label>
+          <input matInput formControlName="amount" inputmode="decimal" />
+          <mat-hint>{{ t('fields.amountHint') }}</mat-hint>
+          @if (form.controls.amount.hasError('decimal')) {
+            <mat-error>{{ t('errors.decimal') }}</mat-error>
+          } @else if (form.controls.amount.hasError('positive')) {
+            <mat-error>{{ t('errors.positive') }}</mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{ t('fields.account') }}</mat-label>
+          <mat-select formControlName="accountId">
+            @for (a of accounts(); track a.id) {
+              <mat-option [value]="a.id">{{ a.name }} · {{ a.currency }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <mat-form-field>
+        <mat-label>{{ t('fields.category') }}</mat-label>
+        <mat-select formControlName="categoryId">
+          <mat-option value="">{{ t('fields.noCategory') }}</mat-option>
+          @for (c of categoryOptions(); track c.id) {
+            <mat-option [value]="c.id">{{ c.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <div class="row">
+        <mat-form-field>
+          <mat-label>{{ t('fields.frequency') }}</mat-label>
+          <mat-select formControlName="frequency">
+            @for (f of frequencies; track f) {
+              <mat-option [value]="f">{{ t('frequencies.' + f) }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{ t('fields.interval') }}</mat-label>
+          <input matInput type="number" formControlName="interval" min="1" />
+          <mat-hint>{{ t('fields.intervalHint.' + frequency()) }}</mat-hint>
+        </mat-form-field>
+      </div>
+
+      @if (frequency() === 'MONTHLY') {
+        <mat-form-field>
+          <mat-label>{{ t('fields.dayOfMonth') }}</mat-label>
+          <input matInput type="number" formControlName="dayOfMonth" min="1" max="31" />
+          <mat-hint>{{ t('fields.dayOfMonthHint') }}</mat-hint>
+        </mat-form-field>
+      }
+
+      <div class="row">
+        <mat-form-field>
+          <mat-label>{{ t('fields.startDate') }}</mat-label>
+          <input matInput [matDatepicker]="start" formControlName="startDate" />
+          <mat-datepicker-toggle matIconSuffix [for]="start" />
+          <mat-datepicker #start />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{ t('fields.endDate') }}</mat-label>
+          <input matInput [matDatepicker]="end" formControlName="endDate" />
+          <mat-datepicker-toggle matIconSuffix [for]="end" />
+          <mat-datepicker #end />
+          <mat-hint>{{ t('fields.endDateHint') }}</mat-hint>
+        </mat-form-field>
+      </div>
+      @if (endBeforeStart()) {
+        <p class="error">{{ t('errors.endBeforeStart') }}</p>
+      }
+
+      <mat-radio-group formControlName="autoPost" class="radios" [attr.aria-label]="t('fields.mode')">
+        <mat-radio-button [value]="true">{{ t('fields.auto') }}</mat-radio-button>
+        <mat-radio-button [value]="false">{{ t('fields.confirm') }}</mat-radio-button>
+      </mat-radio-group>
+
+      @if (type() === 'INCOME') {
+        <mat-checkbox formControlName="isSalary">{{ t('fields.isSalary') }}</mat-checkbox>
+      }
+
+      @if (error(); as key) {
+        <p class="error" role="alert">{{ t(key) }}</p>
+      }
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button type="button" mat-dialog-close [disabled]="busy()">{{ t('dialog.cancel') }}</button>
+      <button mat-flat-button type="submit" [disabled]="busy() || form.invalid || endBeforeStart()">
+        @if (busy()) {
+          <mat-spinner diameter="18" />
+        }
+        {{ t('dialog.save') }}
+      </button>
+    </mat-dialog-actions>
+  </form>
+</ng-container>

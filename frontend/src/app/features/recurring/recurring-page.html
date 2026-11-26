@@ -1,0 +1,86 @@
+<ng-container *transloco="let t; prefix: 'recurring'">
+  <section class="page">
+    <header class="head">
+      <div>
+        <h2>{{ t('title') }}</h2>
+        <p class="subtitle">{{ t('subtitle') }}</p>
+      </div>
+      @if (household.canWrite()) {
+        <button mat-flat-button (click)="openNew()" [disabled]="accounts.active().length === 0">
+          <mat-icon fontSet="material-symbols-outlined">add</mat-icon>{{ t('new') }}
+        </button>
+      }
+    </header>
+
+    @if (loading()) {
+      <mat-progress-bar mode="indeterminate" />
+    }
+    @if (loadError()) {
+      <p class="error" role="alert">{{ t('errors.load') }}</p>
+    }
+    @if (!loading() && accounts.accounts().length === 0) {
+      <p class="hint">{{ t('needAccount') }} <a routerLink="/cuentas">{{ t('goToAccounts') }}</a></p>
+    }
+
+    <app-pending-list />
+
+    @if (!loading() && recurring.rules().length === 0 && accounts.accounts().length > 0) {
+      <mat-card appearance="outlined" class="empty">
+        <mat-card-content>
+          <mat-icon fontSet="material-symbols-outlined" aria-hidden="true">event_repeat</mat-icon>
+          <p><strong>{{ t('empty.title') }}</strong></p>
+          <p>{{ t('empty.body') }}</p>
+        </mat-card-content>
+      </mat-card>
+    }
+
+    <ul class="list">
+      @for (r of active(); track r.id) {
+        <ng-container *ngTemplateOutlet="row; context: { $implicit: r }" />
+      }
+    </ul>
+    @if (paused().length > 0) {
+      <h3 class="section">{{ t('pausedTitle') }}</h3>
+      <ul class="list archived">
+        @for (r of paused(); track r.id) {
+          <ng-container *ngTemplateOutlet="row; context: { $implicit: r }" />
+        }
+      </ul>
+    }
+
+    <ng-template #row let-r>
+      <li class="account" [attr.data-rule]="r.description">
+        <mat-icon class="type-icon" fontSet="material-symbols-outlined" aria-hidden="true">{{ r.isSalary ? 'payments' : 'event_repeat' }}</mat-icon>
+        <div class="info">
+          <span class="name">{{ r.description }}</span>
+          <span class="meta">
+            {{ schedule(r) }} · {{ accountName(r.accountId) }} · {{ r.autoPost ? t('auto') : t('withConfirm') }}
+          </span>
+          @if (r.active) {
+            <span class="meta">{{ t('next', { date: (r.nextRunOn | date: 'd/M/y' : 'UTC') }) }}</span>
+          }
+        </div>
+        <div class="amount">
+          <span class="value" [class.pos]="r.type === 'INCOME'">{{ money(r) }}</span>
+        </div>
+        @if (household.canWrite()) {
+          <button mat-icon-button [matMenuTriggerFor]="menu" [attr.aria-label]="t('actions', { description: r.description })">
+            <mat-icon fontSet="material-symbols-outlined">more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="edit(r)">
+              <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>{{ t('edit') }}
+            </button>
+            <button mat-menu-item (click)="toggle(r)">
+              <mat-icon fontSet="material-symbols-outlined">{{ r.active ? 'pause' : 'play_arrow' }}</mat-icon>
+              {{ r.active ? t('pause') : t('resume') }}
+            </button>
+            <button mat-menu-item (click)="remove(r)">
+              <mat-icon fontSet="material-symbols-outlined">delete</mat-icon>{{ t('delete') }}
+            </button>
+          </mat-menu>
+        }
+      </li>
+    </ng-template>
+  </section>
+</ng-container>

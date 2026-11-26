@@ -67,7 +67,11 @@
             <li class="tx" [attr.data-tx]="e.tx.description">
               <mat-icon class="icon" fontSet="material-symbols-outlined" aria-hidden="true">{{ category(e.tx)?.icon ?? 'receipt_long' }}</mat-icon>
               <div class="info">
-                <span class="desc">{{ e.tx.description }}</span>
+                <span class="desc">{{ e.tx.description }}
+                  @if (e.tx.recurringRuleId) {
+                    <mat-icon class="recurring-mark" fontSet="material-symbols-outlined" [attr.aria-label]="t('fromRecurring')">event_repeat</mat-icon>
+                  }
+                </span>
                 <span class="meta">{{ category(e.tx)?.name ?? t('uncategorized') }} · {{ accountName(e.tx.accountId) }}</span>
               </div>
               <span class="amount" [class.pos]="e.tx.type === 'INCOME'" [class.neg]="e.tx.type === 'EXPENSE'">

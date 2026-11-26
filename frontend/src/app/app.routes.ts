@@ -44,5 +44,10 @@ export const routes: Routes = [
     canActivate: [authGuard, unlockedGuard],
     loadChildren: () => import('./features/transactions/transactions.routes').then((m) => m.TRANSACTIONS_ROUTES),
   },
+  {
+    path: 'recurrentes',
+    canActivate: [authGuard, unlockedGuard],
+    loadChildren: () => import('./features/recurring/recurring.routes').then((m) => m.RECURRING_ROUTES),
+  },
   { path: '**', redirectTo: 'inicio' },
 ];

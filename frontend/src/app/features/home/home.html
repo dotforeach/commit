@@ -2,6 +2,8 @@
   <section class="home">
     <h2>{{ t('greeting', { name: displayName() }) }}</h2>
 
+    <app-pending-list />
+
     <mat-card appearance="outlined">
       <mat-card-header>
         <mat-icon mat-card-avatar fontSet="material-symbols-outlined" aria-hidden="true">verified_user</mat-icon>

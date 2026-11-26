@@ -30,9 +30,9 @@
     "semantic_hash": ""
   },
   "backend/src/app.module.ts": {
-    "mtime": 1795710818.6433058,
-    "seen": 1795710830.824744,
-    "ast_hash": "cd5678c508de5528dc89e9523a844ca8",
+    "mtime": 1795711103.4918694,
+    "seen": 1795712296.470943,
+    "ast_hash": "44ec0da348c11f7406b9cf1f00b1a967",
     "semantic_hash": ""
   },
   "backend/src/config/env.schema.ts": {
@@ -162,9 +162,9 @@
     "semantic_hash": ""
   },
   "frontend/src/app/app.routes.ts": {
-    "mtime": 1795710818.6469562,
-    "seen": 1795710830.8247838,
-    "ast_hash": "e15ec599e07f5abb8ecf64a7938867ea",
+    "mtime": 1795711372.8026361,
+    "seen": 1795712296.4709902,
+    "ast_hash": "25edb7ee1f7af775ec52ba6d893589f9",
     "semantic_hash": ""
   },
   "frontend/src/app/app.spec.ts": {
@@ -216,9 +216,9 @@
     "semantic_hash": ""
   },
   "frontend/src/app/app.html": {
-    "mtime": 1795710818.6465454,
-    "seen": 1795710830.824818,
-    "ast_hash": "710f1b58ab36184a312705f3116bdac2",
+    "mtime": 1795711372.8027077,
+    "seen": 1795712296.4710321,
+    "ast_hash": "9dbf15d39c2a68fdbc9c2eb4e2e69f13",
     "semantic_hash": ""
   },
   "frontend/src/index.html": {
@@ -228,9 +228,9 @@
     "semantic_hash": ""
   },
   "frontend/public/i18n/es.json": {
-    "mtime": 1795710818.646126,
-    "seen": 1795710830.824783,
-    "ast_hash": "776a4d1470b9a41d54d8bb8d8127106a",
+    "mtime": 1795711372.8033779,
+    "seen": 1795712296.470989,
+    "ast_hash": "e5152e0aae0c3db00d6401a43280d824",
     "semantic_hash": ""
   },
   "frontend/src/app/core/i18n/transloco-loader.ts": {
@@ -468,9 +468,9 @@
     "semantic_hash": ""
   },
   "frontend/src/app/features/home/home.ts": {
-    "mtime": 1795710818.6090121,
-    "seen": 1795710830.824808,
-    "ast_hash": "766c4cca99e7277ceec4d8b88ef9a23e",
+    "mtime": 1795711372.8019955,
+    "seen": 1795712296.471017,
+    "ast_hash": "09fc550a6dc8b5ce56d5bb39556950fb",
     "semantic_hash": ""
   },
   "frontend/src/app/shared/validators.ts": {
@@ -498,9 +498,9 @@
     "semantic_hash": ""
   },
   "frontend/src/app/features/home/home.html": {
-    "mtime": 1795710818.6087558,
-    "seen": 1795710830.8248231,
-    "ast_hash": "b5ad4679995ca026d79fff6f83675d8a",
+    "mtime": 1795711372.8021064,
+    "seen": 1795712296.4710379,
+    "ast_hash": "25950a725df73eb0afdb5c23b2eaa1c3",
     "semantic_hash": ""
   },
   "backend/src/accounts/accounts.controller.ts": {
@@ -756,8 +756,8 @@
     "semantic_hash": ""
   },
   "backend/src/transactions/transactions.service.ts": {
-    "mtime": 1795710818.6448195,
-    "seen": 1795710830.824762,
+    "mtime": 1795711103.4920123,
+    "seen": 1795712296.470966,
     "ast_hash": "2c104f83b5e4d87af1443f5d9a7041dd",
     "semantic_hash": ""
   },
@@ -816,15 +816,15 @@
     "semantic_hash": ""
   },
   "frontend/src/app/features/transactions/transaction.model.ts": {
-    "mtime": 1795710818.6506386,
-    "seen": 1795710830.82481,
-    "ast_hash": "71b341e7c3be0de7735ded3bb47d1662",
+    "mtime": 1795711251.7140493,
+    "seen": 1795712296.471024,
+    "ast_hash": "a88fd2080510964914eec8ae1b450bca",
     "semantic_hash": ""
   },
   "frontend/src/app/features/transactions/transactions-page.ts": {
-    "mtime": 1795710818.6510582,
-    "seen": 1795710830.824811,
-    "ast_hash": "0ce2b853aa66576bddcea0ea701093b1",
+    "mtime": 1795711372.8022113,
+    "seen": 1795712296.471025,
+    "ast_hash": "6004c6b731b8eecd00ce38bc6a234d70",
     "semantic_hash": ""
   },
   "frontend/src/app/features/transactions/transactions.routes.ts": {
@@ -834,9 +834,9 @@
     "semantic_hash": ""
   },
   "frontend/src/app/features/transactions/transactions.service.ts": {
-    "mtime": 1795710818.6513243,
-    "seen": 1795710830.824812,
-    "ast_hash": "c895f6e798125de878b2b05eb0fecba2",
+    "mtime": 1795711251.7139318,
+    "seen": 1795712296.471026,
+    "ast_hash": "de7ab1a96781ecb92f704e17926a5da2",
     "semantic_hash": ""
   },
   "frontend/src/app/features/transactions/transaction-dialog/transaction-dialog.html": {
@@ -846,9 +846,123 @@
     "semantic_hash": ""
   },
   "frontend/src/app/features/transactions/transactions-page.html": {
-    "mtime": 1795710818.6507797,
-    "seen": 1795710830.824825,
-    "ast_hash": "fa94982b14f19f83bae5b79896859c87",
+    "mtime": 1795711372.8023038,
+    "seen": 1795712296.4710422,
+    "ast_hash": "1db0f8c764fe3e674f220844f28f9eda",
+    "semantic_hash": ""
+  },
+  "backend/prisma/migrations/20261126000000_init/migration.sql": {
+    "mtime": 1795710818.5744884,
+    "seen": 1795711045.614058,
+    "ast_hash": "149a3cea6a6c621088a93df943c97bfb",
+    "semantic_hash": ""
+  },
+  "backend/prisma/migrations/20261126000100_seed_currencies/migration.sql": {
+    "mtime": 1795710818.5747335,
+    "seen": 1795711045.614059,
+    "ast_hash": "5b48ef84625127eb4fc8debf03dad284",
+    "semantic_hash": ""
+  },
+  "backend/src/recurring/recurring.controller.ts": {
+    "mtime": 1795711103.452381,
+    "seen": 1795712296.4709592,
+    "ast_hash": "dd99cf65a6308b1fa3bccc9e70af4007",
+    "semantic_hash": ""
+  },
+  "backend/src/recurring/recurring.module.ts": {
+    "mtime": 1795711103.4547057,
+    "seen": 1795712296.4709601,
+    "ast_hash": "6b8defece14eca96e32b00e0cf1fc34f",
+    "semantic_hash": ""
+  },
+  "backend/src/recurring/recurring.schemas.ts": {
+    "mtime": 1795711103.4487548,
+    "seen": 1795712296.4709609,
+    "ast_hash": "1f5b4f213c670dbddb0a600379e66cb8",
+    "semantic_hash": ""
+  },
+  "backend/src/recurring/recurring.service.ts": {
+    "mtime": 1795711166.9299989,
+    "seen": 1795712296.4709618,
+    "ast_hash": "a57b2a8981514b421191ba1236632878",
+    "semantic_hash": ""
+  },
+  "backend/test/recurring.e2e-spec.ts": {
+    "mtime": 1795711166.9301238,
+    "seen": 1795712296.470975,
+    "ast_hash": "f56b80752e2fc3ec30d3a8d9b8f6ae81",
+    "semantic_hash": ""
+  },
+  "frontend/e2e/recurring.e2e.ts": {
+    "mtime": 1795711654.845609,
+    "seen": 1795712296.470985,
+    "ast_hash": "6a4235e4b842cc63334a60d89a91a246",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/core/dates/recurrence.spec.ts": {
+    "mtime": 1795711201.9152615,
+    "seen": 1795712296.471005,
+    "ast_hash": "b0b0a7df461213f762f384e9ccfb3063",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/core/dates/recurrence.ts": {
+    "mtime": 1795711201.9132462,
+    "seen": 1795712296.471006,
+    "ast_hash": "4bebd66f7d906fb857b35e5efbdd66e6",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/recurring/pending-list/pending-list.ts": {
+    "mtime": 1795711372.76496,
+    "seen": 1795712296.471018,
+    "ast_hash": "d3703a0a25c72f73884e6d97f2019acf",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/recurring/recurring-page.ts": {
+    "mtime": 1795711409.0172927,
+    "seen": 1795712296.471019,
+    "ast_hash": "e3cb29e4572e4523e94944d527ad0102",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/recurring/recurring.model.ts": {
+    "mtime": 1795711264.7353265,
+    "seen": 1795712296.471019,
+    "ast_hash": "f70751d5bc9c7c99bc9deb6020d6aab0",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/recurring/recurring.routes.ts": {
+    "mtime": 1795711372.8025606,
+    "seen": 1795712296.47102,
+    "ast_hash": "4683f3d9610cbc51f28d897f29e10729",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/recurring/recurring.service.ts": {
+    "mtime": 1795711264.7354622,
+    "seen": 1795712296.47102,
+    "ast_hash": "badc8fc07b9fe185f798d742687b028a",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/recurring/rule-dialog/rule-dialog.ts": {
+    "mtime": 1795711322.83168,
+    "seen": 1795712296.471021,
+    "ast_hash": "fa97e241f2108364b4b57f1804485988",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/recurring/pending-list/pending-list.html": {
+    "mtime": 1795711372.7669597,
+    "seen": 1795712296.471039,
+    "ast_hash": "c0a8788b7c08c523f64419f4744c9763",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/recurring/recurring-page.html": {
+    "mtime": 1795711322.838436,
+    "seen": 1795712296.471039,
+    "ast_hash": "e6c15a1805028ad9ea588495f14df560",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/recurring/rule-dialog/rule-dialog.html": {
+    "mtime": 1795711322.8336737,
+    "seen": 1795712296.47104,
+    "ast_hash": "bb6003019878d32a65683287fa89a34b",
     "semantic_hash": ""
   },
   "backend/pnpm-lock.yaml": {

@@ -3,6 +3,11 @@
   flex-direction: column;
   gap: 4px;
   min-width: min(480px, 80vw);
+
+  // El contenido scrollea: sin esto, los hijos se encogen y el toggle (overflow: hidden) queda aplastado e inclickeable.
+  > * {
+    flex-shrink: 0;
+  }
 }
 
 .row {
@@ -41,4 +46,10 @@ mat-option mat-icon {
 .mode {
   align-self: flex-start;
   margin-bottom: 12px;
+}
+
+.radios {
+  display: flex;
+  flex-direction: column;
+  margin: 4px 0 8px;
 }
