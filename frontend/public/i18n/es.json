@@ -167,7 +167,8 @@
   "nav": {
     "home": "Inicio",
     "accounts": "Cuentas",
-    "lock": "Bloquear"
+    "lock": "Bloquear",
+    "transactions": "Movimientos"
   },
   "accounts": {
     "title": "Cuentas",
@@ -179,8 +180,6 @@
     "delete": "Eliminar",
     "actions": "Acciones de {{name}}",
     "archivedCount": "Archivadas ({{n}})",
-    "initialBalanceShort": "saldo inicial",
-    "initialDebtShort": "deuda inicial",
     "cardDays": "cierra el {{closing}}, vence el {{due}}",
     "archived": "Cuenta archivada",
     "unarchived": "Cuenta desarchivada",
@@ -242,6 +241,77 @@
       "decimal": "Monto inválido. Ej.: 1.234,56",
       "conflict": "La cuenta cambió en otro dispositivo. Cerrá y volvé a abrirla.",
       "load": "No pudimos cargar tus cuentas.",
+      "generic": "No pudimos guardar los cambios. Probá de nuevo.",
+      "hasTransactions": "Esta cuenta tiene movimientos: archivala en lugar de eliminarla."
+    },
+    "balanceShort": "saldo actual",
+    "debtShort": "deuda actual"
+  },
+  "transactions": {
+    "title": "Movimientos",
+    "subtitle": "Tus ingresos, gastos y transferencias. Todo se cifra antes de salir de tu dispositivo.",
+    "new": "Nuevo movimiento",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "actions": "Acciones de {{description}}",
+    "deleted": "Movimiento eliminado",
+    "month": "Mes",
+    "prevMonth": "Mes anterior",
+    "nextMonth": "Mes siguiente",
+    "filterAccount": "Cuenta",
+    "allAccounts": "Todas las cuentas",
+    "income": "Ingresos",
+    "expense": "Gastos",
+    "net": "Resultado",
+    "uncategorized": "Sin categoría",
+    "emptyMonth": "No hay movimientos en este mes.",
+    "needAccount": "Para cargar movimientos primero creá una cuenta.",
+    "goToAccounts": "Ir a Cuentas",
+    "modes": {
+      "EXPENSE": "Gasto",
+      "INCOME": "Ingreso",
+      "TRANSFER": "Transferencia"
+    },
+    "deleteDialog": {
+      "title": "Eliminar movimiento",
+      "message": "¿Eliminar «{{description}}»?",
+      "messageTransfer": "¿Eliminar la transferencia «{{description}}»? Se eliminan la salida y la entrada.",
+      "confirm": "Eliminar",
+      "cancel": "Cancelar"
+    },
+    "dialog": {
+      "newTitle": "Nuevo movimiento",
+      "editTitle": "Editar movimiento",
+      "mode": "Tipo de movimiento",
+      "cancel": "Cancelar",
+      "save": "Guardar"
+    },
+    "fields": {
+      "amount": "Monto",
+      "amountOut": "Monto que sale",
+      "amountIn": "Monto que entra ({{currency}})",
+      "amountInHint": "Las cuentas tienen monedas distintas: indicá cuánto llegó.",
+      "date": "Fecha",
+      "account": "Cuenta",
+      "fromAccount": "Desde",
+      "toAccount": "Hacia",
+      "category": "Categoría",
+      "noCategory": "Sin categoría",
+      "description": "Descripción",
+      "descriptionPlaceholder": {
+        "EXPENSE": "Ej.: Supermercado del sábado",
+        "INCOME": "Ej.: Sueldo de noviembre",
+        "TRANSFER": "Ej.: Compra de dólares"
+      },
+      "notes": "Notas (opcional)"
+    },
+    "errors": {
+      "decimal": "Monto inválido. Ej.: 1.234,56",
+      "positive": "El monto tiene que ser mayor a cero.",
+      "sameAccount": "Elegí dos cuentas distintas.",
+      "noAccounts": "Primero creá una cuenta en la sección Cuentas.",
+      "conflict": "El movimiento cambió en otro dispositivo. Cerrá y volvé a abrirlo.",
+      "load": "No pudimos cargar tus movimientos.",
       "generic": "No pudimos guardar los cambios. Probá de nuevo."
     }
   }

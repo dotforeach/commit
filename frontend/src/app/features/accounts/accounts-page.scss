@@ -67,6 +67,10 @@
 
   .value {
     font: var(--mat-sys-title-medium);
+
+    &.negative {
+      color: var(--mat-sys-error);
+    }
   }
 }
 

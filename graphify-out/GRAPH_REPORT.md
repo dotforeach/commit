@@ -1,14 +1,19 @@
 # Graph Report - xp  (2026-11-26)
 
 ## Corpus Check
-- 111 files · ~26,979 words
+- 132 files · ~34,977 words
 - Verdict: corpus is large enough that graph structure adds value.
-- Unclassified: 27 file(s) not represented in the graph (top: (none) 13, .scss 7, .example 2)
+- Unclassified: 28 file(s) not represented in the graph (top: (none) 13, .scss 9, .example 2)
 
 ## Summary
-- 859 nodes · 1689 edges · 66 communities (45 shown, 21 thin omitted)
-- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 22 edges (avg confidence: 0.85)
+- 1026 nodes · 2144 edges · 74 communities (50 shown, 24 thin omitted)
+- Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 35 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
+
+## Graph Freshness
+- Built from commit: `e3d2f108`
+- Run `git rev-parse HEAD` and compare to check if the graph is stale.
+- Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
 - frontend/package.json
@@ -30,7 +35,7 @@
 - Arquitectura de cifrado (conocimiento cero, modo híbrido)
 - PrismaService
 - app.module.ts
-- .updateKeys
+- me.controller.ts
 - backend-dev
 - frontend
 - environment
@@ -40,26 +45,40 @@
 - volumes
 - Register
 - e2e/helpers.ts
-- @nestjs/common
+- src/transactions/transactions.service.ts
 - Unlock
-- Home
+- transactions-page.ts
 - Login
 - oxlint-tsgolint@^7.0.2001
 - account-dialog.ts
-- keys.service.ts
-- decimal.ts
+- PrismaService
+- features/transactions/transactions.service.ts
 - dependencies
-- @nestjs/common
-- AuthService
-- uuid
-- AccountsPage
+- health.controller.ts
+- home.ts
+- libsodium-wrappers-sumo
+- @angular/core
 - RedisModule
-- app.routes.ts
+- TransactionsPage
 - Recover
 - @nestjs/cli@^12.0.0
-- oxlint@^1.58.0
-- @types/express@^5.0.0
+- HealthController
+- frontend/package.json
+- nest-cli.dev.json
 - scripts
+- migrate
+- @nestjs/mau@^0.2.6
+- @nestjs/schematics@^12.0.0
+- @types/cookie-parser@^1.4.10
+- @types/node@^24.0.0
+- @types/pg@^8.23.1
+- @types/supertest@^7.0.0
+- vite@^8.0.0
+- vitest@^4.1.2
+- @fontsource/roboto@5.3.0
+- material-symbols@0.49.0
+- tslib@^2.3.0
+- uuid
 - backend/README.md
 - migrate
 - adminer
@@ -71,22 +90,22 @@
 - allowBuilds
 
 ## God Nodes (most connected - your core abstractions)
-1. `getSodium()` - 34 edges
-2. `@nestjs/common` - 31 edges
-3. `PrismaService` - 25 edges
-4. `@angular/core` - 24 edges
-5. `KeyVaultService` - 21 edges
-6. `compilerOptions` - 20 edges
-7. `AuthService` - 15 edges
-8. `@jsverse/transloco` - 15 edges
-9. `AccountsService` - 14 edges
-10. `@angular/router` - 14 edges
+1. `@nestjs/common` - 37 edges
+2. `getSodium()` - 34 edges
+3. `@angular/core` - 31 edges
+4. `PrismaService` - 30 edges
+5. `KeyVaultService` - 23 edges
+6. `compilerOptions` - 21 edges
+7. `TransactionsService` - 18 edges
+8. `@angular/common` - 17 edges
+9. `@angular/material` - 17 edges
+10. `@jsverse/transloco` - 17 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `toDto()` --calls--> `toBase64()`  [EXTRACTED]
   backend/src/accounts/accounts.service.ts → backend/src/common/base64.ts
-- `passphraseUpdate()` --calls--> `keyUpdateSignedMessage()`  [EXTRACTED]
-  backend/test/keys.e2e-spec.ts → backend/src/users/key-update-signature.ts
+- `toDto()` --calls--> `toBase64()`  [EXTRACTED]
+  backend/src/transactions/transactions.service.ts → backend/src/common/base64.ts
 - `payload()` --calls--> `b64()`  [EXTRACTED]
   backend/test/accounts.e2e-spec.ts → backend/test/helpers.ts
 - `newUser()` --calls--> `buildRegistration()`  [EXTRACTED]
@@ -97,11 +116,11 @@
 ## Import Cycles
 - None detected.
 
-## Communities (66 total, 21 thin omitted)
+## Communities (74 total, 24 thin omitted)
 
 ### Community 0 - "frontend/package.json"
-Cohesion: 0.13
-Nodes (20): devDependencies, @angular/build@^22.3.0, @angular/cli@^22.3.0, @angular/compiler-cli@^22.3.0, jsdom@^31.0.0, @playwright/test@^1.65.1, prettier@^3.8.1, typescript@~6.0.2 (+12 more)
+Cohesion: 0.14
+Nodes (14): devDependencies, @angular/build@^22.3.0, @angular/cli@^22.3.0, @angular/compiler-cli@^22.3.0, jsdom@^31.0.0, @playwright/test@^1.65.1, typescript@~6.0.2, vitest@^5.0.0 (+6 more)
 
 ### Community 1 - "scripts"
 Cohesion: 0.29
@@ -113,51 +132,51 @@ Nodes (42): build, serve, test, builder, configurations, defaultConfiguration, o
 
 ### Community 3 - "backend/package.json"
 Cohesion: 0.12
-Nodes (15): author, description, source-map-support@^0.5.21, @types/node@^24.0.0, @types/pg@^8.23.1, vite@^8.0.0, license, name (+7 more)
+Nodes (15): author, pg@^8.23.1, @prisma/client@7.10.1, reflect-metadata@^0.2.2, rxjs@^7.8.1, description, rxjs, license (+7 more)
 
 ### Community 4 - "devDependencies"
-Cohesion: 0.11
-Nodes (19): devDependencies, @nestjs/mau@^0.2.6, @nestjs/schematics@^12.0.0, @nestjs/testing@^12.0.1, prettier@^3.4.2, supertest@^7.0.0, @types/cookie-parser@^1.4.10, @types/supertest@^7.0.0 (+11 more)
+Cohesion: 0.12
+Nodes (16): devDependencies, @nestjs/testing@^12.0.1, oxlint@^1.58.0, prettier@^3.4.2, source-map-support@^0.5.21, supertest@^7.0.0, @types/express@^5.0.0, typescript@^6.0.2 (+8 more)
 
 ### Community 5 - "auth.controller.ts"
-Cohesion: 0.11
-Nodes (17): AuthController, CREDENTIALS_LIMIT, SESSION_LIMIT, categorySchema, Credentials, credentialsSchema, encryptedPayload, kdfParamsSchema (+9 more)
+Cohesion: 0.12
+Nodes (15): AuthController, CREDENTIALS_LIMIT, SESSION_LIMIT, categorySchema, Credentials, credentialsSchema, encryptedPayload, kdfParamsSchema (+7 more)
 
 ### Community 6 - "redis-refresh-token.store.ts"
 Cohesion: 0.16
 Nodes (8): familyRevokedKey(), RedisRefreshTokenStore, StoredRecord, tokenKey(), userFamiliesKey(), REDIS, redis, ioredis
 
 ### Community 7 - "UsersRepository"
-Cohesion: 0.18
-Nodes (4): AuthService, JwtAuth, AuthUser, UsersRepository
+Cohesion: 0.12
+Nodes (7): AuthService, JwtAuth, AuthUser, @nestjs/authentication, AuthenticationTypes, authUserSelect, UsersRepository
 
 ### Community 8 - "src/accounts/accounts.service.ts"
-Cohesion: 0.06
-Nodes (21): AccountsController, uuid, AccountsModule, accountFields, accountTypeSchema, CreateAccountInput, createAccountSchema, creditCardMessage (+13 more)
+Cohesion: 0.08
+Nodes (16): AccountsController, uuid, accountFields, accountTypeSchema, CreateAccountInput, createAccountSchema, creditCardMessage, creditCardSchema (+8 more)
 
 ### Community 9 - "features/accounts/accounts.service.ts"
-Cohesion: 0.21
-Nodes (9): Account, ACCOUNT_TYPES, AccountDraft, AccountDto, accountIcon(), AccountPayload, CreditCardPayload, AccountsService (+1 more)
+Cohesion: 0.10
+Nodes (12): AccountDialog, Account, ACCOUNT_TYPES, AccountDraft, AccountDto, accountIcon(), AccountPayload, AccountType (+4 more)
 
 ### Community 10 - "compilerOptions"
 Cohesion: 0.07
-Nodes (25): compilerOptions, rootDir, exclude, extends, include, compilerOptions, allowSyntheticDefaultImports, declaration (+17 more)
+Nodes (26): compilerOptions, rootDir, exclude, extends, include, compilerOptions, allowSyntheticDefaultImports, declaration (+18 more)
 
 ### Community 11 - "test/helpers.ts"
-Cohesion: 0.31
-Nodes (9): memberKeySignedMessage(), newUser(), payload(), b64(), buildRegistration(), createTestApp(), passphraseUpdate(), registered() (+1 more)
+Cohesion: 0.20
+Nodes (15): memberKeySignedMessage(), KeyUpdateFields, keyUpdateSignedMessage(), lengthPrefixed(), KEY_UPDATE_VECTOR, newUser(), payload(), b64() (+7 more)
 
 ### Community 12 - "dependencies"
-Cohesion: 0.09
-Nodes (23): dependencies, @angular/cdk@22.3.0, @angular/common@^22.3.0, @angular/compiler@^22.3.0, @angular/core@^22.3.0, @angular/forms@^22.3.0, @angular/material@22.3.0, @angular/platform-browser@^22.3.0 (+15 more)
+Cohesion: 0.13
+Nodes (15): dependencies, @angular/common@^22.3.0, @angular/compiler@^22.3.0, @angular/core@^22.3.0, @angular/forms@^22.3.0, @angular/material@22.3.0, @angular/platform-browser@^22.3.0, @angular/router@^22.3.0 (+7 more)
 
 ### Community 13 - "@angular/core"
-Cohesion: 0.19
-Nodes (8): App, appConfig, routes, authInterceptor(), TranslocoHttpLoader, @angular/common, @angular/core, @jsverse/transloco
+Cohesion: 0.18
+Nodes (8): App, appConfig, routes, authGuard(), guestGuard(), unlockedGuard(), TranslocoHttpLoader, @angular/router
 
 ### Community 14 - "registration.service.ts"
-Cohesion: 0.06
-Nodes (58): HouseholdPayload, MeHousehold, MeResponse, RegisterRequest, RegistrationForm, RegistrationService, aeadDecrypt(), aeadEncrypt() (+50 more)
+Cohesion: 0.08
+Nodes (48): MeResponse, RegistrationForm, RegistrationService, aeadDecrypt(), aeadEncrypt(), decryptPayload(), encryptPayload(), payloadAad() (+40 more)
 
 ### Community 15 - "redis"
 Cohesion: 0.10
@@ -167,21 +186,21 @@ Nodes (23): POSTGRES_DB, POSTGRES_PASSWORD, POSTGRES_USER, REDIS_PASSWORD, inter
 Cohesion: 0.20
 Nodes (9): Arquitectura de cifrado (conocimiento cero, modo híbrido), Caché offline, Dos secretos por usuario, Flujos, Formato del payload, Jerarquía de claves, Lo que el cifrado NO protege, Qué queda en claro y qué se cifra (modo híbrido) (+1 more)
 
-### Community 17 - "PrismaService"
-Cohesion: 0.16
-Nodes (3): CurrenciesController, CurrenciesModule, PrismaService
-
 ### Community 18 - "app.module.ts"
-Cohesion: 0.14
-Nodes (12): AppModule, AuthModule, Env, envSchema, app, config, PrismaModule, cookie-parser (+4 more)
+Cohesion: 0.11
+Nodes (15): AccountsModule, AppModule, AuthModule, CategoriesModule, Env, envSchema, HouseholdAccess, HouseholdsModule (+7 more)
+
+### Community 19 - "me.controller.ts"
+Cohesion: 0.12
+Nodes (10): verifyEd25519(), base64Bytes(), toBase64(), UpdateKeysInput, updateKeysSchema, KeysService, MeController, UsersModule (+2 more)
 
 ### Community 20 - "backend-dev"
-Cohesion: 0.20
-Nodes (10): depends_on, ports, profiles, volumes, postgres, redis, depends_on, condition (+2 more)
+Cohesion: 0.29
+Nodes (7): depends_on, ports, profiles, volumes, redis, condition, backend-dev
 
 ### Community 21 - "frontend"
-Cohesion: 0.22
-Nodes (9): condition, backend, BACKEND_UPSTREAM, depends_on, environment, ports, profiles, restart (+1 more)
+Cohesion: 0.20
+Nodes (10): condition, backend, BACKEND_UPSTREAM, build, depends_on, environment, ports, profiles (+2 more)
 
 ### Community 22 - "environment"
 Cohesion: 0.44
@@ -200,56 +219,76 @@ Cohesion: 0.33
 Nodes (6): depends_on, profiles, restart, migrate, condition, backend
 
 ### Community 26 - "volumes"
-Cohesion: 0.33
-Nodes (6): volumes, backend-node-modules, frontend-angular-cache, frontend-node-modules, postgres-data, redis-data
+Cohesion: 0.29
+Nodes (7): volumes, backend-dist, backend-node-modules, frontend-angular-cache, frontend-node-modules, postgres-data, redis-data
 
 ### Community 28 - "e2e/helpers.ts"
-Cohesion: 0.44
-Nodes (5): readPhrase(), registerViaUi(), strip(), unlock(), @playwright/test
+Cohesion: 0.27
+Nodes (9): createAccount(), nextIn(), pick(), readPhrase(), registerViaUi(), strip(), unlock(), newTransaction() (+1 more)
 
-### Community 29 - "@nestjs/common"
-Cohesion: 0.20
-Nodes (7): HouseholdAccess, @nestjs/authentication, AuthenticationTypes, UsersModule, authUserSelect, @nestjs/authentication, @nestjs/common
+### Community 29 - "src/transactions/transactions.service.ts"
+Cohesion: 0.08
+Nodes (20): isoDate, syncPage(), SyncQuery, syncQuerySchema, toIsoDate(), TransactionsController, uuid, CreateTransactionsInput (+12 more)
+
+### Community 31 - "transactions-page.ts"
+Cohesion: 0.15
+Nodes (12): DATE_PROVIDERS, EsArDateAdapter, fromIsoDate(), monthOf(), todayIso(), toIsoDate(), CategoriesService, Category (+4 more)
 
 ### Community 34 - "account-dialog.ts"
-Cohesion: 0.16
-Nodes (9): CurrenciesService, Currency, AccountDialog, CARD_NETWORKS, AccountType, ConfirmData, ConfirmDialog, confirmDialog() (+1 more)
-
-### Community 35 - "keys.service.ts"
-Cohesion: 0.19
-Nodes (8): RegisterInput, verifyEd25519(), KeyUpdateFields, keyUpdateSignedMessage(), lengthPrefixed(), KEY_UPDATE_VECTOR, UpdateKeysInput, KeysService
-
-### Community 36 - "decimal.ts"
 Cohesion: 0.22
-Nodes (8): formatMoney(), normalize(), parseDecimalInput(), ARS, BTC, stripThousands(), toInputValue(), decimal()
+Nodes (7): CurrenciesService, Currency, CARD_NETWORKS, ConfirmData, ConfirmDialog, confirmDialog(), @angular/common
+
+### Community 35 - "PrismaService"
+Cohesion: 0.13
+Nodes (5): AccountDto, AccountRow, CategoriesController, HouseholdAccessService, PrismaService
+
+### Community 36 - "features/transactions/transactions.service.ts"
+Cohesion: 0.07
+Nodes (34): addDecimals(), compareDecimals(), fromUnits(), isNegative(), negateDecimal(), normalize(), parseDecimalInput(), ARS (+26 more)
 
 ### Community 37 - "dependencies"
-Cohesion: 0.09
-Nodes (23): dependencies, cookie-parser@^1.4.7, ioredis@^6.1.0, @nestjs/authentication@^0.1.7, @nestjs/common@^12.0.1, @nestjs/config@^12.1.1, @nestjs/core@^12.0.1, @nestjs/platform-express@^12.0.1 (+15 more)
+Cohesion: 0.12
+Nodes (16): dependencies, cookie-parser@^1.4.7, ioredis@^6.1.0, @nestjs/authentication@^0.1.7, @nestjs/common@^12.0.1, @nestjs/config@^12.1.1, @nestjs/core@^12.0.1, @nestjs/platform-express@^12.0.1 (+8 more)
 
-### Community 38 - "@nestjs/common"
+### Community 38 - "health.controller.ts"
+Cohesion: 0.24
+Nodes (5): @nestjs/throttler@^6.8.0, DatabaseHealthIndicator, HealthModule, @nestjs/terminus, @nestjs/throttler
+
+### Community 39 - "home.ts"
 Cohesion: 0.15
-Nodes (5): @nestjs/terminus@^12.2.0, DatabaseHealthIndicator, HealthController, HealthModule, @nestjs/terminus
+Nodes (7): HouseholdPayload, MeHousehold, RegisterRequest, TokenResponse, authInterceptor(), AuthService, Home
 
-### Community 40 - "uuid"
+### Community 41 - "@angular/core"
+Cohesion: 0.24
+Nodes (8): WrongPassphraseError, SessionService, CURRENCIES, differentFrom(), matchValidator(), @angular/core, @angular/forms, @jsverse/transloco
+
+### Community 43 - "TransactionsPage"
+Cohesion: 0.15
+Nodes (4): formatMoney(), LedgerEntry, shiftMonth(), TransactionsPage
+
+### Community 47 - "frontend/package.json"
+Cohesion: 0.22
+Nodes (8): @angular/cdk@22.3.0, prettier@^3.8.1, prettier, name, packageManager, private, version, @angular/cdk
+
+### Community 48 - "nest-cli.dev.json"
 Cohesion: 0.33
-Nodes (4): libsodium-wrappers-sumo@^0.8.4, uuid@^14.0.3, libsodium-wrappers-sumo, uuid
-
-### Community 43 - "app.routes.ts"
-Cohesion: 0.70
-Nodes (3): authGuard(), guestGuard(), unlockedGuard()
+Nodes (5): collection, compilerOptions, deleteOutDir, $schema, sourceRoot
 
 ### Community 49 - "scripts"
 Cohesion: 0.14
 Nodes (14): scripts, build, deploy, format, lint, start, start:debug, start:dev (+6 more)
+
+### Community 50 - "migrate"
+Cohesion: 0.33
+Nodes (6): postgres, depends_on, profiles, restart, condition, migrate
 
 ### Community 64 - "backend/README.md"
 Cohesion: 0.18
 Nodes (10): Compile and run the project, Deployment, Description, License, Observability, Project setup, Resources, Run tests (+2 more)
 
 ### Community 87 - "migrate"
-Cohesion: 0.29
-Nodes (10): build, build, context, target, build, build, build, profiles (+2 more)
+Cohesion: 0.53
+Nodes (6): build, build, context, target, build, build
 
 ### Community 93 - "adminer"
 Cohesion: 0.25
@@ -280,22 +319,22 @@ Cohesion: 0.40
 Nodes (4): allowBuilds, prisma, @prisma/engines, @scarf/scarf
 
 ## Knowledge Gaps
-- **21 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **24 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `@nestjs/common` connect `@nestjs/common` to `backend/package.json`, `keys.service.ts`, `auth.controller.ts`, `dependencies`, `redis-refresh-token.store.ts`, `src/accounts/accounts.service.ts`, `@nestjs/common`, `test/helpers.ts`, `PrismaService`, `app.module.ts`?**
-  _High betweenness centrality (0.051) - this node is a cross-community bridge._
+- **Why does `@nestjs/common` connect `app.module.ts` to `PrismaService`, `backend/package.json`, `auth.controller.ts`, `dependencies`, `UsersRepository`, `src/accounts/accounts.service.ts`, `redis-refresh-token.store.ts`, `health.controller.ts`, `test/helpers.ts`, `PrismaService`, `me.controller.ts`, `src/transactions/transactions.service.ts`?**
+  _High betweenness centrality (0.062) - this node is a cross-community bridge._
 - **Should `frontend/package.json` be split into smaller, more focused modules?**
-  _Cohesion score 0.12857142857142856 - nodes in this community are weakly interconnected._
-- **Why does `@angular/core` connect `@angular/core` to `frontend/package.json`, `account-dialog.ts`, `features/accounts/accounts.service.ts`, `app.routes.ts`, `dependencies`, `registration.service.ts`?**
-  _High betweenness centrality (0.018) - this node is a cross-community bridge._
+  _Cohesion score 0.14285714285714285 - nodes in this community are weakly interconnected._
+- **Why does `@angular/core` connect `@angular/core` to `Login`, `account-dialog.ts`, `features/transactions/transactions.service.ts`, `home.ts`, `features/accounts/accounts.service.ts`, `dependencies`, `@angular/core`, `registration.service.ts`, `frontend/package.json`, `transactions-page.ts`?**
+  _High betweenness centrality (0.022) - this node is a cross-community bridge._
 - **Should `frontend` be split into smaller, more focused modules?**
   _Cohesion score 0.048726467331118496 - nodes in this community are weakly interconnected._
-- **Why does `@nestjs/authentication` connect `@nestjs/common` to `backend/package.json`, `auth.controller.ts`, `dependencies`, `redis-refresh-token.store.ts`, `src/accounts/accounts.service.ts`, `@nestjs/common`, `test/helpers.ts`?**
-  _High betweenness centrality (0.015) - this node is a cross-community bridge._
+- **Why does `@nestjs/authentication` connect `me.controller.ts` to `backend/package.json`, `auth.controller.ts`, `dependencies`, `UsersRepository`, `src/accounts/accounts.service.ts`, `redis-refresh-token.store.ts`, `health.controller.ts`, `test/helpers.ts`, `app.module.ts`, `src/transactions/transactions.service.ts`?**
+  _High betweenness centrality (0.017) - this node is a cross-community bridge._
 - **Should `backend/package.json` be split into smaller, more focused modules?**
   _Cohesion score 0.125 - nodes in this community are weakly interconnected._
 - **Should `devDependencies` be split into smaller, more focused modules?**
-  _Cohesion score 0.10526315789473684 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.125 - nodes in this community are weakly interconnected._

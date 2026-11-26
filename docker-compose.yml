@@ -61,6 +61,8 @@ services:
     volumes:
       - ./backend:/app
       - backend-node-modules:/app/node_modules
+      # dist propio del contenedor: un `pnpm build` en el host no le borra la app en ejecución
+      - backend-dist:/app/dist
     ports:
       - "3000:3000"
       - "9229:9229"
@@ -138,5 +140,6 @@ volumes:
   postgres-data:
   redis-data:
   backend-node-modules:
+  backend-dist:
   frontend-node-modules:
   frontend-angular-cache:

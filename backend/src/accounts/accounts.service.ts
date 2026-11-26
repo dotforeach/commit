@@ -126,6 +126,8 @@ export class AccountsService {
   /** Borrado lógico: queda una lápida para que los demás dispositivos lo sincronicen. */
   async remove(householdId: string, userId: string, id: string, expectedRevision: bigint): Promise<void> {
     await this.access.require(householdId, userId, 'write');
+    const inUse = await this.prisma.transaction.count({ where: { accountId: id, householdId, deletedAt: null } });
+    if (inUse > 0) throw new ConflictException({ message: 'La cuenta tiene movimientos: archivala', errorCode: 'account_has_transactions' });
     await this.prisma.$transaction(async (tx) => {
       const now = new Date();
       const { count } = await tx.account.updateMany({

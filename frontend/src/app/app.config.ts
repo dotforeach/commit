@@ -1,16 +1,21 @@
+import { registerLocaleData } from '@angular/common';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
-import { ApplicationConfig, isDevMode, provideBrowserGlobalErrorListeners } from '@angular/core';
+import localeEsAr from '@angular/common/locales/es-AR';
+import { ApplicationConfig, LOCALE_ID, isDevMode, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideTransloco } from '@jsverse/transloco';
 import { routes } from './app.routes';
 import { authInterceptor } from './core/auth/auth.interceptor';
 import { TranslocoHttpLoader } from './core/i18n/transloco-loader';
 
+registerLocaleData(localeEsAr);
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
     provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
+    { provide: LOCALE_ID, useValue: 'es-AR' },
     provideTransloco({
       config: {
         availableLangs: ['es'],

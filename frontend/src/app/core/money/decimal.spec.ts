@@ -1,4 +1,4 @@
-import { formatMoney, parseDecimalInput, toInputValue } from './decimal';
+import { addDecimals, compareDecimals, formatMoney, negateDecimal, parseDecimalInput, subDecimals, toInputValue } from './decimal';
 
 const ARS = { code: 'ARS', symbol: '$', decimals: 2 };
 const BTC = { code: 'BTC', symbol: '₿', decimals: 8 };
@@ -36,5 +36,24 @@ describe('formatMoney', () => {
 
   it('prepara el valor para editar', () => {
     expect(toInputValue('1234.5')).toBe('1234,5');
+  });
+});
+
+
+describe('aritmética decimal exacta', () => {
+  it('suma sin errores de punto flotante', () => {
+    expect(addDecimals('0.1', '0.2')).toBe('0.3');
+    expect(addDecimals('999999999999999.9999', '0.0001')).toBe('1000000000000000');
+    expect(addDecimals()).toBe('0');
+    expect(addDecimals('-5', '5')).toBe('0');
+  });
+
+  it('resta, niega y compara', () => {
+    expect(subDecimals('100', '150.25')).toBe('-50.25');
+    expect(negateDecimal('-3.5')).toBe('3.5');
+    expect(negateDecimal('0')).toBe('0');
+    expect(compareDecimals('10', '9.9999')).toBe(1);
+    expect(compareDecimals('-1', '1')).toBe(-1);
+    expect(compareDecimals('2.50', '2.5')).toBe(0);
   });
 });

@@ -68,8 +68,8 @@
           </span>
         </div>
         <div class="amount">
-          <span class="value">{{ money(a.initialBalance, a.currency) }}</span>
-          <span class="label">{{ a.type === 'CREDIT_CARD' ? t('initialDebtShort') : t('initialBalanceShort') }}</span>
+          <span class="value" [class.negative]="balance(a).amount.startsWith('-')">{{ money(balance(a).amount, a.currency) }}</span>
+          <span class="label">{{ balance(a).isDebt ? t('debtShort') : t('balanceShort') }}</span>
         </div>
         @if (household.canWrite()) {
           <button mat-icon-button [matMenuTriggerFor]="menu" [attr.aria-label]="t('actions', { name: a.name })">

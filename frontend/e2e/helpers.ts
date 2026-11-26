@@ -9,6 +9,10 @@ export async function readPhrase(page: Page): Promise<string[]> {
   return (await items.allTextContents()).map((t) => t.replace(/^\s*\d+\s*/, '').trim());
 }
 
+/** "Siguiente" del paso abierto (durante la animación, el del paso anterior sigue visible). */
+const nextIn = (page: Page, step: string) =>
+  page.getByRole('region', { name: step }).getByRole('button', { name: 'Siguiente' }).click();
+
 /** Registra una cuenta por la UI y devuelve la frase de recuperación mostrada. */
 export async function registerViaUi(
   page: Page,
@@ -19,15 +23,15 @@ export async function registerViaUi(
   await page.getByLabel('Email').fill(opts.email);
   await page.getByLabel('Contraseña de ingreso').fill(opts.password);
   await page.getByLabel('Repetí la contraseña').fill(opts.password);
-  await page.getByRole('button', { name: 'Siguiente' }).first().click();
+  await nextIn(page, 'Tu cuenta');
 
   await page.getByLabel('Clave de descifrado', { exact: true }).fill(opts.passphrase);
   await page.getByLabel('Repetí la clave de descifrado').fill(opts.passphrase);
-  await page.getByRole('button', { name: 'Siguiente' }).first().click();
+  await nextIn(page, 'Clave de descifrado');
 
   const phrase = await readPhrase(page);
   await page.getByText('Guardé mi frase de recuperación').click();
-  await page.getByRole('button', { name: 'Siguiente' }).first().click();
+  await nextIn(page, 'Frase de recuperación');
 
   const fields = page.getByLabel(/Palabra n\.º \d+/);
   await expect(fields).toHaveCount(3);
@@ -46,4 +50,31 @@ export async function unlock(page: Page, passphrase: string) {
   await expect(page).toHaveURL(/\/desbloquear$/);
   await page.getByLabel('Clave de descifrado').fill(passphrase);
   await page.getByRole('button', { name: 'Desbloquear' }).click();
+}
+
+/** Crea una cuenta desde la pantalla Cuentas (ya abierta). */
+export async function createAccount(
+  page: Page,
+  a: { name: string; type?: string; currency?: string; initial: string; label?: string },
+) {
+  await page.getByRole('button', { name: 'Nueva cuenta' }).click();
+  const dialog = page.getByRole('dialog');
+  await dialog.getByLabel('Nombre').fill(a.name);
+  if (a.type) {
+    await dialog.getByRole('combobox', { name: 'Tipo' }).click();
+    await page.getByRole('option', { name: a.type }).click();
+  }
+  if (a.currency) {
+    await dialog.getByRole('combobox', { name: 'Moneda' }).click();
+    await page.getByRole('option', { name: a.currency }).click();
+  }
+  await dialog.getByLabel(a.label ?? 'Saldo inicial').fill(a.initial);
+  await dialog.getByRole('button', { name: 'Guardar' }).click();
+  await expect(page.locator(`li[data-account="${a.name}"]`)).toBeVisible();
+}
+
+/** Selecciona una opción de un mat-select dentro del diálogo abierto. */
+export async function pick(page: Page, label: string, option: string) {
+  await page.getByRole('dialog').getByRole('combobox', { name: label }).click();
+  await page.getByRole('option', { name: option, exact: true }).click();
 }

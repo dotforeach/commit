@@ -16,7 +16,8 @@ FROM deps AS dev
 ENV NODE_ENV=development
 COPY . .
 EXPOSE 3000 9229
-CMD ["sh", "-c", "pnpm prisma generate && pnpm prisma migrate deploy && pnpm start:dev"]
+# dist es un volumen propio del contenedor: se vacía su contenido en vez de borrar el directorio.
+CMD ["sh", "-c", "pnpm prisma generate && pnpm prisma migrate deploy && rm -rf dist/* && pnpm nest start --watch --config nest-cli.dev.json"]
 
 # ── Build ──────────────────────────────────────────────────────
 FROM deps AS build

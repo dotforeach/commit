@@ -39,5 +39,10 @@ export const routes: Routes = [
     canActivate: [authGuard, unlockedGuard],
     loadComponent: () => import('./features/accounts/accounts-page').then((m) => m.AccountsPage),
   },
+  {
+    path: 'movimientos',
+    canActivate: [authGuard, unlockedGuard],
+    loadChildren: () => import('./features/transactions/transactions.routes').then((m) => m.TRANSACTIONS_ROUTES),
+  },
   { path: '**', redirectTo: 'inicio' },
 ];

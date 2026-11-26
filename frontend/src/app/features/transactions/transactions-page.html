@@ -1,0 +1,114 @@
+<ng-container *transloco="let t; prefix: 'transactions'">
+  <section class="page">
+    <header class="head">
+      <div>
+        <h2>{{ t('title') }}</h2>
+        <p class="subtitle">{{ t('subtitle') }}</p>
+      </div>
+      @if (household.canWrite()) {
+        <button mat-flat-button (click)="openNew()" [disabled]="accounts.active().length === 0">
+          <mat-icon fontSet="material-symbols-outlined">add</mat-icon>{{ t('new') }}
+        </button>
+      }
+    </header>
+
+    @if (transactions.loading()) {
+      <mat-progress-bar mode="indeterminate" />
+    }
+    @if (loadError()) {
+      <p class="error" role="alert">{{ t('errors.load') }}</p>
+    }
+    @if (!transactions.loading() && accounts.accounts().length === 0 && !loadError()) {
+      <p class="hint">{{ t('needAccount') }} <a routerLink="/cuentas">{{ t('goToAccounts') }}</a></p>
+    }
+
+    <div class="toolbar">
+      <div class="month" role="group" [attr.aria-label]="t('month')">
+        <button mat-icon-button (click)="prevMonth()" [attr.aria-label]="t('prevMonth')">
+          <mat-icon fontSet="material-symbols-outlined">chevron_left</mat-icon>
+        </button>
+        <span class="month-label" data-testid="month">{{ monthDate() | date: 'MMMM y' }}</span>
+        <button mat-icon-button (click)="nextMonth()" [attr.aria-label]="t('nextMonth')">
+          <mat-icon fontSet="material-symbols-outlined">chevron_right</mat-icon>
+        </button>
+      </div>
+      <mat-form-field subscriptSizing="dynamic" class="filter">
+        <mat-label>{{ t('filterAccount') }}</mat-label>
+        <mat-select [ngModel]="accountFilter()" (ngModelChange)="accountFilter.set($event)">
+          <mat-option value="">{{ t('allAccounts') }}</mat-option>
+          @for (a of accounts.accounts(); track a.id) {
+            <mat-option [value]="a.id">{{ a.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    @if (totals().length > 0) {
+      <div class="totals">
+        @for (tot of totals(); track tot.currency) {
+          <mat-card appearance="outlined" class="total" [attr.data-currency]="tot.currency">
+            <div><span class="label">{{ t('income') }}</span><span class="pos">{{ moneyIn(tot.income, tot.currency) }}</span></div>
+            <div><span class="label">{{ t('expense') }}</span><span class="neg">{{ moneyIn(tot.expense, tot.currency) }}</span></div>
+            <div><span class="label">{{ t('net') }}</span><strong>{{ moneyIn(tot.net, tot.currency) }}</strong></div>
+          </mat-card>
+        }
+      </div>
+    }
+
+    @if (!transactions.loading() && days().length === 0 && accounts.accounts().length > 0) {
+      <p class="hint">{{ t('emptyMonth') }}</p>
+    }
+
+    @for (day of days(); track day.date) {
+      <h3 class="day">{{ day.date | date: 'EEEE d \'de\' MMMM' : 'UTC' }}</h3>
+      <ul class="list">
+        @for (e of day.entries; track e.kind === 'single' ? e.tx.id : e.out.id) {
+          @if (e.kind === 'single') {
+            <li class="tx" [attr.data-tx]="e.tx.description">
+              <mat-icon class="icon" fontSet="material-symbols-outlined" aria-hidden="true">{{ category(e.tx)?.icon ?? 'receipt_long' }}</mat-icon>
+              <div class="info">
+                <span class="desc">{{ e.tx.description }}</span>
+                <span class="meta">{{ category(e.tx)?.name ?? t('uncategorized') }} · {{ accountName(e.tx.accountId) }}</span>
+              </div>
+              <span class="amount" [class.pos]="e.tx.type === 'INCOME'" [class.neg]="e.tx.type === 'EXPENSE'">
+                {{ money(e.tx.amount, e.tx.accountId, e.tx.type === 'INCOME' ? '+' : '-') }}
+              </span>
+              <ng-container *ngTemplateOutlet="actions; context: { $implicit: e, label: e.tx.description }" />
+            </li>
+          } @else {
+            <li class="tx" [attr.data-tx]="e.out.description">
+              <mat-icon class="icon" fontSet="material-symbols-outlined" aria-hidden="true">swap_horiz</mat-icon>
+              <div class="info">
+                <span class="desc">{{ e.out.description }}</span>
+                <span class="meta">{{ accountName(e.out.accountId) }} → {{ accountName(e.in.accountId) }}</span>
+              </div>
+              <span class="amount transfer">
+                <span>{{ money(e.out.amount, e.out.accountId, '-') }}</span>
+                @if (e.out.amount !== e.in.amount) {
+                  <span class="received">{{ money(e.in.amount, e.in.accountId, '+') }}</span>
+                }
+              </span>
+              <ng-container *ngTemplateOutlet="actions; context: { $implicit: e, label: e.out.description }" />
+            </li>
+          }
+        }
+      </ul>
+    }
+
+    <ng-template #actions let-e let-label="label">
+      @if (household.canWrite()) {
+        <button mat-icon-button [matMenuTriggerFor]="menu" [attr.aria-label]="t('actions', { description: label })">
+          <mat-icon fontSet="material-symbols-outlined">more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="edit(e)">
+            <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>{{ t('edit') }}
+          </button>
+          <button mat-menu-item (click)="remove(e)">
+            <mat-icon fontSet="material-symbols-outlined">delete</mat-icon>{{ t('delete') }}
+          </button>
+        </mat-menu>
+      }
+    </ng-template>
+  </section>
+</ng-container>

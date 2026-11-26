@@ -12,6 +12,8 @@ import { CurrenciesService } from '../../core/currencies/currencies.service';
 import { HouseholdContextService } from '../../core/households/household-context.service';
 import { formatMoney } from '../../core/money/decimal';
 import { confirmDialog } from '../../shared/confirm-dialog/confirm-dialog';
+import { HttpErrorResponse } from '@angular/common/http';
+import { TransactionsService } from '../transactions/transactions.service';
 import { AccountDialog } from './account-dialog/account-dialog';
 import { accountIcon, type Account } from './account.model';
 import { AccountsService } from './accounts.service';
@@ -25,6 +27,7 @@ import { AccountsService } from './accounts.service';
 export class AccountsPage implements OnInit {
   readonly accounts = inject(AccountsService);
   readonly household = inject(HouseholdContextService);
+  readonly transactions = inject(TransactionsService);
   private readonly currencies = inject(CurrenciesService);
   private readonly dialog = inject(MatDialog);
   private readonly snack = inject(MatSnackBar);
@@ -36,7 +39,7 @@ export class AccountsPage implements OnInit {
 
   async ngOnInit() {
     try {
-      await this.accounts.load();
+      await Promise.all([this.accounts.load(), this.transactions.ensureLoaded()]);
     } catch {
       this.loadError.set(true);
     }
@@ -44,6 +47,11 @@ export class AccountsPage implements OnInit {
 
   money(amount: string, currency: string) {
     return formatMoney(amount, this.currencies.get(currency));
+  }
+
+  /** Saldo actual (o deuda, en tarjetas y préstamos) calculado con los movimientos descifrados. */
+  balance(account: Account) {
+    return this.transactions.balances().get(account.id) ?? { amount: account.initialBalance, isDebt: false };
   }
 
   openNew() {
@@ -75,9 +83,11 @@ export class AccountsPage implements OnInit {
     try {
       await fn();
       this.snack.open(this.transloco.translate(successKey), undefined, { duration: 3000 });
-    } catch {
-      this.snack.open(this.transloco.translate('accounts.errors.generic'), undefined, { duration: 5000 });
-      await this.accounts.load();
+    } catch (e) {
+      const inUse = e instanceof HttpErrorResponse && e.error?.errorCode === 'account_has_transactions';
+      const key = inUse ? 'accounts.errors.hasTransactions' : 'accounts.errors.generic';
+      this.snack.open(this.transloco.translate(key), undefined, { duration: 6000 });
+      if (!inUse) await this.accounts.load();
     }
   }
 }

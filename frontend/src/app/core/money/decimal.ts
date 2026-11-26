@@ -71,3 +71,45 @@ export function formatMoney(amount: string, currency: { code: string; symbol: st
 export function toInputValue(amount: string): string {
   return amount.replace('.', ',');
 }
+
+// ── Aritmética exacta: enteros escalados a 4 decimales con BigInt ─────────────
+const SCALE = 10_000n;
+
+function toUnits(amount: string): bigint {
+  const negative = amount.startsWith('-');
+  const [int, frac = ''] = amount.replace('-', '').split('.');
+  const units = BigInt(int || '0') * SCALE + BigInt((frac + '0000').slice(0, 4));
+  return negative ? -units : units;
+}
+
+function fromUnits(units: bigint): string {
+  const negative = units < 0n;
+  const abs = negative ? -units : units;
+  const int = abs / SCALE;
+  const frac = (abs % SCALE).toString().padStart(4, '0').replace(/0+$/, '');
+  const out = frac ? `${int}.${frac}` : `${int}`;
+  return negative && out !== '0' ? `-${out}` : out;
+}
+
+export const ZERO = '0';
+
+export function addDecimals(...amounts: string[]): string {
+  return fromUnits(amounts.reduce((sum, a) => sum + toUnits(a), 0n));
+}
+
+export function subDecimals(a: string, b: string): string {
+  return fromUnits(toUnits(a) - toUnits(b));
+}
+
+export function negateDecimal(a: string): string {
+  return fromUnits(-toUnits(a));
+}
+
+export function compareDecimals(a: string, b: string): -1 | 0 | 1 {
+  const d = toUnits(a) - toUnits(b);
+  return d === 0n ? 0 : d < 0n ? -1 : 1;
+}
+
+export function isNegative(a: string): boolean {
+  return toUnits(a) < 0n;
+}
