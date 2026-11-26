@@ -1,0 +1,20 @@
+# Secretos
+.env
+.env.*
+!.env.example
+*.pem
+id_*
+dotforeach*
+
+# SO / editores
+.DS_Store
+.idea/
+
+# graphify (caché local; el grafo se regenera)
+graphify-out/cache/
+
+# Artefactos de build
+*.tsbuildinfo
+
+# graphify: estado interno (contiene rutas locales); se versiona solo el grafo y el reporte
+graphify-out/.graphify_*

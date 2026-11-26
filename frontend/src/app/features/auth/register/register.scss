@@ -1,0 +1,36 @@
+@use '../auth-shared';
+
+.phrase {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 8px;
+  padding: 0;
+  margin: 8px 0;
+  list-style: none;
+  counter-reset: none;
+
+  li {
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: var(--mat-sys-surface-container-high);
+    font: var(--mat-sys-body-large);
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  }
+
+  .n {
+    display: inline-block;
+    min-width: 1.8em;
+    color: var(--mat-sys-on-surface-variant);
+  }
+}
+
+.phrase-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.warning {
+  color: var(--mat-sys-error);
+  font: var(--mat-sys-body-medium);
+}

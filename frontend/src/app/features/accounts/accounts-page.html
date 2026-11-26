@@ -1,0 +1,99 @@
+<ng-container *transloco="let t; prefix: 'accounts'">
+  <section class="page">
+    <header class="head">
+      <div>
+        <h2>{{ t('title') }}</h2>
+        <p class="subtitle">{{ t('subtitle') }}</p>
+      </div>
+      @if (household.canWrite()) {
+        <button mat-flat-button (click)="openNew()">
+          <mat-icon fontSet="material-symbols-outlined">add</mat-icon>{{ t('new') }}
+        </button>
+      }
+    </header>
+
+    @if (accounts.loading()) {
+      <mat-progress-bar mode="indeterminate" />
+    }
+    @if (loadError()) {
+      <p class="error" role="alert">{{ t('errors.load') }}</p>
+    }
+
+    @if (!accounts.loading() && accounts.active().length === 0 && !loadError()) {
+      <mat-card appearance="outlined" class="empty">
+        <mat-card-content>
+          <mat-icon fontSet="material-symbols-outlined" aria-hidden="true">account_balance_wallet</mat-icon>
+          <p><strong>{{ t('empty.title') }}</strong></p>
+          <p>{{ t('empty.body') }}</p>
+        </mat-card-content>
+      </mat-card>
+    }
+
+    <ul class="list">
+      @for (a of accounts.active(); track a.id) {
+        <ng-container *ngTemplateOutlet="row; context: { $implicit: a }" />
+      }
+    </ul>
+
+    @if (accounts.archived().length > 0) {
+      <button mat-button class="toggle" (click)="showArchived.set(!showArchived())">
+        <mat-icon fontSet="material-symbols-outlined">{{ showArchived() ? 'expand_less' : 'expand_more' }}</mat-icon>
+        {{ t('archivedCount', { n: accounts.archived().length }) }}
+      </button>
+      @if (showArchived()) {
+        <ul class="list archived">
+          @for (a of accounts.archived(); track a.id) {
+            <ng-container *ngTemplateOutlet="row; context: { $implicit: a }" />
+          }
+        </ul>
+      }
+    }
+
+    <ng-template #row let-a>
+      <li class="account" [attr.data-account]="a.name">
+        <mat-icon class="type-icon" fontSet="material-symbols-outlined" aria-hidden="true">{{ icon(a.type) }}</mat-icon>
+        <div class="info">
+          <span class="name">{{ a.name }}</span>
+          <span class="meta">
+            {{ t('types.' + a.type) }}
+            @if (a.institution) {
+              · {{ a.institution }}
+            }
+            @if (a.creditCard; as card) {
+              @if (card.lastFour) {
+                · •••• {{ card.lastFour }}
+              }
+              · {{ t('cardDays', { closing: card.closingDay, due: card.dueDay }) }}
+            }
+          </span>
+        </div>
+        <div class="amount">
+          <span class="value">{{ money(a.initialBalance, a.currency) }}</span>
+          <span class="label">{{ a.type === 'CREDIT_CARD' ? t('initialDebtShort') : t('initialBalanceShort') }}</span>
+        </div>
+        @if (household.canWrite()) {
+          <button mat-icon-button [matMenuTriggerFor]="menu" [attr.aria-label]="t('actions', { name: a.name })">
+            <mat-icon fontSet="material-symbols-outlined">more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="edit(a)">
+              <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>{{ t('edit') }}
+            </button>
+            @if (a.archived) {
+              <button mat-menu-item (click)="archive(a, false)">
+                <mat-icon fontSet="material-symbols-outlined">unarchive</mat-icon>{{ t('unarchive') }}
+              </button>
+            } @else {
+              <button mat-menu-item (click)="archive(a, true)">
+                <mat-icon fontSet="material-symbols-outlined">archive</mat-icon>{{ t('archive') }}
+              </button>
+            }
+            <button mat-menu-item (click)="remove(a)">
+              <mat-icon fontSet="material-symbols-outlined">delete</mat-icon>{{ t('delete') }}
+            </button>
+          </mat-menu>
+        }
+      </li>
+    </ng-template>
+  </section>
+</ng-container>

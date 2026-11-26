@@ -1,0 +1,248 @@
+{
+  "app": {
+    "name": "Finanzas 0→100"
+  },
+  "household": {
+    "personalName": "Finanzas de {{name}}"
+  },
+  "register": {
+    "title": "Crear cuenta",
+    "subtitle": "Tus datos se cifran en tu dispositivo: ni nosotros podemos verlos.",
+    "next": "Siguiente",
+    "back": "Atrás",
+    "haveAccount": "¿Ya tenés cuenta?",
+    "login": "Ingresar",
+    "account": {
+      "label": "Tu cuenta",
+      "displayName": "Nombre",
+      "email": "Email",
+      "baseCurrency": "Moneda principal",
+      "password": "Contraseña de ingreso",
+      "passwordHint": "Mínimo 10 caracteres. Sirve solo para iniciar sesión.",
+      "passwordConfirm": "Repetí la contraseña"
+    },
+    "decryption": {
+      "label": "Clave de descifrado",
+      "whatTitle": "Una segunda clave, solo para tus datos",
+      "what": "Con esta clave se cifran tus finanzas en tu dispositivo. Nunca se envía al servidor: ni el equipo de la app ni un administrador pueden leer tus datos.",
+      "warning": "Si la olvidás, solo podrás recuperar tus datos con la frase de recuperación del próximo paso.",
+      "passphrase": "Clave de descifrado",
+      "passphraseHint": "Mínimo 12 caracteres y distinta de la contraseña de ingreso. Una frase larga es ideal.",
+      "passphraseConfirm": "Repetí la clave de descifrado"
+    },
+    "phrase": {
+      "label": "Frase de recuperación",
+      "intro": "Estas 24 palabras son la única forma de recuperar tus datos si olvidás la clave de descifrado. Anotalas en papel, en orden, y guardalas en un lugar seguro.",
+      "copy": "Copiar",
+      "download": "Descargar .txt",
+      "warning": "No la compartas con nadie. Quien tenga esta frase puede leer tus finanzas. No la vamos a volver a mostrar.",
+      "confirm": "Guardé mi frase de recuperación en un lugar seguro"
+    },
+    "check": {
+      "label": "Confirmar frase",
+      "intro": "Para asegurarnos de que la anotaste bien, escribí estas palabras (las tildes son opcionales):",
+      "word": "Palabra n.º {{n}}",
+      "submit": "Crear cuenta",
+      "creating": "Generando tus claves…"
+    },
+    "errors": {
+      "passwordMismatch": "Las contraseñas no coinciden.",
+      "passphraseMismatch": "Las claves de descifrado no coinciden.",
+      "sameAsPassword": "Tiene que ser distinta de la contraseña de ingreso.",
+      "phraseMismatch": "Alguna palabra no coincide. Revisá tu frase.",
+      "emailTaken": "Ya existe una cuenta con ese email.",
+      "generic": "No pudimos crear la cuenta. Probá de nuevo."
+    }
+  },
+  "login": {
+    "title": "Ingresar",
+    "subtitle": "Después te vamos a pedir tu clave de descifrado.",
+    "email": "Email",
+    "password": "Contraseña de ingreso",
+    "submit": "Ingresar",
+    "noAccount": "¿No tenés cuenta?",
+    "register": "Crear una",
+    "errors": {
+      "invalidCredentials": "Email o contraseña incorrectos.",
+      "tooManyAttempts": "Demasiados intentos. Esperá un minuto y volvé a probar.",
+      "generic": "No pudimos iniciar sesión. Probá de nuevo."
+    }
+  },
+  "unlock": {
+    "title": "Desbloquear tus datos",
+    "subtitle": "Tus finanzas están cifradas. Ingresá tu clave de descifrado.",
+    "passphrase": "Clave de descifrado",
+    "hint": "No es la contraseña de ingreso.",
+    "submit": "Desbloquear",
+    "unlocking": "Descifrando…",
+    "logout": "Cerrar sesión",
+    "errors": {
+      "wrongPassphrase": "Clave de descifrado incorrecta.",
+      "generic": "No pudimos desbloquear tus datos. Probá de nuevo."
+    },
+    "forgot": "¿Olvidaste tu clave de descifrado?"
+  },
+  "home": {
+    "greeting": "Hola, {{name}}",
+    "encryptedTitle": "Tus datos están cifrados",
+    "encryptedSubtitle": "Este nombre se descifró en tu dispositivo con tu clave.",
+    "decryptError": "No pudimos descifrar tus hogares.",
+    "lock": "Bloquear",
+    "logout": "Cerrar sesión",
+    "roles": {
+      "OWNER": "Dueño",
+      "ADMIN": "Administrador",
+      "MEMBER": "Miembro",
+      "VIEWER": "Solo lectura"
+    },
+    "changePassphrase": "Cambiar clave de descifrado"
+  },
+  "categories": {
+    "income": {
+      "salary": "Sueldo",
+      "bonus": "Aguinaldo y bonos",
+      "freelance": "Trabajos extra",
+      "other": "Otros ingresos"
+    },
+    "housing": {
+      "rent": "Alquiler y expensas",
+      "utilities": "Servicios (luz, gas, agua, internet)"
+    },
+    "food": {
+      "groceries": "Supermercado",
+      "restaurants": "Salidas y delivery"
+    },
+    "transport": "Transporte",
+    "health": "Salud",
+    "education": "Educación",
+    "insurance": "Seguros",
+    "taxes": "Impuestos",
+    "entertainment": "Entretenimiento",
+    "subscriptions": "Suscripciones",
+    "shopping": "Ropa y compras",
+    "travel": "Viajes",
+    "gifts": "Regalos",
+    "other": "Otros gastos",
+    "savings": "Ahorro",
+    "debt": {
+      "payments": "Pago de deudas"
+    },
+    "investments": "Inversiones"
+  },
+  "recover": {
+    "title": "Recuperar acceso a tus datos",
+    "subtitle": "Escribí tus 24 palabras de recuperación, en orden. Las tildes son opcionales.",
+    "newSubtitle": "Frase correcta. Elegí una clave de descifrado nueva.",
+    "phrase": "Frase de recuperación",
+    "phraseHint": "Separá las palabras con espacios.",
+    "verify": "Verificar frase",
+    "back": "Volver",
+    "newPassphrase": "Nueva clave de descifrado",
+    "newPassphraseHint": "Mínimo 12 caracteres. Tu frase de recuperación sigue sirviendo.",
+    "newPassphraseConfirm": "Repetí la nueva clave",
+    "save": "Guardar y desbloquear",
+    "errors": {
+      "invalidPhrase": "La frase no es válida: revisá que sean 24 palabras de la lista, en orden.",
+      "wrongPhrase": "Esa frase no corresponde a esta cuenta.",
+      "mismatch": "Las claves no coinciden.",
+      "generic": "No pudimos completar la recuperación. Probá de nuevo."
+    }
+  },
+  "changePassphrase": {
+    "title": "Cambiar clave de descifrado",
+    "subtitle": "Tus datos no se vuelven a cifrar: solo cambia la clave que protege tus claves privadas.",
+    "current": "Clave de descifrado actual",
+    "new": "Nueva clave de descifrado",
+    "newHint": "Mínimo 12 caracteres.",
+    "confirm": "Repetí la nueva clave",
+    "cancel": "Cancelar",
+    "save": "Cambiar clave",
+    "errors": {
+      "wrongCurrent": "La clave actual es incorrecta.",
+      "same": "La nueva clave tiene que ser distinta de la actual.",
+      "mismatch": "Las claves no coinciden.",
+      "generic": "No pudimos cambiar la clave. Probá de nuevo."
+    }
+  },
+  "nav": {
+    "home": "Inicio",
+    "accounts": "Cuentas",
+    "lock": "Bloquear"
+  },
+  "accounts": {
+    "title": "Cuentas",
+    "subtitle": "Dónde está tu plata: efectivo, bancos, billeteras virtuales, tarjetas y más.",
+    "new": "Nueva cuenta",
+    "edit": "Editar",
+    "archive": "Archivar",
+    "unarchive": "Desarchivar",
+    "delete": "Eliminar",
+    "actions": "Acciones de {{name}}",
+    "archivedCount": "Archivadas ({{n}})",
+    "initialBalanceShort": "saldo inicial",
+    "initialDebtShort": "deuda inicial",
+    "cardDays": "cierra el {{closing}}, vence el {{due}}",
+    "archived": "Cuenta archivada",
+    "unarchived": "Cuenta desarchivada",
+    "deleted": "Cuenta eliminada",
+    "deleteDialog": {
+      "title": "Eliminar cuenta",
+      "message": "¿Eliminar «{{name}}»? Si solo dejaste de usarla, mejor archivala: así conservás su historial.",
+      "confirm": "Eliminar",
+      "cancel": "Cancelar"
+    },
+    "empty": {
+      "title": "Todavía no cargaste cuentas",
+      "body": "Empezá por las que más usás: tu cuenta sueldo, la billetera virtual y el efectivo."
+    },
+    "types": {
+      "CASH": "Efectivo",
+      "CHECKING": "Cuenta bancaria",
+      "SAVINGS": "Caja de ahorro",
+      "DIGITAL_WALLET": "Billetera virtual",
+      "CREDIT_CARD": "Tarjeta de crédito",
+      "INVESTMENT": "Inversiones",
+      "LOAN": "Préstamo",
+      "OTHER": "Otra"
+    },
+    "networks": {
+      "visa": "Visa",
+      "mastercard": "Mastercard",
+      "amex": "American Express",
+      "cabal": "Cabal",
+      "naranja": "Naranja X",
+      "other": "Otra"
+    },
+    "dialog": {
+      "newTitle": "Nueva cuenta",
+      "editTitle": "Editar cuenta",
+      "cancel": "Cancelar",
+      "save": "Guardar"
+    },
+    "fields": {
+      "name": "Nombre",
+      "namePlaceholder": "Ej.: Cuenta sueldo",
+      "type": "Tipo",
+      "currency": "Moneda",
+      "initialBalance": "Saldo inicial",
+      "initialBalanceHint": "Lo que tenés hoy en esta cuenta. Ej.: 150.000,50",
+      "initialDebt": "Deuda actual",
+      "initialDebtHint": "Lo que debés hoy en la tarjeta (sin contar cuotas futuras).",
+      "institution": "Banco o entidad",
+      "institutionPlaceholder": "Ej.: Banco Nación, Mercado Pago",
+      "cardSection": "Datos de la tarjeta",
+      "network": "Red",
+      "lastFour": "Últimos 4 dígitos",
+      "creditLimit": "Límite de compra",
+      "closingDay": "Día de cierre",
+      "dueDay": "Día de vencimiento",
+      "includeInNetWorth": "Incluir en mi patrimonio"
+    },
+    "errors": {
+      "decimal": "Monto inválido. Ej.: 1.234,56",
+      "conflict": "La cuenta cambió en otro dispositivo. Cerrá y volvé a abrirla.",
+      "load": "No pudimos cargar tus cuentas.",
+      "generic": "No pudimos guardar los cambios. Probá de nuevo."
+    }
+  }
+}

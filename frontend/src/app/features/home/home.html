@@ -1,0 +1,36 @@
+<ng-container *transloco="let t; prefix: 'home'">
+  <section class="home">
+    <h2>{{ t('greeting', { name: displayName() }) }}</h2>
+
+    <mat-card appearance="outlined">
+      <mat-card-header>
+        <mat-icon mat-card-avatar fontSet="material-symbols-outlined" aria-hidden="true">verified_user</mat-icon>
+        <mat-card-title>{{ t('encryptedTitle') }}</mat-card-title>
+        <mat-card-subtitle>{{ t('encryptedSubtitle') }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        @if (households.hasValue()) {
+          <ul class="households">
+            @for (h of households.value(); track h.id) {
+              <li>
+                <mat-icon fontSet="material-symbols-outlined" aria-hidden="true">home</mat-icon>
+                <span class="name">{{ h.name }}</span>
+                <span class="meta">{{ h.baseCurrency }} · {{ t('roles.' + h.role) }}</span>
+              </li>
+            }
+          </ul>
+        } @else if (households.error()) {
+          <p class="error">{{ t('decryptError') }}</p>
+        }
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <a mat-button routerLink="/ajustes/clave">
+          <mat-icon fontSet="material-symbols-outlined">password</mat-icon>{{ t('changePassphrase') }}
+        </a>
+        <button mat-button (click)="logout()">
+          <mat-icon fontSet="material-symbols-outlined">logout</mat-icon>{{ t('logout') }}
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </section>
+</ng-container>

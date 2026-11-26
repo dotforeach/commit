@@ -1,0 +1,19 @@
+<ng-container *transloco="let t">
+  <mat-toolbar>
+    <mat-icon fontSet="material-symbols-outlined" aria-hidden="true">savings</mat-icon>
+    <h1 class="app-title">{{ t('app.name') }}</h1>
+    @if (vault.isUnlocked()) {
+      <nav class="nav">
+        <a mat-button routerLink="/inicio" routerLinkActive="active">{{ t('nav.home') }}</a>
+        <a mat-button routerLink="/cuentas" routerLinkActive="active">{{ t('nav.accounts') }}</a>
+      </nav>
+      <span class="spacer"></span>
+      <button mat-icon-button (click)="lock()" [attr.aria-label]="t('nav.lock')">
+        <mat-icon fontSet="material-symbols-outlined">lock</mat-icon>
+      </button>
+    }
+  </mat-toolbar>
+  <main>
+    <router-outlet />
+  </main>
+</ng-container>

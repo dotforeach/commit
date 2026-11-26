@@ -1,0 +1,12 @@
+# Guías para agentes: no son código del proyecto
+**/.agents/
+**/.claude/
+**/skills-lock.json
+**/AGENTS.md
+**/CLAUDE.md
+# Generados / dependencias
+**/node_modules/
+**/dist/
+**/src/generated/
+**/pnpm-lock.yaml
+**/.angular/

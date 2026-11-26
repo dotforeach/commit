@@ -1,0 +1,99 @@
+<ng-container *transloco="let t; prefix: 'accounts'">
+  <h2 mat-dialog-title>{{ editing ? t('dialog.editTitle') : t('dialog.newTitle') }}</h2>
+  <form [formGroup]="form" (ngSubmit)="save()">
+    <mat-dialog-content class="fields">
+      <mat-form-field>
+        <mat-label>{{ t('fields.name') }}</mat-label>
+        <input matInput formControlName="name" [placeholder]="t('fields.namePlaceholder')" cdkFocusInitial />
+      </mat-form-field>
+
+      <div class="row">
+        <mat-form-field>
+          <mat-label>{{ t('fields.type') }}</mat-label>
+          <mat-select formControlName="type">
+            @for (item of types; track item.type) {
+              <mat-option [value]="item.type">
+                <mat-icon fontSet="material-symbols-outlined">{{ item.icon }}</mat-icon>
+                {{ t('types.' + item.type) }}
+              </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{ t('fields.currency') }}</mat-label>
+          <mat-select formControlName="currency">
+            @for (c of currencies.list.value(); track c.code) {
+              <mat-option [value]="c.code">{{ c.code }} · {{ c.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <mat-form-field>
+        <mat-label>{{ isCard() ? t('fields.initialDebt') : t('fields.initialBalance') }}</mat-label>
+        <input matInput formControlName="initialBalance" inputmode="decimal" />
+        <mat-hint>{{ isCard() ? t('fields.initialDebtHint') : t('fields.initialBalanceHint') }}</mat-hint>
+        @if (form.controls.initialBalance.hasError('decimal')) {
+          <mat-error>{{ t('errors.decimal') }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>{{ t('fields.institution') }}</mat-label>
+        <input matInput formControlName="institution" [placeholder]="t('fields.institutionPlaceholder')" />
+      </mat-form-field>
+
+      @if (isCard()) {
+        <fieldset formGroupName="card" class="card">
+          <legend>{{ t('fields.cardSection') }}</legend>
+          <div class="row">
+            <mat-form-field>
+              <mat-label>{{ t('fields.network') }}</mat-label>
+              <mat-select formControlName="network">
+                @for (n of networks; track n) {
+                  <mat-option [value]="n">{{ t('networks.' + n) }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>{{ t('fields.lastFour') }}</mat-label>
+              <input matInput formControlName="lastFour" inputmode="numeric" maxlength="4" />
+            </mat-form-field>
+          </div>
+          <mat-form-field>
+            <mat-label>{{ t('fields.creditLimit') }}</mat-label>
+            <input matInput formControlName="creditLimit" inputmode="decimal" />
+            @if (form.controls.card.controls.creditLimit.hasError('decimal')) {
+              <mat-error>{{ t('errors.decimal') }}</mat-error>
+            }
+          </mat-form-field>
+          <div class="row">
+            <mat-form-field>
+              <mat-label>{{ t('fields.closingDay') }}</mat-label>
+              <input matInput type="number" formControlName="closingDay" min="1" max="31" />
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>{{ t('fields.dueDay') }}</mat-label>
+              <input matInput type="number" formControlName="dueDay" min="1" max="31" />
+            </mat-form-field>
+          </div>
+        </fieldset>
+      }
+
+      <mat-slide-toggle formControlName="includeInNetWorth">{{ t('fields.includeInNetWorth') }}</mat-slide-toggle>
+
+      @if (error(); as key) {
+        <p class="error" role="alert">{{ t(key) }}</p>
+      }
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button type="button" mat-dialog-close [disabled]="busy()">{{ t('dialog.cancel') }}</button>
+      <button mat-flat-button type="submit" [disabled]="busy() || form.invalid">
+        @if (busy()) {
+          <mat-spinner diameter="18" />
+        }
+        {{ t('dialog.save') }}
+      </button>
+    </mat-dialog-actions>
+  </form>
+</ng-container>

@@ -1,0 +1,33 @@
+<ng-container *transloco="let t; prefix: 'unlock'">
+  <mat-card class="auth-card" appearance="outlined">
+    <mat-card-header>
+      <mat-icon mat-card-avatar fontSet="material-symbols-outlined" aria-hidden="true">lock</mat-icon>
+      <mat-card-title>{{ t('title') }}</mat-card-title>
+      <mat-card-subtitle>{{ t('subtitle') }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="form" class="form" (ngSubmit)="submit()">
+        <mat-form-field>
+          <mat-label>{{ t('passphrase') }}</mat-label>
+          <input matInput type="password" formControlName="passphrase" autocomplete="off" />
+          <mat-hint>{{ t('hint') }}</mat-hint>
+        </mat-form-field>
+        @if (error(); as key) {
+          <p class="error" role="alert">{{ t(key) }}</p>
+        }
+        <p class="forgot"><a routerLink="/recuperar">{{ t('forgot') }}</a></p>
+        <div class="actions">
+          <button mat-button type="button" (click)="logout()" [disabled]="busy()">{{ t('logout') }}</button>
+          <button mat-flat-button type="submit" [disabled]="busy() || form.invalid">
+            @if (busy()) {
+              <mat-spinner diameter="18" />
+              {{ t('unlocking') }}
+            } @else {
+              {{ t('submit') }}
+            }
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</ng-container>

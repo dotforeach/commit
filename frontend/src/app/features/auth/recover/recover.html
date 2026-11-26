@@ -1,0 +1,65 @@
+<ng-container *transloco="let t; prefix: 'recover'">
+  <mat-card class="auth-card" appearance="outlined">
+    <mat-card-header>
+      <mat-icon mat-card-avatar fontSet="material-symbols-outlined" aria-hidden="true">key</mat-icon>
+      <mat-card-title>{{ t('title') }}</mat-card-title>
+      <mat-card-subtitle>{{ identity() ? t('newSubtitle') : t('subtitle') }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      @if (!identity()) {
+        <form [formGroup]="phraseForm" class="form" (ngSubmit)="openWithPhrase()">
+          <mat-form-field>
+            <mat-label>{{ t('phrase') }}</mat-label>
+            <textarea
+              matInput
+              formControlName="phrase"
+              rows="5"
+              autocomplete="off"
+              autocapitalize="none"
+              spellcheck="false"
+            ></textarea>
+            <mat-hint>{{ t('phraseHint') }}</mat-hint>
+          </mat-form-field>
+          @if (error(); as key) {
+            <p class="error" role="alert">{{ t(key) }}</p>
+          }
+          <div class="actions">
+            <a mat-button routerLink="/desbloquear">{{ t('back') }}</a>
+            <button mat-flat-button type="submit" [disabled]="busy() || phraseForm.invalid">
+              @if (busy()) {
+                <mat-spinner diameter="18" />
+              }
+              {{ t('verify') }}
+            </button>
+          </div>
+        </form>
+      } @else {
+        <form [formGroup]="newPassphrase" class="form" (ngSubmit)="setNewPassphrase()">
+          <mat-form-field>
+            <mat-label>{{ t('newPassphrase') }}</mat-label>
+            <input matInput type="password" formControlName="passphrase" autocomplete="off" />
+            <mat-hint>{{ t('newPassphraseHint') }}</mat-hint>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{ t('newPassphraseConfirm') }}</mat-label>
+            <input matInput type="password" formControlName="passphraseConfirm" autocomplete="off" />
+          </mat-form-field>
+          @if (newPassphrase.hasError('mismatch') && newPassphrase.controls.passphraseConfirm.touched) {
+            <p class="error">{{ t('errors.mismatch') }}</p>
+          }
+          @if (error(); as key) {
+            <p class="error" role="alert">{{ t(key) }}</p>
+          }
+          <div class="actions">
+            <button mat-flat-button type="submit" [disabled]="busy() || newPassphrase.invalid">
+              @if (busy()) {
+                <mat-spinner diameter="18" />
+              }
+              {{ t('save') }}
+            </button>
+          </div>
+        </form>
+      }
+    </mat-card-content>
+  </mat-card>
+</ng-container>

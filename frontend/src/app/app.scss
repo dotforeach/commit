@@ -1,0 +1,12 @@
+.app-title {
+  margin: 0 24px 0 12px;
+  font: var(--mat-sys-title-large);
+}
+
+.nav .active {
+  background: var(--mat-sys-secondary-container);
+}
+
+.spacer {
+  flex: 1;
+}
