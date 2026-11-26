@@ -21,6 +21,12 @@ server {
     proxy_set_header X-Forwarded-Proto $scheme;
   }
 
+  # Service worker y su manifiesto: siempre frescos (si no, la app nunca se actualiza)
+  location ~ ^/(ngsw-worker\.js|ngsw\.json|safety-worker\.js|worker-basic\.min\.js)$ {
+    add_header Cache-Control "no-cache";
+    try_files $uri =404;
+  }
+
   # Archivos con hash: caché larga
   location ~* \.(?:js|css|woff2?|png|jpg|jpeg|gif|svg|ico|webp)$ {
     expires 1y;

@@ -16,8 +16,8 @@ FROM deps AS dev
 ENV NODE_ENV=development
 COPY . .
 EXPOSE 3000 9229
-# dist es un volumen propio del contenedor: se vacía TODO su contenido (incluido .tsbuildinfo) sin borrar el directorio.
-CMD ["sh", "-c", "pnpm prisma generate && pnpm prisma migrate deploy && find dist -mindepth 1 -delete && pnpm nest start --watch --config nest-cli.dev.json"]
+# .dist-dev es un volumen propio del contenedor (no pisa el dist/ del host): se vacía TODO su contenido sin borrar el directorio.
+CMD ["sh", "-c", "pnpm prisma generate && pnpm prisma migrate deploy && find .dist-dev -mindepth 1 -delete && pnpm nest start --watch --config nest-cli.dev.json --entryFile main"]
 
 # ── Build ──────────────────────────────────────────────────────
 FROM deps AS build

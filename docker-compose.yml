@@ -11,6 +11,9 @@ x-backend-env: &backend-env
   DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}?schema=public
   REDIS_URL: redis://:${REDIS_PASSWORD}@redis:6379
   JWT_SECRET: ${JWT_SECRET:?definí JWT_SECRET en .env}
+  VAPID_PUBLIC_KEY: ${VAPID_PUBLIC_KEY:-}
+  VAPID_PRIVATE_KEY: ${VAPID_PRIVATE_KEY:-}
+  VAPID_SUBJECT: ${VAPID_SUBJECT:-mailto:admin@example.com}
   PORT: 3000
 
 services:
@@ -61,8 +64,8 @@ services:
     volumes:
       - ./backend:/app
       - backend-node-modules:/app/node_modules
-      # dist propio del contenedor: un `pnpm build` en el host no le borra la app en ejecución
-      - backend-dist:/app/dist
+      # salida propia del contenedor (.dist-dev): ni el host ni el contenedor se pisan el build
+      - backend-dist:/app/.dist-dev
     ports:
       - "3000:3000"
       - "9229:9229"

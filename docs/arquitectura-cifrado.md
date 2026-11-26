@@ -74,7 +74,7 @@ Pendiente para el módulo de sync: una `revision` asignada por secuencia puede h
 
 El navegador agenda `reminders` con `remindAt` en claro y el texto cifrado. Un job de BullMQ crea, a esa hora, una `notification` por miembro activo con el mismo payload cifrado. El servidor conoce cuándo, no qué ni cuánto.
 
-**Web Push** (decidido): con la app cerrada, el servidor envía una notificación push genérica ("Tenés un recordatorio"), sin datos financieros; el detalle se descifra al abrir la app.
+**Web Push** (implementado): con la app cerrada, el servidor envía una notificación push genérica ("Tenés un recordatorio"), sin datos financieros; el detalle se descifra al abrir la app. Un job de BullMQ revisa cada minuto los recordatorios vencidos y los reclama con `FOR UPDATE SKIP LOCKED` (nunca se disparan dos veces). El navegador programa los recordatorios de los próximos 35 días (vencimientos de tarjeta, cuotas, plazos fijos y recurrentes a confirmar) sin duplicarlos.
 
 ## Lo que el cifrado NO protege
 

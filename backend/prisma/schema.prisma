@@ -55,6 +55,7 @@ model User {
   remindersCreated    Reminder[]
   notifications       Notification[]
   tipDismissals       TipDismissal[]
+  pushSubscriptions   PushSubscription[]
 
   @@map("users")
 }
@@ -1020,4 +1021,20 @@ model Notification {
   @@unique([userId, dedupeKey])
   @@index([userId, readAt, createdAt(sort: Desc)])
   @@map("notifications")
+}
+
+/// Suscripción Web Push de un dispositivo. El push que se envía es genérico ("Tenés un recordatorio"):
+/// el servicio de push del navegador nunca ve datos financieros.
+model PushSubscription {
+  id        String   @id @default(uuid(7)) @db.Uuid
+  userId    String   @db.Uuid
+  endpoint  String   @unique
+  p256dh    String
+  auth      String
+  createdAt DateTime @default(now()) @db.Timestamptz
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("push_subscriptions")
 }

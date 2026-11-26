@@ -19,6 +19,8 @@ import { RecurringService } from '../recurring/recurring.service';
 import { computeBudget } from '../budget/budget-math';
 import { NetWorthService } from '../networth/net-worth.service';
 import { ProgressService } from '../progress/progress.service';
+import { NotificationsService } from '../notifications/notifications.service';
+import { ReminderPlannerService } from '../notifications/reminder-planner.service';
 import { RatesService } from '../rates/rates.service';
 import { BudgetsService } from '../budget/budgets.service';
 import { CurrenciesService } from '../../core/currencies/currencies.service';
@@ -47,6 +49,8 @@ export class Home implements OnInit {
   private readonly rates = inject(RatesService);
   private readonly netWorthService = inject(NetWorthService);
   readonly progress = inject(ProgressService);
+  private readonly planner = inject(ReminderPlannerService);
+  private readonly notifications = inject(NotificationsService);
   private readonly transloco = inject(TranslocoService);
 
   readonly me = this.session.me;
@@ -108,6 +112,8 @@ export class Home implements OnInit {
       await this.progress.ensureLoaded();
       const created = await this.recurring.processDue();
       void this.progress.record().catch(() => undefined);
+      void this.planner.plan().catch(() => undefined);
+      void this.notifications.load().catch(() => undefined);
       if (created > 0) this.snack.open(this.transloco.translate('recurring.autoPosted', { n: created }), undefined, { duration: 4000 });
     } catch {
       // El inicio sigue funcionando aunque falle; las otras pantallas muestran su error.

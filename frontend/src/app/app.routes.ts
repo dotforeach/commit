@@ -79,5 +79,11 @@ export const routes: Routes = [
     canActivate: [authGuard, unlockedGuard],
     loadComponent: () => import('./features/onboarding/onboarding-page').then((m) => m.OnboardingPage),
   },
+  {
+    path: 'ajustes',
+    pathMatch: 'full',
+    canActivate: [authGuard, unlockedGuard],
+    loadComponent: () => import('./features/settings/settings-page').then((m) => m.SettingsPage),
+  },
   { path: '**', redirectTo: 'inicio' },
 ];

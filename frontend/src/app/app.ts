@@ -5,9 +5,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { KeyVaultService } from './core/crypto/key-vault.service';
+import { NotificationsBell } from './features/notifications/notifications-bell';
 
 @Component({
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, MatToolbarModule, MatButtonModule, MatIconModule, TranslocoDirective],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, MatToolbarModule, MatButtonModule, MatIconModule, NotificationsBell, TranslocoDirective],
   selector: 'app-root',
   styleUrl: './app.scss',
   templateUrl: './app.html',

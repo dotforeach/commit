@@ -14,6 +14,12 @@
         <a mat-button routerLink="/cuentas" routerLinkActive="active">{{ t('nav.accounts') }}</a>
       </nav>
       <span class="spacer"></span>
+      @defer (on idle) {
+        <app-notifications-bell />
+      }
+      <a mat-icon-button routerLink="/ajustes" [attr.aria-label]="t('nav.settings')">
+        <mat-icon fontSet="material-symbols-outlined">settings</mat-icon>
+      </a>
       <button mat-icon-button (click)="lock()" [attr.aria-label]="t('nav.lock')">
         <mat-icon fontSet="material-symbols-outlined">lock</mat-icon>
       </button>
