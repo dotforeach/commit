@@ -6,6 +6,9 @@
       <mat-card-subtitle>{{ t('subtitle') }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
+      @if (autoLock.lockedByInactivity()) {
+        <p class="callout" role="status" data-testid="auto-locked">{{ t('autoLocked', { n: autoLock.minutes() }) }}</p>
+      }
       <form [formGroup]="form" class="form" (ngSubmit)="submit()">
         <mat-form-field>
           <mat-label>{{ t('passphrase') }}</mat-label>

@@ -4,6 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { TranslocoDirective } from '@jsverse/transloco';
+import { AutoLockService } from './core/crypto/auto-lock.service';
 import { KeyVaultService } from './core/crypto/key-vault.service';
 import { NotificationsBell } from './features/notifications/notifications-bell';
 
@@ -16,6 +17,8 @@ import { NotificationsBell } from './features/notifications/notifications-bell';
 export class App {
   readonly vault = inject(KeyVaultService);
   private readonly router = inject(Router);
+  /** Se instancia con la app: vigila la inactividad. */
+  protected readonly autoLock = inject(AutoLockService);
 
   async lock() {
     await this.vault.lock();

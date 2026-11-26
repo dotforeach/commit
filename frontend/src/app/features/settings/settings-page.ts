@@ -5,11 +5,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { RouterLink } from '@angular/router';
 import { TranslocoDirective } from '@jsverse/transloco';
+import { AUTO_LOCK_OPTIONS, AutoLockService } from '../../core/crypto/auto-lock.service';
 import { NotificationsService } from '../notifications/notifications.service';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-settings-page',
-  imports: [RouterLink, TranslocoDirective, MatButtonModule, MatCardModule, MatIconModule, MatSlideToggleModule],
+  imports: [RouterLink, TranslocoDirective, MatButtonModule, MatCardModule, MatFormFieldModule, MatIconModule, MatSelectModule, MatSlideToggleModule],
   template: `
     <ng-container *transloco="let t; prefix: 'settings'">
       <section class="page">
@@ -37,6 +40,17 @@ import { NotificationsService } from '../notifications/notifications.service';
             <mat-icon mat-card-avatar fontSet="material-symbols-outlined" aria-hidden="true">lock</mat-icon>
             <mat-card-title>{{ t('security.title') }}</mat-card-title>
           </mat-card-header>
+          <mat-card-content>
+            <mat-form-field>
+              <mat-label>{{ t('security.autoLock') }}</mat-label>
+              <mat-select [value]="autoLock.minutes()" (selectionChange)="autoLock.setMinutes($event.value)">
+                @for (m of lockOptions; track m) {
+                  <mat-option [value]="m">{{ m === 0 ? t('security.never') : t('security.minutes', { n: m }) }}</mat-option>
+                }
+              </mat-select>
+              <mat-hint>{{ t('security.autoLockHint') }}</mat-hint>
+            </mat-form-field>
+          </mat-card-content>
           <mat-card-actions>
             <a mat-button routerLink="/ajustes/clave">{{ t('security.passphrase') }}</a>
             <a mat-button routerLink="/hogar">{{ t('security.household') }}</a>
@@ -54,6 +68,8 @@ import { NotificationsService } from '../notifications/notifications.service';
 })
 export class SettingsPage {
   readonly notifications = inject(NotificationsService);
+  readonly autoLock = inject(AutoLockService);
+  readonly lockOptions = AUTO_LOCK_OPTIONS;
   readonly busy = signal(false);
   readonly message = signal<string | null>(null);
 

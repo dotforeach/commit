@@ -145,7 +145,8 @@
       "wrongPassphrase": "Clave de descifrado incorrecta.",
       "generic": "No pudimos desbloquear tus datos. Probá de nuevo."
     },
-    "forgot": "¿Olvidaste tu clave de descifrado?"
+    "forgot": "¿Olvidaste tu clave de descifrado?",
+    "autoLocked": "Bloqueamos tus datos después de {{n}} minutos sin actividad."
   },
   "home": {
     "greeting": "Hola, {{name}}",
@@ -1218,7 +1219,11 @@
       "title": "Seguridad y datos",
       "passphrase": "Cambiar clave de descifrado",
       "household": "Mi hogar",
-      "rates": "Cotizaciones"
+      "rates": "Cotizaciones",
+      "autoLock": "Bloquear automáticamente",
+      "never": "Nunca",
+      "minutes": "Tras {{n}} minutos sin actividad",
+      "autoLockHint": "Al bloquear, tus claves y tus datos descifrados se borran de la memoria."
     }
   }
 }

@@ -10,6 +10,7 @@ import { Router, RouterLink } from '@angular/router';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { AuthService } from '../../../core/auth/auth.service';
 import { takeReturnUrl } from '../../../core/auth/guards';
+import { AutoLockService } from '../../../core/crypto/auto-lock.service';
 import { KeyVaultService, WrongPassphraseError } from '../../../core/crypto/key-vault.service';
 import { SessionService } from '../../../core/session/session.service';
 
@@ -34,6 +35,7 @@ export class Unlock {
   private readonly session = inject(SessionService);
   private readonly auth = inject(AuthService);
   private readonly router = inject(Router);
+  readonly autoLock = inject(AutoLockService);
 
   readonly busy = signal(false);
   readonly error = signal<string | null>(null);
