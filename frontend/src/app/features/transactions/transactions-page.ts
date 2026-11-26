@@ -21,6 +21,8 @@ import { AccountsService } from '../accounts/accounts.service';
 import { CategoriesService } from '../categories/categories.service';
 import { totalsByCurrency } from './ledger';
 import { RecurringService } from '../recurring/recurring.service';
+import { InstallmentsService } from '../cards/installments.service';
+import { DebtsService } from '../debts/debts.service';
 import { TransactionDialog } from './transaction-dialog/transaction-dialog';
 import type { LedgerEntry, Transaction } from './transaction.model';
 import { TransactionsService } from './transactions.service';
@@ -62,6 +64,8 @@ export class TransactionsPage implements OnInit {
   /** El injector de la ruta tiene los providers del datepicker (DATE_PROVIDERS); MatDialog usaría el raíz. */
   private readonly injector = inject(Injector);
   private readonly recurring = inject(RecurringService);
+  private readonly installments = inject(InstallmentsService);
+  private readonly debts = inject(DebtsService);
 
   readonly month = signal(monthOf(todayIso()));
   readonly accountFilter = signal<string>('');
@@ -96,7 +100,7 @@ export class TransactionsPage implements OnInit {
 
   async ngOnInit() {
     try {
-      await Promise.all([this.accounts.load(), this.categories.ensureLoaded(), this.transactions.ensureLoaded()]);
+      await Promise.all([this.accounts.load(), this.categories.ensureLoaded(), this.transactions.ensureLoaded(), this.installments.ensureLoaded()]);
       await this.recurring.processDue();
     } catch {
       this.loadError.set(true);
@@ -128,6 +132,15 @@ export class TransactionsPage implements OnInit {
     return formatMoney(amount, this.currencies.get(currency));
   }
 
+  /** Compras en cuotas y pagos de deudas no se editan: se eliminan y se vuelven a cargar. */
+  editable(e: LedgerEntry) {
+    return e.kind === 'transfer' || (!e.tx.installmentPlanId && !e.tx.debtId);
+  }
+
+  installmentsOf(planId: string) {
+    return this.installments.plans().find((p) => p.id === planId)?.installmentsCount ?? '?';
+  }
+
   openNew() {
     this.dialog.open(TransactionDialog, { autoFocus: 'first-tabbable', injector: this.injector });
   }
@@ -149,6 +162,8 @@ export class TransactionsPage implements OnInit {
     if (!ok) return;
     try {
       await this.transactions.remove(tx);
+      if (tx.installmentPlanId) this.installments.forgetByTransaction(tx.id);
+      if (tx.debtId) await this.debts.load();
       this.snack.open(this.transloco.translate('transactions.deleted'), undefined, { duration: 3000 });
     } catch {
       this.snack.open(this.transloco.translate('transactions.errors.generic'), undefined, { duration: 5000 });

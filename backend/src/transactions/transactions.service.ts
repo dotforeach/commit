@@ -1,5 +1,5 @@
 import { BadRequestException, ConflictException, Injectable, NotFoundException } from '@nestjs/common';
-import type { Transaction } from '../generated/prisma/client.js';
+import type { DebtPayment, InstallmentPlan, Transaction } from '../generated/prisma/client.js';
 import { toBase64 } from '../common/base64.js';
 import { syncPage, toIsoDate, type SyncQuery } from '../common/sync.js';
 import { HouseholdAccessService } from '../households/household-access.service.js';
@@ -8,7 +8,9 @@ import type { CreateTransactionsInput, UpdateTransactionsInput } from './transac
 
 type Leg = CreateTransactionsInput['items'][number];
 
-function toDto(t: Transaction) {
+type Linked = Transaction & { installmentPlan?: Pick<InstallmentPlan, 'id' | 'deletedAt'> | null; debtPayment?: Pick<DebtPayment, 'id' | 'debtId' | 'deletedAt'> | null };
+
+function toDto(t: Linked) {
   return {
     id: t.id,
     householdId: t.householdId,
@@ -23,11 +25,18 @@ function toDto(t: Transaction) {
     payload: toBase64(t.payload),
     keyVersion: t.keyVersion,
     revision: t.revision.toString(),
+    installmentPlanId: t.installmentPlan && !t.installmentPlan.deletedAt ? t.installmentPlan.id : null,
+    debtId: t.debtPayment && !t.debtPayment.deletedAt ? t.debtPayment.debtId : null,
     createdAt: t.createdAt,
     updatedAt: t.updatedAt,
     deletedAt: t.deletedAt,
   };
 }
+
+const LINKS = {
+  installmentPlan: { select: { id: true, deletedAt: true } },
+  debtPayment: { select: { id: true, debtId: true, deletedAt: true } },
+} as const;
 
 /** Qué tipo de categoría admite cada tipo de movimiento. */
 const CATEGORY_KIND: Record<string, 'INCOME' | 'EXPENSE' | null> = {
@@ -53,6 +62,7 @@ export class TransactionsService {
       where: { householdId, revision: { gt: since }, ...(since === 0n ? { deletedAt: null } : {}) },
       orderBy: { revision: 'asc' },
       take: limit + 1,
+      include: LINKS,
     });
     const { page, hasMore, nextSince } = syncPage(rows, limit);
     return { items: page.map(toDto), hasMore, nextSince };
@@ -78,11 +88,14 @@ export class TransactionsService {
   async update(householdId: string, userId: string, input: UpdateTransactionsInput) {
     const { currentKeyVersion } = await this.access.require(householdId, userId, 'write');
     const ids = input.items.map((t) => t.id);
-    const existing = await this.prisma.transaction.findMany({ where: { id: { in: ids }, householdId, deletedAt: null } });
+    const existing = await this.prisma.transaction.findMany({ where: { id: { in: ids }, householdId, deletedAt: null }, include: LINKS });
     if (existing.length !== ids.length) throw new NotFoundException('Movimiento no encontrado');
     for (const item of input.items) {
       const current = existing.find((e) => e.id === item.id)!;
       // No se puede convertir un movimiento en transferencia ni separar las patas de una.
+      if ((current.installmentPlan && !current.installmentPlan.deletedAt) || (current.debtPayment && !current.debtPayment.deletedAt)) {
+        throw new BadRequestException('Las compras en cuotas y los pagos de deudas no se editan: eliminalos y volvé a cargarlos');
+      }
       if (current.transferGroupId !== item.transferGroupId) {
         throw new BadRequestException('No se puede cambiar si un movimiento es o no una transferencia');
       }
@@ -109,11 +122,19 @@ export class TransactionsService {
       const row = await tx.transaction.findFirst({ where: { id, householdId, deletedAt: null } });
       if (!row) throw new NotFoundException('Movimiento no encontrado');
       if (row.revision !== expectedRevision) throw new ConflictException('El movimiento cambió; recargá');
+      const now = new Date();
+      // Lo que cuelga de este movimiento se va con él: plan de cuotas o pago de deuda.
+      const plan = await tx.installmentPlan.findFirst({ where: { transactionId: id, deletedAt: null } });
+      if (plan) {
+        await tx.installmentPlan.update({ where: { id: plan.id }, data: { deletedAt: now } });
+        await tx.cardInstallment.updateMany({ where: { planId: plan.id, deletedAt: null }, data: { deletedAt: now } });
+      }
+      await tx.debtPayment.updateMany({ where: { transactionId: id, deletedAt: null }, data: { deletedAt: now } });
       await tx.transaction.updateMany({
         where: row.transferGroupId
           ? { householdId, transferGroupId: row.transferGroupId, deletedAt: null }
           : { id, householdId, revision: expectedRevision },
-        data: { deletedAt: new Date() },
+        data: { deletedAt: now },
       });
     });
   }

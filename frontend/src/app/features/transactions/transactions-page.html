@@ -71,6 +71,12 @@
                   @if (e.tx.recurringRuleId) {
                     <mat-icon class="recurring-mark" fontSet="material-symbols-outlined" [attr.aria-label]="t('fromRecurring')">event_repeat</mat-icon>
                   }
+                  @if (e.tx.installmentPlanId) {
+                    <span class="badge">{{ t('inInstallments', { n: installmentsOf(e.tx.installmentPlanId) }) }}</span>
+                  }
+                  @if (e.tx.debtId) {
+                    <span class="badge">{{ t('debtPayment') }}</span>
+                  }
                 </span>
                 <span class="meta">{{ category(e.tx)?.name ?? t('uncategorized') }} · {{ accountName(e.tx.accountId) }}</span>
               </div>
@@ -105,9 +111,11 @@
           <mat-icon fontSet="material-symbols-outlined">more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="edit(e)">
-            <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>{{ t('edit') }}
-          </button>
+          @if (editable(e)) {
+            <button mat-menu-item (click)="edit(e)">
+              <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>{{ t('edit') }}
+            </button>
+          }
           <button mat-menu-item (click)="remove(e)">
             <mat-icon fontSet="material-symbols-outlined">delete</mat-icon>{{ t('delete') }}
           </button>

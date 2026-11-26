@@ -17,10 +17,18 @@ import { compareDecimals, parseDecimalInput, toInputValue } from '../../../core/
 import { AccountsService } from '../../accounts/accounts.service';
 import { accountIcon } from '../../accounts/account.model';
 import { CategoriesService } from '../../categories/categories.service';
+import { InstallmentsService } from '../../cards/installments.service';
 import type { LedgerEntry } from '../transaction.model';
 import { TransactionsService } from '../transactions.service';
 
 type Mode = 'EXPENSE' | 'INCOME' | 'TRANSFER';
+
+/** Datos iniciales para un movimiento nuevo (p. ej. "Pagar resumen" arma la transferencia). */
+export interface TransactionPrefill {
+  prefill: { mode: Mode; accountId?: string; toAccountId?: string; amount?: string; description?: string };
+}
+
+const isEntry = (d: unknown): d is LedgerEntry => !!d && typeof d === 'object' && 'kind' in d;
 
 /** Monto positivo válido (o vacío si no es obligatorio). */
 const positiveAmount = (c: AbstractControl<string>): ValidationErrors | null => {
@@ -53,7 +61,10 @@ export class TransactionDialog {
   private readonly ref = inject(MatDialogRef<TransactionDialog>);
   readonly accountsService = inject(AccountsService);
   readonly categories = inject(CategoriesService);
-  readonly entry = inject<LedgerEntry | null>(MAT_DIALOG_DATA, { optional: true });
+  private readonly data = inject<LedgerEntry | TransactionPrefill | null>(MAT_DIALOG_DATA, { optional: true });
+  readonly entry: LedgerEntry | null = isEntry(this.data) ? this.data : null;
+  private readonly prefill = this.data && !isEntry(this.data) ? this.data.prefill : null;
+  private readonly installments = inject(InstallmentsService);
   readonly icon = accountIcon;
 
   readonly busy = signal(false);
@@ -71,11 +82,17 @@ export class TransactionDialog {
     categoryId: [this.entry?.kind === 'single' ? (this.entry.tx.categoryId ?? '') : ''],
     description: [this.initial('description'), [Validators.required, Validators.maxLength(140)]],
     notes: [this.initial('notes'), Validators.maxLength(1000)],
+    installments: [1, [Validators.min(1), Validators.max(72)]],
   });
 
   readonly mode = toSignal(this.form.controls.mode.valueChanges, { initialValue: this.form.controls.mode.value });
   private readonly from = toSignal(this.form.controls.accountId.valueChanges, { initialValue: this.form.controls.accountId.value });
   private readonly to = toSignal(this.form.controls.toAccountId.valueChanges, { initialValue: this.form.controls.toAccountId.value });
+
+  /** Gasto con tarjeta de crédito: se puede pagar en cuotas (solo al crear). */
+  readonly canUseInstallments = computed(
+    () => !this.entry && this.mode() === 'EXPENSE' && this.accountsService.accounts().find((a) => a.id === this.from())?.type === 'CREDIT_CARD',
+  );
 
   readonly categoryOptions = computed(() => (this.mode() === 'INCOME' ? this.categories.income() : this.categories.expense()));
   readonly currencyOf = (id: string) => this.accountsService.accounts().find((a) => a.id === id)?.currency ?? '';
@@ -94,6 +111,17 @@ export class TransactionDialog {
     });
     this.form.controls.accountId.valueChanges.subscribe(() => this.syncValidators());
     this.form.controls.toAccountId.valueChanges.subscribe(() => this.syncValidators());
+    if (this.prefill) {
+      const p = this.prefill;
+      this.form.patchValue({
+        mode: p.mode,
+        accountId: p.accountId ?? '',
+        toAccountId: p.toAccountId ?? '',
+        amount: p.amount ? toInputValue(p.amount) : '',
+        description: p.description ?? '',
+      });
+      this.syncValidators();
+    }
     if (!this.form.controls.accountId.value && this.accounts().length > 0) {
       this.form.controls.accountId.setValue(this.accounts()[0].id);
     }
@@ -139,8 +167,14 @@ export class TransactionDialog {
         else await this.transactions.createTransfer(draft);
       } else {
         const draft = { type: v.mode, accountId: v.accountId, categoryId: v.categoryId || null, date, amount, description, notes };
+        const card = this.accountsService.accounts().find((a) => a.id === v.accountId)?.creditCard;
         if (this.entry?.kind === 'single') await this.transactions.updateSingle(this.entry.tx, draft);
-        else await this.transactions.createSingle(draft);
+        else if (this.canUseInstallments() && v.installments > 1 && card) {
+          await this.installments.create(
+            { id: v.accountId, closingDay: card.closingDay, dueDay: card.dueDay },
+            { date, total: amount, count: v.installments, categoryId: draft.categoryId, description, notes },
+          );
+        } else await this.transactions.createSingle(draft);
       }
       this.ref.close(true);
     } catch (e) {

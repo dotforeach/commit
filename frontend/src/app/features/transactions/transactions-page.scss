@@ -107,3 +107,13 @@
   vertical-align: middle;
   color: var(--mat-sys-on-surface-variant);
 }
+
+.badge {
+  margin-left: 6px;
+  padding: 1px 8px;
+  border-radius: 10px;
+  font: var(--mat-sys-label-small);
+  background: var(--mat-sys-secondary-container);
+  color: var(--mat-sys-on-secondary-container);
+  vertical-align: middle;
+}

@@ -312,7 +312,9 @@
         "INCOME": "Ej.: Sueldo de noviembre",
         "TRANSFER": "Ej.: Compra de dólares"
       },
-      "notes": "Notas (opcional)"
+      "notes": "Notas (opcional)",
+      "installments": "Cuotas",
+      "installmentsHint": "1 = en un pago. Cada cuota cae en el resumen que corresponde."
     },
     "errors": {
       "decimal": "Monto inválido. Ej.: 1.234,56",
@@ -323,7 +325,9 @@
       "load": "No pudimos cargar tus movimientos.",
       "generic": "No pudimos guardar los cambios. Probá de nuevo."
     },
-    "fromRecurring": "Generado por un recurrente"
+    "fromRecurring": "Generado por un recurrente",
+    "inInstallments": "en {{n}} cuotas",
+    "debtPayment": "pago de deuda"
   },
   "recurring": {
     "title": "Recurrentes",

@@ -174,6 +174,8 @@ export class TransactionsService {
       transferGroupId: dto.transferGroupId,
       createdById: dto.createdById,
       recurringRuleId: dto.recurringRuleId,
+      installmentPlanId: dto.installmentPlanId ?? null,
+      debtId: dto.debtId ?? null,
       revision: dto.revision,
     };
   }

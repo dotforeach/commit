@@ -17,6 +17,8 @@ export interface TransactionDto {
   date: string; // YYYY-MM-DD
   transferGroupId: string | null;
   recurringRuleId: string | null;
+  installmentPlanId?: string | null;
+  debtId?: string | null;
   createdById: string;
   payload: string;
   keyVersion: number;
@@ -33,6 +35,10 @@ export interface Transaction extends TransactionPayload {
   date: string;
   transferGroupId: string | null;
   recurringRuleId?: string | null;
+  /** Es la compra de un plan de cuotas: no se edita, se elimina y se vuelve a cargar. */
+  installmentPlanId?: string | null;
+  /** Es el pago de una deuda. */
+  debtId?: string | null;
   createdById: string;
   revision: string;
 }
