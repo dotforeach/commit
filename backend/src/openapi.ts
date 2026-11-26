@@ -9,7 +9,7 @@ import { AppModule } from './app.module.js';
 
 const app = await NestFactory.create(AppModule, { preview: true, logger: false });
 app.setGlobalPrefix('api', { exclude: ['health', 'ready'] });
-const document = SwaggerModule.createDocument(app, new DocumentBuilder().setTitle('Finanzas 0→100 API').setVersion('0.1').addBearerAuth().build());
+const document = SwaggerModule.createDocument(app, new DocumentBuilder().setTitle('Commit API').setVersion('0.1.0').addBearerAuth().build());
 const out = new URL('../frontend/src/app/core/api/openapi.json', `file://${process.cwd()}/`);
 writeFileSync(out, JSON.stringify(document, null, 2) + '\n');
 console.log(`OpenAPI: ${Object.keys(document.paths).length} rutas → ${out.pathname}`);

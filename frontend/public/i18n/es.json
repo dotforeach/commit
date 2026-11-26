@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "Finanzas 0→100"
+    "name": "Commit"
   },
   "household": {
     "personalName": "Finanzas de {{name}}",

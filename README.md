@@ -1,4 +1,4 @@
-# Finanzas 0→100
+# Commit
 
 App para ordenar las finanzas personales de punta a punta: cuentas, movimientos, recurrentes, presupuesto, deudas, ahorro e inversiones. Los datos se cifran en tu dispositivo (conocimiento cero): ni el servidor ni sus administradores pueden leerlos. Ver [docs/arquitectura-cifrado.md](docs/arquitectura-cifrado.md).
 

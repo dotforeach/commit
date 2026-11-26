@@ -9,7 +9,7 @@ describe('App', () => {
       imports: [
         App,
         TranslocoTestingModule.forRoot({
-          langs: { es: { app: { name: 'Finanzas 0→100' } } },
+          langs: { es: { app: { name: 'Commit' } } },
           translocoConfig: { availableLangs: ['es'], defaultLang: 'es' },
         }),
       ],
@@ -22,6 +22,6 @@ describe('App', () => {
     await fixture.whenStable();
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Finanzas 0→100');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Commit 0.1.0');
   });
 });

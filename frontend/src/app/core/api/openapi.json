@@ -5105,9 +5105,9 @@
     }
   },
   "info": {
-    "title": "Finanzas 0→100 API",
+    "title": "Commit API",
     "description": "",
-    "version": "0.1",
+    "version": "0.1.0",
     "contact": {}
   },
   "tags": [],

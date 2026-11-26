@@ -98,7 +98,7 @@ export class Register {
 
   downloadPhrase() {
     const numbered = this.phrase().map((w, i) => `${String(i + 1).padStart(2, ' ')}. ${w}`).join('\n');
-    const blob = new Blob([`Finanzas 0→100 — frase de recuperación\n\n${numbered}\n`], { type: 'text/plain' });
+    const blob = new Blob([`Commit — frase de recuperación\n\n${numbered}\n`], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = Object.assign(document.createElement('a'), { href: url, download: 'frase-de-recuperacion.txt' });
     a.click();

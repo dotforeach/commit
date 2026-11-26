@@ -1,4 +1,4 @@
-// Modelo de datos — Finanzas 0→100 (cifrado de conocimiento cero, modo híbrido)
+// Modelo de datos — Commit (cifrado de conocimiento cero, modo híbrido)
 //
 // Ver docs/arquitectura-cifrado.md. Resumen:
 // - Todo dato financiero pertenece a un Household. Cada hogar tiene una clave simétrica

@@ -31,7 +31,7 @@ if (!isProduction) {
   const document = () =>
     SwaggerModule.createDocument(
       app,
-      new DocumentBuilder().setTitle('Finanzas 0→100 API').setVersion('0.1').addBearerAuth().build(),
+      new DocumentBuilder().setTitle('Commit API').setVersion('0.1.0').addBearerAuth().build(),
     );
   SwaggerModule.setup('api/docs', app, document);
 }

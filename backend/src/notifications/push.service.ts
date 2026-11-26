@@ -39,7 +39,7 @@ export class PushService implements OnModuleInit {
     const subs = await this.prisma.pushSubscription.findMany({ where: { userId } });
     const message = JSON.stringify({
       notification: {
-        title: 'Finanzas 0→100',
+        title: 'Commit',
         body,
         icon: '/icons/icon-192x192.png',
         data: { onActionClick: { default: { operation: 'navigateLastFocusedOrOpen', url: '/inicio' } } },

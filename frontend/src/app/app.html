@@ -1,7 +1,7 @@
 <ng-container *transloco="let t">
   <mat-toolbar>
     <mat-icon fontSet="material-symbols-outlined" aria-hidden="true">savings</mat-icon>
-    <h1 class="app-title">{{ t('app.name') }}</h1>
+    <h1 class="app-title">{{ t('app.name') }} <span class="app-version" data-testid="app-version">{{ version }}</span></h1>
     @if (vault.isUnlocked()) {
       <nav class="nav">
         <a mat-button routerLink="/inicio" routerLinkActive="active">{{ t('nav.home') }}</a>

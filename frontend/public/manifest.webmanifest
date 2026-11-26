@@ -1,6 +1,6 @@
 {
-  "name": "Finanzas 0→100",
-  "short_name": "Finanzas",
+  "name": "Commit",
+  "short_name": "Commit",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",

@@ -1,4 +1,4 @@
-# Finanzas 0→100
+# Commit
 #
 #   Desarrollo:  docker compose --profile dev up --build
 #   Producción:  docker compose --profile prod up --build -d

@@ -56,7 +56,7 @@ export class RateSources {
   }
 
   private async get(url: string): Promise<unknown> {
-    const res = await fetch(url, { signal: AbortSignal.timeout(10_000), headers: { accept: 'application/json', 'user-agent': 'finanzas-0-100' } });
+    const res = await fetch(url, { signal: AbortSignal.timeout(10_000), headers: { accept: 'application/json', 'user-agent': 'commit-app' } });
     if (!res.ok) throw new Error(`${url}: HTTP ${res.status}`);
     return res.json();
   }
