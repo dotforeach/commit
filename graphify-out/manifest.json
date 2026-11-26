@@ -228,9 +228,9 @@
     "semantic_hash": ""
   },
   "frontend/public/i18n/es.json": {
-    "mtime": 1795726489.7982657,
-    "seen": 1795726799.869148,
-    "ast_hash": "e793975c26ab9ad11016defe2e72ae6e",
+    "mtime": 1795737122.9960234,
+    "seen": 1795737361.235989,
+    "ast_hash": "ceac14f31ae371d403c7d97f1f5e0a0e",
     "semantic_hash": ""
   },
   "frontend/src/app/core/i18n/transloco-loader.ts": {

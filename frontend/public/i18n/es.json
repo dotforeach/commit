@@ -1272,7 +1272,7 @@
       },
       "fullFund": {
         "title": "Completá el fondo de emergencia (3 meses): ahorrá {{amount}}",
-        "why": "Llevás {{saved}} de {{target}}. Es tu red de seguridad ante una pérdida de ingresos."
+        "why": "Con el colchón de este mes llevarías {{saved}} de {{target}}. Es tu red de seguridad ante una pérdida de ingresos."
       },
       "goal": {
         "title": "Ahorrá {{amount}} para «{{name}}»",
