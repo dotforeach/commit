@@ -30,9 +30,9 @@
     "semantic_hash": ""
   },
   "backend/src/app.module.ts": {
-    "mtime": 1795717125.2884264,
-    "seen": 1795717555.5416331,
-    "ast_hash": "a2f053a9841f8a4d7512b71ee6c3eff5",
+    "mtime": 1795717724.615703,
+    "seen": 1795718354.5151339,
+    "ast_hash": "932f6e9f995c4e14a18c83f4dcd6fd50",
     "semantic_hash": ""
   },
   "backend/src/config/env.schema.ts": {
@@ -162,9 +162,9 @@
     "semantic_hash": ""
   },
   "frontend/src/app/app.routes.ts": {
-    "mtime": 1795717334.4106138,
-    "seen": 1795717555.5432909,
-    "ast_hash": "039b959632b2c705b268916460a6523e",
+    "mtime": 1795717963.07072,
+    "seen": 1795718354.517101,
+    "ast_hash": "2c6f8a30800808724c4c28daf121a529",
     "semantic_hash": ""
   },
   "frontend/src/app/app.spec.ts": {
@@ -216,9 +216,9 @@
     "semantic_hash": ""
   },
   "frontend/src/app/app.html": {
-    "mtime": 1795716510.548009,
-    "seen": 1795716833.5853682,
-    "ast_hash": "560b390225759a567e50ba3f51caa01d",
+    "mtime": 1795717963.0709262,
+    "seen": 1795718354.519521,
+    "ast_hash": "e69f2e8b9230b86b84b5879e8af6424d",
     "semantic_hash": ""
   },
   "frontend/src/index.html": {
@@ -228,9 +228,9 @@
     "semantic_hash": ""
   },
   "frontend/public/i18n/es.json": {
-    "mtime": 1795717334.4117472,
-    "seen": 1795717555.5432699,
-    "ast_hash": "7e88586b3977d4c932b6c17856aae947",
+    "mtime": 1795717963.07287,
+    "seen": 1795718354.517078,
+    "ast_hash": "353d6dba4e462f0e49630d51322655fe",
     "semantic_hash": ""
   },
   "frontend/src/app/core/i18n/transloco-loader.ts": {
@@ -468,9 +468,9 @@
     "semantic_hash": ""
   },
   "frontend/src/app/features/home/home.ts": {
-    "mtime": 1795717334.381794,
-    "seen": 1795717555.544567,
-    "ast_hash": "7dc075ab964fe7fb4f50ca8e2666d47f",
+    "mtime": 1795717963.071146,
+    "seen": 1795718354.5185769,
+    "ast_hash": "8c0ffd84e73e3de88f9ea8a6cdede4f3",
     "semantic_hash": ""
   },
   "frontend/src/app/shared/validators.ts": {
@@ -498,9 +498,9 @@
     "semantic_hash": ""
   },
   "frontend/src/app/features/home/home.html": {
-    "mtime": 1795717334.3819087,
-    "seen": 1795717555.545606,
-    "ast_hash": "d59e1575cc1067c82920b5ba52f4b8ff",
+    "mtime": 1795717963.071329,
+    "seen": 1795718354.519828,
+    "ast_hash": "90bbc71fe1c43d3fcba3568cc6bd328e",
     "semantic_hash": ""
   },
   "backend/src/accounts/accounts.controller.ts": {
@@ -853,14 +853,14 @@
   },
   "backend/prisma/migrations/20261126000000_init/migration.sql": {
     "mtime": 1795710818.5744884,
-    "seen": 1795711045.614058,
-    "ast_hash": "",
+    "seen": 1795717556.889206,
+    "ast_hash": "149a3cea6a6c621088a93df943c97bfb",
     "semantic_hash": ""
   },
   "backend/prisma/migrations/20261126000100_seed_currencies/migration.sql": {
     "mtime": 1795710818.5747335,
-    "seen": 1795711045.614059,
-    "ast_hash": "",
+    "seen": 1795717556.889208,
+    "ast_hash": "5b48ef84625127eb4fc8debf03dad284",
     "semantic_hash": ""
   },
   "backend/src/recurring/recurring.controller.ts": {
@@ -1437,6 +1437,66 @@
     "mtime": 1795717334.3877578,
     "seen": 1795717555.5456069,
     "ast_hash": "d88c64d0db409401e805484cb3618d83",
+    "semantic_hash": ""
+  },
+  "backend/src/progress/progress.ts": {
+    "mtime": 1795717724.590328,
+    "seen": 1795718354.515944,
+    "ast_hash": "861fca7bb6d3e57aa6739852d0f39ee9",
+    "semantic_hash": ""
+  },
+  "backend/test/progress.e2e-spec.ts": {
+    "mtime": 1795717724.619125,
+    "seen": 1795718354.516555,
+    "ast_hash": "dd3ac54d9735239b129d69e9e56bbc53",
+    "semantic_hash": ""
+  },
+  "frontend/e2e/progress.e2e.ts": {
+    "mtime": 1795718219.5713637,
+    "seen": 1795718354.516908,
+    "ast_hash": "9a4bc3f58312835d662d2b289f7b8c8e",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/onboarding/onboarding-page.ts": {
+    "mtime": 1795717998.588575,
+    "seen": 1795718354.5186508,
+    "ast_hash": "073fae1033bf859a90deca8f67d5b755",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/progress/progress-engine.spec.ts": {
+    "mtime": 1795717777.8443956,
+    "seen": 1795718354.518652,
+    "ast_hash": "97ef6b3438407e079c4932f985185900",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/progress/progress-engine.ts": {
+    "mtime": 1795717777.8425994,
+    "seen": 1795718354.518653,
+    "ast_hash": "67574c9887341fa334637d4b2de3c18d",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/progress/progress-page.ts": {
+    "mtime": 1795717855.1516886,
+    "seen": 1795718354.518653,
+    "ast_hash": "abd4dc40072a6cc169eb41566d91a080",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/progress/progress.service.ts": {
+    "mtime": 1795717818.4551318,
+    "seen": 1795718354.5186539,
+    "ast_hash": "494ba7547bdf7d2d866a0ded95f3fbdf",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/onboarding/onboarding-page.html": {
+    "mtime": 1795717919.8307323,
+    "seen": 1795718354.519828,
+    "ast_hash": "b4f52408b9a4760a03fcdd560f6f81a4",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/progress/progress-page.html": {
+    "mtime": 1795717855.1536877,
+    "seen": 1795718354.519829,
+    "ast_hash": "bd42f8ac93818ea98389e34d2dac9890",
     "semantic_hash": ""
   },
   "backend/pnpm-lock.yaml": {

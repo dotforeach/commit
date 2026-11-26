@@ -1,0 +1,52 @@
+@use '../accounts/accounts-page';
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+
+  &.three {
+    grid-template-columns: 2fr 1fr 1fr;
+    margin-bottom: 8px;
+  }
+}
+
+.fixed-row {
+  display: grid;
+  grid-template-columns: 1fr 160px 90px;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 0;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 12px;
+
+  mat-spinner {
+    display: inline-block;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+}
+
+.total {
+  text-align: right;
+  font: var(--mat-sys-title-small);
+}
+
+.suggestion ul {
+  padding-left: 20px;
+}
+
+.warn {
+  color: #ef6c00;
+}

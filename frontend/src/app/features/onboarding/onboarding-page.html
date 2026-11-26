@@ -1,0 +1,150 @@
+<ng-container *transloco="let t; prefix: 'onboarding'">
+  <section class="page">
+    <header class="head">
+      <div>
+        <h2>{{ t('title') }}</h2>
+        <p class="subtitle">{{ t('subtitle') }}</p>
+      </div>
+      <button mat-button (click)="skip()">{{ t('skip') }}</button>
+    </header>
+    @if (error(); as key) {
+      <p class="error" role="alert">{{ t('error') }}</p>
+    }
+
+    <mat-stepper orientation="vertical" #stepper>
+      <!-- 1. Sueldo -->
+      <mat-step [stepControl]="salary" [label]="t('salary.label')">
+        <form [formGroup]="salary" class="form">
+          <p>{{ t('salary.intro') }}</p>
+          @if (existingAccounts().length > 0) {
+            <mat-form-field>
+              <mat-label>{{ t('salary.account') }}</mat-label>
+              <mat-select formControlName="accountId">
+                @for (a of existingAccounts(); track a.id) {
+                  <mat-option [value]="a.id">{{ a.name }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          } @else {
+            <div class="row">
+              <mat-form-field>
+                <mat-label>{{ t('salary.newAccount') }}</mat-label>
+                <input matInput formControlName="accountName" />
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>{{ t('salary.balance') }}</mat-label>
+                <input matInput formControlName="initialBalance" inputmode="decimal" />
+              </mat-form-field>
+            </div>
+          }
+          <div class="row">
+            <mat-form-field>
+              <mat-label>{{ t('salary.amount') }}</mat-label>
+              <input matInput formControlName="amount" inputmode="decimal" />
+              <mat-hint>{{ t('salary.amountHint') }}</mat-hint>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>{{ t('salary.payday') }}</mat-label>
+              <input matInput type="number" formControlName="payday" min="1" max="31" />
+            </mat-form-field>
+          </div>
+          <div class="actions">
+            <button mat-flat-button type="button" [disabled]="salary.invalid || busy()" (click)="saveSalary().then((ok) => ok && stepper.next())">
+              {{ saved().salary ? t('next') : t('saveNext') }}
+            </button>
+          </div>
+        </form>
+      </mat-step>
+
+      <!-- 2. Gastos fijos -->
+      <mat-step [stepControl]="fixed" [label]="t('fixed.label')">
+        <form [formGroup]="fixed" class="form">
+          <p>{{ t('fixed.intro') }}</p>
+          <div formArrayName="items" class="fixed">
+            @for (row of fixedItems.controls; track $index; let i = $index) {
+              <div class="fixed-row" [formGroupName]="i">
+                <span class="name">{{ label(fixedDefs[i].key) }}
+                  @if (fixedDefs[i].variable) {
+                    <span class="meta">({{ t('fixed.variable') }})</span>
+                  }
+                </span>
+                <mat-form-field subscriptSizing="dynamic">
+                  <mat-label>{{ t('fixed.amount') }}</mat-label>
+                  <input matInput formControlName="amount" inputmode="decimal" [attr.aria-label]="t('fixed.amountFor', { name: label(fixedDefs[i].key) })" />
+                </mat-form-field>
+                <mat-form-field subscriptSizing="dynamic" class="day">
+                  <mat-label>{{ t('fixed.day') }}</mat-label>
+                  <input matInput type="number" formControlName="day" min="1" max="31" />
+                </mat-form-field>
+              </div>
+            }
+          </div>
+          <p class="total">{{ t('fixed.total', { amount: money(fixedTotal()) }) }}</p>
+          <div class="actions">
+            <button mat-button matStepperPrevious type="button">{{ t('back') }}</button>
+            <button mat-flat-button type="button" [disabled]="fixed.invalid || busy()" (click)="saveFixed().then((ok) => ok && stepper.next())">
+              {{ saved().fixed ? t('next') : t('saveNext') }}
+            </button>
+          </div>
+        </form>
+      </mat-step>
+
+      <!-- 3. Deudas -->
+      <mat-step [stepControl]="debtsForm" [label]="t('debts.label')" [optional]="true">
+        <form [formGroup]="debtsForm" class="form">
+          <p>{{ t('debts.intro') }}</p>
+          <div formArrayName="items">
+            @for (row of debtItems.controls; track $index; let i = $index) {
+              <div class="row three" [formGroupName]="i">
+                <mat-form-field subscriptSizing="dynamic">
+                  <mat-label>{{ t('debts.name') }}</mat-label>
+                  <input matInput formControlName="name" [attr.aria-label]="t('debts.nameN', { n: i + 1 })" />
+                </mat-form-field>
+                <mat-form-field subscriptSizing="dynamic">
+                  <mat-label>{{ t('debts.balance') }}</mat-label>
+                  <input matInput formControlName="balance" inputmode="decimal" [attr.aria-label]="t('debts.balanceN', { n: i + 1 })" />
+                </mat-form-field>
+                <mat-form-field subscriptSizing="dynamic">
+                  <mat-label>{{ t('debts.payment') }}</mat-label>
+                  <input matInput formControlName="payment" inputmode="decimal" [attr.aria-label]="t('debts.paymentN', { n: i + 1 })" />
+                </mat-form-field>
+              </div>
+            }
+          </div>
+          <div class="actions">
+            <button mat-button matStepperPrevious type="button">{{ t('back') }}</button>
+            <button mat-flat-button type="button" [disabled]="busy()" (click)="saveDebts().then((ok) => ok && stepper.next())">
+              {{ saved().debts ? t('next') : t('saveNext') }}
+            </button>
+          </div>
+        </form>
+      </mat-step>
+
+      <!-- 4. Presupuesto -->
+      <mat-step [label]="t('budget.label')">
+        @if (suggestion(); as s) {
+          <div class="suggestion" data-testid="onboarding-budget">
+            <p>{{ t('budget.intro', { income: money(s.income) }) }}</p>
+            <ul>
+              <li><strong>{{ t('budget.needs') }}</strong> {{ money(s.needs) }} · {{ t('budget.fixedIn', { amount: money(s.fixed) }) }}</li>
+              <li><strong>{{ t('budget.wants') }}</strong> {{ money(s.wants) }}</li>
+              <li><strong>{{ t('budget.savings') }}</strong> {{ money(s.savings) }}</li>
+            </ul>
+            @if (s.needsLeft.startsWith('-')) {
+              <p class="warn">{{ t('budget.fixedTooHigh') }}</p>
+            }
+          </div>
+        }
+        <div class="actions">
+          <button mat-button matStepperPrevious type="button">{{ t('back') }}</button>
+          <button mat-flat-button type="button" [disabled]="busy()" (click)="finish()">
+            @if (busy()) {
+              <mat-spinner diameter="18" />
+            }
+            {{ t('finish') }}
+          </button>
+        </div>
+      </mat-step>
+    </mat-stepper>
+  </section>
+</ng-container>

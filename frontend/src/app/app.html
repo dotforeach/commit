@@ -5,6 +5,7 @@
     @if (vault.isUnlocked()) {
       <nav class="nav">
         <a mat-button routerLink="/inicio" routerLinkActive="active">{{ t('nav.home') }}</a>
+        <a mat-button routerLink="/progreso" routerLinkActive="active">{{ t('nav.progress') }}</a>
         <a mat-button routerLink="/movimientos" routerLinkActive="active">{{ t('nav.transactions') }}</a>
         <a mat-button routerLink="/presupuesto" routerLinkActive="active">{{ t('nav.budget') }}</a>
         <a mat-button routerLink="/recurrentes" routerLinkActive="active">{{ t('nav.recurring') }}</a>

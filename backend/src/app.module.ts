@@ -2,6 +2,7 @@ import { BullModule } from '@nestjs/bullmq';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import type { Env } from './config/env.schema.js';
+import { ProgressModule } from './progress/progress.js';
 import { RatesModule } from './rates/rates.module.js';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
@@ -52,6 +53,7 @@ import { RedisModule } from './redis/redis.module.js';
     DepositsModule,
     InvestmentsModule,
     RatesModule,
+    ProgressModule,
   ],
   providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }],
 })

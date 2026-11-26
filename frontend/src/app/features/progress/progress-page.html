@@ -1,0 +1,84 @@
+<ng-container *transloco="let t; prefix: 'progress'">
+  <section class="page">
+    <h2>{{ t('title') }}</h2>
+    <p class="subtitle">{{ t('subtitle') }}</p>
+    @if (loading()) {
+      <mat-progress-bar mode="indeterminate" />
+    }
+
+    <div class="top">
+      <mat-card appearance="outlined" class="score-card">
+        <div class="ring" [style.--pct]="progress.score().score" data-testid="score">
+          <span class="value">{{ progress.score().score }}</span>
+          <span class="of">/ 100</span>
+        </div>
+        <p class="score-label">{{ t('scoreLabel.' + (progress.score().score >= 80 ? 'great' : progress.score().score >= 50 ? 'good' : progress.score().score >= 25 ? 'fair' : 'start')) }}</p>
+        @if (trend(); as d) {
+          <p class="trend" [class.up]="d > 0" [class.down]="d < 0">{{ d > 0 ? '▲' : '▼' }} {{ t('trend', { n: d > 0 ? d : -d }) }}</p>
+        }
+      </mat-card>
+
+      <mat-card appearance="outlined" class="components">
+        <mat-card-header><mat-card-title>{{ t('componentsTitle') }}</mat-card-title></mat-card-header>
+        <mat-card-content>
+          <ul>
+            @for (c of progress.score().components; track c.key) {
+              <li [attr.data-component]="c.key">
+                <div class="row">
+                  <span class="name">{{ t('components.' + c.key + '.name') }}</span>
+                  <span class="pts">{{ c.points }} / {{ c.max }}</span>
+                </div>
+                <mat-progress-bar mode="determinate" [value]="(c.points / c.max) * 100" />
+                <span class="meta">{{ explain(c) }}</span>
+              </li>
+            }
+          </ul>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    @if (progress.tips().length > 0) {
+      <h3 class="section">{{ t('tipsTitle') }}</h3>
+      <div class="tips">
+        @for (tip of progress.tips(); track tip.key) {
+          <mat-card appearance="outlined" class="tip" [attr.data-tip]="tip.key">
+            <mat-card-content>
+              <p class="tip-title"><mat-icon fontSet="material-symbols-outlined" aria-hidden="true">lightbulb</mat-icon>{{ t('tips.' + tip.key + '.title') }}</p>
+              <p>{{ t('tips.' + tip.key + '.body') }}</p>
+            </mat-card-content>
+            <mat-card-actions align="end">
+              <button mat-button (click)="dismiss(tip.key)">{{ t('dismiss') }}</button>
+              <a mat-flat-button [routerLink]="tip.route">{{ t('tips.' + tip.key + '.action') }}</a>
+            </mat-card-actions>
+          </mat-card>
+        }
+      </div>
+    }
+
+    <h3 class="section">{{ t('pathTitle') }}</h3>
+    <ol class="path">
+      @for (level of progress.path().levels; track level.key; let i = $index) {
+        <li [class.done]="level.done" [class.current]="i === progress.path().current" [attr.data-level]="level.key">
+          <mat-icon class="badge" fontSet="material-symbols-outlined" aria-hidden="true">{{ level.done ? 'check_circle' : icons[level.key] }}</mat-icon>
+          <div class="level-body">
+            <p class="level-name">{{ t('levelN', { n: i + 1 }) }} · {{ t('levels.' + level.key + '.name') }}</p>
+            <p class="meta">{{ t('levels.' + level.key + '.goal') }}</p>
+            @if (i === progress.path().current) {
+              <ul class="checks">
+                @for (c of level.checks; track c.key) {
+                  <li [class.ok]="c.done">
+                    <mat-icon fontSet="material-symbols-outlined" aria-hidden="true">{{ c.done ? 'check' : 'radio_button_unchecked' }}</mat-icon>
+                    {{ t('checks.' + level.key + '.' + c.key) }}
+                  </li>
+                }
+              </ul>
+            }
+          </div>
+        </li>
+      }
+    </ol>
+    @if (progress.path().current === progress.path().levels.length) {
+      <p class="all-done">{{ t('allDone') }}</p>
+    }
+  </section>
+</ng-container>

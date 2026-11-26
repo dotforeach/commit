@@ -18,6 +18,7 @@ import { PendingList } from '../recurring/pending-list/pending-list';
 import { RecurringService } from '../recurring/recurring.service';
 import { computeBudget } from '../budget/budget-math';
 import { NetWorthService } from '../networth/net-worth.service';
+import { ProgressService } from '../progress/progress.service';
 import { RatesService } from '../rates/rates.service';
 import { BudgetsService } from '../budget/budgets.service';
 import { CurrenciesService } from '../../core/currencies/currencies.service';
@@ -45,6 +46,7 @@ export class Home implements OnInit {
   private readonly currencies = inject(CurrenciesService);
   private readonly rates = inject(RatesService);
   private readonly netWorthService = inject(NetWorthService);
+  readonly progress = inject(ProgressService);
   private readonly transloco = inject(TranslocoService);
 
   readonly me = this.session.me;
@@ -103,7 +105,9 @@ export class Home implements OnInit {
   async ngOnInit() {
     try {
       await Promise.all([this.accounts.load(), this.categories.ensureLoaded(), this.transactions.ensureLoaded(), this.budgets.ensureLoaded(), this.netWorthService.ensureLoaded()]);
+      await this.progress.ensureLoaded();
       const created = await this.recurring.processDue();
+      void this.progress.record().catch(() => undefined);
       if (created > 0) this.snack.open(this.transloco.translate('recurring.autoPosted', { n: created }), undefined, { duration: 4000 });
     } catch {
       // El inicio sigue funcionando aunque falle; las otras pantallas muestran su error.

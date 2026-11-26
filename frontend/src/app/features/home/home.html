@@ -2,6 +2,41 @@
   <section class="home">
     <h2>{{ t('greeting', { name: displayName() }) }}</h2>
 
+    @if (!me()?.user?.onboardingCompletedAt) {
+      <mat-card appearance="outlined" class="onboarding" data-testid="onboarding-banner">
+        <mat-card-header>
+          <mat-icon mat-card-avatar fontSet="material-symbols-outlined" aria-hidden="true">rocket_launch</mat-icon>
+          <mat-card-title>{{ t('onboarding.title') }}</mat-card-title>
+          <mat-card-subtitle>{{ t('onboarding.body') }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-actions align="end">
+          <a mat-flat-button routerLink="/bienvenida">{{ t('onboarding.start') }}</a>
+        </mat-card-actions>
+      </mat-card>
+    }
+
+    <mat-card appearance="outlined" class="progress-card" data-testid="home-progress">
+      <mat-card-header>
+        <mat-icon mat-card-avatar fontSet="material-symbols-outlined" aria-hidden="true">insights</mat-icon>
+        <mat-card-title>{{ t('progress.title', { score: progress.score().score }) }}</mat-card-title>
+        <mat-card-subtitle>
+          @if (progress.path().current < progress.path().levels.length) {
+            {{ t('progress.level', { n: progress.path().current + 1 }) }}
+          } @else {
+            {{ t('progress.allDone') }}
+          }
+        </mat-card-subtitle>
+      </mat-card-header>
+      @if (progress.tips()[0]; as tip) {
+        <mat-card-content>
+          <p class="tip"><mat-icon fontSet="material-symbols-outlined" aria-hidden="true">lightbulb</mat-icon>{{ t('tips.' + tip.key) }}</p>
+        </mat-card-content>
+      }
+      <mat-card-actions align="end">
+        <a mat-button routerLink="/progreso">{{ t('progress.open') }}</a>
+      </mat-card-actions>
+    </mat-card>
+
     <app-pending-list />
 
     <mat-card appearance="outlined" class="networth" data-testid="net-worth">

@@ -69,5 +69,15 @@ export const routes: Routes = [
     canActivate: [authGuard, unlockedGuard],
     loadComponent: () => import('./features/rates/rates-page').then((m) => m.RatesPage),
   },
+  {
+    path: 'progreso',
+    canActivate: [authGuard, unlockedGuard],
+    loadComponent: () => import('./features/progress/progress-page').then((m) => m.ProgressPage),
+  },
+  {
+    path: 'bienvenida',
+    canActivate: [authGuard, unlockedGuard],
+    loadComponent: () => import('./features/onboarding/onboarding-page').then((m) => m.OnboardingPage),
+  },
   { path: '**', redirectTo: 'inicio' },
 ];

@@ -61,3 +61,19 @@
     color: var(--mat-sys-on-surface-variant);
   }
 }
+
+.onboarding,
+.progress-card {
+  margin: 16px 0;
+}
+
+.onboarding {
+  border-color: var(--mat-sys-primary);
+}
+
+.progress-card .tip {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 0;
+}

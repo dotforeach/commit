@@ -119,6 +119,29 @@
       "detail": "Tenés {{assets}} · Debés {{liabilities}}",
       "missing": "{{n}} partidas sin cotización no se sumaron.",
       "rates": "Cotizaciones"
+    },
+    "onboarding": {
+      "title": "Empezá por acá",
+      "body": "Tu sueldo, tus gastos fijos y un presupuesto sugerido en 5 minutos.",
+      "start": "Primeros pasos"
+    },
+    "progress": {
+      "title": "Salud financiera: {{score}}/100",
+      "level": "Estás en el nivel {{n}} de 7",
+      "allDone": "¡Completaste la ruta!",
+      "open": "Ver mi progreso"
+    },
+    "tips": {
+      "onboarding.finish": "Terminá tus primeros pasos",
+      "debt.avalanche": "Tenés deudas caras",
+      "emergency.start": "Armá tu fondo de emergencia",
+      "budget.create": "Armá el presupuesto del mes",
+      "budget.over": "Te pasaste en alguna categoría",
+      "savings.low": "Estás ahorrando menos del 10%",
+      "emergency.grow": "Seguí con el fondo de emergencia",
+      "cash.idle": "Tenés pesos quietos",
+      "invest.diversify": "Diversificá",
+      "record.consistency": "Registrá todos los meses"
     }
   },
   "categories": {
@@ -196,7 +219,8 @@
     "recurring": "Recurrentes",
     "budget": "Presupuesto",
     "debts": "Deudas",
-    "savings": "Ahorro"
+    "savings": "Ahorro",
+    "progress": "Mi progreso"
   },
   "accounts": {
     "title": "Cuentas",
@@ -870,5 +894,222 @@
     "manualSaved": "Cotización guardada",
     "noData": "Todavía no hay cotizaciones: el servidor las trae en unos minutos.",
     "sources": "Fuentes: DolarApi (dolarapi.com) y CoinGecko. No reciben ningún dato tuyo."
+  },
+  "progress": {
+    "title": "Mi progreso",
+    "subtitle": "De 0 a 100: tu puntaje de salud financiera, tu nivel y qué hacer ahora.",
+    "scoreLabel": {
+      "start": "Recién empezás",
+      "fair": "Vas encaminado",
+      "good": "Bien",
+      "great": "¡Excelente!"
+    },
+    "trend": "{{n}} puntos desde la última vez",
+    "componentsTitle": "Cómo se calcula",
+    "components": {
+      "savings": {
+        "name": "Tasa de ahorro",
+        "value": "Ahorrás el {{pct}}% de tus ingresos (ideal: 20% o más).",
+        "noData": "Sin ingresos registrados en los últimos meses."
+      },
+      "emergency": {
+        "name": "Fondo de emergencia",
+        "value": "Cubre {{months}} meses de gastos (ideal: 6).",
+        "noData": "—"
+      },
+      "debt": {
+        "name": "Peso de las deudas",
+        "value": "Tus cuotas son el {{pct}}% de tus ingresos (ideal: 10% o menos).",
+        "noData": "—"
+      },
+      "budget": {
+        "name": "Presupuesto",
+        "value": "El {{pct}}% de tus categorías está dentro del límite.",
+        "noData": "No tenés presupuesto este mes."
+      },
+      "consistency": {
+        "name": "Constancia",
+        "value": "Registraste movimientos {{n}} de los últimos 3 meses.",
+        "noData": "—"
+      }
+    },
+    "tipsTitle": "Qué hacer ahora",
+    "dismiss": "Ya está / no aplica",
+    "tips": {
+      "onboarding.finish": {
+        "title": "Terminá tus primeros pasos",
+        "body": "En 5 minutos cargás tu sueldo, tus gastos fijos y armamos un presupuesto sugerido.",
+        "action": "Empezar"
+      },
+      "debt.avalanche": {
+        "title": "Tenés deudas caras",
+        "body": "Las tasas altas (tarjeta financiada, préstamos personales) te comen el sueldo. Poné todo el extra en la de mayor tasa: método avalancha.",
+        "action": "Ver mi plan"
+      },
+      "emergency.start": {
+        "title": "Armá tu fondo de emergencia",
+        "body": "Es lo primero que te protege de un imprevisto sin endeudarte. Empezá por un mes de gastos.",
+        "action": "Crear la meta"
+      },
+      "budget.create": {
+        "title": "Armá el presupuesto del mes",
+        "body": "Decidir antes cuánto gastar en cada cosa es la forma más simple de que alcance.",
+        "action": "Armar presupuesto"
+      },
+      "budget.over": {
+        "title": "Te pasaste en alguna categoría",
+        "body": "Revisá en qué y ajustá el resto del mes, o corregí el límite si no era realista.",
+        "action": "Ver presupuesto"
+      },
+      "savings.low": {
+        "title": "Estás ahorrando menos del 10%",
+        "body": "Revisá suscripciones, delivery y gastos hormiga: suelen ser lo más fácil de recortar.",
+        "action": "Ver mis gastos"
+      },
+      "emergency.grow": {
+        "title": "Seguí con el fondo de emergencia",
+        "body": "La meta recomendada son 3 a 6 meses de gastos. Automatizá un aporte el día que cobrás.",
+        "action": "Ver mis metas"
+      },
+      "cash.idle": {
+        "title": "Tenés pesos quietos",
+        "body": "Con la inflación, la plata parada pierde valor. Con el colchón cubierto, mirá plazos fijos o FCI de liquidez.",
+        "action": "Ver opciones"
+      },
+      "invest.diversify": {
+        "title": "Diversificá",
+        "body": "Tenés todo en un solo tipo de inversión. Repartir entre clases (plazo fijo, FCI, CEDEARs, bonos) baja el riesgo.",
+        "action": "Ver inversiones"
+      },
+      "record.consistency": {
+        "title": "Registrá todos los meses",
+        "body": "Con 3 meses seguidos de movimientos, tus promedios y tu puntaje se vuelven confiables.",
+        "action": "Cargar movimientos"
+      }
+    },
+    "pathTitle": "Tu ruta",
+    "levelN": "Nivel {{n}}",
+    "allDone": "¡Completaste los 7 niveles! Mantené el rumbo.",
+    "levelUp": "¡Subiste de nivel! Completaste «{{level}}» 🎉",
+    "levels": {
+      "start": {
+        "name": "Empezar",
+        "goal": "Registrar tus cuentas, tus ingresos y tus gastos."
+      },
+      "control": {
+        "name": "Controlar",
+        "goal": "Tener un presupuesto y registrar un mes completo."
+      },
+      "cushion": {
+        "name": "Colchón",
+        "goal": "Un fondo de emergencia de al menos 1 mes de gastos."
+      },
+      "debtFree": {
+        "name": "Sin deudas caras",
+        "goal": "Cancelar tarjeta financiada y préstamos con tasa alta (≥30% TNA)."
+      },
+      "fullFund": {
+        "name": "Fondo completo",
+        "goal": "3 meses de gastos o más en el fondo de emergencia."
+      },
+      "saving": {
+        "name": "Ahorro constante",
+        "goal": "Ahorrar el 20% o más de tus ingresos."
+      },
+      "investing": {
+        "name": "Invertir",
+        "goal": "Hacer crecer tus ahorros, repartidos en al menos 2 tipos de inversión."
+      }
+    },
+    "checks": {
+      "start": {
+        "account": "Tener al menos una cuenta",
+        "income": "Registrar tu ingreso (o tu sueldo recurrente)",
+        "transactions": "Cargar al menos 5 movimientos"
+      },
+      "control": {
+        "budget": "Armar el presupuesto de este mes",
+        "recordMonth": "Registrar movimientos durante un mes completo"
+      },
+      "cushion": {
+        "goal": "Crear la meta de fondo de emergencia",
+        "oneMonth": "Juntar 1 mes de gastos"
+      },
+      "debtFree": {
+        "noHighRate": "No tener deudas con tasa alta"
+      },
+      "fullFund": {
+        "threeMonths": "Juntar 3 meses de gastos"
+      },
+      "saving": {
+        "twentyPercent": "Ahorrar el 20% de lo que ganás"
+      },
+      "investing": {
+        "invested": "Tener ahorros invertidos",
+        "diversified": "Repartirlos en 2 tipos o más"
+      }
+    }
+  },
+  "onboarding": {
+    "title": "Primeros pasos",
+    "subtitle": "Cargá lo básico y te armamos un presupuesto. Podés cambiar todo después.",
+    "skip": "Saltar por ahora",
+    "next": "Siguiente",
+    "saveNext": "Guardar y seguir",
+    "back": "Atrás",
+    "finish": "Terminar y ver mi progreso",
+    "error": "No pudimos guardar este paso. Probá de nuevo.",
+    "salary": {
+      "label": "Tu sueldo",
+      "intro": "¿Cuánto cobrás por mes (en mano) y qué día?",
+      "account": "Cuenta donde cobrás",
+      "newAccount": "Nombre de la cuenta",
+      "defaultAccount": "Cuenta sueldo",
+      "balance": "Saldo actual",
+      "amount": "Sueldo neto mensual",
+      "amountHint": "Se registra solo cada mes.",
+      "payday": "Día de cobro",
+      "ruleName": "Sueldo"
+    },
+    "fixed": {
+      "label": "Gastos fijos",
+      "intro": "Completá los que tengas. Se cargan solos cada mes; los que varían te piden confirmar el monto.",
+      "variable": "varía",
+      "amount": "Monto",
+      "amountFor": "Monto de {{name}}",
+      "day": "Día",
+      "total": "Total de gastos fijos: {{amount}}",
+      "items": {
+        "rent": "Alquiler",
+        "hoa": "Expensas",
+        "power": "Luz",
+        "gas": "Gas",
+        "water": "Agua",
+        "internet": "Internet",
+        "phone": "Celular",
+        "health": "Prepaga / obra social",
+        "subscriptions": "Suscripciones",
+        "school": "Colegio / cuota educativa"
+      }
+    },
+    "debts": {
+      "label": "Tus deudas (opcional)",
+      "intro": "Préstamos, deudas con alguien, tarjeta financiada… Después podés agregar la tasa y el plazo.",
+      "name": "Nombre",
+      "nameN": "Nombre de la deuda {{n}}",
+      "balance": "Cuánto debés",
+      "balanceN": "Saldo de la deuda {{n}}",
+      "payment": "Cuota mensual",
+      "paymentN": "Cuota de la deuda {{n}}"
+    },
+    "budget": {
+      "label": "Tu presupuesto",
+      "intro": "Con un sueldo de {{income}}, la regla 50/30/20 sugiere:",
+      "needs": "Necesidades (50%):",
+      "wants": "Deseos (30%):",
+      "savings": "Ahorro y deudas (20%):",
+      "fixedIn": "tus gastos fijos ocupan {{amount}}",
+      "fixedTooHigh": "Tus gastos fijos superan el 50% del sueldo: es normal al principio, pero es lo primero a revisar."
+    }
   }
 }
