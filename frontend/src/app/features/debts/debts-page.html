@@ -5,6 +5,7 @@
         <h2>{{ t('title') }}</h2>
         <p class="subtitle">{{ t('subtitle') }}</p>
       </div>
+      <a mat-stroked-button routerLink="/plan" data-testid="debts-plan">✨ {{ t('magicPlan') }}</a>
       @if (household.canWrite()) {
         <button mat-flat-button (click)="newDebt()">
           <mat-icon fontSet="material-symbols-outlined">add</mat-icon>{{ t('new') }}

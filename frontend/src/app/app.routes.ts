@@ -72,6 +72,11 @@ export const routes: Routes = [
     loadComponent: () => import('./features/rates/rates-page').then((m) => m.RatesPage),
   },
   {
+    path: 'plan',
+    canActivate: [authGuard, unlockedGuard],
+    loadComponent: () => import('./features/plan/plan-page').then((m) => m.PlanPage),
+  },
+  {
     path: 'progreso',
     canActivate: [authGuard, unlockedGuard],
     loadComponent: () => import('./features/progress/progress-page').then((m) => m.ProgressPage),

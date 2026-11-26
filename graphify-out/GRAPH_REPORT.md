@@ -1,17 +1,17 @@
 # Graph Report - commit  (2026-11-26)
 
 ## Corpus Check
-- 262 files · ~111,597 words
+- 267 files · ~115,604 words
 - Verdict: corpus is large enough that graph structure adds value.
-- Unclassified: 41 file(s) not represented in the graph (top: .scss 20, (none) 14, .example 2)
+- Unclassified: 42 file(s) not represented in the graph (top: .scss 21, (none) 14, .example 2)
 
 ## Summary
-- 2216 nodes · 5670 edges · 108 communities (74 shown, 34 thin omitted)
+- 2253 nodes · 5796 edges · 112 communities (79 shown, 33 thin omitted)
 - Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 155 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `c82de4dc`
+- Built from commit: `a67c64f1`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -23,19 +23,19 @@
 - devDependencies
 - auth.controller.ts
 - redis-refresh-token.store.ts
-- debts-page.ts
+- debt-dialog.ts
 - accounts.schemas.ts
-- features/accounts/accounts.service.ts
+- AccountsService
 - compilerOptions
 - test/helpers.ts
 - dependencies
 - debt-dialog.ts
-- getSodium
+- key-vault.service.ts
 - postgres
 - Arquitectura de cifrado (conocimiento cero, modo híbrido)
 - RecurringService
 - @nestjs/common
-- .save
+- ledger.ts
 - backend-dev
 - frontend
 - environment
@@ -47,7 +47,7 @@
 - e2e/helpers.ts
 - TransactionsController
 - savings-page.ts
-- parseDecimalInput
+- debts-page.ts
 - zod
 - ProgressController
 - progress-engine.ts
@@ -61,27 +61,28 @@
 - debts-page.ts
 - InvestmentsService
 - @jsverse/transloco
-- AutoLockService
+- base64.ts
 - BudgetsService
 - nest-cli.dev.json
 - scripts
 - migrate
 - NotificationsController
-- rates.controller.ts
+- toBase64
 - TransactionsService
 - redis
 - BudgetPage
 - healthcheck
-- accounts.schemas.ts
-- Login
+- goals.ts
+- parseDecimalInput
 - .require
-- budgets/budgets.service.ts
-- Home
+- plan-engine.ts
+- recurring-page.ts
 - frontend/package.json
-- src/debts/debts.service.ts
+- src/recurring/recurring.service.ts
 - backend/README.md
 - Converter
-- DebtsController
+- HouseholdRatesController
+- debts.controller.ts
 - KeyVaultService
 - MembersService
 - onboarding-page.ts
@@ -90,69 +91,73 @@
 - GoalsService
 - ProgressService
 - HouseholdService
-- kdf.ts
+- openapi.ts
 - HouseholdPage
-- crypto.spec.ts
+- recover.ts
 - key-update.ts
 - PrismaService
 - ngsw-config.json
 - Unlock
 - card-cycle.ts
-- Recover
+- DepositsService
 - savings-math.ts
 - migrate
 - .register
 - change-passphrase.ts
 - frontend/package.json
-- Register
+- RecurringPage
 - version.ts
 - adminer
-- JoinPage
+- AccountsPage
 - Frontend
 - @nestjs/authentication
 - RatesPage
+- currencies.controller.ts
+- reminder-plan.ts
 - libsodium-wrappers-sumo
 - .oxlintrc.json
 - RedisModule
-- @angular/cdk@22.3.0
+- PlanService
 - allowBuilds
 - rxjs@~7.8.0
 - nest-cli.json
+- RemindersScheduler
+- @angular/compiler@^22.3.0
 - dotenv
 - allowBuilds
 
 ## God Nodes (most connected - your core abstractions)
 1. `@nestjs/common` - 71 edges
-2. `PrismaService` - 66 edges
-3. `@angular/core` - 66 edges
-4. `parseDecimalInput()` - 51 edges
-5. `KeyVaultService` - 41 edges
-6. `@angular/common` - 40 edges
-7. `@angular/material` - 38 edges
-8. `@jsverse/transloco` - 38 edges
-9. `toBase64()` - 36 edges
-10. `getSodium()` - 36 edges
+2. `@angular/core` - 68 edges
+3. `PrismaService` - 66 edges
+4. `parseDecimalInput()` - 53 edges
+5. `KeyVaultService` - 42 edges
+6. `@angular/common` - 41 edges
+7. `@angular/material` - 39 edges
+8. `@jsverse/transloco` - 39 edges
+9. `getSodium()` - 36 edges
+10. `toBase64()` - 36 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `Code scaffolding` --references--> `components`  [INFERRED]
   frontend/README.md → frontend/src/app/core/api/openapi.d.ts
-- `toDto()` --calls--> `toBase64()`  [EXTRACTED]
-  backend/src/accounts/accounts.service.ts → backend/src/common/base64.ts
-- `toDto()` --calls--> `toBase64()`  [EXTRACTED]
-  backend/src/budgets/budgets.service.ts → backend/src/common/base64.ts
-- `dto()` --calls--> `toBase64()`  [EXTRACTED]
-  backend/src/deposits/deposits.ts → backend/src/common/base64.ts
-- `toDto()` --calls--> `toBase64()`  [EXTRACTED]
-  backend/src/installments/installments.service.ts → backend/src/common/base64.ts
+- `decimal()` --calls--> `parseDecimalInput()`  [EXTRACTED]
+  frontend/src/app/features/accounts/account-dialog/account-dialog.ts → frontend/src/app/core/money/decimal.ts
+- `Debt` --references--> `Amortization`  [EXTRACTED]
+  frontend/src/app/features/debts/debt.model.ts → frontend/src/app/features/debts/debt-math.ts
+- `effectiveRate()` --calls--> `monthlyRate()`  [EXTRACTED]
+  frontend/src/app/features/plan/plan-engine.ts → frontend/src/app/features/debts/debt-math.ts
+- `buildPlan()` --calls--> `simulatePayoff()`  [EXTRACTED]
+  frontend/src/app/features/plan/plan-engine.ts → frontend/src/app/features/debts/debt-math.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (108 total, 34 thin omitted)
+## Communities (112 total, 33 thin omitted)
 
 ### Community 0 - "savings.service.ts"
-Cohesion: 0.08
-Nodes (12): Asset, Contribution, Deposit, DepositPayload, Goal, GoalDraft, GoalPayload, GoalStatus (+4 more)
+Cohesion: 0.05
+Nodes (22): TradeDialog, Asset, AssetClass, Contribution, Deposit, DepositPayload, Goal, GoalDraft (+14 more)
 
 ### Community 1 - "scripts"
 Cohesion: 0.25
@@ -163,52 +168,52 @@ Cohesion: 0.05
 Nodes (44): build, serve, test, builder, configurations, defaultConfiguration, options, cli (+36 more)
 
 ### Community 3 - "dependencies"
-Cohesion: 0.08
-Nodes (26): dependencies, bullmq@^6.7.10, cookie-parser@^1.4.7, @nestjs/authentication@^0.1.7, @nestjs/bullmq@^12.0.2, @nestjs/common@^12.0.1, @nestjs/config@^12.1.1, @nestjs/core@^12.0.1 (+18 more)
+Cohesion: 0.09
+Nodes (23): dependencies, bullmq@^6.7.10, cookie-parser@^1.4.7, @nestjs/authentication@^0.1.7, @nestjs/bullmq@^12.0.2, @nestjs/common@^12.0.1, @nestjs/config@^12.1.1, @nestjs/platform-express@^12.0.1 (+15 more)
 
 ### Community 4 - "devDependencies"
 Cohesion: 0.06
-Nodes (45): author, description, devDependencies, @nestjs/cli@^12.0.0, @nestjs/mau@^0.2.6, @nestjs/schematics@^12.0.0, @nestjs/testing@^12.0.1, oxlint@^1.58.0 (+37 more)
+Nodes (43): author, description, devDependencies, @nestjs/cli@^12.0.0, @nestjs/mau@^0.2.6, @nestjs/schematics@^12.0.0, oxlint@^1.58.0, oxlint-tsgolint@^7.0.2001 (+35 more)
 
 ### Community 5 - "auth.controller.ts"
-Cohesion: 0.11
-Nodes (16): AuthController, CREDENTIALS_LIMIT, SESSION_LIMIT, categorySchema, Credentials, credentialsSchema, encryptedPayload, kdfParamsSchema (+8 more)
+Cohesion: 0.12
+Nodes (15): AuthController, CREDENTIALS_LIMIT, SESSION_LIMIT, categorySchema, Credentials, credentialsSchema, encryptedPayload, kdfParamsSchema (+7 more)
 
 ### Community 6 - "redis-refresh-token.store.ts"
 Cohesion: 0.18
 Nodes (6): familyRevokedKey(), RedisRefreshTokenStore, StoredRecord, tokenKey(), userFamiliesKey(), REDIS
 
-### Community 7 - "debts-page.ts"
-Cohesion: 0.12
-Nodes (25): DebtDialog, fractionToPercent(), percentToFraction(), shiftPoint(), Amortization, amortizationSchedule(), frenchPayment(), monthlyRate() (+17 more)
+### Community 7 - "debt-dialog.ts"
+Cohesion: 0.16
+Nodes (14): DebtDialog, fractionToPercent(), percentToFraction(), shiftPoint(), Amortization, DebtDto, DebtKind, DebtPayload (+6 more)
 
 ### Community 8 - "accounts.schemas.ts"
 Cohesion: 0.14
 Nodes (3): AccountsController, AccountsService, toDto()
 
-### Community 9 - "features/accounts/accounts.service.ts"
-Cohesion: 0.07
-Nodes (19): AccountDialog, Account, ACCOUNT_TYPES, AccountDraft, AccountDto, AccountPayload, AccountType, CreditCardPayload (+11 more)
+### Community 9 - "AccountsService"
+Cohesion: 0.14
+Nodes (12): AccountDialog, CARD_NETWORKS, decimal(), Account, ACCOUNT_TYPES, AccountDraft, AccountDto, AccountPayload (+4 more)
 
 ### Community 10 - "compilerOptions"
 Cohesion: 0.06
 Nodes (30): compilerOptions, rootDir, exclude, extends, include, compilerOptions, allowSyntheticDefaultImports, declaration (+22 more)
 
 ### Community 11 - "test/helpers.ts"
-Cohesion: 0.08
-Nodes (37): memberKeySignedMessage(), coinGecko, COINS, DOLAR_CASAS, dolarApiItem, mid(), PublicRate, RateSources (+29 more)
+Cohesion: 0.06
+Nodes (41): memberKeySignedMessage(), coinGecko, COINS, DOLAR_CASAS, dolarApiItem, mid(), PublicRate, RateSources (+33 more)
 
 ### Community 12 - "dependencies"
 Cohesion: 0.12
-Nodes (17): dependencies, @angular/common@^22.3.0, @angular/compiler@^22.3.0, @angular/core@^22.3.0, @angular/forms@^22.3.0, @angular/material@22.3.0, @angular/platform-browser@^22.3.0, @angular/router@^22.3.0 (+9 more)
+Nodes (16): dependencies, @angular/common@^22.3.0, @angular/core@^22.3.0, @angular/forms@^22.3.0, @angular/material@22.3.0, @angular/platform-browser@^22.3.0, @angular/router@^22.3.0, @angular/service-worker@^22.3.0 (+8 more)
 
 ### Community 13 - "debt-dialog.ts"
 Cohesion: 0.12
 Nodes (4): Debt, DebtDraft, DebtsPage, DebtsService
 
-### Community 14 - "getSodium"
-Cohesion: 0.27
-Nodes (10): aeadDecrypt(), aeadEncrypt(), decryptPayload(), keyFingerprint(), generateIdentity(), sealAad(), SealContext, sealPrivateKeys() (+2 more)
+### Community 14 - "key-vault.service.ts"
+Cohesion: 0.20
+Nodes (10): HouseholdPayload, MeHousehold, RegisterRequest, RegistrationForm, keyFingerprint(), generateIdentity(), DEFAULT_KDF_PARAMS, UpdateKeysRequest (+2 more)
 
 ### Community 15 - "postgres"
 Cohesion: 0.22
@@ -219,16 +224,16 @@ Cohesion: 0.12
 Nodes (15): Arquitectura de cifrado (conocimiento cero, modo híbrido), Caché offline, Dos secretos por usuario, Flujos, Formato del payload, Jerarquía de claves, Lo que el cifrado NO protege, Qué queda en claro y qué se cifra (modo híbrido) (+7 more)
 
 ### Community 17 - "RecurringService"
-Cohesion: 0.07
-Nodes (22): addDays(), daysInMonth(), DueOccurrences, dueOccurrences(), firstOccurrence(), format(), Frequency, nextOccurrence() (+14 more)
+Cohesion: 0.11
+Nodes (16): addDays(), daysInMonth(), DueOccurrences, dueOccurrences(), firstOccurrence(), format(), nextOccurrence(), parse() (+8 more)
 
 ### Community 18 - "@nestjs/common"
-Cohesion: 0.06
-Nodes (24): AccountsModule, AppModule, AuthModule, BudgetsModule, CategoriesModule, Env, envSchema, CurrenciesController (+16 more)
+Cohesion: 0.08
+Nodes (22): AccountsModule, BudgetsModule, CategoriesModule, Env, envSchema, DebtsModule, HouseholdsModule, InstallmentsModule (+14 more)
 
-### Community 19 - ".save"
-Cohesion: 0.13
-Nodes (11): estimateStatement(), card, plan, upcomingInstallments(), InstallmentPlan, Transaction, TransactionDto, TransactionType (+3 more)
+### Community 19 - "ledger.ts"
+Cohesion: 0.14
+Nodes (15): card, plan, InstallmentPlan, AccountBalance, buildLedger(), computeBalances(), CurrencyTotals, idOf() (+7 more)
 
 ### Community 20 - "backend-dev"
 Cohesion: 0.13
@@ -259,36 +264,32 @@ Cohesion: 0.29
 Nodes (7): volumes, backend-dist, backend-node-modules, frontend-angular-cache, frontend-node-modules, postgres-data, redis-data
 
 ### Community 27 - "deposits.ts"
-Cohesion: 0.05
-Nodes (44): toBase64(), encryptedPayload, keyVersion, linkedTransaction, LinkedTransaction, toIsoDate(), paymentDto(), toDto() (+36 more)
+Cohesion: 0.07
+Nodes (26): encryptedPayload, keyVersion, linkedTransaction, LinkedTransaction, collectDeposit, createDeposit, datesMsg, DepositsModule (+18 more)
 
 ### Community 28 - "e2e/helpers.ts"
-Cohesion: 0.15
-Nodes (14): expense(), newDebt(), createAccount(), nextIn(), pick(), readPhrase(), registerViaUi(), strip() (+6 more)
+Cohesion: 0.13
+Nodes (16): expense(), newDebt(), createAccount(), nextIn(), pick(), readPhrase(), registerViaUi(), strip() (+8 more)
 
 ### Community 29 - "TransactionsController"
-Cohesion: 0.11
-Nodes (20): revision, SAFE_LAG_MS, syncPage(), SyncQuery, syncQuerySchema, uuid, CreateTransactionsInput, createTransactionsSchema (+12 more)
+Cohesion: 0.13
+Nodes (19): SAFE_LAG_MS, syncPage(), SyncQuery, syncQuerySchema, uuid, CreateTransactionsInput, createTransactionsSchema, fields (+11 more)
 
 ### Community 30 - "savings-page.ts"
-Cohesion: 0.08
-Nodes (28): CurrenciesService, Currency, fromIsoDate(), monthOf(), todayIso(), toIsoDate(), formatMoney(), accountIcon() (+20 more)
+Cohesion: 0.14
+Nodes (21): CurrenciesService, Currency, fromIsoDate(), monthOf(), todayIso(), toIsoDate(), toInputValue(), accountIcon() (+13 more)
 
-### Community 31 - "parseDecimalInput"
+### Community 31 - "debts-page.ts"
 Cohesion: 0.08
-Nodes (44): addDecimals(), compareDecimals(), fromUnits(), isNegative(), negateDecimal(), normalize(), parseDecimalInput(), percentOf() (+36 more)
+Nodes (46): addDecimals(), formatMoney(), fromUnits(), isNegative(), negateDecimal(), percentOf(), ratioOf(), ARS (+38 more)
 
 ### Community 32 - "zod"
-Cohesion: 0.08
-Nodes (20): @nestjs/throttler@^6.8.0, base64Bytes(), accept, defaultHousehold, grant, invite, role, rotate (+12 more)
+Cohesion: 0.13
+Nodes (7): isoDate, InstallmentsController, uuid, CreatePlanInput, createPlanSchema, encryptedPayload, InstallmentsService
 
 ### Community 34 - "progress-engine.ts"
 Cohesion: 0.13
 Nodes (18): Check, clamp01(), ComponentKey, emergencyMonths(), FinanceSnapshot, HealthScore, healthScore(), Level (+10 more)
-
-### Community 37 - "DepositsService"
-Cohesion: 0.14
-Nodes (3): DepositsController, DepositsService, dto()
 
 ### Community 38 - "health.controller.ts"
 Cohesion: 0.15
@@ -298,21 +299,25 @@ Nodes (5): @nestjs/terminus@^12.2.0, DatabaseHealthIndicator, HealthController, 
 Cohesion: 0.14
 Nodes (3): BudgetsController, BudgetsService, toDto()
 
-### Community 41 - "src/recurring/recurring.service.ts"
-Cohesion: 0.10
-Nodes (13): RecurringController, uuid, coherentMessage, CreateRuleInput, createRuleSchema, encryptedPayload, PostOccurrencesInput, postOccurrencesSchema (+5 more)
+### Community 42 - "NotificationsService"
+Cohesion: 0.09
+Nodes (4): Login, Home, JoinPage, NotificationsService
 
 ### Community 43 - "debts-page.ts"
-Cohesion: 0.09
-Nodes (37): Method, RequestBody, CreateAccount, CreateTransactions, HouseholdPayload, MeHousehold, RegisterRequest, TokenResponse (+29 more)
+Cohesion: 0.12
+Nodes (22): Method, RequestBody, CreateAccount, CreateTransactions, HouseholdContextService, isNetworkError(), OfflineCacheService, SessionService (+14 more)
 
 ### Community 45 - "@jsverse/transloco"
-Cohesion: 0.06
-Nodes (27): App, appConfig, routes, authInterceptor(), authGuard(), guestGuard(), remember(), unlockedGuard() (+19 more)
+Cohesion: 0.07
+Nodes (22): App, appConfig, routes, authInterceptor(), authGuard(), guestGuard(), remember(), takeReturnUrl() (+14 more)
+
+### Community 46 - "base64.ts"
+Cohesion: 0.09
+Nodes (16): @nestjs/throttler@^6.8.0, verifyEd25519(), base64Bytes(), accept, defaultHousehold, grant, invite, role (+8 more)
 
 ### Community 47 - "BudgetsService"
 Cohesion: 0.10
-Nodes (12): BudgetDialog, BudgetContext, cat(), ctx(), Budget, BudgetDraft, BudgetDto, BudgetItem (+4 more)
+Nodes (10): BudgetDialog, cat(), ctx(), Budget, BudgetDraft, BudgetDto, BudgetItem, BudgetItemDto (+2 more)
 
 ### Community 48 - "nest-cli.dev.json"
 Cohesion: 0.29
@@ -330,9 +335,9 @@ Nodes (6): postgres, depends_on, profiles, restart, condition, migrate
 Cohesion: 0.12
 Nodes (4): NotificationsController, RemindersProcessor, PushService, RemindersService
 
-### Community 52 - "rates.controller.ts"
-Cohesion: 0.08
-Nodes (16): isoDate, createManual, HouseholdRatesController, HouseholdRatesService, PublicRatesController, settings, USD_RATE_TYPES, uuid (+8 more)
+### Community 52 - "toBase64"
+Cohesion: 0.11
+Nodes (18): toBase64(), toIsoDate(), paymentDto(), toDto(), dto(), toDto(), assetClass, assetDto() (+10 more)
 
 ### Community 54 - "redis"
 Cohesion: 0.25
@@ -342,21 +347,29 @@ Nodes (8): REDIS_PASSWORD, command, environment, image, ports, restart, volumes,
 Cohesion: 0.53
 Nodes (6): interval, retries, test, timeout, healthcheck, healthcheck
 
-### Community 57 - "accounts.schemas.ts"
-Cohesion: 0.14
-Nodes (15): uuid, accountFields, accountTypeSchema, CreateAccountInput, createAccountSchema, creditCardMessage, creditCardSchema, day (+7 more)
+### Community 57 - "goals.ts"
+Cohesion: 0.06
+Nodes (31): uuid, accountFields, accountTypeSchema, CreateAccountInput, createAccountSchema, creditCardMessage, creditCardSchema, day (+23 more)
 
-### Community 60 - "budgets/budgets.service.ts"
-Cohesion: 0.20
-Nodes (9): uuid, budgetFields, CreateBudgetInput, createBudgetSchema, encryptedPayload, itemSchema, UpdateBudgetInput, updateBudgetSchema (+1 more)
+### Community 58 - "parseDecimalInput"
+Cohesion: 0.14
+Nodes (17): compareDecimals(), normalize(), parseDecimalInput(), stripThousands(), optionalAmount(), amount(), PaymentDialog, positive() (+9 more)
+
+### Community 60 - "plan-engine.ts"
+Cohesion: 0.15
+Nodes (9): buildPlan(), effectiveRate(), pick(), PlanDebt, PlanInput, PlanResult, PlanStep, round2() (+1 more)
+
+### Community 61 - "recurring-page.ts"
+Cohesion: 0.18
+Nodes (6): Frequency, CategoriesService, RecurringRule, RuleDto, RulePayload, RuleDialog
 
 ### Community 62 - "frontend/package.json"
 Cohesion: 0.12
 Nodes (16): devDependencies, @angular/build@^22.3.0, @angular/compiler-cli@^22.3.0, jsdom@^31.0.0, openapi-typescript@^7.13.0, @playwright/test@^1.65.1, prettier@^3.8.1, typescript@~6.0.2 (+8 more)
 
-### Community 63 - "src/debts/debts.service.ts"
-Cohesion: 0.28
-Nodes (9): uuid, CreateDebtInput, createDebtSchema, CreatePaymentInput, createPaymentSchema, debtFields, encryptedPayload, UpdateDebtInput (+1 more)
+### Community 63 - "src/recurring/recurring.service.ts"
+Cohesion: 0.23
+Nodes (10): uuid, coherentMessage, CreateRuleInput, createRuleSchema, encryptedPayload, PostOccurrencesInput, postOccurrencesSchema, ruleFields (+2 more)
 
 ### Community 64 - "backend/README.md"
 Cohesion: 0.18
@@ -366,28 +379,36 @@ Nodes (10): Compile and run the project, Deployment, Description, License, Obser
 Cohesion: 0.15
 Nodes (9): computeNetWorth(), NetWorth, NetWorthItem, round2(), converter, Converter, ConverterOptions, Quote (+1 more)
 
+### Community 67 - "debts.controller.ts"
+Cohesion: 0.10
+Nodes (11): DebtsController, uuid, CreateDebtInput, createDebtSchema, CreatePaymentInput, createPaymentSchema, debtFields, encryptedPayload (+3 more)
+
 ### Community 68 - "KeyVaultService"
-Cohesion: 0.30
-Nodes (4): MeResponse, Identity, openPrivateKeys(), fromBase64()
+Cohesion: 0.16
+Nodes (6): MeResponse, Identity, KeyVaultService, WrongPassphraseError, WrongRecoveryPhraseError, recoveryKeyFromPhrase()
 
 ### Community 69 - "MembersService"
 Cohesion: 0.13
-Nodes (4): verifyEd25519(), hashToken(), MembersController, MembersService
+Nodes (3): hashToken(), MembersController, MembersService
 
-### Community 76 - "kdf.ts"
-Cohesion: 0.43
-Nodes (5): deriveKeyFromPassphrase(), deriveOnMainThread(), kdfWorker(), pending, randomSalt()
+### Community 76 - "openapi.ts"
+Cohesion: 0.15
+Nodes (9): @nestjs/core@^12.0.1, @nestjs/swagger@^12.1.2, @nestjs/testing@^12.0.1, AppModule, document, out, @nestjs/core, @nestjs/swagger (+1 more)
 
-### Community 78 - "crypto.spec.ts"
-Cohesion: 0.38
-Nodes (8): FAST_KDF, byFolded, fold(), generateRecoveryPhrase(), normalizeRecoveryPhrase(), recoveryKeyFromPhrase(), sameWord(), @scure/bip39
+### Community 77 - "HouseholdPage"
+Cohesion: 0.26
+Nodes (3): HouseholdPage, Invitation, Member
+
+### Community 78 - "recover.ts"
+Cohesion: 0.13
+Nodes (11): byFolded, fold(), generateRecoveryPhrase(), normalizeRecoveryPhrase(), sameWord(), Recover, CURRENCIES, Register (+3 more)
 
 ### Community 79 - "key-update.ts"
-Cohesion: 0.24
-Nodes (9): KdfParams, concat(), KeyUpdateFields, keyUpdateSignedMessage(), lengthPrefixed(), signKeyUpdate(), VECTOR, utf8() (+1 more)
+Cohesion: 0.20
+Nodes (15): deriveKeyFromPassphrase(), deriveOnMainThread(), KdfParams, kdfWorker(), pending, randomSalt(), concat(), KeyUpdateFields (+7 more)
 
 ### Community 80 - "PrismaService"
-Cohesion: 0.12
+Cohesion: 0.13
 Nodes (4): CategoriesController, HouseholdAccess, HouseholdAccessService, PrismaService
 
 ### Community 81 - "ngsw-config.json"
@@ -395,24 +416,24 @@ Cohesion: 0.50
 Nodes (3): assetGroups, index, $schema
 
 ### Community 83 - "card-cycle.ts"
-Cohesion: 0.10
-Nodes (20): closingDate(), Cycle, cycleFor(), daysIn(), installmentMonths(), iso(), pad(), shift() (+12 more)
+Cohesion: 0.18
+Nodes (12): closingDate(), Cycle, cycleFor(), daysIn(), installmentMonths(), iso(), pad(), shift() (+4 more)
 
 ### Community 86 - "savings-math.ts"
-Cohesion: 0.28
-Nodes (12): averageMonthlyExpenses(), cashAmount(), computeHoldings(), daysBetween(), DepositProjection, depositProjection(), GoalProgress, goalProgress() (+4 more)
+Cohesion: 0.17
+Nodes (16): AmountDialog, AmountDialogData, AmountDialogResult, toMoneyString(), averageMonthlyExpenses(), cashAmount(), computeHoldings(), daysBetween() (+8 more)
 
 ### Community 87 - "migrate"
 Cohesion: 0.48
 Nodes (7): build, build, context, target, build, build, build
 
 ### Community 88 - ".register"
-Cohesion: 0.18
-Nodes (8): RegistrationService, encryptPayload(), payloadAad(), generateHouseholdKey(), memberKeySignedMessage(), unwrapHouseholdKey(), wrapHouseholdKey(), toBase64()
+Cohesion: 0.17
+Nodes (16): RegistrationService, aeadDecrypt(), aeadEncrypt(), decryptPayload(), encryptPayload(), payloadAad(), FAST_KDF, openPrivateKeys() (+8 more)
 
 ### Community 90 - "frontend/package.json"
 Cohesion: 0.17
-Nodes (11): @angular/service-worker@^22.3.0, material-symbols@0.49.0, @angular/cli@^22.3.0, license, name, packageManager, private, version (+3 more)
+Nodes (11): @angular/cdk@22.3.0, @fontsource/roboto@5.3.0, @angular/cli@^22.3.0, license, name, packageManager, private, version (+3 more)
 
 ### Community 93 - "adminer"
 Cohesion: 0.25
@@ -423,8 +444,12 @@ Cohesion: 0.14
 Nodes (12): Additional Resources, Building, Code scaffolding, Development server, Frontend, Running end-to-end tests, Running unit tests, components (+4 more)
 
 ### Community 96 - "@nestjs/authentication"
-Cohesion: 0.07
-Nodes (12): JwtAuth, UpdateKeysInput, updateKeysSchema, KeysService, MeController, AuthUser, @nestjs/authentication, AuthenticationTypes (+4 more)
+Cohesion: 0.12
+Nodes (10): AuthModule, AuthService, JwtAuth, AuthUser, @nestjs/authentication, AuthenticationTypes, UsersModule, authUserSelect (+2 more)
+
+### Community 99 - "reminder-plan.ts"
+Cohesion: 0.33
+Nodes (6): at9(), daysIn(), nextDay(), PlanInput, PlannedReminder, planReminders()
 
 ### Community 101 - ".oxlintrc.json"
 Cohesion: 0.29
@@ -447,22 +472,22 @@ Cohesion: 0.33
 Nodes (5): allowBuilds, msgpackr-extract, prisma, @prisma/engines, @scarf/scarf
 
 ## Knowledge Gaps
-- **34 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **33 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `@nestjs/common` connect `@nestjs/common` to `@nestjs/authentication`, `zod`, `dependencies`, `devDependencies`, `auth.controller.ts`, `redis-refresh-token.store.ts`, `health.controller.ts`, `src/recurring/recurring.service.ts`, `test/helpers.ts`, `PrismaService`, `rates.controller.ts`, `accounts.schemas.ts`, `deposits.ts`, `budgets/budgets.service.ts`, `TransactionsController`, `src/debts/debts.service.ts`?**
-  _High betweenness centrality (0.048) - this node is a cross-community bridge._
+- **Why does `@nestjs/common` connect `@nestjs/common` to `@nestjs/authentication`, `zod`, `currencies.controller.ts`, `dependencies`, `devDependencies`, `auth.controller.ts`, `redis-refresh-token.store.ts`, `debts.controller.ts`, `health.controller.ts`, `test/helpers.ts`, `openapi.ts`, `base64.ts`, `PrismaService`, `toBase64`, `goals.ts`, `deposits.ts`, `TransactionsController`, `src/recurring/recurring.service.ts`?**
+  _High betweenness centrality (0.034) - this node is a cross-community bridge._
 - **Should `savings.service.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.08200290275761973 - nodes in this community are weakly interconnected._
-- **Why does `PrismaService` connect `PrismaService` to `@nestjs/authentication`, `zod`, `health.controller.ts`, `test/helpers.ts`, `@nestjs/common`, `NotificationsController`, `rates.controller.ts`, `accounts.schemas.ts`, `deposits.ts`, `budgets/budgets.service.ts`, `TransactionsController`, `src/debts/debts.service.ts`?**
-  _High betweenness centrality (0.025) - this node is a cross-community bridge._
+  _Cohesion score 0.05289450484866295 - nodes in this community are weakly interconnected._
+- **Why does `@angular/core` connect `savings-page.ts` to `savings.service.ts`, `parseDecimalInput`, `debt-dialog.ts`, `AccountsService`, `debts-page.ts`, `dependencies`, `@jsverse/transloco`, `key-vault.service.ts`, `recover.ts`, `savings-math.ts`, `frontend/package.json`, `recurring-page.ts`, `debts-page.ts`?**
+  _High betweenness centrality (0.029) - this node is a cross-community bridge._
 - **Should `frontend` be split into smaller, more focused modules?**
   _Cohesion score 0.046464646464646465 - nodes in this community are weakly interconnected._
-- **Why does `@nestjs/authentication` connect `@nestjs/authentication` to `zod`, `dependencies`, `devDependencies`, `auth.controller.ts`, `redis-refresh-token.store.ts`, `health.controller.ts`, `src/recurring/recurring.service.ts`, `test/helpers.ts`, `dotenv`, `PrismaService`, `@nestjs/common`, `rates.controller.ts`, `accounts.schemas.ts`, `deposits.ts`, `budgets/budgets.service.ts`, `TransactionsController`, `src/debts/debts.service.ts`?**
-  _High betweenness centrality (0.016) - this node is a cross-community bridge._
+- **Why does `@playwright/test` connect `e2e/helpers.ts` to `frontend/package.json`, `frontend/package.json`?**
+  _High betweenness centrality (0.022) - this node is a cross-community bridge._
 - **Should `dependencies` be split into smaller, more focused modules?**
-  _Cohesion score 0.07692307692307693 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.08695652173913043 - nodes in this community are weakly interconnected._
 - **Should `devDependencies` be split into smaller, more focused modules?**
-  _Cohesion score 0.06086956521739131 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.06342494714587738 - nodes in this community are weakly interconnected._

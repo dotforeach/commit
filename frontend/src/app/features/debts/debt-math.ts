@@ -84,11 +84,14 @@ export interface StrategyResult {
  * - snowball: menor saldo primero (victorias rápidas, más motivación).
  * - avalanche: mayor tasa primero (menos intereses).
  */
-export function simulatePayoff(debts: StrategyDebt[], extra: number, strategy: 'snowball' | 'avalanche', maxMonths = 600): StrategyResult {
+export function simulatePayoff(debts: StrategyDebt[], extra: number, strategy: 'snowball' | 'avalanche' | string[], maxMonths = 600): StrategyResult {
   const state = debts.filter((d) => d.balance > 0.005).map((d) => ({ ...d }));
-  const order = [...state].sort((a, b) =>
-    strategy === 'snowball' ? a.balance - b.balance || b.annualRate - a.annualRate : b.annualRate - a.annualRate || a.balance - b.balance,
-  );
+  // Con una lista de ids, el extra va solo a esas deudas y en ese orden (el resto, solo mínimos).
+  const order = Array.isArray(strategy)
+    ? strategy.map((id) => state.find((d) => d.id === id)).filter((d) => d !== undefined)
+    : [...state].sort((a, b) =>
+        strategy === 'snowball' ? a.balance - b.balance || b.annualRate - a.annualRate : b.annualRate - a.annualRate || a.balance - b.balance,
+      );
   const budget = state.reduce((s, d) => s + d.minimumPayment, 0) + extra;
   const payoff: StrategyResult['payoff'] = [];
   let totalInterest = 0;

@@ -162,9 +162,9 @@
     "semantic_hash": ""
   },
   "frontend/src/app/app.routes.ts": {
-    "mtime": 1795721307.3814588,
-    "seen": 1795721517.8248699,
-    "ast_hash": "8417ff0bcd44c12306b8488745079896",
+    "mtime": 1795726489.7959657,
+    "seen": 1795726799.869149,
+    "ast_hash": "be2ce7020b116d61b33f1024565a74b5",
     "semantic_hash": ""
   },
   "frontend/src/app/app.spec.ts": {
@@ -228,9 +228,9 @@
     "semantic_hash": ""
   },
   "frontend/public/i18n/es.json": {
-    "mtime": 1795722379.3319917,
-    "seen": 1795722603.736894,
-    "ast_hash": "42dadf8f365d60a14dd4a97ea93c6c1f",
+    "mtime": 1795726489.7982657,
+    "seen": 1795726799.869148,
+    "ast_hash": "e793975c26ab9ad11016defe2e72ae6e",
     "semantic_hash": ""
   },
   "frontend/src/app/core/i18n/transloco-loader.ts": {
@@ -498,9 +498,9 @@
     "semantic_hash": ""
   },
   "frontend/src/app/features/home/home.html": {
-    "mtime": 1795717963.071329,
-    "seen": 1795718354.519828,
-    "ast_hash": "90bbc71fe1c43d3fcba3568cc6bd328e",
+    "mtime": 1795726489.796158,
+    "seen": 1795726799.869249,
+    "ast_hash": "58226b415f3d78cfc5535c9c75159569",
     "semantic_hash": ""
   },
   "backend/src/accounts/accounts.controller.ts": {
@@ -853,14 +853,14 @@
   },
   "backend/prisma/migrations/20261126000000_init/migration.sql": {
     "mtime": 1795710818.5744884,
-    "seen": 1795722123.431084,
-    "ast_hash": "",
+    "seen": 1795722604.594042,
+    "ast_hash": "149a3cea6a6c621088a93df943c97bfb",
     "semantic_hash": ""
   },
   "backend/prisma/migrations/20261126000100_seed_currencies/migration.sql": {
     "mtime": 1795710818.5747335,
-    "seen": 1795722123.431085,
-    "ast_hash": "",
+    "seen": 1795722604.5940428,
+    "ast_hash": "5b48ef84625127eb4fc8debf03dad284",
     "semantic_hash": ""
   },
   "backend/src/recurring/recurring.controller.ts": {
@@ -1134,9 +1134,9 @@
     "semantic_hash": ""
   },
   "frontend/src/app/features/debts/debt-math.ts": {
-    "mtime": 1795715187.7141619,
-    "seen": 1795715287.270807,
-    "ast_hash": "d4953ef6fcbfa040b9b75d340acde411",
+    "mtime": 1795726381.7571309,
+    "seen": 1795726799.869194,
+    "ast_hash": "1fd487656dcae0b8ad324db74dda814f",
     "semantic_hash": ""
   },
   "frontend/src/app/features/debts/debt.model.ts": {
@@ -1182,9 +1182,9 @@
     "semantic_hash": ""
   },
   "frontend/src/app/features/debts/debts-page.ts": {
-    "mtime": 1795717281.9846559,
-    "seen": 1795717555.5444689,
-    "ast_hash": "ca813f2b62a53565bb7f6279179c82eb",
+    "mtime": 1795726500.3820672,
+    "seen": 1795726799.869196,
+    "ast_hash": "30ab02d2556bf69008a6fb7fa8f5063e",
     "semantic_hash": ""
   },
   "frontend/src/app/features/debts/debts.routes.ts": {
@@ -1212,9 +1212,9 @@
     "semantic_hash": ""
   },
   "frontend/src/app/features/debts/debts-page.html": {
-    "mtime": 1795715724.3510952,
-    "seen": 1795715953.738524,
-    "ast_hash": "a91e153fafe80c817c2bf176c360a1f1",
+    "mtime": 1795726489.7964506,
+    "seen": 1795726799.869248,
+    "ast_hash": "a2de606bcb15035660c80fc9e9cf3742",
     "semantic_hash": ""
   },
   "frontend/src/app/features/debts/payment-dialog/payment-dialog.html": {
@@ -1482,9 +1482,9 @@
     "semantic_hash": ""
   },
   "frontend/src/app/features/progress/progress.service.ts": {
-    "mtime": 1795721118.4937148,
-    "seen": 1795721517.824928,
-    "ast_hash": "6a77bf0876169983e6d7d05447ee560e",
+    "mtime": 1795726407.5760715,
+    "seen": 1795726799.8692129,
+    "ast_hash": "5732dbd59b44a88875f4e455ac98295b",
     "semantic_hash": ""
   },
   "frontend/src/app/features/onboarding/onboarding-page.html": {
@@ -1501,8 +1501,8 @@
   },
   "backend/prisma/migrations/20261126001000_household_usd_rate/migration.sql": {
     "mtime": 1795717052.8870065,
-    "seen": 1795722123.431086,
-    "ast_hash": "",
+    "seen": 1795722604.5940428,
+    "ast_hash": "b26ccb209484c516fca2212b2b41a225",
     "semantic_hash": ""
   },
   "backend/src/notifications/notifications.controller.ts": {
@@ -1693,8 +1693,8 @@
   },
   "backend/prisma/migrations/20261126002000_push_subscriptions/migration.sql": {
     "mtime": 1795718632.675072,
-    "seen": 1795722123.431087,
-    "ast_hash": "",
+    "seen": 1795722604.594044,
+    "ast_hash": "7988b06b84b56ac92019e9d2650ae321",
     "semantic_hash": ""
   },
   "frontend/e2e/autolock.e2e.ts": {
@@ -1785,6 +1785,42 @@
     "mtime": 1795722379.3317103,
     "seen": 1795722603.737749,
     "ast_hash": "844d99c4b93172358616c7c64f6c318a",
+    "semantic_hash": ""
+  },
+  "frontend/e2e/plan.e2e.ts": {
+    "mtime": 1795726558.1863415,
+    "seen": 1795726799.869138,
+    "ast_hash": "bca914cc9aaa38919a2d4d7f42b59e87",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/plan/plan-engine.spec.ts": {
+    "mtime": 1795726381.7644894,
+    "seen": 1795726799.869208,
+    "ast_hash": "86e37f090e297797563676175a04ec71",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/plan/plan-engine.ts": {
+    "mtime": 1795726381.7626135,
+    "seen": 1795726799.869209,
+    "ast_hash": "57e10163794e57e8aaa027b95c46192a",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/plan/plan-page.ts": {
+    "mtime": 1795726489.7586973,
+    "seen": 1795726799.869209,
+    "ast_hash": "ca569376581df632429d745c95dfc92b",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/plan/plan.service.ts": {
+    "mtime": 1795726428.0402145,
+    "seen": 1795726799.86921,
+    "ast_hash": "abb10c4f26bd132363f8c1c729cb2784",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/plan/plan-page.html": {
+    "mtime": 1795726489.7609892,
+    "seen": 1795726799.869251,
+    "ast_hash": "20bd763fc0b6cecfaa238f10a2bd5033",
     "semantic_hash": ""
   },
   "backend/pnpm-lock.yaml": {

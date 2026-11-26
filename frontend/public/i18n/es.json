@@ -208,6 +208,11 @@
       "cash.idle": "Tenés pesos quietos",
       "invest.diversify": "Diversificá",
       "record.consistency": "Registrá todos los meses"
+    },
+    "plan": {
+      "title": "Plan mágico",
+      "subtitle": "Qué pagar primero y cuánto ahorrar este mes, según tus datos.",
+      "open": "Ver mi plan"
     }
   },
   "categories": {
@@ -774,7 +779,8 @@
       "conflict": "La deuda cambió en otro dispositivo. Cerrá y volvé a abrirla.",
       "load": "No pudimos cargar tus deudas.",
       "generic": "No pudimos guardar los cambios. Probá de nuevo."
-    }
+    },
+    "magicPlan": "Plan mágico"
   },
   "savings": {
     "title": "Ahorro e inversiones",
@@ -1226,5 +1232,68 @@
       "autoLockHint": "Al bloquear, tus claves y tus datos descifrados se borran de la memoria."
     }
   },
-  "offline": "Sin conexión: estás viendo tus datos guardados en este dispositivo (solo lectura)."
+  "offline": "Sin conexión: estás viendo tus datos guardados en este dispositivo (solo lectura).",
+  "plan": {
+    "title": "Plan mágico",
+    "subtitle": "Qué hacer con tu plata este mes, en orden de prioridad. Se calcula en tu dispositivo: tus datos no salen de acá.",
+    "loadError": "No pudimos cargar tus datos para armar el plan.",
+    "needsData": "Para armar tu plan necesito al menos un mes con ingresos y gastos registrados.",
+    "goTransactions": "Cargar movimientos",
+    "capacity": "Te quedan {{amount}} por mes después de tus gastos de vida (ingresos {{income}} − gastos {{expenses}}, promedio de los últimos meses).",
+    "day": "día {{day}}",
+    "dueOn": "vence {{date}}",
+    "realRate": "tasa real {{rate}} anual",
+    "go": "Ir",
+    "nothing": "No hay nada urgente: ¡vas muy bien!",
+    "steps": {
+      "minimums": {
+        "title": "Pagá los mínimos de tus deudas ({{amount}})",
+        "why": "Es lo primero: no caer en mora evita recargos y cuida tu historial crediticio."
+      },
+      "shortfall": {
+        "title": "Te faltan {{amount}} por mes para cubrir los mínimos",
+        "why": "Tus ingresos no alcanzan para tus gastos y deudas. Revisá el presupuesto para recortar, o hablá con tus acreedores para refinanciar antes de atrasarte."
+      },
+      "cards": {
+        "title": "Pagá el total de tus tarjetas ({{amount}})",
+        "why": "Pagar solo el mínimo financia el resto a una de las tasas más caras. Estos consumos ya están en tus gastos."
+      },
+      "miniFund": {
+        "title": "Armá un colchón de 1 mes de gastos: ahorrá {{amount}}",
+        "why": "Tenés {{saved}} de {{target}}. Con este colchón, un imprevisto no se convierte en una deuda nueva."
+      },
+      "prepay": {
+        "title": "Adelantá {{amount}} a «{{name}}»",
+        "why": "Es tu deuda más cara (cuesta {{rate}} por año, en términos reales): cada peso que adelantás te ahorra intereses."
+      },
+      "dontPrepay": {
+        "title": "No adelantes estas deudas: pagá solo la cuota",
+        "why": "Con una inflación de {{inflation}} mensual, su tasa queda por debajo y la deuda se licúa sola. Esa plata rinde más ahorrada."
+      },
+      "fullFund": {
+        "title": "Completá el fondo de emergencia (3 meses): ahorrá {{amount}}",
+        "why": "Llevás {{saved}} de {{target}}. Es tu red de seguridad ante una pérdida de ingresos."
+      },
+      "goal": {
+        "title": "Ahorrá {{amount}} para «{{name}}»",
+        "why": "Es lo que hace falta por mes para llegar a tiempo a tu meta."
+      },
+      "invest": {
+        "title": "Invertí {{amount}}",
+        "why": "Ya cubriste lo urgente: hacé que el resto trabaje para vos (plazo fijo, fondos, dólares, etc.)."
+      }
+    },
+    "impact": {
+      "title": "Lo que ganás siguiendo el plan",
+      "body": "Saldrías de tus deudas en {{months}} meses en vez de {{baseline}} pagando solo mínimos, y te ahorrás {{saved}} de intereses.",
+      "rescued": "Pagando solo los mínimos no terminarías nunca (los intereses le ganan a la cuota). Con el plan, salís en {{months}} meses."
+    },
+    "inflation": {
+      "label": "Inflación mensual esperada",
+      "hint": "Se usa para ver qué deudas en tu moneda conviene adelantar. Queda guardada cifrada, en este dispositivo.",
+      "save": "Guardar",
+      "clear": "Quitar"
+    },
+    "disclaimer": "Es una guía automática basada en tus datos, no asesoramiento financiero profesional."
+  }
 }

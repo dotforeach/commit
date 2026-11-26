@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { RouterLink } from '@angular/router';
 import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 import { CurrenciesService } from '../../core/currencies/currencies.service';
 import { todayIso } from '../../core/dates/dates';
@@ -35,6 +36,7 @@ import { ScheduleDialog } from './schedule-dialog/schedule-dialog';
 @Component({
   selector: 'app-debts-page',
   imports: [
+    RouterLink,
     DatePipe,
     FormsModule,
     TranslocoDirective,

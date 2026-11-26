@@ -15,6 +15,17 @@
       </mat-card>
     }
 
+    <mat-card appearance="outlined" class="magic" data-testid="home-plan">
+      <mat-card-header>
+        <mat-icon mat-card-avatar fontSet="material-symbols-outlined" aria-hidden="true">auto_awesome</mat-icon>
+        <mat-card-title>{{ t('plan.title') }}</mat-card-title>
+        <mat-card-subtitle>{{ t('plan.subtitle') }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-actions align="end">
+        <a mat-flat-button routerLink="/plan">✨ {{ t('plan.open') }}</a>
+      </mat-card-actions>
+    </mat-card>
+
     <mat-card appearance="outlined" class="progress-card" data-testid="home-progress">
       <mat-card-header>
         <mat-icon mat-card-avatar fontSet="material-symbols-outlined" aria-hidden="true">insights</mat-icon>

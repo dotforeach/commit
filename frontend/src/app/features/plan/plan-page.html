@@ -1,0 +1,102 @@
+<ng-container *transloco="let t; prefix: 'plan'">
+  <section class="page">
+    <header class="head">
+      <div>
+        <h2>✨ {{ t('title') }}</h2>
+        <p class="subtitle">{{ t('subtitle') }}</p>
+      </div>
+    </header>
+
+    @if (loading()) {
+      <mat-progress-bar mode="indeterminate" />
+    } @else if (loadError()) {
+      <p class="error" role="alert">{{ t('loadError') }}</p>
+    } @else if (plan().needsData) {
+      <mat-card appearance="outlined" data-testid="plan-needs-data">
+        <mat-card-content><p>{{ t('needsData') }}</p></mat-card-content>
+        <mat-card-actions align="end"><a mat-button routerLink="/movimientos">{{ t('goTransactions') }}</a></mat-card-actions>
+      </mat-card>
+    } @else {
+      <p class="capacity" data-testid="plan-capacity">
+        {{ t('capacity', { amount: money(plan().capacity), income: money(input().avgIncome), expenses: money(input().avgLivingExpenses) }) }}
+      </p>
+
+      <ol class="steps">
+        @for (s of steps(); track s.n) {
+          <li class="step" [class.alert]="s.kind === 'shortfall'" [attr.data-step]="s.kind">
+            <mat-icon class="icon" fontSet="material-symbols-outlined" aria-hidden="true">{{ icons[s.kind] }}</mat-icon>
+            <div class="body">
+              <h3>{{ s.n }}. {{ t('steps.' + s.kind + '.title', params(s)) }}</h3>
+              <p class="why">{{ t('steps.' + s.kind + '.why', params(s)) }}</p>
+              @switch (s.kind) {
+                @case ('minimums') {
+                  <ul class="items">
+                    @for (i of s.items; track i.debtId) {
+                      <li>
+                        <span>{{ i.name }}</span><span>{{ money(i.amount) }}@if (i.paymentDay) { · {{ t('day', { day: i.paymentDay }) }}}</span>
+                      </li>
+                    }
+                  </ul>
+                }
+                @case ('cards') {
+                  <ul class="items">
+                    @for (i of s.items; track i.accountId) {
+                      <li>
+                        <span>{{ i.name }}</span><span>{{ money(i.due) }} · {{ t('dueOn', { date: (i.dueDate | date: 'd/M' : 'UTC') }) }}</span>
+                      </li>
+                    }
+                  </ul>
+                }
+                @case ('dontPrepay') {
+                  <ul class="items">
+                    @for (i of s.items; track i.debtId) {
+                      <li><span>{{ i.name }}</span><span>{{ t('realRate', { rate: pct(i.realRate) }) }}</span></li>
+                    }
+                  </ul>
+                }
+              }
+            </div>
+            <a mat-button class="go" [routerLink]="links[s.kind]">{{ t('go') }}</a>
+          </li>
+        } @empty {
+          <li class="step"><p>{{ t('nothing') }}</p></li>
+        }
+      </ol>
+
+      @if (plan().impact; as im) {
+        <mat-card appearance="outlined" class="impact" data-testid="plan-impact">
+          <mat-card-header>
+            <mat-icon mat-card-avatar fontSet="material-symbols-outlined" aria-hidden="true">celebration</mat-icon>
+            <mat-card-title>{{ t('impact.title') }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            @if (im.baseline.stuck && !im.plan.stuck) {
+              <p>{{ t('impact.rescued', { months: im.plan.months }) }}</p>
+            } @else if (!im.plan.stuck) {
+              <p>{{ t('impact.body', { months: im.plan.months, baseline: im.baseline.months, saved: money(im.baseline.interest - im.plan.interest) }) }}</p>
+            }
+          </mat-card-content>
+        </mat-card>
+      }
+    }
+
+    <mat-card appearance="outlined" class="inflation">
+      <mat-card-content>
+        <mat-form-field subscriptSizing="dynamic">
+          <mat-label>{{ t('inflation.label') }}</mat-label>
+          <input matInput inputmode="decimal" data-testid="plan-inflation" [ngModel]="inflationInput()" (ngModelChange)="inflationInput.set($event)" />
+          <span matTextSuffix>%</span>
+        </mat-form-field>
+        <p class="meta">{{ t('inflation.hint') }}</p>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        @if (service.monthlyInflation() !== null) {
+          <button mat-button (click)="clearInflation()">{{ t('inflation.clear') }}</button>
+        }
+        <button mat-flat-button (click)="saveInflation()">{{ t('inflation.save') }}</button>
+      </mat-card-actions>
+    </mat-card>
+
+    <p class="meta disclaimer">{{ t('disclaimer') }}</p>
+  </section>
+</ng-container>

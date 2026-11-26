@@ -24,7 +24,7 @@ import { healthScore, levels, tips, type FinanceSnapshot, type HealthScore } fro
 const LIQUID = new Set(['CASH', 'CHECKING', 'SAVINGS', 'DIGITAL_WALLET']);
 
 /** Los 3 meses completos anteriores a hoy ("YYYY-MM"). */
-function lastFullMonths(today: string, n = 3): string[] {
+export function lastFullMonths(today: string, n = 3): string[] {
   const [y, m] = today.split('-').map(Number);
   return Array.from({ length: n }, (_, i) => {
     const t = y * 12 + (m - 1) - (i + 1);
