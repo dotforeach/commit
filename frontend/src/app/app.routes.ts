@@ -49,5 +49,10 @@ export const routes: Routes = [
     canActivate: [authGuard, unlockedGuard],
     loadChildren: () => import('./features/recurring/recurring.routes').then((m) => m.RECURRING_ROUTES),
   },
+  {
+    path: 'presupuesto',
+    canActivate: [authGuard, unlockedGuard],
+    loadComponent: () => import('./features/budget/budget-page').then((m) => m.BudgetPage),
+  },
   { path: '**', redirectTo: 'inicio' },
 ];

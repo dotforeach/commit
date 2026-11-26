@@ -12,9 +12,9 @@
     "semantic_hash": ""
   },
   "backend/package.json": {
-    "mtime": 1795710818.5725443,
-    "seen": 1795710830.824739,
-    "ast_hash": "5ad13db07bf286511f9aa44178dcdc12",
+    "mtime": 1795712960.3056102,
+    "seen": 1795712978.7288609,
+    "ast_hash": "ddd870bb2a2dd8474dc739d44108e4c0",
     "semantic_hash": ""
   },
   "backend/pnpm-workspace.yaml": {
@@ -30,9 +30,9 @@
     "semantic_hash": ""
   },
   "backend/src/app.module.ts": {
-    "mtime": 1795711103.4918694,
-    "seen": 1795712296.470943,
-    "ast_hash": "44ec0da348c11f7406b9cf1f00b1a967",
+    "mtime": 1795713034.3286827,
+    "seen": 1795713408.182301,
+    "ast_hash": "cfd5e123915f68df18fe7f04961f51c8",
     "semantic_hash": ""
   },
   "backend/src/config/env.schema.ts": {
@@ -138,9 +138,9 @@
     "semantic_hash": ""
   },
   "frontend/package.json": {
-    "mtime": 1795710818.5871913,
-    "seen": 1795710830.824781,
-    "ast_hash": "70d2fb5237a57c816f4ebffbcb6c4897",
+    "mtime": 1795712960.305899,
+    "seen": 1795712978.728908,
+    "ast_hash": "41422ea981a0a3e94e8c7aee818276c9",
     "semantic_hash": ""
   },
   "frontend/pnpm-workspace.yaml": {
@@ -162,9 +162,9 @@
     "semantic_hash": ""
   },
   "frontend/src/app/app.routes.ts": {
-    "mtime": 1795711372.8026361,
-    "seen": 1795712296.4709902,
-    "ast_hash": "25edb7ee1f7af775ec52ba6d893589f9",
+    "mtime": 1795713243.7584383,
+    "seen": 1795713408.182354,
+    "ast_hash": "061732c3092c81be2e14947024f4c768",
     "semantic_hash": ""
   },
   "frontend/src/app/app.spec.ts": {
@@ -216,9 +216,9 @@
     "semantic_hash": ""
   },
   "frontend/src/app/app.html": {
-    "mtime": 1795711372.8027077,
-    "seen": 1795712296.4710321,
-    "ast_hash": "9dbf15d39c2a68fdbc9c2eb4e2e69f13",
+    "mtime": 1795713243.7585375,
+    "seen": 1795713408.1824021,
+    "ast_hash": "06a16c23fc4f65aeba1e60007ef7e15b",
     "semantic_hash": ""
   },
   "frontend/src/index.html": {
@@ -228,9 +228,9 @@
     "semantic_hash": ""
   },
   "frontend/public/i18n/es.json": {
-    "mtime": 1795711372.8033779,
-    "seen": 1795712296.470989,
-    "ast_hash": "e5152e0aae0c3db00d6401a43280d824",
+    "mtime": 1795713243.759625,
+    "seen": 1795713408.1823518,
+    "ast_hash": "980196073e42deb5e4d91e92646a614b",
     "semantic_hash": ""
   },
   "frontend/src/app/core/i18n/transloco-loader.ts": {
@@ -468,9 +468,9 @@
     "semantic_hash": ""
   },
   "frontend/src/app/features/home/home.ts": {
-    "mtime": 1795711372.8019955,
-    "seen": 1795712296.471017,
-    "ast_hash": "09fc550a6dc8b5ce56d5bb39556950fb",
+    "mtime": 1795713270.5542212,
+    "seen": 1795713408.182386,
+    "ast_hash": "36001bfd84af75b8588546ebb29e5d20",
     "semantic_hash": ""
   },
   "frontend/src/app/shared/validators.ts": {
@@ -498,9 +498,9 @@
     "semantic_hash": ""
   },
   "frontend/src/app/features/home/home.html": {
-    "mtime": 1795711372.8021064,
-    "seen": 1795712296.4710379,
-    "ast_hash": "25950a725df73eb0afdb5c23b2eaa1c3",
+    "mtime": 1795713243.7587974,
+    "seen": 1795713408.1824079,
+    "ast_hash": "29e8f3f07a22d04d69e3d4d422c7b713",
     "semantic_hash": ""
   },
   "backend/src/accounts/accounts.controller.ts": {
@@ -636,15 +636,15 @@
     "semantic_hash": ""
   },
   "frontend/src/app/core/money/decimal.spec.ts": {
-    "mtime": 1795710818.6477478,
-    "seen": 1795710830.8248,
-    "ast_hash": "9315a34899167a24644b77aef07650da",
+    "mtime": 1795713118.3639948,
+    "seen": 1795713408.182372,
+    "ast_hash": "f2b83f7f357b0bc45929ec9544acce50",
     "semantic_hash": ""
   },
   "frontend/src/app/core/money/decimal.ts": {
-    "mtime": 1795710818.6481555,
-    "seen": 1795710830.8248,
-    "ast_hash": "f3f379082d5c72c5e7cfc7198a055a97",
+    "mtime": 1795713118.3562155,
+    "seen": 1795713408.182373,
+    "ast_hash": "148bcf6314ff0c566b703a20b8809350",
     "semantic_hash": ""
   },
   "frontend/src/app/features/accounts/account-dialog/account-dialog.ts": {
@@ -963,6 +963,96 @@
     "mtime": 1795711322.8336737,
     "seen": 1795712296.47104,
     "ast_hash": "bb6003019878d32a65683287fa89a34b",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1795712975.1039855,
+    "seen": 1795712978.728949,
+    "ast_hash": "9e53a527700ee3ae1e655944aef57bbe",
+    "semantic_hash": ""
+  },
+  "backend/src/budgets/budgets.controller.ts": {
+    "mtime": 1795713034.3031728,
+    "seen": 1795713408.182307,
+    "ast_hash": "7397858ab3f03128662278c08be47872",
+    "semantic_hash": ""
+  },
+  "backend/src/budgets/budgets.module.ts": {
+    "mtime": 1795713034.3051994,
+    "seen": 1795713408.1823082,
+    "ast_hash": "6ee2e263c054bbfa12af231e26c92927",
+    "semantic_hash": ""
+  },
+  "backend/src/budgets/budgets.schemas.ts": {
+    "mtime": 1795713034.2991164,
+    "seen": 1795713408.1823092,
+    "ast_hash": "dd012c34a07738e8b91e4d7997947620",
+    "semantic_hash": ""
+  },
+  "backend/src/budgets/budgets.service.ts": {
+    "mtime": 1795713034.3012228,
+    "seen": 1795713408.1823099,
+    "ast_hash": "2a53e65b4f426830c7dab238a97ab2aa",
+    "semantic_hash": ""
+  },
+  "backend/test/budgets.e2e-spec.ts": {
+    "mtime": 1795713054.3993113,
+    "seen": 1795713408.182334,
+    "ast_hash": "c80992a2b81ff07a9e64d8c1d8969f13",
+    "semantic_hash": ""
+  },
+  "frontend/e2e/budget.e2e.ts": {
+    "mtime": 1795713288.6444457,
+    "seen": 1795713408.1823459,
+    "ast_hash": "3c03818f2bab5cad8130bd41f0f5b88f",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/budget/budget-dialog/budget-dialog.ts": {
+    "mtime": 1795713168.6143851,
+    "seen": 1795713408.18238,
+    "ast_hash": "d248a430242b023893148401840fde80",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/budget/budget-math.spec.ts": {
+    "mtime": 1795713118.362262,
+    "seen": 1795713408.1823812,
+    "ast_hash": "7695c0ec45a894d02acf4451e5c9a0bb",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/budget/budget-math.ts": {
+    "mtime": 1795713118.3602958,
+    "seen": 1795713408.1823812,
+    "ast_hash": "7155b28291c5405d4a38e12aea33dd1e",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/budget/budget-page.ts": {
+    "mtime": 1795713212.0015428,
+    "seen": 1795713408.182383,
+    "ast_hash": "8fd157c0ae6be429e0eb05ca2d3be73e",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/budget/budget.model.ts": {
+    "mtime": 1795713118.3583927,
+    "seen": 1795713408.182384,
+    "ast_hash": "6d644daf16507a895396ffdfa114a40d",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/budget/budgets.service.ts": {
+    "mtime": 1795713168.6082125,
+    "seen": 1795713408.182384,
+    "ast_hash": "76d9a445d2ba62683bd4bb39e341d82b",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/budget/budget-dialog/budget-dialog.html": {
+    "mtime": 1795713168.6121092,
+    "seen": 1795713408.182407,
+    "ast_hash": "91b0aa37b77ddc50eab2a0b0d75a8fe8",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/budget/budget-page.html": {
+    "mtime": 1795713212.0279372,
+    "seen": 1795713408.1824079,
+    "ast_hash": "3e27b814754a9d92bfe16ee71dcccfe6",
     "semantic_hash": ""
   },
   "backend/pnpm-lock.yaml": {

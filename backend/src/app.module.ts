@@ -4,6 +4,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { AccountsModule } from './accounts/accounts.module.js';
 import { AuthModule } from './auth/auth.module.js';
+import { BudgetsModule } from './budgets/budgets.module.js';
 import { CategoriesModule } from './categories/categories.module.js';
 import { RecurringModule } from './recurring/recurring.module.js';
 import { TransactionsModule } from './transactions/transactions.module.js';
@@ -26,6 +27,7 @@ import { RedisModule } from './redis/redis.module.js';
     CategoriesModule,
     TransactionsModule,
     RecurringModule,
+    BudgetsModule,
   ],
   providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }],
 })

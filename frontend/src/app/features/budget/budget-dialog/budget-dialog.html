@@ -1,0 +1,72 @@
+<ng-container *transloco="let t; prefix: 'budget'">
+  <h2 mat-dialog-title>{{ b ? t('dialog.editTitle') : t('dialog.newTitle') }}</h2>
+  <form [formGroup]="form" (ngSubmit)="save()">
+    <mat-dialog-content class="fields">
+      <div class="row">
+        <mat-form-field>
+          <mat-label>{{ t('fields.method') }}</mat-label>
+          <mat-select formControlName="method">
+            @for (m of methods; track m) {
+              <mat-option [value]="m">{{ t('methods.' + m + '.name') }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{ t('fields.currency') }}</mat-label>
+          <mat-select formControlName="currency">
+            @for (c of currencies.list.value(); track c.code) {
+              <mat-option [value]="c.code">{{ c.code }} · {{ c.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <p class="method-help">{{ t('methods.' + method() + '.help') }}</p>
+
+      <mat-form-field>
+        <mat-label>{{ t('fields.expectedIncome') }}</mat-label>
+        <input matInput formControlName="expectedIncome" inputmode="decimal" />
+        <mat-hint>{{ method() === 'CATEGORY' ? t('fields.expectedIncomeOptional') : t('fields.expectedIncomeRequired') }}</mat-hint>
+        @if (form.controls.expectedIncome.hasError('decimal')) {
+          <mat-error>{{ t('errors.decimal') }}</mat-error>
+        }
+      </mat-form-field>
+      @if (recurringIncome(); as income) {
+        <button mat-stroked-button type="button" class="suggest" (click)="useRecurringIncome()">
+          <mat-icon fontSet="material-symbols-outlined">event_repeat</mat-icon>
+          {{ t('fields.useRecurring', { amount: money(income) }) }}
+        </button>
+      }
+
+      <h3 class="section">{{ t('fields.categories') }}</h3>
+      <p class="method-help">{{ t('fields.categoriesHelp') }}</p>
+      <div formArrayName="items" class="items">
+        @for (group of itemsArray.controls; track $index) {
+          <div class="item" [formGroupName]="$index">
+            <span class="cat">{{ categoryName(group.value.categoryId) }}</span>
+            <mat-form-field subscriptSizing="dynamic" class="amount">
+              <mat-label>{{ t('fields.amount') }}</mat-label>
+              <input matInput formControlName="amount" inputmode="decimal" [attr.aria-label]="t('fields.amountFor', { name: categoryName(group.value.categoryId) })" />
+            </mat-form-field>
+            <mat-checkbox formControlName="rollover" [attr.aria-label]="t('fields.rolloverFor', { name: categoryName(group.value.categoryId) })">
+              {{ t('fields.rollover') }}
+            </mat-checkbox>
+          </div>
+        }
+      </div>
+      <p class="assigned">{{ t('fields.assigned', { amount: money(assigned()) }) }}</p>
+
+      @if (error(); as key) {
+        <p class="error" role="alert">{{ t(key) }}</p>
+      }
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button type="button" mat-dialog-close [disabled]="busy()">{{ t('dialog.cancel') }}</button>
+      <button mat-flat-button type="submit" [disabled]="busy() || form.invalid">
+        @if (busy()) {
+          <mat-spinner diameter="18" />
+        }
+        {{ t('dialog.save') }}
+      </button>
+    </mat-dialog-actions>
+  </form>
+</ng-container>

@@ -1,0 +1,136 @@
+<ng-container *transloco="let t; prefix: 'budget'">
+  <section class="page">
+    <header class="head">
+      <div>
+        <h2>{{ t('title') }}</h2>
+        <p class="subtitle">{{ t('subtitle') }}</p>
+      </div>
+      @if (household.canWrite() && budget()) {
+        <div class="actions">
+          <button mat-stroked-button (click)="open()">
+            <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>{{ t('edit') }}
+          </button>
+          <button mat-icon-button (click)="remove()" [attr.aria-label]="t('delete')">
+            <mat-icon fontSet="material-symbols-outlined">delete</mat-icon>
+          </button>
+        </div>
+      }
+    </header>
+
+    <div class="month" role="group" [attr.aria-label]="t('month')">
+      <button mat-icon-button (click)="shift(-1)" [attr.aria-label]="t('prevMonth')">
+        <mat-icon fontSet="material-symbols-outlined">chevron_left</mat-icon>
+      </button>
+      <span class="month-label">{{ monthDate() | date: 'MMMM y' }}</span>
+      <button mat-icon-button (click)="shift(1)" [attr.aria-label]="t('nextMonth')">
+        <mat-icon fontSet="material-symbols-outlined">chevron_right</mat-icon>
+      </button>
+    </div>
+
+    @if (loading()) {
+      <mat-progress-bar mode="indeterminate" />
+    }
+    @if (loadError()) {
+      <p class="error" role="alert">{{ t('errors.load') }}</p>
+    }
+
+    @if (!loading() && !budget()) {
+      <mat-card appearance="outlined" class="empty">
+        <mat-card-content>
+          <mat-icon fontSet="material-symbols-outlined" aria-hidden="true">savings</mat-icon>
+          <p><strong>{{ t('empty.title') }}</strong></p>
+          <p>{{ t('empty.body') }}</p>
+          @if (household.canWrite()) {
+            <div class="empty-actions">
+              <button mat-flat-button (click)="open()">{{ t('create') }}</button>
+              @if (previous(); as prev) {
+                <button mat-stroked-button (click)="copyPrevious()">
+                  {{ t('copyFrom', { month: (prev.year + '-' + (prev.month < 10 ? '0' : '') + prev.month + '-01' | date: 'MMMM' : 'UTC') }) }}
+                </button>
+              }
+            </div>
+          }
+        </mat-card-content>
+      </mat-card>
+    }
+
+    @if (budget(); as b) {
+      @if (progress(); as p) {
+        <mat-card appearance="outlined" class="summary" data-testid="budget-summary">
+          <div class="summary-row">
+            <span>{{ t('methods.' + b.method + '.name') }} · {{ b.currency }}</span>
+            @if (b.expectedIncome) {
+              <span>{{ t('expectedIncome') }}: <strong>{{ money(b.expectedIncome) }}</strong></span>
+            }
+          </div>
+          @if (p.items.length > 0) {
+            <div class="summary-row big">
+              <span>{{ t('spentOf', { spent: money(p.totalSpent), total: money(p.totalAvailable) }) }}</span>
+            </div>
+          }
+          @if (p.unassigned !== null) {
+            <p class="unassigned" [class.neg]="negative(p.unassigned)" data-testid="unassigned">
+              {{ negative(p.unassigned) ? t('overAssigned', { amount: money(p.unassigned.replace('-', '')) }) : t('unassigned', { amount: money(p.unassigned) }) }}
+            </p>
+          }
+          @if (p.otherCurrencyCount > 0) {
+            <p class="note">{{ t('otherCurrency', { n: p.otherCurrencyCount, currency: b.currency }) }}</p>
+          }
+        </mat-card>
+
+        @if (p.groups; as groups) {
+          <h3 class="section">{{ t('groupsTitle') }}</h3>
+          <ul class="bars">
+            @for (g of groups; track g.group) {
+              <li [attr.data-group]="g.group">
+                <div class="bar-head">
+                  <span class="name">{{ t('groups.' + g.group) }} ({{ g.pct }}%)</span>
+                  <span class="nums">{{ money(g.spent) }} / {{ money(g.target) }}</span>
+                </div>
+                <mat-progress-bar mode="determinate" [value]="barValue(g.ratio)" [class]="'status-' + g.status" />
+              </li>
+            }
+          </ul>
+        }
+
+        @if (p.items.length > 0) {
+          <h3 class="section">{{ t('categoriesTitle') }}</h3>
+          <ul class="bars">
+            @for (i of p.items; track i.itemId) {
+              <li [attr.data-budget-item]="categoryName(i.categoryId)" [attr.data-status]="i.status">
+                <div class="bar-head">
+                  <span class="name">
+                    <mat-icon fontSet="material-symbols-outlined" aria-hidden="true">{{ categoryIcon(i.categoryId) }}</mat-icon>
+                    {{ categoryName(i.categoryId) }}
+                  </span>
+                  <span class="nums">{{ money(i.spent) }} / {{ money(i.available) }} · {{ percent(i.ratio) }}</span>
+                </div>
+                <mat-progress-bar mode="determinate" [value]="barValue(i.ratio)" [class]="'status-' + i.status" />
+                <div class="bar-foot">
+                  <span [class.neg]="negative(i.remaining)">
+                    {{ negative(i.remaining) ? t('over', { amount: money(i.remaining.replace('-', '')) }) : t('left', { amount: money(i.remaining) }) }}
+                  </span>
+                  @if (i.carried !== '0') {
+                    <span class="note">{{ t('carried', { amount: money(i.carried) }) }}</span>
+                  }
+                </div>
+              </li>
+            }
+          </ul>
+        }
+
+        @if (p.unbudgeted.length > 0) {
+          <h3 class="section">{{ t('unbudgetedTitle', { amount: money(p.unbudgetedSpent) }) }}</h3>
+          <ul class="unbudgeted">
+            @for (u of p.unbudgeted; track u.categoryId) {
+              <li>
+                <span>{{ categoryName(u.categoryId) }}</span><span>{{ money(u.spent) }}</span>
+              </li>
+            }
+          </ul>
+        }
+      }
+    }
+    <p class="hint"><a routerLink="/movimientos">{{ t('goToTransactions') }}</a></p>
+  </section>
+</ng-container>

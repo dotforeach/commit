@@ -1,4 +1,5 @@
 import { Component, computed, inject, resource, type OnInit } from '@angular/core';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -15,11 +16,15 @@ import { AccountsService } from '../accounts/accounts.service';
 import { CategoriesService } from '../categories/categories.service';
 import { PendingList } from '../recurring/pending-list/pending-list';
 import { RecurringService } from '../recurring/recurring.service';
+import { computeBudget } from '../budget/budget-math';
+import { BudgetsService } from '../budget/budgets.service';
+import { CurrenciesService } from '../../core/currencies/currencies.service';
+import { formatMoney, ratioOf } from '../../core/money/decimal';
 import { TransactionsService } from '../transactions/transactions.service';
 
 @Component({
   selector: 'app-home',
-  imports: [PendingList, RouterLink, TranslocoDirective, MatButtonModule, MatCardModule, MatIconModule],
+  imports: [MatProgressBarModule, PendingList, RouterLink, TranslocoDirective, MatButtonModule, MatCardModule, MatIconModule],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
@@ -33,6 +38,8 @@ export class Home implements OnInit {
   private readonly transactions = inject(TransactionsService);
   private readonly recurring = inject(RecurringService);
   private readonly snack = inject(MatSnackBar);
+  private readonly budgets = inject(BudgetsService);
+  private readonly currencies = inject(CurrenciesService);
   private readonly transloco = inject(TranslocoService);
 
   readonly me = this.session.me;
@@ -56,10 +63,32 @@ export class Home implements OnInit {
       ),
   });
 
+  /** Presupuesto del mes en curso: cuánto se gastó y cuántas categorías se pasaron. */
+  readonly budgetSummary = computed(() => {
+    const now = new Date();
+    const b = this.budgets.budgets().find((x) => x.year === now.getFullYear() && x.month === now.getMonth() + 1);
+    if (!b || b.items.length === 0) return null;
+    const accounts = this.accounts.accounts();
+    const p = computeBudget(b, {
+      transactions: this.transactions.transactions(),
+      currencyOfAccount: (id) => accounts.find((a) => a.id === id)?.currency,
+      categoriesById: this.categories.byId(),
+      budgets: this.budgets.budgets(),
+    });
+    const currency = this.currencies.get(b.currency);
+    return {
+      spent: formatMoney(p.totalSpent, currency),
+      total: formatMoney(p.totalAvailable, currency),
+      value: Math.min(100, Math.round(ratioOf(p.totalSpent, p.totalAvailable) * 100)),
+      over: p.items.filter((i) => i.status === 'over').length,
+      warning: p.items.filter((i) => i.status === 'warning').length,
+    };
+  });
+
   /** Al entrar: registra los recurrentes automáticos vencidos y deja visibles los pendientes. */
   async ngOnInit() {
     try {
-      await Promise.all([this.accounts.load(), this.categories.ensureLoaded(), this.transactions.ensureLoaded()]);
+      await Promise.all([this.accounts.load(), this.categories.ensureLoaded(), this.transactions.ensureLoaded(), this.budgets.ensureLoaded()]);
       const created = await this.recurring.processDue();
       if (created > 0) this.snack.open(this.transloco.translate('recurring.autoPosted', { n: created }), undefined, { duration: 4000 });
     } catch {

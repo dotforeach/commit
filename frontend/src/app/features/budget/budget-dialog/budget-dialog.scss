@@ -1,0 +1,41 @@
+@use '../../accounts/account-dialog/account-dialog';
+
+.method-help {
+  margin: 0 0 8px;
+  font: var(--mat-sys-body-small);
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.suggest {
+  align-self: flex-start;
+  margin-bottom: 8px;
+}
+
+.section {
+  margin: 12px 0 0;
+  font: var(--mat-sys-title-small);
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  display: grid;
+  grid-template-columns: 1fr 160px auto;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+}
+
+.cat {
+  font: var(--mat-sys-body-medium);
+}
+
+.assigned {
+  margin: 8px 0 0;
+  text-align: right;
+  font: var(--mat-sys-title-small);
+}

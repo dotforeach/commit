@@ -4,6 +4,27 @@
 
     <app-pending-list />
 
+    @if (budgetSummary(); as b) {
+      <mat-card appearance="outlined" class="budget" data-testid="home-budget">
+        <mat-card-header>
+          <mat-icon mat-card-avatar fontSet="material-symbols-outlined" aria-hidden="true">savings</mat-icon>
+          <mat-card-title>{{ t('budget.title') }}</mat-card-title>
+          <mat-card-subtitle>{{ t('budget.spentOf', { spent: b.spent, total: b.total }) }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-progress-bar mode="determinate" [value]="b.value" />
+          @if (b.over > 0) {
+            <p class="alert">{{ t('budget.over', { n: b.over }) }}</p>
+          } @else if (b.warning > 0) {
+            <p class="alert warn">{{ t('budget.warning', { n: b.warning }) }}</p>
+          }
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <a mat-button routerLink="/presupuesto">{{ t('budget.open') }}</a>
+        </mat-card-actions>
+      </mat-card>
+    }
+
     <mat-card appearance="outlined">
       <mat-card-header>
         <mat-icon mat-card-avatar fontSet="material-symbols-outlined" aria-hidden="true">verified_user</mat-icon>

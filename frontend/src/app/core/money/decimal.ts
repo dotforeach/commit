@@ -113,3 +113,15 @@ export function compareDecimals(a: string, b: string): -1 | 0 | 1 {
 export function isNegative(a: string): boolean {
   return toUnits(a) < 0n;
 }
+
+/** `pct`% de un monto, exacto a 4 decimales (trunca): percentOf("1000", 50) → "500". */
+export function percentOf(amount: string, pct: number): string {
+  if (!Number.isInteger(pct)) throw new Error('percentOf espera un porcentaje entero');
+  return fromUnits((toUnits(amount) * BigInt(pct)) / 100n);
+}
+
+/** Proporción a / b como número, solo para mostrar (barras de progreso, %). */
+export function ratioOf(a: string, b: string): number {
+  const den = toUnits(b);
+  return den === 0n ? 0 : Number((toUnits(a) * 10_000n) / den) / 10_000;
+}

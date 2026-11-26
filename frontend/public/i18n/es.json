@@ -95,7 +95,14 @@
       "MEMBER": "Miembro",
       "VIEWER": "Solo lectura"
     },
-    "changePassphrase": "Cambiar clave de descifrado"
+    "changePassphrase": "Cambiar clave de descifrado",
+    "budget": {
+      "title": "Presupuesto del mes",
+      "spentOf": "Gastaste {{spent}} de {{total}}",
+      "over": "{{n}} categorías se pasaron del presupuesto",
+      "warning": "{{n}} categorías están cerca del límite",
+      "open": "Ver presupuesto"
+    }
   },
   "categories": {
     "income": {
@@ -169,7 +176,8 @@
     "accounts": "Cuentas",
     "lock": "Bloquear",
     "transactions": "Movimientos",
-    "recurring": "Recurrentes"
+    "recurring": "Recurrentes",
+    "budget": "Presupuesto"
   },
   "accounts": {
     "title": "Cuentas",
@@ -430,5 +438,87 @@
   "footer": {
     "license": "Software libre bajo licencia AGPL-3.0",
     "source": "Código fuente"
+  },
+  "budget": {
+    "title": "Presupuesto",
+    "subtitle": "Cuánto querés gastar en cada cosa este mes, y cómo vas.",
+    "month": "Mes",
+    "prevMonth": "Mes anterior",
+    "nextMonth": "Mes siguiente",
+    "create": "Armar presupuesto",
+    "copyFrom": "Copiar el de {{month}}",
+    "copied": "Presupuesto copiado",
+    "edit": "Editar",
+    "delete": "Eliminar presupuesto",
+    "expectedIncome": "Ingreso esperado",
+    "spentOf": "Gastaste {{spent}} de {{total}}",
+    "unassigned": "Te quedan {{amount}} por asignar",
+    "overAssigned": "Asignaste {{amount}} más de lo que ingresa",
+    "otherCurrency": "{{n}} gastos en otras monedas no se cuentan en este presupuesto en {{currency}}.",
+    "groupsTitle": "Regla 50/30/20",
+    "groups": {
+      "NEEDS": "Necesidades",
+      "WANTS": "Deseos",
+      "SAVINGS": "Ahorro y deudas"
+    },
+    "categoriesTitle": "Por categoría",
+    "left": "Quedan {{amount}}",
+    "over": "Te pasaste {{amount}}",
+    "carried": "incluye {{amount}} del mes anterior",
+    "unbudgetedTitle": "Gastos sin presupuesto: {{amount}}",
+    "uncategorized": "Sin categoría",
+    "goToTransactions": "Ver los movimientos del mes",
+    "empty": {
+      "title": "Este mes no tiene presupuesto",
+      "body": "Elegí cuánto querés gastar en cada categoría y la app te avisa cuando te acercás al límite."
+    },
+    "deleteDialog": {
+      "title": "Eliminar presupuesto",
+      "message": "¿Eliminar el presupuesto de este mes? Tus movimientos no se tocan.",
+      "confirm": "Eliminar",
+      "cancel": "Cancelar"
+    },
+    "methods": {
+      "CATEGORY": {
+        "name": "Por categoría",
+        "help": "Un monto máximo para cada categoría que quieras controlar."
+      },
+      "FIFTY_THIRTY_TWENTY": {
+        "name": "50/30/20",
+        "help": "50% del ingreso a necesidades, 30% a deseos y 20% a ahorro y deudas. Podés sumar límites por categoría."
+      },
+      "ENVELOPE": {
+        "name": "Sobres",
+        "help": "Repartí todo tu ingreso en categorías hasta que no quede nada sin asignar."
+      }
+    },
+    "dialog": {
+      "newTitle": "Armar presupuesto",
+      "editTitle": "Editar presupuesto",
+      "cancel": "Cancelar",
+      "save": "Guardar"
+    },
+    "fields": {
+      "method": "Método",
+      "currency": "Moneda",
+      "expectedIncome": "Ingreso esperado del mes",
+      "expectedIncomeOptional": "Opcional en este método.",
+      "expectedIncomeRequired": "Necesario para este método.",
+      "useRecurring": "Usar mis ingresos recurrentes ({{amount}})",
+      "categories": "Límites por categoría",
+      "categoriesHelp": "Dejá vacío lo que no quieras limitar. \"Arrastrar\" pasa lo que sobre (o lo que te pases) al mes siguiente.",
+      "amount": "Límite",
+      "amountFor": "Límite para {{name}}",
+      "rollover": "Arrastrar",
+      "rolloverFor": "Arrastrar sobrante de {{name}}",
+      "assigned": "Asignado: {{amount}}"
+    },
+    "errors": {
+      "decimal": "Monto inválido. Ej.: 1.234,56",
+      "incomeRequired": "Este método necesita el ingreso esperado del mes.",
+      "conflict": "El presupuesto cambió en otro dispositivo. Cerrá y volvé a abrirlo.",
+      "load": "No pudimos cargar tu presupuesto.",
+      "generic": "No pudimos guardar los cambios. Probá de nuevo."
+    }
   }
 }

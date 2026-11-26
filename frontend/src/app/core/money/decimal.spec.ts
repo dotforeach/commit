@@ -57,3 +57,13 @@ describe('aritmética decimal exacta', () => {
     expect(compareDecimals('2.50', '2.5')).toBe(0);
   });
 });
+
+describe('percentOf y ratioOf', () => {
+  it('porcentajes exactos', async () => {
+    const { percentOf, ratioOf } = await import('./decimal');
+    expect(percentOf('1000000', 50)).toBe('500000');
+    expect(percentOf('333.33', 30)).toBe('99.999');
+    expect(ratioOf('85000', '100000')).toBe(0.85);
+    expect(ratioOf('5', '0')).toBe(0);
+  });
+});
