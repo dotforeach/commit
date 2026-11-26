@@ -1,4 +1,4 @@
-import { randomBytes, randomUUID, sign } from 'node:crypto';
+import { randomBytes, sign } from 'node:crypto';
 import type { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import type { App } from 'supertest/types.js';

@@ -853,14 +853,14 @@
   },
   "backend/prisma/migrations/20261126000000_init/migration.sql": {
     "mtime": 1795710818.5744884,
-    "seen": 1795717556.889206,
-    "ast_hash": "",
+    "seen": 1795720439.807297,
+    "ast_hash": "149a3cea6a6c621088a93df943c97bfb",
     "semantic_hash": ""
   },
   "backend/prisma/migrations/20261126000100_seed_currencies/migration.sql": {
     "mtime": 1795710818.5747335,
-    "seen": 1795717556.889208,
-    "ast_hash": "",
+    "seen": 1795720439.807298,
+    "ast_hash": "5b48ef84625127eb4fc8debf03dad284",
     "semantic_hash": ""
   },
   "backend/src/recurring/recurring.controller.ts": {
@@ -1501,8 +1501,8 @@
   },
   "backend/prisma/migrations/20261126001000_household_usd_rate/migration.sql": {
     "mtime": 1795717052.8870065,
-    "seen": 1795718355.4333062,
-    "ast_hash": "",
+    "seen": 1795720439.8072991,
+    "ast_hash": "b26ccb209484c516fca2212b2b41a225",
     "semantic_hash": ""
   },
   "backend/src/notifications/notifications.controller.ts": {
@@ -1689,6 +1689,12 @@
     "mtime": 1795720106.9912345,
     "seen": 1795720438.689644,
     "ast_hash": "2b1f85b5c8393727416acffa505a75cd",
+    "semantic_hash": ""
+  },
+  "backend/prisma/migrations/20261126002000_push_subscriptions/migration.sql": {
+    "mtime": 1795718632.675072,
+    "seen": 1795720439.8073,
+    "ast_hash": "7988b06b84b56ac92019e9d2650ae321",
     "semantic_hash": ""
   },
   "backend/pnpm-lock.yaml": {
