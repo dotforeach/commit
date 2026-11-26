@@ -426,5 +426,9 @@
       "load": "No pudimos cargar tus recurrentes.",
       "generic": "No pudimos guardar los cambios. Probá de nuevo."
     }
+  },
+  "footer": {
+    "license": "Software libre bajo licencia AGPL-3.0",
+    "source": "Código fuente"
   }
 }
