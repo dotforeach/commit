@@ -30,9 +30,9 @@
     "semantic_hash": ""
   },
   "backend/src/app.module.ts": {
-    "mtime": 1795713034.3286827,
-    "seen": 1795713408.182301,
-    "ast_hash": "cfd5e123915f68df18fe7f04961f51c8",
+    "mtime": 1795715092.8849654,
+    "seen": 1795715287.270717,
+    "ast_hash": "5ee71443ecf1eca7d5ac55f874f46462",
     "semantic_hash": ""
   },
   "backend/src/config/env.schema.ts": {
@@ -132,9 +132,9 @@
     "semantic_hash": ""
   },
   "frontend/angular.json": {
-    "mtime": 1795710818.5861723,
-    "seen": 1795710830.824777,
-    "ast_hash": "00c3a920c66f94565ba8f44bd9eaafcc",
+    "mtime": 1795715015.7184682,
+    "seen": 1795715287.270765,
+    "ast_hash": "a684582eac192c60abbac4dab0ad68bd",
     "semantic_hash": ""
   },
   "frontend/package.json": {
@@ -162,9 +162,9 @@
     "semantic_hash": ""
   },
   "frontend/src/app/app.routes.ts": {
-    "mtime": 1795713243.7584383,
-    "seen": 1795713408.182354,
-    "ast_hash": "061732c3092c81be2e14947024f4c768",
+    "mtime": 1795715724.3792787,
+    "seen": 1795715953.7384589,
+    "ast_hash": "eb8bde1384a04500ca76e1f3650e15e3",
     "semantic_hash": ""
   },
   "frontend/src/app/app.spec.ts": {
@@ -216,9 +216,9 @@
     "semantic_hash": ""
   },
   "frontend/src/app/app.html": {
-    "mtime": 1795713243.7585375,
-    "seen": 1795713408.1824021,
-    "ast_hash": "06a16c23fc4f65aeba1e60007ef7e15b",
+    "mtime": 1795715724.3793633,
+    "seen": 1795715953.738517,
+    "ast_hash": "bbb430fdb91485f5ccdc66122c0e3261",
     "semantic_hash": ""
   },
   "frontend/src/index.html": {
@@ -228,9 +228,9 @@
     "semantic_hash": ""
   },
   "frontend/public/i18n/es.json": {
-    "mtime": 1795713243.759625,
-    "seen": 1795713408.1823518,
-    "ast_hash": "980196073e42deb5e4d91e92646a614b",
+    "mtime": 1795715724.3800333,
+    "seen": 1795715953.7384572,
+    "ast_hash": "79fdee7bf0c01121d59b0b14771da40a",
     "semantic_hash": ""
   },
   "frontend/src/app/core/i18n/transloco-loader.ts": {
@@ -600,9 +600,9 @@
     "semantic_hash": ""
   },
   "frontend/e2e/helpers.ts": {
-    "mtime": 1795710818.6456802,
-    "seen": 1795710830.824779,
-    "ast_hash": "24ef1e7bfb5b439a88853a8ccf5e2c29",
+    "mtime": 1795715783.7793245,
+    "seen": 1795715953.738452,
+    "ast_hash": "7d60ea8dd433eb036d3899ccc03d1f2b",
     "semantic_hash": ""
   },
   "frontend/e2e/recovery.e2e.ts": {
@@ -756,9 +756,9 @@
     "semantic_hash": ""
   },
   "backend/src/transactions/transactions.service.ts": {
-    "mtime": 1795711103.4920123,
-    "seen": 1795712296.470966,
-    "ast_hash": "2c104f83b5e4d87af1443f5d9a7041dd",
+    "mtime": 1795715122.3741474,
+    "seen": 1795715287.270748,
+    "ast_hash": "fbc42a153f1757ed5e58399c4040cba4",
     "semantic_hash": ""
   },
   "backend/test/transactions.e2e-spec.ts": {
@@ -810,21 +810,21 @@
     "semantic_hash": ""
   },
   "frontend/src/app/features/transactions/transaction-dialog/transaction-dialog.ts": {
-    "mtime": 1795710818.6500907,
-    "seen": 1795710830.82481,
-    "ast_hash": "cf061c6b89648325060c5f20356615a0",
+    "mtime": 1795715266.0798907,
+    "seen": 1795715287.270815,
+    "ast_hash": "9b08eb4c01429332dbef81394c56275e",
     "semantic_hash": ""
   },
   "frontend/src/app/features/transactions/transaction.model.ts": {
-    "mtime": 1795711251.7140493,
-    "seen": 1795712296.471024,
-    "ast_hash": "a88fd2080510964914eec8ae1b450bca",
+    "mtime": 1795715234.8672354,
+    "seen": 1795715287.270816,
+    "ast_hash": "21f657edd59d1900e9b05f854105514f",
     "semantic_hash": ""
   },
   "frontend/src/app/features/transactions/transactions-page.ts": {
-    "mtime": 1795711372.8022113,
-    "seen": 1795712296.471025,
-    "ast_hash": "6004c6b731b8eecd00ce38bc6a234d70",
+    "mtime": 1795715266.080644,
+    "seen": 1795715287.270816,
+    "ast_hash": "5de7499f7f6795eb03006e861f89c180",
     "semantic_hash": ""
   },
   "frontend/src/app/features/transactions/transactions.routes.ts": {
@@ -834,21 +834,21 @@
     "semantic_hash": ""
   },
   "frontend/src/app/features/transactions/transactions.service.ts": {
-    "mtime": 1795711251.7139318,
-    "seen": 1795712296.471026,
-    "ast_hash": "de7ab1a96781ecb92f704e17926a5da2",
+    "mtime": 1795715234.8673327,
+    "seen": 1795715287.270817,
+    "ast_hash": "b90614ea9bb9919027926b9ed6ab25da",
     "semantic_hash": ""
   },
   "frontend/src/app/features/transactions/transaction-dialog/transaction-dialog.html": {
-    "mtime": 1795710818.6495535,
-    "seen": 1795710830.824824,
-    "ast_hash": "509212a914ff9711f214476301423efe",
+    "mtime": 1795715266.080162,
+    "seen": 1795715287.270835,
+    "ast_hash": "5c825dc0c71725a3cbc92f114bd5128f",
     "semantic_hash": ""
   },
   "frontend/src/app/features/transactions/transactions-page.html": {
-    "mtime": 1795711372.8023038,
-    "seen": 1795712296.4710422,
-    "ast_hash": "1db0f8c764fe3e674f220844f28f9eda",
+    "mtime": 1795715266.080377,
+    "seen": 1795715287.270835,
+    "ast_hash": "0b91c75f800b402dd3ff278a3e734ead",
     "semantic_hash": ""
   },
   "backend/prisma/migrations/20261126000000_init/migration.sql": {
@@ -1053,6 +1053,174 @@
     "mtime": 1795713212.0279372,
     "seen": 1795713408.1824079,
     "ast_hash": "3e27b814754a9d92bfe16ee71dcccfe6",
+    "semantic_hash": ""
+  },
+  "backend/src/debts/debts.controller.ts": {
+    "mtime": 1795715059.669075,
+    "seen": 1795715287.270731,
+    "ast_hash": "41db83f3e0deb29d01245092f269f29b",
+    "semantic_hash": ""
+  },
+  "backend/src/debts/debts.module.ts": {
+    "mtime": 1795715059.670804,
+    "seen": 1795715287.270732,
+    "ast_hash": "461eb35ac46403d1849aa4fa9c02c877",
+    "semantic_hash": ""
+  },
+  "backend/src/debts/debts.schemas.ts": {
+    "mtime": 1795715059.66549,
+    "seen": 1795715287.270732,
+    "ast_hash": "e971a99c0cabf2c86c7c8ae03141dec6",
+    "semantic_hash": ""
+  },
+  "backend/src/debts/debts.service.ts": {
+    "mtime": 1795715059.6674054,
+    "seen": 1795715287.270733,
+    "ast_hash": "182651afafd584b5b93c504a316bc08d",
+    "semantic_hash": ""
+  },
+  "backend/src/installments/installments.controller.ts": {
+    "mtime": 1795715092.859092,
+    "seen": 1795715287.270737,
+    "ast_hash": "ae5c786a53621d7edb3d034970945907",
+    "semantic_hash": ""
+  },
+  "backend/src/installments/installments.module.ts": {
+    "mtime": 1795715092.8609426,
+    "seen": 1795715287.270738,
+    "ast_hash": "3a91cb8f51dffaa98ae6813688f102dc",
+    "semantic_hash": ""
+  },
+  "backend/src/installments/installments.schemas.ts": {
+    "mtime": 1795715092.8553,
+    "seen": 1795715287.270738,
+    "ast_hash": "3f2f57a1172dfd594239b8977836b3b9",
+    "semantic_hash": ""
+  },
+  "backend/src/installments/installments.service.ts": {
+    "mtime": 1795715092.857201,
+    "seen": 1795715287.2707388,
+    "ast_hash": "df4ad2ff0fe0bb4860771bd4599b2f16",
+    "semantic_hash": ""
+  },
+  "backend/test/debts.e2e-spec.ts": {
+    "mtime": 1795715122.3776536,
+    "seen": 1795715287.270755,
+    "ast_hash": "14694127f36d4cca99b6b0b8eac64335",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/cards/card-cycle.spec.ts": {
+    "mtime": 1795715234.867123,
+    "seen": 1795715287.270804,
+    "ast_hash": "7fc102e3d423e3eb5e72763363d3b001",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/cards/card-cycle.ts": {
+    "mtime": 1795715187.7199154,
+    "seen": 1795715287.270805,
+    "ast_hash": "757e39020c5ef18c03b51967c5fc567b",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/cards/installments.service.ts": {
+    "mtime": 1795715234.8421378,
+    "seen": 1795715287.270805,
+    "ast_hash": "3b3d3b0c08c5d5c4777b07c3cdc1ab77",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/debts/debt-math.spec.ts": {
+    "mtime": 1795715187.716203,
+    "seen": 1795715287.270807,
+    "ast_hash": "e11acda3f5df2ea8ebec9013176d3e88",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/debts/debt-math.ts": {
+    "mtime": 1795715187.7141619,
+    "seen": 1795715287.270807,
+    "ast_hash": "d4953ef6fcbfa040b9b75d340acde411",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/debts/debt.model.ts": {
+    "mtime": 1795715234.8358488,
+    "seen": 1795715287.270808,
+    "ast_hash": "c1c040f541f1933f896cf9f9b8e0598b",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/debts/debts.service.ts": {
+    "mtime": 1795715234.837889,
+    "seen": 1795715287.270808,
+    "ast_hash": "d8092e7f2604b809578b32b99445d5db",
+    "semantic_hash": ""
+  },
+  "frontend/e2e/debts.e2e.ts": {
+    "mtime": 1795715806.1288834,
+    "seen": 1795715953.738451,
+    "ast_hash": "620a07725d138e36b4fb49b26585091e",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/cards/card-statement.spec.ts": {
+    "mtime": 1795715564.1690195,
+    "seen": 1795715953.7384908,
+    "ast_hash": "3087e763c45895386f782d124fb57860",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/cards/card-statement.ts": {
+    "mtime": 1795715564.1658435,
+    "seen": 1795715953.738492,
+    "ast_hash": "5a2e2180b8df9b07de06f193a245bfc6",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/debts/debt-dialog/debt-dialog.ts": {
+    "mtime": 1795715638.9612162,
+    "seen": 1795715953.738494,
+    "ast_hash": "0bd309d4ead42838727674d3b736618e",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/debts/debt-dialog/percent.spec.ts": {
+    "mtime": 1795715626.1520472,
+    "seen": 1795715953.738494,
+    "ast_hash": "875f1725ffef41893d2287f708fb4375",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/debts/debts-page.ts": {
+    "mtime": 1795715724.348995,
+    "seen": 1795715953.738497,
+    "ast_hash": "ffd31fdf2fae4581b24bab64c83cf5cf",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/debts/debts.routes.ts": {
+    "mtime": 1795715724.379167,
+    "seen": 1795715953.738498,
+    "ast_hash": "e2282334d8ca9936048c22a14c593019",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/debts/payment-dialog/payment-dialog.ts": {
+    "mtime": 1795715626.149001,
+    "seen": 1795715953.7384992,
+    "ast_hash": "89d432d3894d559f3cd7de56b2cb0f4c",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/debts/schedule-dialog/schedule-dialog.ts": {
+    "mtime": 1795715724.3468356,
+    "seen": 1795715953.7385,
+    "ast_hash": "9f0d1e36d3eddd754d1f7d80af6ec621",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/debts/debt-dialog/debt-dialog.html": {
+    "mtime": 1795715626.120528,
+    "seen": 1795715953.7385228,
+    "ast_hash": "af709e9f6cc4f875c7430b8fbceb95ae",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/debts/debts-page.html": {
+    "mtime": 1795715724.3510952,
+    "seen": 1795715953.738524,
+    "ast_hash": "a91e153fafe80c817c2bf176c360a1f1",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/debts/payment-dialog/payment-dialog.html": {
+    "mtime": 1795715626.124362,
+    "seen": 1795715953.738525,
+    "ast_hash": "06030700fcc03a6519eedd53243b71a3",
     "semantic_hash": ""
   },
   "backend/pnpm-lock.yaml": {

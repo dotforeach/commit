@@ -177,7 +177,8 @@
     "lock": "Bloquear",
     "transactions": "Movimientos",
     "recurring": "Recurrentes",
-    "budget": "Presupuesto"
+    "budget": "Presupuesto",
+    "debts": "Deudas"
   },
   "accounts": {
     "title": "Cuentas",
@@ -522,6 +523,146 @@
       "incomeRequired": "Este método necesita el ingreso esperado del mes.",
       "conflict": "El presupuesto cambió en otro dispositivo. Cerrá y volvé a abrirlo.",
       "load": "No pudimos cargar tu presupuesto.",
+      "generic": "No pudimos guardar los cambios. Probá de nuevo."
+    }
+  },
+  "debts": {
+    "title": "Deudas y tarjetas",
+    "subtitle": "Préstamos, cuotas y resúmenes: cuánto debés, cuándo vence y cómo salir más rápido.",
+    "new": "Nueva deuda",
+    "activeTitle": "Préstamos y deudas",
+    "closedTitle": "Saldadas o cerradas",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "pay": "Registrar pago",
+    "viewSchedule": "Ver cronograma",
+    "undoPayment": "Deshacer el último pago",
+    "actions": "Acciones de {{name}}",
+    "rate": "TNA {{rate}}",
+    "progress": "{{paid}} de {{total}} cuotas",
+    "ofOriginal": "de {{amount}}",
+    "paidPct": "Pagaste el {{pct}}% del capital",
+    "paidOff": "¡Saldaste «{{name}}»! 🎉",
+    "paymentRemoved": "Pago eliminado (y su movimiento)",
+    "deleted": "Deuda eliminada",
+    "empty": {
+      "title": "No tenés deudas cargadas",
+      "body": "Si tenés préstamos, deudas con alguien o tarjetas, cargalos para ver cuánto debés y cómo salir más rápido."
+    },
+    "deleteDialog": {
+      "title": "Eliminar deuda",
+      "message": "¿Eliminar «{{name}}»? Los movimientos de los pagos se conservan.",
+      "confirm": "Eliminar",
+      "cancel": "Cancelar"
+    },
+    "kinds": {
+      "PERSONAL_LOAN": "Préstamo personal",
+      "MORTGAGE": "Hipotecario",
+      "CAR_LOAN": "Prendario (auto)",
+      "CREDIT_CARD_BALANCE": "Saldo financiado de tarjeta",
+      "FAMILY_OR_FRIEND": "Familia o amigos",
+      "OTHER": "Otra"
+    },
+    "rateTypes": {
+      "FIXED": "Fija",
+      "VARIABLE": "Variable",
+      "INDEXED": "Ajustable (UVA/CER)",
+      "NONE": "Sin interés"
+    },
+    "systems": {
+      "FRENCH": "Francés (cuota fija)",
+      "GERMAN": "Alemán (cuota decreciente)",
+      "BULLET": "Todo al final",
+      "CUSTOM": "Otro"
+    },
+    "statuses": {
+      "ACTIVE": "Activa",
+      "PAID_OFF": "Saldada",
+      "DEFAULTED": "En mora",
+      "CANCELLED": "Cancelada"
+    },
+    "dialog": {
+      "newTitle": "Nueva deuda",
+      "editTitle": "Editar deuda",
+      "cancel": "Cancelar",
+      "save": "Guardar"
+    },
+    "fields": {
+      "name": "Nombre",
+      "namePlaceholder": "Ej.: Préstamo Banco Nación",
+      "kind": "Tipo",
+      "lender": "Acreedor",
+      "originalAmount": "Monto original",
+      "currency": "Moneda",
+      "annualRate": "Tasa nominal anual (TNA)",
+      "annualRateHint": "Vacío o 0 si no tiene interés.",
+      "rateType": "Tipo de tasa",
+      "amortization": "Sistema",
+      "termMonths": "Plazo (meses)",
+      "startDate": "Fecha de inicio",
+      "paymentDay": "Día de pago",
+      "minimumPayment": "Cuota o pago mínimo",
+      "minimumPaymentHint": "Si lo dejás vacío se calcula con el sistema y el plazo.",
+      "status": "Estado"
+    },
+    "payment": {
+      "title": "Pago de {{name}}",
+      "amount": "Monto pagado",
+      "date": "Fecha",
+      "account": "Pagado desde",
+      "interest": "Interés incluido",
+      "interestHint": "Sugerido según tu saldo y la tasa.",
+      "principal": "Capital: {{amount}}",
+      "save": "Registrar pago",
+      "description": "Cuota {{name}}",
+      "noAccounts": "No tenés cuentas en {{currency}} para pagar esta deuda."
+    },
+    "schedule": {
+      "title": "Cronograma de {{name}}",
+      "note": "Proyección desde el monto original; las cuotas ya pagadas aparecen atenuadas.",
+      "payment": "Cuota",
+      "interest": "Interés",
+      "principal": "Capital",
+      "balance": "Saldo",
+      "totalInterest": "Intereses totales: {{amount}}",
+      "close": "Cerrar"
+    },
+    "strategy": {
+      "title": "Plan para salir de deudas",
+      "subtitle": "Pagás los mínimos de todas y el extra va a una por vez. Cuando una se salda, su cuota pasa a la siguiente.",
+      "extra": "Extra por mes",
+      "months": "Terminás en {{n}} meses",
+      "interest": "Intereses: {{amount}}",
+      "order": "Orden",
+      "stuck": "Con estos pagos no alcanzás a cubrir los intereses.",
+      "saves": "La avalancha te ahorra {{amount}} en intereses.",
+      "skipped": "{{n}} deudas en otras monedas no entran en el cálculo en {{currency}}.",
+      "snowball": {
+        "name": "Bola de nieve",
+        "help": "Primero la de menor saldo: victorias rápidas que motivan."
+      },
+      "avalanche": {
+        "name": "Avalancha",
+        "help": "Primero la de mayor tasa: pagás menos intereses."
+      }
+    },
+    "cards": {
+      "title": "Tarjetas de crédito",
+      "closed": "Último resumen: cerró el {{closing}}, vence el {{due}}",
+      "charges": "Consumos",
+      "installments": "Cuotas del mes",
+      "paid": "Pagado",
+      "due": "A pagar",
+      "current": "Resumen en curso (cierra el {{closing}}): {{amount}}",
+      "upcoming": "Cuotas comprometidas",
+      "pay": "Pagar resumen",
+      "payDescription": "Pago resumen {{name}}"
+    },
+    "errors": {
+      "decimal": "Monto inválido. Ej.: 1.234,56",
+      "split": "El interés no puede ser negativo ni mayor que el pago.",
+      "conflict": "La deuda cambió en otro dispositivo. Cerrá y volvé a abrirla.",
+      "load": "No pudimos cargar tus deudas.",
       "generic": "No pudimos guardar los cambios. Probá de nuevo."
     }
   }

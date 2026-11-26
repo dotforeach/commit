@@ -1,0 +1,111 @@
+<ng-container *transloco="let t; prefix: 'debts'">
+  <h2 mat-dialog-title>{{ editing ? t('dialog.editTitle') : t('dialog.newTitle') }}</h2>
+  <form [formGroup]="form" (ngSubmit)="save()">
+    <mat-dialog-content class="fields">
+      <mat-form-field>
+        <mat-label>{{ t('fields.name') }}</mat-label>
+        <input matInput formControlName="name" [placeholder]="t('fields.namePlaceholder')" cdkFocusInitial />
+      </mat-form-field>
+      <div class="row">
+        <mat-form-field>
+          <mat-label>{{ t('fields.kind') }}</mat-label>
+          <mat-select formControlName="kind">
+            @for (k of kinds; track k) {
+              <mat-option [value]="k">{{ t('kinds.' + k) }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{ t('fields.lender') }}</mat-label>
+          <input matInput formControlName="lender" />
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field>
+          <mat-label>{{ t('fields.originalAmount') }}</mat-label>
+          <input matInput formControlName="originalAmount" inputmode="decimal" />
+          @if (form.controls.originalAmount.hasError('decimal')) {
+            <mat-error>{{ t('errors.decimal') }}</mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{ t('fields.currency') }}</mat-label>
+          <mat-select formControlName="currency">
+            @for (c of currencies.list.value(); track c.code) {
+              <mat-option [value]="c.code">{{ c.code }} · {{ c.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field>
+          <mat-label>{{ t('fields.annualRate') }}</mat-label>
+          <input matInput formControlName="annualRate" inputmode="decimal" />
+          <span matTextSuffix>%</span>
+          <mat-hint>{{ t('fields.annualRateHint') }}</mat-hint>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{ t('fields.rateType') }}</mat-label>
+          <mat-select formControlName="rateType">
+            @for (r of rateTypes; track r) {
+              <mat-option [value]="r">{{ t('rateTypes.' + r) }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field>
+          <mat-label>{{ t('fields.amortization') }}</mat-label>
+          <mat-select formControlName="amortization">
+            @for (s of systems; track s) {
+              <mat-option [value]="s">{{ t('systems.' + s) }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{ t('fields.termMonths') }}</mat-label>
+          <input matInput type="number" formControlName="termMonths" min="1" />
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field>
+          <mat-label>{{ t('fields.startDate') }}</mat-label>
+          <input matInput [matDatepicker]="start" formControlName="startDate" />
+          <mat-datepicker-toggle matIconSuffix [for]="start" />
+          <mat-datepicker #start />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{ t('fields.paymentDay') }}</mat-label>
+          <input matInput type="number" formControlName="paymentDay" min="1" max="31" />
+        </mat-form-field>
+      </div>
+      <mat-form-field>
+        <mat-label>{{ t('fields.minimumPayment') }}</mat-label>
+        <input matInput formControlName="minimumPayment" inputmode="decimal" />
+        <mat-hint>{{ t('fields.minimumPaymentHint') }}</mat-hint>
+      </mat-form-field>
+      @if (editing) {
+        <mat-form-field>
+          <mat-label>{{ t('fields.status') }}</mat-label>
+          <mat-select formControlName="status">
+            @for (s of statuses; track s) {
+              <mat-option [value]="s">{{ t('statuses.' + s) }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      }
+      @if (error(); as key) {
+        <p class="error" role="alert">{{ t(key) }}</p>
+      }
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button type="button" mat-dialog-close [disabled]="busy()">{{ t('dialog.cancel') }}</button>
+      <button mat-flat-button type="submit" [disabled]="busy() || form.invalid">
+        @if (busy()) {
+          <mat-spinner diameter="18" />
+        }
+        {{ t('dialog.save') }}
+      </button>
+    </mat-dialog-actions>
+  </form>
+</ng-container>

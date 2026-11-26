@@ -54,5 +54,10 @@ export const routes: Routes = [
     canActivate: [authGuard, unlockedGuard],
     loadComponent: () => import('./features/budget/budget-page').then((m) => m.BudgetPage),
   },
+  {
+    path: 'deudas',
+    canActivate: [authGuard, unlockedGuard],
+    loadChildren: () => import('./features/debts/debts.routes').then((m) => m.DEBTS_ROUTES),
+  },
   { path: '**', redirectTo: 'inicio' },
 ];

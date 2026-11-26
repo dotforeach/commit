@@ -75,6 +75,6 @@ export async function createAccount(
 
 /** Selecciona una opción de un mat-select dentro del diálogo abierto. */
 export async function pick(page: Page, label: string, option: string) {
-  await page.getByRole('dialog').getByRole('combobox', { name: label }).click();
+  await page.getByRole('dialog').getByRole('combobox', { name: label, exact: true }).click();
   await page.getByRole('option', { name: option, exact: true }).click();
 }

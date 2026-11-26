@@ -1,0 +1,188 @@
+<ng-container *transloco="let t; prefix: 'debts'">
+  <section class="page">
+    <header class="head">
+      <div>
+        <h2>{{ t('title') }}</h2>
+        <p class="subtitle">{{ t('subtitle') }}</p>
+      </div>
+      @if (household.canWrite()) {
+        <button mat-flat-button (click)="newDebt()">
+          <mat-icon fontSet="material-symbols-outlined">add</mat-icon>{{ t('new') }}
+        </button>
+      }
+    </header>
+
+    @if (loading()) {
+      <mat-progress-bar mode="indeterminate" />
+    }
+    @if (loadError()) {
+      <p class="error" role="alert">{{ t('errors.load') }}</p>
+    }
+
+    @if (!loading() && debts.debts().length === 0 && cards().length === 0) {
+      <mat-card appearance="outlined" class="empty">
+        <mat-card-content>
+          <mat-icon fontSet="material-symbols-outlined" aria-hidden="true">celebration</mat-icon>
+          <p><strong>{{ t('empty.title') }}</strong></p>
+          <p>{{ t('empty.body') }}</p>
+        </mat-card-content>
+      </mat-card>
+    }
+
+    @if (active().length > 0) {
+      <h3 class="section">{{ t('activeTitle') }}</h3>
+      <ul class="list">
+        @for (d of active(); track d.id) {
+          <li class="debt" [attr.data-debt]="d.name">
+            <div class="debt-head">
+              <mat-icon class="type-icon" fontSet="material-symbols-outlined" aria-hidden="true">request_quote</mat-icon>
+              <div class="info">
+                <span class="name">{{ d.name }}</span>
+                <span class="meta">
+                  {{ t('kinds.' + d.kind) }}
+                  @if (d.lender) {
+                    · {{ d.lender }}
+                  }
+                  @if (ratePct(d); as r) {
+                    · {{ t('rate', { rate: r }) }}
+                  }
+                  @if (d.termMonths) {
+                    · {{ t('progress', { paid: d.payments.length, total: d.termMonths }) }}
+                  }
+                </span>
+              </div>
+              <div class="amount">
+                <span class="value" data-testid="debt-balance">{{ money(balance(d), d.currency) }}</span>
+                <span class="label">{{ t('ofOriginal', { amount: money(d.originalAmount, d.currency) }) }}</span>
+              </div>
+              @if (household.canWrite()) {
+                <button mat-icon-button [matMenuTriggerFor]="menu" [attr.aria-label]="t('actions', { name: d.name })">
+                  <mat-icon fontSet="material-symbols-outlined">more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item (click)="schedule(d)" [disabled]="!d.termMonths">
+                    <mat-icon fontSet="material-symbols-outlined">table_view</mat-icon>{{ t('viewSchedule') }}
+                  </button>
+                  <button mat-menu-item (click)="edit(d)">
+                    <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>{{ t('edit') }}
+                  </button>
+                  @if (d.payments.length > 0) {
+                    <button mat-menu-item (click)="undoLastPayment(d)">
+                      <mat-icon fontSet="material-symbols-outlined">undo</mat-icon>{{ t('undoPayment') }}
+                    </button>
+                  }
+                  <button mat-menu-item (click)="remove(d)">
+                    <mat-icon fontSet="material-symbols-outlined">delete</mat-icon>{{ t('delete') }}
+                  </button>
+                </mat-menu>
+              }
+            </div>
+            <mat-progress-bar mode="determinate" [value]="paidRatio(d)" />
+            <div class="debt-foot">
+              <span class="meta">{{ t('paidPct', { pct: paidRatio(d) }) }}</span>
+              @if (household.canWrite()) {
+                <button mat-stroked-button (click)="pay(d)">{{ t('pay') }}</button>
+              }
+            </div>
+          </li>
+        }
+      </ul>
+    }
+
+    @if (strategy(); as s) {
+      <mat-card appearance="outlined" class="strategy" data-testid="strategy">
+        <mat-card-header>
+          <mat-icon mat-card-avatar fontSet="material-symbols-outlined" aria-hidden="true">route</mat-icon>
+          <mat-card-title>{{ t('strategy.title') }}</mat-card-title>
+          <mat-card-subtitle>{{ t('strategy.subtitle') }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-form-field subscriptSizing="dynamic">
+            <mat-label>{{ t('strategy.extra') }}</mat-label>
+            <input matInput inputmode="decimal" [ngModel]="extra()" (ngModelChange)="extra.set($event)" />
+          </mat-form-field>
+          <div class="compare">
+            @for (opt of [{ key: 'snowball', r: s.snowball }, { key: 'avalanche', r: s.avalanche }]; track opt.key) {
+              <div class="option" [attr.data-strategy]="opt.key">
+                <h4>{{ t('strategy.' + opt.key + '.name') }}</h4>
+                <p class="meta">{{ t('strategy.' + opt.key + '.help') }}</p>
+                @if (opt.r.stuck) {
+                  <p class="error">{{ t('strategy.stuck') }}</p>
+                } @else {
+                  <p>{{ t('strategy.months', { n: opt.r.months }) }}</p>
+                  <p>{{ t('strategy.interest', { amount: moneyN(opt.r.totalInterest, s.currency) }) }}</p>
+                  <p class="meta">{{ t('strategy.order') }}: {{ opt.r.order.join(' → ') }}</p>
+                }
+              </div>
+            }
+          </div>
+          @if (s.saves !== '0') {
+            <p class="saves">{{ t('strategy.saves', { amount: money(s.saves, s.currency) }) }}</p>
+          }
+          @if (s.skipped > 0) {
+            <p class="meta">{{ t('strategy.skipped', { n: s.skipped, currency: s.currency }) }}</p>
+          }
+        </mat-card-content>
+      </mat-card>
+    }
+
+    @if (cards().length > 0) {
+      <h3 class="section">{{ t('cards.title') }}</h3>
+      @for (c of cards(); track c.account.id) {
+        <mat-card appearance="outlined" class="card" [attr.data-card]="c.account.name">
+          <mat-card-header>
+            <mat-icon mat-card-avatar fontSet="material-symbols-outlined" aria-hidden="true">credit_card</mat-icon>
+            <mat-card-title>{{ c.account.name }}</mat-card-title>
+            <mat-card-subtitle>
+              {{ t('cards.closed', { closing: (c.closed.cycle.closing | date: 'd/M' : 'UTC'), due: (c.closed.cycle.due | date: 'd/M' : 'UTC') }) }}
+            </mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="rows">
+              <span>{{ t('cards.charges') }}</span><span>{{ money(c.closed.charges, c.account.currency) }}</span>
+              <span>{{ t('cards.installments') }}</span><span>{{ money(c.closed.installments, c.account.currency) }}</span>
+              <span>{{ t('cards.paid') }}</span><span>{{ money(c.closed.paid, c.account.currency) }}</span>
+              <strong>{{ t('cards.due') }}</strong><strong data-testid="card-due">{{ money(c.closed.due, c.account.currency) }}</strong>
+            </div>
+            <p class="meta">
+              {{ t('cards.current', { closing: (c.current.cycle.closing | date: 'd/M' : 'UTC'), amount: money(c.current.total, c.account.currency) }) }}
+            </p>
+            <p class="meta" data-testid="card-upcoming">
+              {{ t('cards.upcoming') }}:
+              @for (u of c.upcoming; track u.month; let last = $last) {
+                {{ u.month + '-01' | date: 'MMM' : 'UTC' }} {{ money(u.amount, c.account.currency) }}{{ last ? '' : ' · ' }}
+              }
+            </p>
+          </mat-card-content>
+          @if (household.canWrite() && c.closed.due !== '0') {
+            <mat-card-actions align="end">
+              <button mat-flat-button (click)="payStatement(c)">{{ t('cards.pay') }}</button>
+            </mat-card-actions>
+          }
+        </mat-card>
+      }
+    }
+
+    @if (closed().length > 0) {
+      <h3 class="section">{{ t('closedTitle') }}</h3>
+      <ul class="list archived">
+        @for (d of closed(); track d.id) {
+          <li class="debt" [attr.data-debt]="d.name">
+            <div class="debt-head">
+              <mat-icon class="type-icon" fontSet="material-symbols-outlined" aria-hidden="true">task_alt</mat-icon>
+              <div class="info">
+                <span class="name">{{ d.name }}</span>
+                <span class="meta">{{ t('statuses.' + d.status) }}</span>
+              </div>
+              @if (household.canWrite()) {
+                <button mat-icon-button (click)="edit(d)" [attr.aria-label]="t('edit')">
+                  <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
+                </button>
+              }
+            </div>
+          </li>
+        }
+      </ul>
+    }
+  </section>
+</ng-container>

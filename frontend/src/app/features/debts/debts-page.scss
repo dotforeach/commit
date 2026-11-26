@@ -1,0 +1,67 @@
+@use '../accounts/accounts-page';
+
+.section {
+  margin: 24px 0 8px;
+  font: var(--mat-sys-title-small);
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.debt {
+  display: block;
+  padding: 12px 8px;
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+}
+
+.debt-head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.debt-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.strategy,
+.card {
+  margin: 16px 0;
+}
+
+.compare {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-top: 12px;
+
+  .option {
+    padding: 12px;
+    border-radius: 12px;
+    background: var(--mat-sys-surface-container);
+
+    h4 {
+      margin: 0 0 4px;
+    }
+
+    p {
+      margin: 4px 0;
+    }
+  }
+}
+
+.saves {
+  margin: 12px 0 0;
+  font: var(--mat-sys-title-small);
+  color: #2e7d32;
+}
+
+.rows {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px 16px;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 8px;
+}
