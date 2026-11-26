@@ -55,26 +55,7 @@ export interface HouseholdPayload {
   financialLevel: string;
 }
 
-export interface RegisterRequest {
-  userId: string;
-  email: string;
-  password: string;
-  displayName: string;
-  locale: string;
-  timezone: string;
-  keys: MeResponse['keys'] extends infer K ? Omit<K, 'keyVersion'> : never;
-  household: {
-    id: string;
-    baseCurrency: string;
-    payload: string;
-    memberKey: { wrappedKey: string; signature: string };
-  };
-  categories: {
-    id: string;
-    parentId: string | null;
-    kind: 'INCOME' | 'EXPENSE';
-    budgetGroup: 'NEEDS' | 'WANTS' | 'SAVINGS' | null;
-    systemKey: string | null;
-    payload: string;
-  }[];
-}
+import type { RequestBody } from './api-contract';
+
+/** Cuerpo de POST /api/auth/register, generado desde el OpenAPI del backend. */
+export type RegisterRequest = RequestBody<'/api/auth/register', 'post'>;

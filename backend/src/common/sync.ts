@@ -4,8 +4,11 @@ import { z } from 'zod';
  * Paginación por revisión (base de la sincronización). `since` = última revisión que el
  * cliente ya tiene; con `since` > 0 se incluyen lápidas (borrados) para que los aplique.
  */
+/** Revisión: viaja como string de dígitos (JSON no tiene enteros de 64 bits) y se usa como BigInt. */
+export const revision = z.string().regex(/^\d{1,19}$/, 'Revisión inválida').transform((s) => BigInt(s));
+
 export const syncQuerySchema = z.object({
-  since: z.coerce.bigint().nonnegative().default(0n),
+  since: z.string().regex(/^\d{1,19}$/).default('0').transform((s) => BigInt(s)),
   limit: z.coerce.number().int().min(1).max(1000).default(500),
 });
 export type SyncQuery = z.infer<typeof syncQuerySchema>;

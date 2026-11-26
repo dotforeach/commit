@@ -70,6 +70,8 @@ export class TransactionsPage implements OnInit {
   readonly month = signal(monthOf(todayIso()));
   readonly accountFilter = signal<string>('');
   readonly loadError = signal(false);
+  /** true cuando terminó la primera carga (evita mostrar "creá una cuenta" mientras carga). */
+  readonly ready = signal(false);
   readonly monthDate = computed(() => fromIsoDate(`${this.month()}-01`));
 
   private readonly accountById = computed(() => new Map(this.accounts.accounts().map((a) => [a.id, a])));
@@ -104,6 +106,8 @@ export class TransactionsPage implements OnInit {
       await this.recurring.processDue();
     } catch {
       this.loadError.set(true);
+    } finally {
+      this.ready.set(true);
     }
   }
 

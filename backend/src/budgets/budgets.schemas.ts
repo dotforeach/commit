@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { revision } from '../common/sync.js';
 import { base64Bytes } from '../common/base64.js';
 
 const encryptedPayload = base64Bytes({ min: 1 + 24 + 16, max: 16 * 1024 });
@@ -32,5 +33,5 @@ export const createBudgetSchema = z.object({
 });
 export type CreateBudgetInput = z.infer<typeof createBudgetSchema>;
 
-export const updateBudgetSchema = z.object({ expectedRevision: z.coerce.bigint(), ...budgetFields });
+export const updateBudgetSchema = z.object({ expectedRevision: revision, ...budgetFields });
 export type UpdateBudgetInput = z.infer<typeof updateBudgetSchema>;

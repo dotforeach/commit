@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { base64Bytes } from '../common/base64.js';
-import { isoDate } from '../common/sync.js';
+import { isoDate, revision } from '../common/sync.js';
 
 const encryptedPayload = base64Bytes({ min: 1 + 24 + 16, max: 16 * 1024 });
 
@@ -32,7 +32,7 @@ export const createRuleSchema = z.object({ id: z.uuid(), ...ruleFields }).refine
 export type CreateRuleInput = z.infer<typeof createRuleSchema>;
 
 export const updateRuleSchema = z
-  .object({ expectedRevision: z.coerce.bigint(), ...ruleFields })
+  .object({ expectedRevision: revision, ...ruleFields })
   .refine(coherent, coherentMessage);
 export type UpdateRuleInput = z.infer<typeof updateRuleSchema>;
 
@@ -43,7 +43,7 @@ export type UpdateRuleInput = z.infer<typeof updateRuleSchema>;
  * `transactions` vacío = omitir esas ocurrencias.
  */
 export const postOccurrencesSchema = z.object({
-  expectedRevision: z.coerce.bigint(),
+  expectedRevision: revision,
   nextRunOn: isoDate,
   active: z.boolean(),
   transactions: z

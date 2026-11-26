@@ -5,6 +5,7 @@ import { firstValueFrom } from 'rxjs';
 import { v7 as uuidv7 } from 'uuid';
 import { KeyVaultService } from '../../core/crypto/key-vault.service';
 import { HouseholdContextService } from '../../core/households/household-context.service';
+import type { RequestBody } from '../../core/api/api-contract';
 import type { Budget, BudgetDraft, BudgetDto } from './budget.model';
 
 /** Presupuestos del hogar (uno por mes). Montos e ingreso esperado van cifrados. */
@@ -55,7 +56,7 @@ export class BudgetsService {
 
   async create(year: number, month: number, draft: BudgetDraft): Promise<Budget> {
     const id = uuidv7();
-    const body = { id, year, month, ...(await this.encrypt(id, draft, false)) };
+    const body = { id, year, month, ...(await this.encrypt(id, draft, false)) } satisfies RequestBody<'/api/households/{householdId}/budgets', 'post'>;
     return this.upsert(await this.decrypt(await firstValueFrom(this.http.post<BudgetDto>(this.base(), body))));
   }
 

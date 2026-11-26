@@ -20,7 +20,8 @@
     "test:cov": "vitest run --coverage",
     "test:debug": "vitest --inspect-brk --no-file-parallelism",
     "test:e2e": "vitest run --config ./vitest.config.e2e.ts",
-    "typecheck": "tsc --noEmit -p tsconfig.json"
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "openapi": "nest build && DATABASE_URL=${DATABASE_URL:-postgresql://x@localhost:1/x} REDIS_URL=${REDIS_URL:-redis://localhost:1} JWT_SECRET=${JWT_SECRET:-openapi-generation-only-secret-000000000} RATES_REFRESH=false REMINDERS_JOB=false node dist/openapi.js"
   },
   "dependencies": {
     "@nestjs/authentication": "^0.1.7",

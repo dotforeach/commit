@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { base64Bytes } from '../common/base64.js';
-import { isoDate } from '../common/sync.js';
+import { isoDate, revision } from '../common/sync.js';
 
 export const transactionTypeSchema = z.enum([
   'INCOME',
@@ -61,7 +61,7 @@ export type CreateTransactionsInput = z.infer<typeof createTransactionsSchema>;
 
 export const updateTransactionsSchema = z.object({
   items: z
-    .array(z.object({ id: z.uuid(), expectedRevision: z.coerce.bigint(), ...fields }))
+    .array(z.object({ id: z.uuid(), expectedRevision: revision, ...fields }))
     .min(1)
     .max(2)
     .refine(validLegs, legsMessage),

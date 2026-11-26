@@ -5,6 +5,7 @@ import { firstValueFrom } from 'rxjs';
 import { v7 as uuidv7 } from 'uuid';
 import { KeyVaultService } from '../../core/crypto/key-vault.service';
 import { HouseholdContextService } from '../../core/households/household-context.service';
+import type { RequestBody } from '../../core/api/api-contract';
 import type { TransactionPayload } from '../transactions/transaction.model';
 import { TransactionsService } from '../transactions/transactions.service';
 import { cashAmount, type Trade } from './savings-math';
@@ -136,7 +137,7 @@ export class SavingsService {
       autoRenew: d.autoRenew,
       ...(await this.hh.seal('fixed_term_deposits', id, { institution: d.institution, principal: d.principal, annualRate: d.annualRate })),
       transaction: { id: txId, categoryId: null, ...(await this.hh.seal('transactions', txId, tx)) },
-    };
+    } satisfies RequestBody<'/api/households/{householdId}/deposits', 'post'>;
     this.upsert(this.deposits, await this.openDeposit(await firstValueFrom(this.http.post<DepositDto>(this.url('deposits'), body))));
     await this.transactions.load();
   }

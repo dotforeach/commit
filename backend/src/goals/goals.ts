@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { deleteQuerySchema } from '../accounts/accounts.schemas.js';
 import { toBase64 } from '../common/base64.js';
 import { encryptedPayload, keyVersion } from '../common/encrypted.js';
-import { isoDate, toIsoDate } from '../common/sync.js';
+import { isoDate, toIsoDate, revision } from '../common/sync.js';
 import type { GoalContribution, SavingsGoal } from '../generated/prisma/client.js';
 import { HouseholdAccessService } from '../households/household-access.service.js';
 import { HouseholdsModule } from '../households/households.module.js';
@@ -22,7 +22,7 @@ const goalFields = {
   keyVersion,
 };
 const createGoal = z.object({ id: z.uuid(), ...goalFields });
-const updateGoal = z.object({ expectedRevision: z.coerce.bigint(), ...goalFields });
+const updateGoal = z.object({ expectedRevision: revision, ...goalFields });
 /** payload: { amount (negativo = retiro), note } */
 const createContribution = z.object({ id: z.uuid(), date: isoDate, payload: encryptedPayload, keyVersion });
 

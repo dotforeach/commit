@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { revision } from '../common/sync.js';
 import { base64Bytes } from '../common/base64.js';
 
 const encryptedPayload = base64Bytes({ min: 1 + 24 + 16, max: 16 * 1024 });
@@ -45,7 +46,7 @@ export type CreateAccountInput = z.infer<typeof createAccountSchema>;
 
 export const updateAccountSchema = z
   .object({
-    expectedRevision: z.coerce.bigint(),
+    expectedRevision: revision,
     archived: z.boolean(),
     ...accountFields,
   })
@@ -53,9 +54,9 @@ export const updateAccountSchema = z
 export type UpdateAccountInput = z.infer<typeof updateAccountSchema>;
 
 export const listQuerySchema = z.object({
-  since: z.coerce.bigint().nonnegative().optional(),
+  since: revision.optional(),
 });
 
 export const deleteQuerySchema = z.object({
-  expectedRevision: z.coerce.bigint(),
+  expectedRevision: revision,
 });

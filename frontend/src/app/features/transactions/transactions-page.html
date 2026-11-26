@@ -18,7 +18,7 @@
     @if (loadError()) {
       <p class="error" role="alert">{{ t('errors.load') }}</p>
     }
-    @if (!transactions.loading() && accounts.accounts().length === 0 && !loadError()) {
+    @if (ready() && accounts.accounts().length === 0 && !loadError()) {
       <p class="hint">{{ t('needAccount') }} <a routerLink="/cuentas">{{ t('goToAccounts') }}</a></p>
     }
 
@@ -55,7 +55,7 @@
       </div>
     }
 
-    @if (!transactions.loading() && days().length === 0 && accounts.accounts().length > 0) {
+    @if (ready() && days().length === 0 && accounts.accounts().length > 0) {
       <p class="hint">{{ t('emptyMonth') }}</p>
     }
 

@@ -9,6 +9,7 @@ import { dueOccurrences, firstOccurrence, nextOccurrence, type RecurrenceRule } 
 import { HouseholdContextService } from '../../core/households/household-context.service';
 import type { TransactionDto, TransactionPayload } from '../transactions/transaction.model';
 import { TransactionsService } from '../transactions/transactions.service';
+import type { RequestBody } from '../../core/api/api-contract';
 import type { PendingOccurrence, RecurringRule, RuleDraft, RuleDto, RulePayload } from './recurring.model';
 
 /** Primera ocurrencia de la regla en o después de `date`. */
@@ -83,7 +84,7 @@ export class RecurringService {
   async create(draft: RuleDraft): Promise<void> {
     const id = uuidv7();
     const nextRunOn = firstOccurrence(scheduleOf(draft));
-    const dto = await firstValueFrom(this.http.post<RuleDto>(this.base(), { id, ...(await this.encrypt(id, draft, nextRunOn)) }));
+    const dto = await firstValueFrom(this.http.post<RuleDto>(this.base(), { id, ...(await this.encrypt(id, draft, nextRunOn)) } satisfies RequestBody<'/api/households/{householdId}/recurring-rules', 'post'>));
     this.upsert(await this.decrypt(dto));
   }
 

@@ -5,6 +5,7 @@ import { firstValueFrom } from 'rxjs';
 import { v7 as uuidv7 } from 'uuid';
 import { KeyVaultService } from '../../core/crypto/key-vault.service';
 import { HouseholdContextService } from '../../core/households/household-context.service';
+import type { RequestBody } from '../../core/api/api-contract';
 import type { Account, AccountDraft, AccountDto, AccountPayload, CreditCardPayload } from './account.model';
 
 /**
@@ -49,14 +50,14 @@ export class AccountsService {
 
   async create(draft: AccountDraft): Promise<Account> {
     const id = uuidv7();
-    const dto = await firstValueFrom(this.http.post<AccountDto>(this.base(), { id, ...(await this.encrypt(id, draft)) }));
+    const dto = await firstValueFrom(this.http.post<AccountDto>(this.base(), { id, ...(await this.encrypt(id, draft)) } satisfies RequestBody<'/api/households/{householdId}/accounts', 'post'>));
     const account = await this.decrypt(dto);
     this.state.update((list) => [...list, account]);
     return account;
   }
 
   async update(account: Account, draft: AccountDraft, archived = account.archived): Promise<Account> {
-    const body = { expectedRevision: account.revision, archived, ...(await this.encrypt(account.id, draft)) };
+    const body = { expectedRevision: account.revision, archived, ...(await this.encrypt(account.id, draft)) } satisfies RequestBody<'/api/households/{householdId}/accounts/{id}', 'put'>;
     const dto = await firstValueFrom(this.http.put<AccountDto>(`${this.base()}/${account.id}`, body));
     const updated = await this.decrypt(dto);
     this.state.update((list) => list.map((a) => (a.id === updated.id ? updated : a)));

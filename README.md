@@ -22,6 +22,15 @@ cd backend && pnpm test && pnpm test:e2e   # necesita Postgres y Redis del compo
 cd frontend && pnpm ng test && pnpm e2e    # e2e: con el stack de desarrollo levantado
 ```
 
+## Contrato de la API
+
+El backend valida con Zod y publica OpenAPI. Después de cambiar un endpoint:
+
+```bash
+cd backend && pnpm openapi          # genera frontend/src/app/core/api/openapi.json (sin base de datos)
+cd frontend && pnpm api:types       # regenera los tipos; si un pedido no coincide, no compila
+```
+
 ## Licencia
 
 [GNU AGPL-3.0](LICENSE) o posterior. Podés usar, modificar y redistribuir este software libremente, pero cualquier versión modificada, **incluida una que se ofrezca como servicio web**, tiene que publicar su código fuente bajo la misma licencia.

@@ -6,6 +6,7 @@ import { v7 as uuidv7 } from 'uuid';
 import { KeyVaultService } from '../../core/crypto/key-vault.service';
 import { HouseholdContextService } from '../../core/households/household-context.service';
 
+import type { RequestBody } from '../../core/api/api-contract';
 import type { TransactionPayload } from '../transactions/transaction.model';
 import { TransactionsService } from '../transactions/transactions.service';
 import { cycleFor, installmentMonths } from './card-cycle';
@@ -112,7 +113,7 @@ export class InstallmentsService {
       ...(await this.household.seal('installment_plans', id, { totalAmount: d.total, installmentAmount: amounts[0] })),
       transaction: { id: txId, categoryId: d.categoryId, date: d.date, ...(await this.household.seal('transactions', txId, txPayload)) },
       installments,
-    };
+    } satisfies RequestBody<'/api/households/{householdId}/installment-plans', 'post'>;
     const dto = await firstValueFrom(this.http.post<PlanDto>(this.base(), body));
     const plan = await this.decrypt(dto);
     this.state.update((l) => [...l, plan]);

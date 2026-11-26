@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { base64Bytes } from '../common/base64.js';
-import { isoDate } from '../common/sync.js';
+import { isoDate, revision } from '../common/sync.js';
 
 const encryptedPayload = base64Bytes({ min: 1 + 24 + 16, max: 16 * 1024 });
 
@@ -22,7 +22,7 @@ const debtFields = {
 export const createDebtSchema = z.object({ id: z.uuid(), ...debtFields });
 export type CreateDebtInput = z.infer<typeof createDebtSchema>;
 
-export const updateDebtSchema = z.object({ expectedRevision: z.coerce.bigint(), ...debtFields });
+export const updateDebtSchema = z.object({ expectedRevision: revision, ...debtFields });
 export type UpdateDebtInput = z.infer<typeof updateDebtSchema>;
 
 /**

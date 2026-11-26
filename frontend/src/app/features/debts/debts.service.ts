@@ -8,6 +8,7 @@ import { HouseholdContextService } from '../../core/households/household-context
 import type { TransactionPayload } from '../transactions/transaction.model';
 import { TransactionsService } from '../transactions/transactions.service';
 import { outstandingBalance } from './debt-math';
+import type { RequestBody } from '../../core/api/api-contract';
 import type { Debt, DebtDraft, DebtDto, DebtPayload, PaymentDraft, PaymentPayload } from './debt.model';
 
 @Injectable({ providedIn: 'root' })
@@ -78,7 +79,7 @@ export class DebtsService {
       date: p.date,
       ...(await this.household.seal('debt_payments', id, paymentPayload)),
       transaction: { id: txId, accountId: p.accountId, categoryId: p.categoryId, ...(await this.household.seal('transactions', txId, txPayload)) },
-    };
+    } satisfies RequestBody<'/api/households/{householdId}/debts/{id}/payments', 'post'>;
     this.upsert(await this.decrypt(await firstValueFrom(this.http.post<DebtDto>(`${this.base()}/${debt.id}/payments`, body))));
     await this.transactions.load();
   }

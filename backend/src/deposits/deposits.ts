@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { deleteQuerySchema } from '../accounts/accounts.schemas.js';
 import { toBase64 } from '../common/base64.js';
 import { encryptedPayload, keyVersion, linkedTransaction, type LinkedTransaction } from '../common/encrypted.js';
-import { isoDate, toIsoDate } from '../common/sync.js';
+import { isoDate, toIsoDate, revision } from '../common/sync.js';
 import type { FixedTermDeposit, Prisma } from '../generated/prisma/client.js';
 import { HouseholdAccessService } from '../households/household-access.service.js';
 import { HouseholdsModule } from '../households/households.module.js';
@@ -26,10 +26,10 @@ const datesMsg = { message: 'El vencimiento tiene que ser posterior a la constit
 
 /** `transaction`: salida del capital de la cuenta (ajuste, no gasto). */
 const createDeposit = z.object({ id: z.uuid(), ...fields, transaction: linkedTransaction.nullable() }).refine(datesOk, datesMsg);
-const updateDeposit = z.object({ expectedRevision: z.coerce.bigint(), ...fields }).refine(datesOk, datesMsg);
+const updateDeposit = z.object({ expectedRevision: revision, ...fields }).refine(datesOk, datesMsg);
 /** Cobro al vencimiento: vuelve el capital (ajuste) y el interés entra como ingreso. */
 const collectDeposit = z.object({
-  expectedRevision: z.coerce.bigint(),
+  expectedRevision: revision,
   date: isoDate,
   principal: linkedTransaction,
   interest: linkedTransaction.nullable(),
