@@ -64,8 +64,8 @@ export class TransactionsService {
       take: limit + 1,
       include: LINKS,
     });
-    const { page, hasMore, nextSince } = syncPage(rows, limit);
-    return { items: page.map(toDto), hasMore, nextSince };
+    const { page, hasMore, nextSince, firstYoungRevision } = syncPage(rows, limit);
+    return { items: page.map(toDto), hasMore, nextSince, firstYoungRevision };
   }
 
   async create(householdId: string, userId: string, input: CreateTransactionsInput) {

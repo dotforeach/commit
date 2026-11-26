@@ -6,6 +6,7 @@ import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/rou
 import { TranslocoDirective } from '@jsverse/transloco';
 import { AutoLockService } from './core/crypto/auto-lock.service';
 import { KeyVaultService } from './core/crypto/key-vault.service';
+import { OfflineCacheService } from './core/offline/offline-cache.service';
 import { NotificationsBell } from './features/notifications/notifications-bell';
 
 @Component({
@@ -19,6 +20,7 @@ export class App {
   private readonly router = inject(Router);
   /** Se instancia con la app: vigila la inactividad. */
   protected readonly autoLock = inject(AutoLockService);
+  readonly cache = inject(OfflineCacheService);
 
   async lock() {
     await this.vault.lock();

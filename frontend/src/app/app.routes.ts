@@ -16,6 +16,8 @@ export const routes: Routes = [
   {
     path: 'desbloquear',
     canActivate: [authGuard],
+    // Se precarga al iniciar (ver SelectivePreloading): bloquear tiene que funcionar sin conexión.
+    data: { preload: true },
     loadComponent: () => import('./features/auth/unlock/unlock').then((m) => m.Unlock),
   },
   {

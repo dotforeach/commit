@@ -1,4 +1,5 @@
 import { HttpClient } from '@angular/common/http';
+import { OfflineCacheService } from '../../core/offline/offline-cache.service';
 import { Injectable, effect, inject, signal, untracked } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { v7 as uuidv7 } from 'uuid';
@@ -9,6 +10,7 @@ import type { Budget, BudgetDraft, BudgetDto } from './budget.model';
 /** Presupuestos del hogar (uno por mes). Montos e ingreso esperado van cifrados. */
 @Injectable({ providedIn: 'root' })
 export class BudgetsService {
+  private readonly offlineCache = inject(OfflineCacheService);
   private readonly http = inject(HttpClient);
   private readonly household = inject(HouseholdContextService);
   private readonly state = signal<Budget[]>([]);
@@ -34,7 +36,7 @@ export class BudgetsService {
 
   async ensureLoaded() {
     if (this.loaded) return;
-    const { items } = await firstValueFrom(this.http.get<{ items: BudgetDto[] }>(this.base()));
+    const { items } = await this.offlineCache.cached(this.base(), () => firstValueFrom(this.http.get<{ items: BudgetDto[] }>(this.base())));
     this.state.set(await Promise.all(items.map((dto) => this.decrypt(dto))));
     this.loaded = true;
   }

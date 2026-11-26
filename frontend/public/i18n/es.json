@@ -1225,5 +1225,6 @@
       "minutes": "Tras {{n}} minutos sin actividad",
       "autoLockHint": "Al bloquear, tus claves y tus datos descifrados se borran de la memoria."
     }
-  }
+  },
+  "offline": "Sin conexión: estás viendo tus datos guardados en este dispositivo (solo lectura)."
 }

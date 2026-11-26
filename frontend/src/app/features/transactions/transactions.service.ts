@@ -3,6 +3,7 @@ import { Injectable, computed, effect, inject, signal, untracked } from '@angula
 import { firstValueFrom } from 'rxjs';
 import { v7 as uuidv7 } from 'uuid';
 import { KeyVaultService } from '../../core/crypto/key-vault.service';
+import { OfflineCacheService, isNetworkError } from '../../core/offline/offline-cache.service';
 import { HouseholdContextService } from '../../core/households/household-context.service';
 import { AccountsService } from '../accounts/accounts.service';
 import { buildLedger, computeBalances } from './ledger';
@@ -34,6 +35,7 @@ interface Page {
   items: TransactionDto[];
   hasMore: boolean;
   nextSince: string | null;
+  firstYoungRevision?: string | null;
 }
 
 /**
@@ -45,8 +47,12 @@ export class TransactionsService {
   private readonly http = inject(HttpClient);
   private readonly household = inject(HouseholdContextService);
   private readonly accounts = inject(AccountsService);
+  private readonly offlineCache = inject(OfflineCacheService);
   private readonly state = signal<Transaction[]>([]);
   private loaded = false;
+  /** Copia cifrada (DTOs) y cursor de lo sincronizado, para mantener la caché local al día. */
+  private dtos = new Map<string, TransactionDto>();
+  private cursor = '0';
 
   readonly loading = signal(false);
   readonly transactions = this.state.asReadonly();
@@ -73,18 +79,47 @@ export class TransactionsService {
     if (!this.loaded) await this.load();
   }
 
+  /**
+   * Sincronización incremental con caché local (cifrada): se pide solo lo que cambió desde el
+   * último cursor seguro y se aplican altas, cambios y lápidas. Sin conexión, se usa lo guardado.
+   */
   async load(): Promise<void> {
     this.loading.set(true);
+    const key = `tx:${this.household.requireHousehold().id}`;
     try {
-      const all: TransactionDto[] = [];
-      let since = '0';
-      for (;;) {
-        const page = await firstValueFrom(this.http.get<Page>(this.base(), { params: { since, limit: 1000 } }));
-        all.push(...page.items);
-        if (!page.hasMore || !page.nextSince) break;
-        since = page.nextSince;
+      const cached = await this.offlineCache.read<{ cursor: string; items: Record<string, TransactionDto> }>(key);
+      const items = { ...(cached?.items ?? {}) };
+      let since = cached?.cursor ?? '0';
+      let cursor = since;
+      let firstYoung: bigint | null = null;
+      try {
+        for (;;) {
+          const page = await firstValueFrom(this.http.get<Page>(this.base(), { params: { since, limit: 1000 } }));
+          for (const dto of page.items) {
+            if (dto.deletedAt) delete items[dto.id];
+            else items[dto.id] = dto;
+          }
+          if (page.firstYoungRevision !== null && page.firstYoungRevision !== undefined) {
+            const y = BigInt(page.firstYoungRevision);
+            if (firstYoung === null || y < firstYoung) firstYoung = y;
+          }
+          if (page.nextSince) cursor = page.nextSince;
+          if (!page.hasMore || !page.nextSince) break;
+          since = page.nextSince;
+        }
+        // El cursor guardado no pasa de filas "recientes": se vuelven a pedir la próxima vez.
+        if (firstYoung !== null && firstYoung - 1n < BigInt(cursor)) cursor = (firstYoung - 1n).toString();
+        this.offlineCache.offline.set(false);
+        this.cursor = cursor;
+        this.dtos = new Map(Object.entries(items));
+        this.persist();
+      } catch (e) {
+        if (!isNetworkError(e) || !cached) throw e;
+        this.offlineCache.offline.set(true);
+        this.cursor = cached.cursor;
+        this.dtos = new Map(Object.entries(items));
       }
-      this.state.set(await Promise.all(all.map((dto) => this.decrypt(dto))));
+      this.state.set(await Promise.all(Object.values(items).map((dto) => this.decrypt(dto))));
       this.loaded = true;
     } finally {
       this.loading.set(false);
@@ -115,9 +150,17 @@ export class TransactionsService {
     ]);
   }
 
+  /** Guarda en la caché local el estado cifrado actual. */
+  private persist() {
+    const hid = this.household.household()?.id;
+    if (hid) void this.offlineCache.write(`tx:${hid}`, { cursor: this.cursor, items: Object.fromEntries(this.dtos) });
+  }
+
   /** Incorpora movimientos que creó otro flujo (p. ej. ocurrencias de recurrentes). */
   async ingest(dtos: TransactionDto[]): Promise<void> {
     if (!this.loaded) return; // se verán en la próxima carga completa
+    for (const d of dtos) this.dtos.set(d.id, d);
+    this.persist();
     const added = await Promise.all(dtos.map((dto) => this.decrypt(dto)));
     const ids = new Set(added.map((t) => t.id));
     this.state.update((list) => [...list.filter((t) => !ids.has(t.id)), ...added]);
@@ -126,6 +169,8 @@ export class TransactionsService {
   /** Borra un movimiento (o la transferencia entera). */
   async remove(t: Transaction): Promise<void> {
     await firstValueFrom(this.http.delete(`${this.base()}/${t.id}`, { params: { expectedRevision: t.revision } }));
+    for (const [id, d] of this.dtos) if (id === t.id || (t.transferGroupId && d.transferGroupId === t.transferGroupId)) this.dtos.delete(id);
+    this.persist();
     this.state.update((list) =>
       list.filter((x) => (t.transferGroupId ? x.transferGroupId !== t.transferGroupId : x.id !== t.id)),
     );
@@ -141,6 +186,8 @@ export class TransactionsService {
 
   private async save(method: 'post' | 'put', items: object[]) {
     const res = await firstValueFrom(this.http.request<Page>(method, this.base(), { body: { items } }));
+    for (const d of res.items) this.dtos.set(d.id, d);
+    this.persist();
     const saved = await Promise.all(res.items.map((dto) => this.decrypt(dto)));
     const ids = new Set(saved.map((t) => t.id));
     this.state.update((list) => [...list.filter((t) => !ids.has(t.id)), ...saved]);

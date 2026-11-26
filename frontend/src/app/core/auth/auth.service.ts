@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import type { RegisterRequest, TokenResponse } from '../api/api.types';
+import { OfflineCacheService, isNetworkError } from '../offline/offline-cache.service';
 
 /**
  * Sesión de login. El access token vive solo en memoria; el refresh token está en una
@@ -10,6 +11,7 @@ import type { RegisterRequest, TokenResponse } from '../api/api.types';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly http = inject(HttpClient);
+  private readonly cache = inject(OfflineCacheService);
   private readonly token = signal<string | null>(null);
   private refreshing: Promise<boolean> | null = null;
 
@@ -19,10 +21,12 @@ export class AuthService {
   }
 
   async register(body: RegisterRequest): Promise<void> {
+    await this.cache.clear();
     this.setTokens(await firstValueFrom(this.http.post<TokenResponse>('/api/auth/register', body)));
   }
 
   async login(email: string, password: string): Promise<void> {
+    await this.cache.clear(); // en un dispositivo compartido no se mezclan datos de dos personas
     this.setTokens(await firstValueFrom(this.http.post<TokenResponse>('/api/auth/login', { email, password })));
   }
 
@@ -33,8 +37,10 @@ export class AuthService {
         this.setTokens(tokens);
         return true;
       })
-      .catch(() => {
+      .catch(async (e: unknown) => {
         this.token.set(null);
+        // Sin conexión pero con datos guardados: se puede abrir la app en modo solo lectura.
+        if (isNetworkError(e) && (await this.cache.read('/api/me'))) return true;
         return false;
       })
       .finally(() => {
@@ -53,6 +59,7 @@ export class AuthService {
       await firstValueFrom(this.http.post('/api/auth/logout', {}));
     } finally {
       this.token.set(null);
+      await this.cache.clear(); // al cerrar sesión no queda nada del usuario en el dispositivo
     }
   }
 

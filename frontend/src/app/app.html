@@ -25,6 +25,11 @@
       </button>
     }
   </mat-toolbar>
+  @if (cache.offline()) {
+    <p class="offline" role="status" data-testid="offline-banner">
+      <span class="material-symbols-outlined" aria-hidden="true">cloud_off</span>{{ t('offline') }}
+    </p>
+  }
   <main>
     <router-outlet />
   </main>

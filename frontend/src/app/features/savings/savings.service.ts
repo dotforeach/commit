@@ -1,4 +1,5 @@
 import { HttpClient } from '@angular/common/http';
+import { OfflineCacheService } from '../../core/offline/offline-cache.service';
 import { Injectable, effect, inject, signal, untracked } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { v7 as uuidv7 } from 'uuid';
@@ -26,6 +27,7 @@ interface InvestmentsDto {
 /** Metas, plazos fijos e inversiones del hogar activo (todo cifrado salvo fechas, tipos y monedas). */
 @Injectable({ providedIn: 'root' })
 export class SavingsService {
+  private readonly offlineCache = inject(OfflineCacheService);
   private readonly http = inject(HttpClient);
   private readonly hh = inject(HouseholdContextService);
   private readonly transactions = inject(TransactionsService);
@@ -56,9 +58,9 @@ export class SavingsService {
   async ensureLoaded() {
     if (this.loaded) return;
     const [g, d, inv] = await Promise.all([
-      firstValueFrom(this.http.get<{ items: GoalDto[] }>(this.url('goals'))),
-      firstValueFrom(this.http.get<{ items: DepositDto[] }>(this.url('deposits'))),
-      firstValueFrom(this.http.get<InvestmentsDto>(this.url('investments'))),
+      this.offlineCache.cached(this.url('goals'), () => firstValueFrom(this.http.get<{ items: GoalDto[] }>(this.url('goals')))),
+      this.offlineCache.cached(this.url('deposits'), () => firstValueFrom(this.http.get<{ items: DepositDto[] }>(this.url('deposits')))),
+      this.offlineCache.cached(this.url('investments'), () => firstValueFrom(this.http.get<InvestmentsDto>(this.url('investments')))),
     ]);
     this.goals.set(await Promise.all(g.items.map((x) => this.openGoal(x))));
     this.deposits.set(await Promise.all(d.items.map((x) => this.openDeposit(x))));

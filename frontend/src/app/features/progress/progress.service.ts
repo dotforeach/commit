@@ -1,4 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { OfflineCacheService } from '../../core/offline/offline-cache.service';
 import { Injectable, computed, effect, inject, signal, untracked } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { v7 as uuidv7 } from 'uuid';
@@ -33,6 +34,7 @@ function lastFullMonths(today: string, n = 3): string[] {
 
 @Injectable({ providedIn: 'root' })
 export class ProgressService {
+  private readonly offlineCache = inject(OfflineCacheService);
   private readonly http = inject(HttpClient);
   private readonly hh = inject(HouseholdContextService);
   private readonly session = inject(SessionService);
@@ -148,9 +150,9 @@ export class ProgressService {
     ]);
     if (this.loaded) return;
     const [tipsRes, scores, milestones] = await Promise.all([
-      firstValueFrom(this.http.get<{ dismissed: string[] }>('/api/me/tips')),
-      firstValueFrom(this.http.get<{ items: { id: string; date: string; payload: string; keyVersion: number }[] }>(this.url('health-scores'))),
-      firstValueFrom(this.http.get<{ items: { id: string; completedAt: string; payload: string; keyVersion: number }[] }>(this.url('milestones'))),
+      this.offlineCache.cached('/api/me/tips', () => firstValueFrom(this.http.get<{ dismissed: string[] }>('/api/me/tips'))),
+      this.offlineCache.cached(this.url('health-scores'), () => firstValueFrom(this.http.get<{ items: { id: string; date: string; payload: string; keyVersion: number }[] }>(this.url('health-scores')))),
+      this.offlineCache.cached(this.url('milestones'), () => firstValueFrom(this.http.get<{ items: { id: string; completedAt: string; payload: string; keyVersion: number }[] }>(this.url('milestones')))),
     ]);
     this.dismissed.set(tipsRes.dismissed);
     this.history.set(await Promise.all(scores.items.map(async (s) => ({ id: s.id, date: s.date, ...(await this.hh.open<{ score: number }>('financial_health_scores', s.id, s.payload, s.keyVersion)) }))));

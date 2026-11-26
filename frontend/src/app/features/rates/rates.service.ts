@@ -1,4 +1,5 @@
 import { HttpClient } from '@angular/common/http';
+import { OfflineCacheService } from '../../core/offline/offline-cache.service';
 import { Injectable, computed, effect, inject, signal, untracked } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { v7 as uuidv7 } from 'uuid';
@@ -36,6 +37,7 @@ export interface ManualRate {
 /** Cotizaciones públicas (del servidor) + manuales del hogar (cifradas), y el conversor resultante. */
 @Injectable({ providedIn: 'root' })
 export class RatesService {
+  private readonly offlineCache = inject(OfflineCacheService);
   private readonly http = inject(HttpClient);
   private readonly hh = inject(HouseholdContextService);
   private readonly session = inject(SessionService);
@@ -73,8 +75,8 @@ export class RatesService {
   async ensureLoaded() {
     if (this.loaded) return;
     const [pub, manual] = await Promise.all([
-      firstValueFrom(this.http.get<{ items: PublicRateDto[] }>('/api/exchange-rates/latest')),
-      firstValueFrom(this.http.get<{ items: ManualRateDto[] }>(this.url('exchange-rates'))),
+      this.offlineCache.cached('/api/exchange-rates/latest', () => firstValueFrom(this.http.get<{ items: PublicRateDto[] }>('/api/exchange-rates/latest'))),
+      this.offlineCache.cached(this.url('exchange-rates'), () => firstValueFrom(this.http.get<{ items: ManualRateDto[] }>(this.url('exchange-rates')))),
     ]);
     this.publicRates.set(pub.items);
     this.manualRates.set(

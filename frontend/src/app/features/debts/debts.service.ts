@@ -1,4 +1,5 @@
 import { HttpClient } from '@angular/common/http';
+import { OfflineCacheService } from '../../core/offline/offline-cache.service';
 import { Injectable, effect, inject, signal, untracked } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { v7 as uuidv7 } from 'uuid';
@@ -11,6 +12,7 @@ import type { Debt, DebtDraft, DebtDto, DebtPayload, PaymentDraft, PaymentPayloa
 
 @Injectable({ providedIn: 'root' })
 export class DebtsService {
+  private readonly offlineCache = inject(OfflineCacheService);
   private readonly http = inject(HttpClient);
   private readonly household = inject(HouseholdContextService);
   private readonly transactions = inject(TransactionsService);
@@ -45,7 +47,7 @@ export class DebtsService {
   }
 
   async load() {
-    const { items } = await firstValueFrom(this.http.get<{ items: DebtDto[] }>(this.base()));
+    const { items } = await this.offlineCache.cached(this.base(), () => firstValueFrom(this.http.get<{ items: DebtDto[] }>(this.base())));
     this.state.set(await Promise.all(items.map((dto) => this.decrypt(dto))));
     this.loaded = true;
   }

@@ -10,11 +10,26 @@ export const syncQuerySchema = z.object({
 });
 export type SyncQuery = z.infer<typeof syncQuerySchema>;
 
-export function syncPage<T extends { revision: bigint }>(rows: T[], limit: number) {
+/**
+ * Las revisiones salen de una secuencia, pero una transacción que empezó antes puede hacerse
+ * visible después que otra más nueva. Para no saltearla, el cursor que el cliente GUARDA no avanza
+ * más allá de filas modificadas en los últimos SAFE_LAG_MS: esas se vuelven a pedir la próxima vez.
+ */
+export const SAFE_LAG_MS = 10_000;
+
+export function syncPage<T extends { revision: bigint; updatedAt: Date }>(rows: T[], limit: number, now = Date.now()) {
   const hasMore = rows.length > limit;
   const page = hasMore ? rows.slice(0, limit) : rows;
   const last = page.at(-1);
-  return { page, hasMore, nextSince: last ? last.revision.toString() : null };
+  const firstYoung = page.find((r) => now - r.updatedAt.getTime() < SAFE_LAG_MS);
+  return {
+    page,
+    hasMore,
+    /** Para pedir la página siguiente. */
+    nextSince: last ? last.revision.toString() : null,
+    /** Revisión más baja de esta página que todavía es "reciente" (null si no hay). */
+    firstYoungRevision: firstYoung ? firstYoung.revision.toString() : null,
+  };
 }
 
 /** "YYYY-MM-DD" ↔ columnas @db.Date (siempre en UTC, sin corrimientos por zona horaria). */

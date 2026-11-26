@@ -1,4 +1,5 @@
 import { HttpClient } from '@angular/common/http';
+import { OfflineCacheService } from '../../core/offline/offline-cache.service';
 import { Injectable, computed, effect, inject, signal, untracked } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { KeyVaultService } from '../../core/crypto/key-vault.service';
@@ -25,6 +26,7 @@ interface CategoryDto extends Omit<Category, 'archived' | 'name' | 'icon' | 'col
 /** Categorías del hogar activo, descifradas. */
 @Injectable({ providedIn: 'root' })
 export class CategoriesService {
+  private readonly offlineCache = inject(OfflineCacheService);
   private readonly http = inject(HttpClient);
   private readonly household = inject(HouseholdContextService);
   private readonly state = signal<Category[]>([]);
@@ -46,7 +48,7 @@ export class CategoriesService {
   async ensureLoaded(): Promise<void> {
     if (this.state().length > 0) return;
     const hid = this.household.requireHousehold().id;
-    const { items } = await firstValueFrom(this.http.get<{ items: CategoryDto[] }>(`/api/households/${hid}/categories`));
+    const { items } = await this.offlineCache.cached(`/api/households/${hid}/categories`, () => firstValueFrom(this.http.get<{ items: CategoryDto[] }>(`/api/households/${hid}/categories`)));
     const categories = await Promise.all(
       items.map(async (dto) => {
         const p = await this.household.open<{ name: string; icon: string | null; color: string | null }>(
