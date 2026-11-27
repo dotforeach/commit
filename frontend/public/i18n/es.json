@@ -310,7 +310,8 @@
       "system": "Tema: igual que el sistema (toca para claro)",
       "light": "Tema: claro (toca para oscuro)",
       "dark": "Tema: oscuro (toca para seguir al sistema)"
-    }
+    },
+    "review": "Por revisar"
   },
   "accounts": {
     "title": "Cuentas",
@@ -1577,5 +1578,135 @@
       },
       "vsHint": "Negativo = ahorras; positivo = te cuesta. La tarjeta de crédito conviene solo si pagas el total antes del vencimiento."
     }
+  },
+  "review": {
+    "title": "Por revisar",
+    "subtitle": "Comprobantes que enviaste por WhatsApp o subiste aquí. Revisa la recomendación y confírmala, o cámbiala.",
+    "whatsapp": "WhatsApp",
+    "upload": "Subir foto",
+    "uploading": "Leyendo…",
+    "notConfigured": "La lectura de comprobantes todavía no está activa en este servidor (falta configurar la IA). Puedes vincular WhatsApp y ver tus planes igual.",
+    "unknownMerchant": "Comercio sin identificar",
+    "types": {
+      "purchase": "Compra",
+      "loan_payment": "Pago de préstamo",
+      "card_statement": "Estado de cuenta",
+      "bill": "Factura de servicio",
+      "other": "Comprobante"
+    },
+    "via": {
+      "whatsapp": "por WhatsApp",
+      "upload": "subido aquí"
+    },
+    "itemsCount": "{{n}} productos",
+    "statement": "Total a pagar ${{total}} · mínimo ${{minimum}} · vence {{due}}",
+    "recommendation": "Recomendación",
+    "confidence": {
+      "high": "Muy probable",
+      "medium": "Probable",
+      "low": "Revísala"
+    },
+    "changed": "La cambiaste",
+    "reasons": {
+      "cardLast4": "La tarjeta termina en {{last4}}.",
+      "paymentMethod": "Se pagó con {{method}}.",
+      "merchantHistory": "Así registraste tus últimas {{n}} compras en {{merchant}}.",
+      "mostUsed": "Es la cuenta que más usas.",
+      "genericCategory": "Por lo que compraste parece {{category}}.",
+      "debtMatch": "Coincide con tu deuda «{{debt}}».",
+      "cardStatement": "Es el estado de cuenta de esta tarjeta."
+    },
+    "methods": {
+      "cash": "efectivo",
+      "debit_card": "tarjeta de débito",
+      "credit_card": "tarjeta de crédito",
+      "transfer": "transferencia",
+      "digital_wallet": "billetera digital",
+      "other": "otro medio"
+    },
+    "categories": {
+      "groceries": "supermercado",
+      "restaurants": "comida fuera",
+      "transport": "transporte",
+      "fuel": "combustible",
+      "utilities": "servicios",
+      "rent": "alquiler",
+      "health": "salud",
+      "education": "educación",
+      "entertainment": "entretenimiento",
+      "subscriptions": "suscripciones",
+      "shopping": "compras",
+      "travel": "viajes",
+      "insurance": "seguros",
+      "taxes": "impuestos",
+      "debt_payment": "pago de deudas",
+      "other": "otros"
+    },
+    "fields": {
+      "description": "Descripción",
+      "amount": "Monto",
+      "date": "Fecha",
+      "account": "Cuenta",
+      "category": "Categoría"
+    },
+    "noCategory": "Sin categoría",
+    "asDebtPayment": "Se registrará como pago de esa deuda.",
+    "discard": "Descartar",
+    "acceptRecommended": "Aceptar recomendación",
+    "acceptMine": "Guardar con mis cambios",
+    "saved": "Movimiento guardado",
+    "defaultDescription": "Comprobante",
+    "empty": "No tienes comprobantes por revisar. Envía una foto por WhatsApp o súbela aquí.",
+    "uploadError": "No se pudo leer la foto.",
+    "privacy": "La recomendación se calcula en tu dispositivo con tus cuentas, categorías e historial: sus nombres no se envían a ningún lado. El comprobante llega cifrado para ti."
+  },
+  "whatsapp": {
+    "title": "Facturas por WhatsApp",
+    "subtitle": "Envía una foto de tus facturas y se cargan solas para que las revises.",
+    "notConfigured": "Este servidor todavía no tiene WhatsApp configurado (faltan las credenciales de Meta). Puedes preparar la vinculación igual.",
+    "linked": "Vinculado desde el {{date}}.",
+    "usage": "Este mes: {{used}} de {{limit}} comprobantes.",
+    "sendCode": "Envía este código desde tu WhatsApp al número de Commit:",
+    "openWhatsapp": "Abrir WhatsApp con el código",
+    "codeExpires": "El código vence en 10 minutos y sirve una sola vez.",
+    "privacyTitle": "Antes de activarlo, ten en cuenta:",
+    "privacy1": "Meta (WhatsApp) y el servidor de Commit ven la foto mientras se procesa. Es una excepción al cifrado de extremo a extremo del resto de la app.",
+    "privacy2": "La foto no se guarda: se lee, se descarta, y el resultado se guarda cifrado con tu clave. Ni nosotros podemos volver a leerlo.",
+    "privacy3": "Para leer la factura se usa un OCR propio y un proveedor de IA; a la IA le llega el texto, no la foto, cuando el OCR está activo.",
+    "privacy4": "Del número solo guardamos una huella (hash). Puedes desvincularlo cuando quieras.",
+    "consent": "Entiendo y quiero activar las facturas por WhatsApp",
+    "needsSubscription": "Para procesar comprobantes necesitas la suscripción.",
+    "seePlans": "Ver planes",
+    "unlink": "Desvincular",
+    "review": "Ver por revisar",
+    "link": "Obtener código",
+    "plans": "Planes"
+  },
+  "subscription": {
+    "title": "Suscripción Commit",
+    "subtitle": "Facturas por WhatsApp con lectura automática y recomendación de cuenta y categoría.",
+    "active": "Tienes el plan {{plan}} activo hasta el {{date}}.",
+    "feature1": "Envía fotos de facturas, recibos y estados de cuenta por WhatsApp o desde la app.",
+    "feature2": "Lectura automática: comercio, fecha, monto, ITBMS y productos.",
+    "feature3": "Recomendación de cuenta y categoría según tu historial, que puedes aceptar o cambiar.",
+    "feature4": "Hasta 100 comprobantes por mes. El resto de Commit sigue siendo gratis.",
+    "plans": {
+      "MONTHLY": {
+        "name": "Mensual",
+        "price": "$2",
+        "per": "/ mes"
+      },
+      "YEARLY": {
+        "name": "Anual",
+        "price": "$20",
+        "per": "/ año"
+      }
+    },
+    "save": "Ahorras $4 al año",
+    "choose": "Elegir este plan",
+    "devActivate": "Activar de prueba (solo desarrollo)",
+    "note": "El cobro se habilitará cuando se configure el proveedor de pagos. Puedes cancelar cuando quieras.",
+    "error": "No se pudo iniciar el pago.",
+    "back": "Volver a Ajustes"
   }
 }

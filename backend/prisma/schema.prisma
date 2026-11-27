@@ -56,6 +56,10 @@ model User {
   notifications       Notification[]
   tipDismissals       TipDismissal[]
   pushSubscriptions   PushSubscription[]
+  whatsappLink        WhatsappLink?
+  receiptInbox        ReceiptInboxItem[]
+  receiptEvents       ReceiptEvent[]
+  subscription        Subscription?
 
   @@map("users")
 }
@@ -1037,4 +1041,80 @@ model PushSubscription {
 
   @@index([userId])
   @@map("push_subscriptions")
+}
+
+// ─────────────────────────────────────────────────────────────
+// Facturas por WhatsApp (excepción opcional al conocimiento cero)
+// La foto se procesa en memoria y se descarta; el resultado se guarda SELLADO para el usuario
+// (crypto_box_seal con su clave pública X25519): el servidor no puede volver a leerlo.
+// ─────────────────────────────────────────────────────────────
+
+/// Número vinculado: solo un HMAC del identificador de WhatsApp, nunca el número en claro.
+model WhatsappLink {
+  userId    String   @id @db.Uuid
+  phoneHash String   @unique
+  consentAt DateTime @db.Timestamptz
+  linkedAt  DateTime @default(now()) @db.Timestamptz
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("whatsapp_links")
+}
+
+/// Resultado de una factura, sellado para el usuario. Se borra cuando lo revisa.
+model ReceiptInboxItem {
+  id        String   @id @default(uuid(7)) @db.Uuid
+  userId    String   @db.Uuid
+  sealed    Bytes
+  createdAt DateTime @default(now()) @db.Timestamptz
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+  @@map("receipt_inbox")
+}
+
+enum ReceiptEventStatus {
+  PROCESSED
+  FAILED
+  REJECTED // sin suscripción, límite mensual o formato no soportado
+}
+
+/// Uso (sin contenido): para el límite mensual y métricas.
+model ReceiptEvent {
+  id        String             @id @default(uuid(7)) @db.Uuid
+  userId    String             @db.Uuid
+  status    ReceiptEventStatus
+  createdAt DateTime           @default(now()) @db.Timestamptz
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+  @@map("receipt_events")
+}
+
+enum SubscriptionPlan {
+  MONTHLY // $2 por mes
+  YEARLY // $20 por año
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  PAST_DUE
+  CANCELED
+}
+
+model Subscription {
+  userId           String             @id @db.Uuid
+  plan             SubscriptionPlan
+  status           SubscriptionStatus
+  currentPeriodEnd DateTime           @db.Timestamptz
+  provider         String?
+  providerRef      String?
+  createdAt        DateTime           @default(now()) @db.Timestamptz
+  updatedAt        DateTime           @updatedAt @db.Timestamptz
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("subscriptions")
 }

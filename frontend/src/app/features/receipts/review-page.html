@@ -1,0 +1,127 @@
+<ng-container *transloco="let t; prefix: 'review'">
+  <section class="page">
+    <header class="head">
+      <div>
+        <h2>{{ t('title') }}</h2>
+        <p class="subtitle">{{ t('subtitle') }}</p>
+      </div>
+      <div class="head-actions">
+        <a mat-stroked-button routerLink="/ajustes" fragment="whatsapp">
+          <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>{{ t('whatsapp') }}
+        </a>
+        <label mat-flat-button class="upload" [class.disabled]="uploading() || !receipts.status()?.extractionConfigured">
+          <mat-icon fontSet="material-symbols-outlined">photo_camera</mat-icon>{{ uploading() ? t('uploading') : t('upload') }}
+          <input #file type="file" accept="image/jpeg,image/png,image/webp" capture="environment" hidden (change)="onFile(file)" [disabled]="uploading() || !receipts.status()?.extractionConfigured" data-testid="upload" />
+        </label>
+      </div>
+    </header>
+
+    @if (loading()) {
+      <mat-progress-bar mode="indeterminate" />
+    } @else {
+      @if (receipts.status(); as st) {
+        @if (!st.extractionConfigured) {
+          <p class="callout" data-testid="not-configured">{{ t('notConfigured') }}</p>
+        }
+      }
+
+      @for (r of receipts.items(); track r.id) {
+        @let d = draft(r);
+        @let rec = recs().get(r.id);
+        <mat-card appearance="outlined" class="receipt" [attr.data-receipt]="r.extraction.merchant">
+          <div class="top">
+            <mat-icon class="doc" fontSet="material-symbols-outlined" aria-hidden="true">{{ r.extraction.documentType === 'card_statement' ? 'credit_card' : r.extraction.documentType === 'loan_payment' ? 'account_balance' : 'receipt_long' }}</mat-icon>
+            <div class="what">
+              <strong>{{ r.extraction.merchant || t('unknownMerchant') }}</strong>
+              <span class="meta">{{ t('types.' + r.extraction.documentType) }} · {{ t('via.' + r.source) }} · {{ r.createdAt | date: 'd/M HH:mm' }}</span>
+            </div>
+            <strong class="total">{{ r.extraction.total ? '$' + r.extraction.total : '—' }}</strong>
+          </div>
+
+          @if (r.extraction.items.length > 0) {
+            <details class="items">
+              <summary>{{ t('itemsCount', { n: r.extraction.items.length }) }}</summary>
+              <ul>
+                @for (i of r.extraction.items; track $index) {
+                  <li><span>{{ i.description }}</span><span>{{ i.amount ? '$' + i.amount : '' }}</span></li>
+                }
+              </ul>
+            </details>
+          }
+          @if (r.extraction.notes) {
+            <p class="note"><mat-icon fontSet="material-symbols-outlined" aria-hidden="true">info</mat-icon>{{ r.extraction.notes }}</p>
+          }
+
+          @if (r.extraction.documentType === 'card_statement' && r.extraction.statement) {
+            <p class="statement">{{ t('statement', { total: r.extraction.statement.totalDue ?? '—', minimum: r.extraction.statement.minimumPayment ?? '—', due: r.extraction.statement.dueDate ?? '—' }) }}</p>
+          }
+
+          <div class="rec" [class]="'rec level-' + confidenceLevel(rec)" data-testid="recommendation">
+            <div class="rec-head">
+              <mat-icon fontSet="material-symbols-outlined" aria-hidden="true">auto_awesome</mat-icon>
+              <strong>{{ t('recommendation') }}</strong>
+              <span class="badge">{{ t('confidence.' + confidenceLevel(rec)) }}</span>
+              @if (!followsRecommendation(r)) {
+                <span class="badge changed">{{ t('changed') }}</span>
+              }
+            </div>
+            <ul class="reasons">
+              @for (reason of rec?.reasons ?? []; track $index) {
+                <li>{{ reasonText(reason) }}</li>
+              }
+            </ul>
+          </div>
+
+          <div class="fields">
+            <mat-form-field subscriptSizing="dynamic">
+              <mat-label>{{ t('fields.description') }}</mat-label>
+              <input matInput [ngModel]="d.description" (ngModelChange)="patch(r, { description: $event })" />
+            </mat-form-field>
+            <mat-form-field subscriptSizing="dynamic">
+              <mat-label>{{ t('fields.amount') }}</mat-label>
+              <span matTextPrefix>$&nbsp;</span>
+              <input matInput inputmode="decimal" [ngModel]="d.amount" (ngModelChange)="patch(r, { amount: $event })" />
+            </mat-form-field>
+            <mat-form-field subscriptSizing="dynamic">
+              <mat-label>{{ t('fields.date') }}</mat-label>
+              <input matInput type="date" [ngModel]="d.date" (ngModelChange)="patch(r, { date: $event })" />
+            </mat-form-field>
+            <mat-form-field subscriptSizing="dynamic">
+              <mat-label>{{ t('fields.account') }}</mat-label>
+              <mat-select [value]="d.accountId" (selectionChange)="patch(r, { accountId: $event.value })" data-testid="account">
+                @for (a of accounts.active(); track a.id) {
+                  <mat-option [value]="a.id">{{ a.name }} · {{ a.currency }}@if (rec?.accountId === a.id) { ✨}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field subscriptSizing="dynamic">
+              <mat-label>{{ t('fields.category') }}</mat-label>
+              <mat-select [value]="d.categoryId" (selectionChange)="patch(r, { categoryId: $event.value })" data-testid="category">
+                <mat-option [value]="null">{{ t('noCategory') }}</mat-option>
+                @for (c of categories.expense(); track c.id) {
+                  <mat-option [value]="c.id">{{ c.name }}@if (rec?.categoryId === c.id) { ✨}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </div>
+          @if (d.debtId) {
+            <p class="meta">{{ t('asDebtPayment') }}</p>
+          }
+
+          <div class="actions">
+            <button mat-button (click)="discard(r)" [disabled]="busy() === r.id">{{ t('discard') }}</button>
+            <button mat-flat-button (click)="accept(r)" [disabled]="busy() === r.id || !d.accountId || !d.amount" data-testid="accept">
+              {{ followsRecommendation(r) ? t('acceptRecommended') : t('acceptMine') }}
+            </button>
+          </div>
+        </mat-card>
+      } @empty {
+        <div class="empty" data-testid="review-empty">
+          <mat-icon fontSet="material-symbols-outlined" aria-hidden="true">inbox</mat-icon>
+          <p>{{ t('empty') }}</p>
+        </div>
+      }
+      <p class="meta privacy">{{ t('privacy') }}</p>
+    }
+  </section>
+</ng-container>

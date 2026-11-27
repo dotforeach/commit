@@ -117,6 +117,16 @@ export const routes: Routes = [
     loadComponent: () => import('./features/plan/plan-page').then((m) => m.PlanPage),
   },
   {
+    path: 'por-revisar',
+    canActivate: [authGuard, unlockedGuard],
+    loadComponent: () => import('./features/receipts/review-page').then((m) => m.ReviewPage),
+  },
+  {
+    path: 'suscripcion',
+    canActivate: [authGuard, unlockedGuard],
+    loadComponent: () => import('./features/receipts/subscription-page').then((m) => m.SubscriptionPage),
+  },
+  {
     path: 'progreso',
     canActivate: [authGuard, unlockedGuard],
     loadComponent: () => import('./features/progress/progress-page').then((m) => m.ProgressPage),

@@ -14,9 +14,32 @@ export const envSchema = z.object({
   VAPID_SUBJECT: z.string().default('mailto:admin@example.com'),
   /** Job de recordatorios (cada minuto). */
   REMINDERS_JOB: z.stringbool().default(true),
+  /** Prefijo de las colas de BullMQ en Redis. */
+  QUEUE_PREFIX: z.string().default('bull'),
   RATES_REFRESH: z.stringbool().default(true),
   /** Intentos de login/registro por minuto y por IP (protege contra fuerza bruta). Subirlo solo en desarrollo. */
   AUTH_RATE_LIMIT: z.coerce.number().int().positive().default(10),
+  // ── Facturas por WhatsApp (todo opcional: sin estas variables la función queda desactivada) ──
+  /** Token que se configura en Meta para verificar el webhook. */
+  WHATSAPP_VERIFY_TOKEN: z.string().default(''),
+  /** App secret de Meta: valida la firma X-Hub-Signature-256 de cada webhook. */
+  WHATSAPP_APP_SECRET: z.string().default(''),
+  /** Token de acceso de la WhatsApp Cloud API. */
+  WHATSAPP_TOKEN: z.string().default(''),
+  WHATSAPP_PHONE_NUMBER_ID: z.string().default(''),
+  /** Número público de Commit en WhatsApp (solo dígitos, con código de país), para el link wa.me. */
+  WHATSAPP_DISPLAY_NUMBER: z.string().default(''),
+  WHATSAPP_GRAPH_VERSION: z.string().default('v23.0'),
+  /** Clave para el HMAC del número (si falta, se deriva de JWT_SECRET). */
+  PHONE_HASH_KEY: z.string().default(''),
+  /** Servicio de OCR propio (PaddleOCR). Sin él, la imagen se envía al modelo de IA. */
+  OCR_URL: z.string().default(''),
+  /** Clave de la API de Claude para extraer y clasificar. */
+  ANTHROPIC_API_KEY: z.string().default(''),
+  EXTRACTION_MODEL: z.string().default('claude-opus-5-5'),
+  RECEIPTS_MONTHLY_LIMIT: z.coerce.number().int().positive().default(100),
+  /** Exigir suscripción activa para procesar facturas (en desarrollo, false). */
+  SUBSCRIPTIONS_ENFORCED: z.stringbool().default(false),
   CORS_ORIGINS: z
     .string()
     .default('http://localhost:4200')

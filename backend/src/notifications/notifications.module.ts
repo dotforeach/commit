@@ -44,5 +44,6 @@ export class RemindersScheduler implements OnApplicationBootstrap {
   imports: [HouseholdsModule, BullModule.registerQueue({ name: QUEUE })],
   controllers: [NotificationsController],
   providers: [PushService, RemindersService, RemindersProcessor, RemindersScheduler],
+  exports: [PushService],
 })
 export class NotificationsModule {}

@@ -10,6 +10,8 @@ import type { Env } from './config/env.schema.js';
 const isProduction = process.env.NODE_ENV === 'production';
 
 const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+  // El webhook de WhatsApp valida la firma de Meta sobre el cuerpo exacto recibido.
+  rawBody: true,
   logger: new ConsoleLogger({
     json: isProduction,
     logLevels: isProduction ? ['log', 'warn', 'error', 'fatal'] : ['log', 'warn', 'error', 'fatal', 'debug'],

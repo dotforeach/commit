@@ -24,6 +24,7 @@
     "openapi": "nest build && DATABASE_URL=${DATABASE_URL:-postgresql://x@localhost:1/x} REDIS_URL=${REDIS_URL:-redis://localhost:1} JWT_SECRET=${JWT_SECRET:-openapi-generation-only-secret-000000000} RATES_REFRESH=false REMINDERS_JOB=false node dist/openapi.js"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^1.14.0",
     "@nestjs/authentication": "^0.1.7",
     "@nestjs/bullmq": "^12.0.2",
     "@nestjs/common": "^12.0.1",
@@ -38,6 +39,7 @@
     "bullmq": "^6.7.10",
     "cookie-parser": "^1.4.7",
     "ioredis": "^6.1.0",
+    "libsodium-wrappers": "^0.8.4",
     "pg": "^8.23.1",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",

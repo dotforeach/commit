@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import type { Env } from './config/env.schema.js';
 import { NotificationsModule } from './notifications/notifications.module.js';
+import { ReceiptsModule } from './receipts/receipts.module.js';
 import { ProgressModule } from './progress/progress.js';
 import { RatesModule } from './rates/rates.module.js';
 import { APP_GUARD } from '@nestjs/core';
@@ -35,6 +36,8 @@ import { RedisModule } from './redis/redis.module.js';
       useFactory: (config: ConfigService<Env, true>) => {
         const url = new URL(config.get('REDIS_URL', { infer: true }));
         return {
+          // Prefijo propio por entorno: los tests no comparten colas con el contenedor de desarrollo.
+          prefix: config.get('QUEUE_PREFIX', { infer: true }),
           connection: { host: url.hostname, port: Number(url.port || 6379), password: decodeURIComponent(url.password) || undefined, maxRetriesPerRequest: null },
         };
       },
@@ -56,6 +59,7 @@ import { RedisModule } from './redis/redis.module.js';
     RatesModule,
     ProgressModule,
     NotificationsModule,
+    ReceiptsModule,
   ],
   providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }],
 })

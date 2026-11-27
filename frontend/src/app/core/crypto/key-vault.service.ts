@@ -83,6 +83,12 @@ export class KeyVaultService {
     await persistIdentity(identity);
   }
 
+  /** Abre algo sellado para mí con crypto_box_seal (p. ej. un comprobante procesado en el servidor). */
+  async openSealed(sealed: Uint8Array): Promise<Uint8Array> {
+    const identity = this.requireIdentity();
+    return (await getSodium()).crypto_box_seal_open(sealed, identity.boxPublicKey, identity.boxSecretKey);
+  }
+
   /** Tras recargar la pestaña: reabre la bóveda con las claves guardadas en esta pestaña (si hay). */
   async tryRestore(me: MeResponse): Promise<boolean> {
     if (this.isUnlocked()) return true;

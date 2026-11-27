@@ -53,7 +53,7 @@ export async function createTestApp(configure?: (b: ReturnType<typeof Test.creat
   let builder = Test.createTestingModule({ imports: [AppModule] });
   if (configure) builder = configure(builder);
   const moduleRef = await builder.overrideProvider(PasswordHasher).useValue(new PasswordHasher({ logN: 10 })).compile();
-  const app = moduleRef.createNestApplication();
+  const app = moduleRef.createNestApplication({ rawBody: true });
   app.use(cookieParser());
   app.useGlobalPipes(new StandardSchemaValidationPipe());
   app.setGlobalPrefix('api', { exclude: ['health', 'ready'] });

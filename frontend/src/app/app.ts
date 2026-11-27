@@ -33,6 +33,7 @@ const NAV: NavItem[] = [
   { path: '/ahorro', label: 'nav.savings', icon: 'savings', primary: false },
   { path: '/cuentas', label: 'nav.accounts', icon: 'account_balance_wallet', primary: false },
   { path: '/plan', label: 'nav.plan', icon: 'auto_awesome', primary: false, mobileOnly: true },
+  { path: '/por-revisar', label: 'nav.review', icon: 'receipt_long', primary: false, mobileOnly: true },
   { path: '/herramientas', label: 'nav.tools', icon: 'calculate', primary: false, mobileOnly: true },
 ];
 

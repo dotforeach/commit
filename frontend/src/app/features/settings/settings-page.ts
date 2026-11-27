@@ -1,4 +1,5 @@
 import { ThemeService } from '../../core/theme/theme.service';
+import { WhatsappCard } from '../receipts/whatsapp-card';
 import { Component, inject, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -13,7 +14,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-settings-page',
-  imports: [RouterLink, TranslocoDirective, MatButtonModule, MatCardModule, MatFormFieldModule, MatIconModule, MatSelectModule, MatSlideToggleModule],
+  imports: [WhatsappCard, RouterLink, TranslocoDirective, MatButtonModule, MatCardModule, MatFormFieldModule, MatIconModule, MatSelectModule, MatSlideToggleModule],
   template: `
     <ng-container *transloco="let t; prefix: 'settings'">
       <section class="page">
@@ -36,6 +37,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
             <p class="meta">{{ t('push.privacy') }}</p>
           </mat-card-content>
         </mat-card>
+        <app-whatsapp-card />
         <mat-card appearance="outlined" class="block">
           <mat-card-header>
             <mat-icon mat-card-avatar fontSet="material-symbols-outlined" aria-hidden="true">contrast</mat-icon>

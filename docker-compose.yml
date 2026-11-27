@@ -91,6 +91,14 @@ services:
     depends_on:
       - backend-dev
 
+  # OCR propio (PaddleOCR) para facturas. Opcional y pesado: docker compose --profile ocr up -d ocr
+  ocr:
+    profiles: [ocr]
+    build: ./ocr
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8090:8000"
+
   adminer:
     profiles: [dev]
     image: adminer:latest
