@@ -12,17 +12,15 @@ Objetivo: que nadie fuera del hogar (ni el administrador, ni el dueño del servi
 
 ## Jerarquía de claves
 
-```
-clave de descifrado ──Argon2id(salt)──▶ KEK ──┐
-frase de recuperación ─Argon2id(salt)─▶ RK ───┤  (cifran, por separado, lo mismo)
-                                              ▼
-                       claves privadas del usuario (X25519 + Ed25519)
-                                              │  abren (sealed box)
-                                              ▼
-                       clave del hogar v1, v2… (XChaCha20-Poly1305, 256 bits)
-                                              │  cifra
-                                              ▼
-                       `payload` de cada fila financiera
+```mermaid
+flowchart TB
+    PW["Clave de descifrado"] -->|"Argon2id (128 MiB, Web Worker)"| KEK["KEK"]
+    FR["Frase de recuperación<br/>24 palabras BIP39"] -->|"BLAKE2b"| RK["RK"]
+    KEK -->|"abre"| PRIV["Claves privadas de la persona<br/>X25519 + Ed25519"]
+    RK -->|"abre (copia alternativa)"| PRIV
+    PRIV -->|"abre (sealed box, firma Ed25519 verificada)"| HK["Clave del hogar v1, v2…<br/>256 bits"]
+    HK -->|"XChaCha20-Poly1305 + AAD"| PL["payload de cada fila financiera"]
+    PRIV -->|"abre (crypto_box_seal)"| RC["Comprobantes de facturas<br/>sellados por el servidor"]
 ```
 
 - Librería: **libsodium** (`libsodium-wrappers-sumo`, carga diferida) en el navegador. Argon2id `crypto_pwhash` (128 MiB, 3 pasadas; el backend exige ≥ 64 MiB), `crypto_box_seal` para envolver claves de hogar, `crypto_sign` para firmar el envoltorio, `crypto_aead_xchacha20poly1305_ietf` para los datos.
@@ -50,9 +48,23 @@ El AAD ata el cifrado a su fila: si el servidor intercambia payloads entre filas
 
 ## Flujos
 
+```mermaid
+sequenceDiagram
+    autonumber
+    actor P as Persona
+    participant N as Navegador
+    participant B as Backend
+    P->>N: contraseña de ingreso + clave de descifrado
+    N->>N: genera claves X25519/Ed25519, frase de 24 palabras<br/>y la clave del hogar personal
+    N->>N: cifra las privadas con la KEK y con la RK<br/>envuelve y firma la clave del hogar
+    P->>N: confirma 3 palabras de la frase
+    N->>B: públicas + privadas CIFRADAS + sales + clave de hogar envuelta
+    Note over B: el servidor nunca recibe la clave de descifrado<br/>ni la frase de recuperación
+```
+
 **Registro**: el navegador genera las claves, la frase de recuperación y la clave del hogar personal; envía al servidor solo las claves públicas, las privadas cifradas (con la KEK y con la RK), sales y parámetros de KDF, y la clave del hogar envuelta para el propio usuario. El usuario confirma que guardó la frase.
 
-**Ingreso**: login con contraseña (access token de 15 min en memoria; refresh token rotativo en cookie `HttpOnly`, `SameSite=Strict`, `Path=/api/auth`, guardado en Redis) → `GET /api/me` devuelve `user_keys` cifradas → el usuario ingresa su clave de descifrado → el navegador abre las privadas → abre las claves de sus hogares. Las claves viven solo en memoria (nunca en `localStorage`); al cerrar sesión o tras inactividad se borran.
+**Ingreso**: login con contraseña (access token de 15 min en memoria; refresh token rotativo en cookie `HttpOnly`, `SameSite=Strict`, `Path=/api/auth`, guardado en Redis) → `GET /api/me` devuelve `user_keys` cifradas → el usuario ingresa su clave de descifrado → el navegador abre las privadas → abre las claves de sus hogares. Las claves se usan en memoria y nunca se guardan en claro. Para que recargar la pestaña no pida la clave, el par de claves se guarda cifrado en la pestaña (ver *Recargar la pestaña*); al bloquear, cerrar sesión o tras inactividad se borra todo.
 
 **Cambiar la clave de descifrado**: se vuelven a cifrar las privadas con una KEK nueva. Los datos no se tocan.
 
@@ -66,9 +78,11 @@ El AAD ata el cifrado a su fila: si el servidor intercambia payloads entre filas
 
 ## Caché offline
 
-Los registros se guardan **cifrados** en IndexedDB y se sincronizan con `GET /sync?since=<revision>`; se descifran en memoria tras ingresar la clave. Las escrituras offline se encolan y se envían al reconectar, con control de concurrencia optimista por `revision` (409 si cambió).
+Las respuestas de la API se guardan en IndexedDB **tal como llegan, es decir, cifradas**, y se descifran en memoria tras ingresar la clave. Sin conexión, la app abre lo guardado en **modo solo lectura** (lo que se intente guardar sin conexión falla con un aviso; no se encola).
 
-Pendiente para el módulo de sync: una `revision` asignada por secuencia puede hacerse visible fuera de orden entre transacciones concurrentes. El endpoint debe devolver solo hasta una marca de agua segura (p. ej. basada en `pg_current_snapshot()`), no simplemente el máximo visto.
+Los movimientos se sincronizan de forma incremental con `GET .../transactions?since=<revision>` y lápidas (`deletedAt`). Como una `revision` de secuencia puede hacerse visible fuera de orden entre transacciones concurrentes, el servidor informa la primera revisión "reciente" de cada página y el cliente no avanza su cursor guardado más allá de ella: esas filas se vuelven a pedir la próxima vez.
+
+La caché se borra al iniciar y al cerrar sesión. Una respuesta pedida antes de cerrar sesión que llega después se descarta (no vuelve a escribir en el dispositivo).
 
 ## Recargar la pestaña (F5)
 
@@ -82,7 +96,19 @@ Para no pedir la clave de descifrado en cada recarga, al desbloquear se guarda *
 
 El navegador agenda `reminders` con `remindAt` en claro y el texto cifrado. Un job de BullMQ crea, a esa hora, una `notification` por miembro activo con el mismo payload cifrado. El servidor conoce cuándo, no qué ni cuánto.
 
-**Web Push** (implementado): con la app cerrada, el servidor envía una notificación push genérica ("Tenés un recordatorio"), sin datos financieros; el detalle se descifra al abrir la app. Un job de BullMQ revisa cada minuto los recordatorios vencidos y los reclama con `FOR UPDATE SKIP LOCKED` (nunca se disparan dos veces). El navegador programa los recordatorios de los próximos 35 días (vencimientos de tarjeta, cuotas, plazos fijos y recurrentes a confirmar) sin duplicarlos.
+**Web Push** (implementado): con la app cerrada, el servidor envía una notificación push genérica ("Tienes un recordatorio"), sin datos financieros; el detalle se descifra al abrir la app. Un job de BullMQ revisa cada minuto los recordatorios vencidos y los reclama con `FOR UPDATE SKIP LOCKED` (nunca se disparan dos veces). El navegador programa los recordatorios de los próximos 35 días (vencimientos de tarjeta, cuotas, plazos fijos y recurrentes a confirmar) sin duplicarlos.
+
+## Excepción: facturas por WhatsApp
+
+Es la única función donde un dato del usuario se procesa en el servidor, y es **opcional, con consentimiento explícito**:
+
+- La foto la ven **Meta** (es su plataforma) y nuestro **servidor**, que la procesa en memoria y la **descarta**.
+- Con el OCR propio, a la **IA le llega solo el texto**, no la foto.
+- El resultado se guarda **sellado** (`crypto_box_seal`) con la clave pública X25519 de la persona: desde ese momento, ni el servidor puede leerlo. Solo la clave privada, en el navegador, lo abre.
+- Del número de WhatsApp se guarda solo un **HMAC**; la vinculación usa un código de un solo uso.
+- La recomendación de cuenta y categoría se calcula en el navegador.
+
+Detalle completo en [facturas-whatsapp.md](facturas-whatsapp.md).
 
 ## Lo que el cifrado NO protege
 

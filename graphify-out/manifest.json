@@ -228,8 +228,8 @@
     "semantic_hash": ""
   },
   "frontend/public/i18n/es.json": {
-    "mtime": 1795753688.4783006,
-    "seen": 1795753938.657804,
+    "mtime": 1795754116.9869518,
+    "seen": 1795754502.131281,
     "ast_hash": "a8f4821789547c5bbffdecc2ed8028ba",
     "semantic_hash": ""
   },
@@ -240,9 +240,9 @@
     "semantic_hash": ""
   },
   "docs/arquitectura-cifrado.md": {
-    "mtime": 1795748282.171375,
-    "seen": 1795752665.4201941,
-    "ast_hash": "13154aa3c580a14ba91d6454b19228cd",
+    "mtime": 1795754457.8572924,
+    "seen": 1795754502.134979,
+    "ast_hash": "08b9e4d6be5f86133de6c187d7ddc8c7",
     "semantic_hash": ""
   },
   "backend/src/auth/auth.controller.ts": {
@@ -450,20 +450,20 @@
     "semantic_hash": ""
   },
   "frontend/src/app/features/auth/login/login.ts": {
-    "mtime": 1795753688.475355,
-    "seen": 1795753938.659036,
+    "mtime": 1795754116.9881775,
+    "seen": 1795754502.1324842,
     "ast_hash": "76e049d1a5ddc27a1fe3c66d5be5a6fa",
     "semantic_hash": ""
   },
   "frontend/src/app/features/auth/register/register.ts": {
-    "mtime": 1795753688.4760416,
-    "seen": 1795753938.6590369,
+    "mtime": 1795754116.9890745,
+    "seen": 1795754502.1324859,
     "ast_hash": "c172afbef185acca2c17e7ae00731f1e",
     "semantic_hash": ""
   },
   "frontend/src/app/features/auth/unlock/unlock.ts": {
-    "mtime": 1795753688.475527,
-    "seen": 1795753938.659038,
+    "mtime": 1795754116.9893897,
+    "seen": 1795754502.1324859,
     "ast_hash": "de7696ea0822f87cd3943481907a846d",
     "semantic_hash": ""
   },
@@ -480,20 +480,20 @@
     "semantic_hash": ""
   },
   "frontend/src/app/features/auth/login/login.html": {
-    "mtime": 1795753688.475092,
-    "seen": 1795753938.6618838,
+    "mtime": 1795754116.9876282,
+    "seen": 1795754502.135069,
     "ast_hash": "d165a33bf8cd436f1eea6a9775a81358",
     "semantic_hash": ""
   },
   "frontend/src/app/features/auth/register/register.html": {
-    "mtime": 1795753688.4759288,
-    "seen": 1795753938.661885,
+    "mtime": 1795754116.9887042,
+    "seen": 1795754502.1350698,
     "ast_hash": "b865b30c5a6038cb347e5669a8e5483b",
     "semantic_hash": ""
   },
   "frontend/src/app/features/auth/unlock/unlock.html": {
-    "mtime": 1795753688.4754436,
-    "seen": 1795753938.661886,
+    "mtime": 1795754116.9892254,
+    "seen": 1795754502.135071,
     "ast_hash": "b8c49b771b28411a2556433b0fb56154",
     "semantic_hash": ""
   },
@@ -672,14 +672,14 @@
     "semantic_hash": ""
   },
   "frontend/src/app/features/auth/change-passphrase/change-passphrase.ts": {
-    "mtime": 1795753688.4756966,
-    "seen": 1795753938.659035,
+    "mtime": 1795754116.9873857,
+    "seen": 1795754502.1324842,
     "ast_hash": "d50947943d37494c80d08f665308bb47",
     "semantic_hash": ""
   },
   "frontend/src/app/features/auth/recover/recover.ts": {
-    "mtime": 1795753688.4765093,
-    "seen": 1795753938.6590369,
+    "mtime": 1795754116.9885247,
+    "seen": 1795754502.1324852,
     "ast_hash": "a25b25bb582a00b41e6993f79d6093ca",
     "semantic_hash": ""
   },
@@ -702,14 +702,14 @@
     "semantic_hash": ""
   },
   "frontend/src/app/features/auth/change-passphrase/change-passphrase.html": {
-    "mtime": 1795753688.475614,
-    "seen": 1795753938.6618829,
+    "mtime": 1795754116.987181,
+    "seen": 1795754502.135068,
     "ast_hash": "be44f042f718c5a6533966486e5883b2",
     "semantic_hash": ""
   },
   "frontend/src/app/features/auth/recover/recover.html": {
-    "mtime": 1795753688.476435,
-    "seen": 1795753938.6618838,
+    "mtime": 1795754116.988365,
+    "seen": 1795754502.135069,
     "ast_hash": "16590cfaf0b6b2585432ad58e1235861",
     "semantic_hash": ""
   },
@@ -966,9 +966,9 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1795722379.3340561,
-    "seen": 1795722603.739672,
-    "ast_hash": "235f8726d1c082f686eaee0fa0183bfa",
+    "mtime": 1795754321.8585043,
+    "seen": 1795754502.134961,
+    "ast_hash": "fbca868cb2a4a6058b8979546c365100",
     "semantic_hash": ""
   },
   "backend/src/budgets/budgets.controller.ts": {
@@ -2196,27 +2196,45 @@
     "semantic_hash": ""
   },
   "frontend/src/app/features/status/status-page.ts": {
-    "mtime": 1795753688.476341,
-    "seen": 1795753938.661174,
+    "mtime": 1795754116.9900393,
+    "seen": 1795754502.134445,
     "ast_hash": "a1ab9501a766efb82c4618461276ff4e",
     "semantic_hash": ""
   },
   "frontend/src/app/features/status/status-page.html": {
-    "mtime": 1795753688.4761586,
-    "seen": 1795753938.662574,
+    "mtime": 1795754116.9895704,
+    "seen": 1795754502.1355991,
     "ast_hash": "5c03034468d62974403bf11c41dc0314",
     "semantic_hash": ""
   },
   "frontend/e2e/password-toggle.e2e.ts": {
-    "mtime": 1795753707.3591359,
-    "seen": 1795753938.657496,
+    "mtime": 1795754116.9864984,
+    "seen": 1795754502.1309628,
     "ast_hash": "42851f11612c183295e8324933984003",
     "semantic_hash": ""
   },
   "frontend/src/app/shared/password-toggle/password-toggle.ts": {
-    "mtime": 1795753688.4323075,
-    "seen": 1795753938.661612,
+    "mtime": 1795754116.9902656,
+    "seen": 1795754502.134837,
     "ast_hash": "3bcef74d6a6bd6223a34472b46ed1d2f",
+    "semantic_hash": ""
+  },
+  "docs/arquitectura.md": {
+    "mtime": 1795754367.8119476,
+    "seen": 1795754502.1349802,
+    "ast_hash": "38d5a17fbccde832d76cfda6c0046e3b",
+    "semantic_hash": ""
+  },
+  "docs/facturas-whatsapp.md": {
+    "mtime": 1795754394.1732867,
+    "seen": 1795754502.1349812,
+    "ast_hash": "b117e7339fa83e92e085c143cd008645",
+    "semantic_hash": ""
+  },
+  "docs/operacion.md": {
+    "mtime": 1795754438.6513808,
+    "seen": 1795754502.1349812,
+    "ast_hash": "6ee6c2f98c77bbf948e694b775390096",
     "semantic_hash": ""
   },
   "backend/pnpm-lock.yaml": {
