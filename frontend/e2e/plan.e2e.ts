@@ -12,7 +12,7 @@ async function pastTransaction(page: Page, t: { mode: 'Gasto' | 'Ingreso'; amoun
   const dialog = page.getByRole('dialog');
   await dialog.getByRole('radio', { name: t.mode }).click();
   await dialog.getByLabel('Monto', { exact: true }).fill(t.amount);
-  await pick(page, 'Cuenta', 'Banco · ARS');
+  await pick(page, 'Cuenta', 'Banco · USD');
   await dialog.getByLabel('Fecha').fill(midPreviousMonth());
   await dialog.getByLabel('Descripción').fill(t.description);
   await dialog.getByRole('button', { name: 'Guardar' }).click();
@@ -24,7 +24,7 @@ async function newDebt(page: Page, d: { name: string; amount: string; rate: stri
   const dialog = page.getByRole('dialog');
   await dialog.getByLabel('Nombre').fill(d.name);
   await dialog.getByLabel('Monto original').fill(d.amount);
-  await dialog.getByLabel('Tasa nominal anual (TNA)').fill(d.rate);
+  await dialog.getByLabel('Tasa de interés anual').fill(d.rate);
   await dialog.getByLabel('Cuota o pago mínimo').fill(d.minimum);
   await dialog.getByRole('button', { name: 'Guardar' }).click();
   await expect(dialog).toHaveCount(0);
@@ -37,25 +37,25 @@ test('plan mágico: prioridades, inflación (cifrada) que cambia la recomendaci�
   await page.getByRole('link', { name: 'Cuentas' }).click();
   await createAccount(page, { name: 'Banco', type: 'Cuenta bancaria', initial: '0' });
   await page.getByRole('link', { name: 'Movimientos' }).click();
-  await pastTransaction(page, { mode: 'Ingreso', amount: '1.000.000', description: 'Sueldo' });
-  await pastTransaction(page, { mode: 'Gasto', amount: '200.000', description: 'Gastos del mes' });
+  await pastTransaction(page, { mode: 'Ingreso', amount: '1,000,000', description: 'Sueldo' });
+  await pastTransaction(page, { mode: 'Gasto', amount: '200,000', description: 'Gastos del mes' });
 
   await page.getByRole('link', { name: 'Deudas' }).click();
-  await newDebt(page, { name: 'Préstamo caro', amount: '300.000', rate: '90', minimum: '20.000' });
-  await newDebt(page, { name: 'Préstamo barato', amount: '200.000', rate: '20', minimum: '10.000' });
+  await newDebt(page, { name: 'Préstamo caro', amount: '300,000', rate: '90', minimum: '20,000' });
+  await newDebt(page, { name: 'Préstamo barato', amount: '200,000', rate: '20', minimum: '10,000' });
 
   // Desde Deudas se llega al plan
   await page.getByTestId('debts-plan').click();
   await expect(page).toHaveURL(/\/plan$/);
-  await expect(page.getByTestId('plan-capacity')).toContainText('$ 800.000,00');
+  await expect(page.getByTestId('plan-capacity')).toContainText('$800,000.00');
   // Capacidad 800.000: mínimos 30.000 · colchón 200.000 · adelantos (caro primero) · fondo completo
   await expect(steps(page)).toHaveCount(5);
   expect(await steps(page).evaluateAll((els) => els.map((e) => e.getAttribute('data-step')))).toEqual(['minimums', 'miniFund', 'prepay', 'prepay', 'fullFund']);
-  await expect(steps(page).nth(2)).toContainText('Adelantá $ 280.000,00 a «Préstamo caro»');
+  await expect(steps(page).nth(2)).toContainText('Adelanta $280,000.00 a «Préstamo caro»');
   await expect(steps(page).nth(3)).toContainText('«Préstamo barato»');
-  // Al 90% TNA, el interés ($22.500/mes) supera la cuota mínima: con solo mínimos no se termina nunca
+  // Al 90% anual, el interés ($22,500/mes) supera la cuota mínima: con solo mínimos no se termina nunca
   await expect(page.getByTestId('plan-impact')).toContainText('no terminarías nunca');
-  await expect(page.getByTestId('plan-impact')).toContainText('salís en 2 meses');
+  await expect(page.getByTestId('plan-impact')).toContainText('sales en 2 meses');
 
   // Con 3% de inflación mensual, el préstamo al 20% se licúa: no conviene adelantarlo
   await page.getByTestId('plan-inflation').fill('3');

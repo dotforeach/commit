@@ -18,8 +18,8 @@ test('recordatorios: se programan cifrados, el servidor los dispara y aparecen e
   await page.getByRole('button', { name: 'Nuevo recurrente' }).click();
   const dialog = page.getByRole('dialog');
   await dialog.getByLabel('Descripción').fill('Internet');
-  await dialog.getByLabel('Monto', { exact: true }).fill('20.000');
-  await pick(page, 'Cuenta', 'Banco · ARS');
+  await dialog.getByLabel('Monto', { exact: true }).fill('20,000');
+  await pick(page, 'Cuenta', 'Banco · USD');
   await dialog.getByLabel('Día del mes').fill(String(today.getDate()));
   await dialog.getByLabel('Desde').fill(`${today.getDate()}/${today.getMonth() + 1}/${today.getFullYear()}`);
   await dialog.getByRole('radio', { name: /Pedirme confirmación/ }).click();
@@ -40,8 +40,8 @@ test('recordatorios: se programan cifrados, el servidor los dispara y aparecen e
   await expect(async () => {
     await page.keyboard.press('Escape'); // cerrar el menú si quedó abierto del intento anterior
     await page.getByTestId('bell').click();
-    await expect(page.locator('[data-notification="Confirmá «Internet»"]')).toBeVisible({ timeout: 4_000 });
+    await expect(page.locator('[data-notification="Confirma «Internet»"]')).toBeVisible({ timeout: 4_000 });
   }).toPass({ timeout: 120_000, intervals: [5_000] });
-  await expect(page.locator('[data-notification="Confirmá «Internet»"]')).toContainText('Revisá el monto de este mes');
+  await expect(page.locator('[data-notification="Confirma «Internet»"]')).toContainText('Revisa el monto de este mes');
   await page.getByRole('menuitem', { name: 'Marcar todas como leídas' }).click();
 });

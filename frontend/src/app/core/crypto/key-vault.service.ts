@@ -166,7 +166,7 @@ export class KeyVaultService {
 
   householdKey(householdId: string, version: number): Uint8Array {
     const key = this.householdKeys.get(householdId)?.get(version);
-    if (!key) throw new Error('No tenés acceso a la clave de este hogar');
+    if (!key) throw new Error('No tienes acceso a la clave de este hogar');
     return key;
   }
 

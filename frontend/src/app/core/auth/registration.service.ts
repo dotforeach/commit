@@ -87,7 +87,7 @@ export class RegistrationService {
       email: form.email,
       password: form.password,
       displayName: form.displayName,
-      locale: 'es-AR',
+      locale: 'es-PA',
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
       keys: {
         publicKey: await toBase64(identity.boxPublicKey),

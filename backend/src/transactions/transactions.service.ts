@@ -94,7 +94,7 @@ export class TransactionsService {
       const current = existing.find((e) => e.id === item.id)!;
       // No se puede convertir un movimiento en transferencia ni separar las patas de una.
       if ((current.installmentPlan && !current.installmentPlan.deletedAt) || (current.debtPayment && !current.debtPayment.deletedAt)) {
-        throw new BadRequestException('Las compras en cuotas y los pagos de deudas no se editan: eliminalos y volvé a cargarlos');
+        throw new BadRequestException('Las compras en cuotas y los pagos de deudas no se editan: elimínalos y vuelve a cargarlos');
       }
       if (current.transferGroupId !== item.transferGroupId) {
         throw new BadRequestException('No se puede cambiar si un movimiento es o no una transferencia');

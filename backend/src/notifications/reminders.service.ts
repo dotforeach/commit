@@ -47,7 +47,7 @@ export class RemindersService {
         })),
         skipDuplicates: true,
       });
-      for (const m of members) await this.push.notify(m.userId, 'Tenés un recordatorio');
+      for (const m of members) await this.push.notify(m.userId, 'Tienes un recordatorio');
     }
     if (due.length > 0) this.logger.log(`Recordatorios disparados: ${due.length}`);
     return due.length;

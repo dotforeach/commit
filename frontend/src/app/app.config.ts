@@ -1,6 +1,6 @@
 import { registerLocaleData } from '@angular/common';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
-import localeEsAr from '@angular/common/locales/es-AR';
+import localeEsPa from '@angular/common/locales/es-PA';
 import {
   ApplicationConfig,
   LOCALE_ID,
@@ -15,14 +15,14 @@ import { authInterceptor } from './core/auth/auth.interceptor';
 import { TranslocoHttpLoader } from './core/i18n/transloco-loader';
 import { provideServiceWorker } from '@angular/service-worker';
 
-registerLocaleData(localeEsAr);
+registerLocaleData(localeEsPa);
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes, withPreloading(SelectivePreloading)),
     provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
-    { provide: LOCALE_ID, useValue: 'es-AR' },
+    { provide: LOCALE_ID, useValue: 'es-PA' },
     provideTransloco({
       config: {
         availableLangs: ['es'],

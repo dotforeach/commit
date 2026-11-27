@@ -13,7 +13,7 @@ import { firstValueFrom } from 'rxjs';
 import { CurrenciesService } from '../../core/currencies/currencies.service';
 import { todayIso } from '../../core/dates/dates';
 import { HouseholdContextService } from '../../core/households/household-context.service';
-import { addDecimals, formatMoney, ZERO } from '../../core/money/decimal';
+import { addDecimals, formatMoney, ZERO, NUMBER_LOCALE } from '../../core/money/decimal';
 import { confirmDialog } from '../../shared/confirm-dialog/confirm-dialog';
 import { AccountsService } from '../accounts/accounts.service';
 import { CategoriesService } from '../categories/categories.service';
@@ -104,7 +104,7 @@ export class SavingsPage implements OnInit {
   }
 
   qty(n: number) {
-    return n.toLocaleString('es-AR', { maximumFractionDigits: 10 });
+    return n.toLocaleString(NUMBER_LOCALE, { maximumFractionDigits: 10 });
   }
 
   private t(key: string, params?: object) {

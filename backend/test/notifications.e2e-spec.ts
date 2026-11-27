@@ -57,7 +57,7 @@ describe('Recordatorios y notificaciones (e2e)', () => {
     expect(a + b).toBeGreaterThanOrEqual(1);
     expect(await prisma.notification.count({ where: { reminderId: past } })).toBe(1);
     expect(await prisma.notification.count({ where: { reminderId: future } })).toBe(0);
-    expect(push.sent.filter((p) => p.userId === reg.userId)).toEqual([{ userId: reg.userId, body: 'Tenés un recordatorio' }]);
+    expect(push.sent.filter((p) => p.userId === reg.userId)).toEqual([{ userId: reg.userId, body: 'Tienes un recordatorio' }]);
 
     const list = await request(s).get('/api/me/notifications').set(auth).expect(200);
     expect(list.body.items).toEqual([expect.objectContaining({ type: 'REMINDER', payload, readAt: null, title: null, body: null })]);

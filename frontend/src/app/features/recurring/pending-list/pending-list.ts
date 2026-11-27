@@ -48,12 +48,12 @@ export class PendingList {
   }
 
   currencySymbol(p: PendingOccurrence) {
-    const code = this.accounts.accounts().find((a) => a.id === p.rule.accountId)?.currency ?? 'ARS';
+    const code = this.accounts.accounts().find((a) => a.id === p.rule.accountId)?.currency ?? 'USD';
     return this.currencies.get(code).symbol;
   }
 
   money(p: PendingOccurrence) {
-    const code = this.accounts.accounts().find((a) => a.id === p.rule.accountId)?.currency ?? 'ARS';
+    const code = this.accounts.accounts().find((a) => a.id === p.rule.accountId)?.currency ?? 'USD';
     return formatMoney(p.rule.amount, this.currencies.get(code));
   }
 

@@ -45,7 +45,7 @@ test('celular: barra inferior, panel "Más" y nada se sale de la pantalla', asyn
   await nav.getByRole('link', { name: 'Deudas' }).click();
   await page.getByRole('button', { name: 'Nueva deuda' }).click();
   const dialog = page.getByRole('dialog');
-  const rate = await dialog.getByLabel('Tasa nominal anual (TNA)').boundingBox();
+  const rate = await dialog.getByLabel('Tasa de interés anual').boundingBox();
   const type = await dialog.getByLabel('Tipo de tasa').boundingBox();
   expect(type!.y).toBeGreaterThan(rate!.y + 10);
 });

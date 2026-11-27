@@ -43,7 +43,7 @@ export const registerSchema = z.object({
   email: z.email().trim().toLowerCase().max(254),
   password: z.string().min(10, 'La contraseña debe tener al menos 10 caracteres').max(1024),
   displayName: z.string().trim().min(1).max(80),
-  locale: z.string().max(10).default('es-AR'),
+  locale: z.string().max(10).default('es-PA'),
   timezone: z.string().max(64).default('America/Argentina/Buenos_Aires'),
   keys: userKeysSchema,
   household: z.object({

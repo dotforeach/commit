@@ -128,7 +128,7 @@ export class TransactionsPage implements OnInit {
   }
 
   money(amount: string, accountId: string, sign: '+' | '-' | '' = '') {
-    const currency = this.accountById().get(accountId)?.currency ?? 'ARS';
+    const currency = this.accountById().get(accountId)?.currency ?? 'USD';
     return `${sign}${formatMoney(amount, this.currencies.get(currency))}`;
   }
 

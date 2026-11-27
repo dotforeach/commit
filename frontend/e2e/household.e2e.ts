@@ -14,7 +14,7 @@ test('hogar compartido: invitar, aceptar, verificar huella, dar acceso, ver dato
   // Dueña: registra, carga una cuenta e invita
   await registerViaUi(a, { name: 'Lu Dueña', email: ownerEmail, password: 'contraseña-de-ingreso-1', passphrase: 'clave de descifrado de Lu' });
   await a.getByRole('link', { name: 'Cuentas' }).click();
-  await createAccount(a, { name: 'Casa', type: 'Cuenta bancaria', initial: '100.000' });
+  await createAccount(a, { name: 'Casa', type: 'Cuenta bancaria', initial: '100,000' });
   await a.getByRole('link', { name: 'Ajustes' }).click();
   await a.getByRole('link', { name: 'Mi hogar' }).click();
   await a.getByLabel('Email de la persona').fill(guestEmail);
@@ -56,7 +56,7 @@ test('hogar compartido: invitar, aceptar, verificar huella, dar acceso, ver dato
   await shared.getByRole('button', { name: 'Usar este hogar' }).click();
   await expect(b.getByText('Cambiaste de hogar')).toBeVisible();
   await b.getByRole('link', { name: 'Cuentas' }).click();
-  await expect(b.locator('li[data-account="Casa"] .value')).toHaveText('$ 100.000,00');
+  await expect(b.locator('li[data-account="Casa"] .value')).toHaveText('$100,000.00');
 
   // Dueña: lo quita (se rota la clave) y sigue leyendo lo viejo y lo nuevo
   await a.locator(`li[data-member="${guestEmail}"]`).getByRole('button', { name: 'Quitar a Max Invitado' }).click();
@@ -64,8 +64,8 @@ test('hogar compartido: invitar, aceptar, verificar huella, dar acceso, ver dato
   await expect(a.getByText('Miembro quitado y clave del hogar renovada')).toBeVisible();
   await a.getByRole('link', { name: 'Cuentas' }).click();
   await expect(a.locator('li[data-account="Casa"]')).toBeVisible();
-  await createAccount(a, { name: 'Después de rotar', type: 'Efectivo', initial: '5.000' });
-  await expect(a.locator('li[data-account="Después de rotar"] .value')).toHaveText('$ 5.000,00');
+  await createAccount(a, { name: 'Después de rotar', type: 'Efectivo', initial: '5,000' });
+  await expect(a.locator('li[data-account="Después de rotar"] .value')).toHaveText('$5,000.00');
 
   // Invitado: al volver a entrar ya no tiene ese hogar (vuelve al suyo)
   await b.reload();

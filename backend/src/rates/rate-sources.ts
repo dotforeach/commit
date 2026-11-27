@@ -29,7 +29,12 @@ const dolarApiItem = z.object({
 });
 const coinGecko = z.record(z.string(), z.object({ usd: z.number().positive().optional(), ars: z.number().positive().optional() }));
 
+const frankfurter = z.object({ base: z.literal('USD'), rates: z.record(z.string().regex(/^[A-Z]{3}$/), z.number().positive()) });
+
 const COINS: Record<string, string> = { bitcoin: 'BTC', ethereum: 'ETH', tether: 'USDT', 'usd-coin': 'USDC' };
+
+/** El balboa circula a la par del dólar por ley: no hace falta consultarlo. */
+const FIXED: PublicRate[] = [{ base: 'USD', quote: 'PAB', rateType: 'official', rate: '1', provider: 'fixed' }];
 
 /** Promedio compra/venta como string decimal (10 decimales como máximo). */
 function mid(compra: number | null, venta: number | null): string | null {
@@ -47,12 +52,18 @@ export class RateSources {
   private readonly logger = new Logger(RateSources.name);
 
   async fetchAll(): Promise<PublicRate[]> {
-    const results = await Promise.allSettled([this.dolarApi(), this.dolarApiOthers(), this.coinGecko()]);
+    const results = await Promise.allSettled([this.referenceRates(), this.dolarApi(), this.dolarApiOthers(), this.coinGecko()]);
     return results.flatMap((r, i) => {
       if (r.status === 'fulfilled') return r.value;
       this.logger.warn(`Fuente de cotizaciones ${i} falló: ${(r.reason as Error).message}`);
       return [];
-    });
+    }).concat(FIXED);
+  }
+
+  /** Monedas principales contra el dólar: tipos de referencia del Banco Central Europeo (vía Frankfurter). */
+  private async referenceRates(): Promise<PublicRate[]> {
+    const data = frankfurter.parse(await this.get('https://api.frankfurter.dev/v1/latest?base=USD'));
+    return Object.entries(data.rates).map(([quote, rate]) => ({ base: 'USD', quote, rateType: 'official', rate: String(rate), provider: 'ecb' }));
   }
 
   private async get(url: string): Promise<unknown> {
@@ -61,7 +72,7 @@ export class RateSources {
     return res.json();
   }
 
-  /** Dólar en todas sus versiones contra el peso. */
+  /** Argentina (referente regional): el dólar en todas sus versiones contra el peso. */
   private async dolarApi(): Promise<PublicRate[]> {
     const items = z.array(dolarApiItem).parse(await this.get('https://dolarapi.com/v1/dolares'));
     return items.flatMap((i) => {

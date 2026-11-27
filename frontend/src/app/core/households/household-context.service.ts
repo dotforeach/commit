@@ -24,7 +24,7 @@ export class HouseholdContextService {
   readonly households = computed(() => this.session.me()?.households ?? []);
 
   readonly householdId = computed(() => this.household()?.id ?? null);
-  readonly baseCurrency = computed(() => this.household()?.baseCurrency ?? 'ARS');
+  readonly baseCurrency = computed(() => this.household()?.baseCurrency ?? 'USD');
   readonly canWrite = computed(() => {
     const role = this.household()?.role;
     return role !== undefined && role !== 'VIEWER';

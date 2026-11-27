@@ -16,17 +16,21 @@ const nextIn = (page: Page, step: string) =>
 /** Registra una cuenta por la UI y devuelve la frase de recuperación mostrada. */
 export async function registerViaUi(
   page: Page,
-  opts: { name: string; email: string; password: string; passphrase: string },
+  opts: { name: string; email: string; password: string; passphrase: string; currency?: string },
 ): Promise<string[]> {
   await page.goto('/registro');
   await page.getByLabel('Nombre').fill(opts.name);
   await page.getByLabel('Email').fill(opts.email);
+  if (opts.currency) {
+    await page.getByRole('combobox', { name: 'Moneda principal' }).click();
+    await page.getByRole('option', { name: opts.currency, exact: true }).click();
+  }
   await page.getByLabel('Contraseña de ingreso').fill(opts.password);
-  await page.getByLabel('Repetí la contraseña').fill(opts.password);
+  await page.getByLabel('Repite la contraseña').fill(opts.password);
   await nextIn(page, 'Tu cuenta');
 
   await page.getByLabel('Clave de descifrado', { exact: true }).fill(opts.passphrase);
-  await page.getByLabel('Repetí la clave de descifrado').fill(opts.passphrase);
+  await page.getByLabel('Repite la clave de descifrado').fill(opts.passphrase);
   await nextIn(page, 'Clave de descifrado');
 
   const phrase = await readPhrase(page);

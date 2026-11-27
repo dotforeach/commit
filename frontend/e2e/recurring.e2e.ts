@@ -19,7 +19,7 @@ async function newRule(
   await dialog.getByRole('radio', { name: r.type, exact: true }).click();
   await dialog.getByLabel('Descripción').fill(r.description);
   await dialog.getByLabel('Monto', { exact: true }).fill(r.amount);
-  await pick(page, 'Cuenta', 'Banco · ARS');
+  await pick(page, 'Cuenta', 'Banco · USD');
   await dialog.getByLabel('Día del mes').fill(r.day);
   await dialog.getByLabel('Desde').fill(r.start);
   if (r.confirm) await dialog.getByRole('radio', { name: /Pedirme confirmación/ }).click();
@@ -41,24 +41,24 @@ test('recurrentes: automático se pone al día, con confirmación se confirma u 
   await createAccount(page, { name: 'Banco', type: 'Cuenta bancaria', initial: '0' });
 
   await page.getByRole('link', { name: 'Recurrentes' }).click();
-  await expect(page.getByText('Todavía no tenés recurrentes')).toBeVisible();
+  await expect(page.getByText('Todavía no tienes recurrentes')).toBeVisible();
 
   // Sueldo automático desde hace dos meses: se registran los tres de una vez.
-  await newRule(page, { type: 'Ingreso', description: 'Sueldo', amount: '800.000', day: '1', start: firstOfMonth(-2), salary: true });
+  await newRule(page, { type: 'Ingreso', description: 'Sueldo', amount: '800,000', day: '1', start: firstOfMonth(-2), salary: true });
   await expect(page.getByText('Se registraron 3 movimientos recurrentes')).toBeVisible();
   const sueldo = page.locator('li[data-rule="Sueldo"]');
   await expect(sueldo).toContainText('Todos los meses, el día 1');
   await expect(sueldo).toContainText(`Próximo: ${firstOfMonth(1)}`);
-  await expect(sueldo).toContainText('+$ 800.000,00');
+  await expect(sueldo).toContainText('+$800,000.00');
 
   // Luz con confirmación desde el mes pasado: queda pendiente la del mes pasado (y la de este).
-  await newRule(page, { type: 'Gasto', description: 'Luz', amount: '25.000', day: '1', start: firstOfMonth(-1), confirm: true });
+  await newRule(page, { type: 'Gasto', description: 'Luz', amount: '25,000', day: '1', start: firstOfMonth(-1), confirm: true });
   const pending = page.locator('li[data-pending="Luz"]');
   await expect(pending).toContainText(firstOfMonth(-1));
   await expect(pending).toContainText('1 más después');
 
   // Confirmo la del mes pasado con otro monto y omito la de este mes.
-  await pending.getByLabel('Monto').fill('27.500');
+  await pending.getByLabel('Monto').fill('27,500');
   await pending.getByRole('button', { name: 'Confirmar' }).click();
   await expect(pending).toContainText(firstOfMonth(0));
   await pending.getByRole('button', { name: 'Omitir' }).click();
@@ -66,15 +66,15 @@ test('recurrentes: automático se pone al día, con confirmación se confirma u 
 
   // Movimientos: este mes tiene el sueldo pero no la luz (omitida); el anterior tiene la luz confirmada.
   await page.getByRole('link', { name: 'Movimientos' }).click();
-  await expect(page.locator('mat-card[data-currency="ARS"]')).toContainText('$ 800.000,00');
+  await expect(page.locator('mat-card[data-currency="USD"]')).toContainText('$800,000.00');
   await expect(page.locator('li[data-tx="Luz"]')).toHaveCount(0);
   await page.getByRole('button', { name: 'Mes anterior' }).click();
-  await expect(page.locator('li[data-tx="Luz"]')).toContainText('-$ 27.500,00');
-  await expect(page.locator('li[data-tx="Sueldo"]')).toContainText('+$ 800.000,00');
+  await expect(page.locator('li[data-tx="Luz"]')).toContainText('-$27,500.00');
+  await expect(page.locator('li[data-tx="Sueldo"]')).toContainText('+$800,000.00');
 
   // Saldo: 3 sueldos − luz de octubre
   await page.getByRole('link', { name: 'Cuentas' }).click();
-  await expect(page.locator('li[data-account="Banco"] .value')).toHaveText('$ 2.372.500,00');
+  await expect(page.locator('li[data-account="Banco"] .value')).toHaveText('$2,372,500.00');
 
   // Pausar y reanudar no carga los meses pausados: retoma desde hoy.
   await page.getByRole('link', { name: 'Recurrentes' }).click();
@@ -90,5 +90,5 @@ test('recurrentes: automático se pone al día, con confirmación se confirma u 
   await unlock(page, passphrase);
   await expect(page).toHaveURL(/\/recurrentes$/, { timeout: 15_000 });
   await page.getByRole('link', { name: 'Cuentas' }).click();
-  await expect(page.locator('li[data-account="Banco"] .value')).toHaveText('$ 2.372.500,00', { timeout: 15_000 });
+  await expect(page.locator('li[data-account="Banco"] .value')).toHaveText('$2,372,500.00', { timeout: 15_000 });
 });

@@ -63,7 +63,7 @@ export class DepositDialog {
     if (!principal || !rate || !v.startDate || !v.maturityDate) return null;
     const p = depositProjection(Number(principal), Number(percentToFraction(rate)), toIsoDate(v.startDate), toIsoDate(v.maturityDate), todayIso());
     if (p.days <= 0) return null;
-    const currency = this.currencies.get(this.accountsSvc.accounts().find((a) => a.id === v.accountId)?.currency ?? 'ARS');
+    const currency = this.currencies.get(this.accountsSvc.accounts().find((a) => a.id === v.accountId)?.currency ?? 'USD');
     return { days: p.days, interest: formatMoney(toMoneyString(p.interest), currency), total: formatMoney(toMoneyString(p.total), currency) };
   });
 

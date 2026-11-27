@@ -6,6 +6,7 @@ import { v7 as uuidv7 } from 'uuid';
 import { KeyVaultService } from '../../core/crypto/key-vault.service';
 import { HouseholdContextService } from '../../core/households/household-context.service';
 import { SessionService } from '../../core/session/session.service';
+import { AccountsService } from '../accounts/accounts.service';
 import { Converter, type Quote } from './converter';
 
 interface PublicRateDto {
@@ -41,12 +42,15 @@ export class RatesService {
   private readonly http = inject(HttpClient);
   private readonly hh = inject(HouseholdContextService);
   private readonly session = inject(SessionService);
+  private readonly accounts = inject(AccountsService);
 
   readonly publicRates = signal<PublicRateDto[]>([]);
   readonly manualRates = signal<ManualRate[]>([]);
   private loaded = false;
 
   readonly usdRateType = computed(() => this.hh.household()?.usdRateType ?? 'mep');
+  /** Lo argentino (dólar MEP, oficial, blue…) solo aplica si el hogar maneja pesos argentinos. */
+  readonly usesArs = computed(() => this.hh.baseCurrency() === 'ARS' || this.accounts.accounts().some((a) => a.currency === 'ARS'));
 
   readonly converter = computed(() => {
     const quotes: Quote[] = [

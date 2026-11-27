@@ -11,7 +11,7 @@ export const routes: Routes = [
   },
   {
     path: 'aprende',
-    title: 'Aprendé · Commit',
+    title: 'Aprende · Commit',
     loadComponent: () => import('./features/learn/learn-page').then((m) => m.LearnPage),
   },
   {

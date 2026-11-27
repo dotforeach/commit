@@ -3,32 +3,41 @@
     <h2>{{ t('title') }}</h2>
     <p class="subtitle">{{ t('subtitle') }}</p>
 
-    <mat-card appearance="outlined" class="block">
-      <mat-card-header><mat-card-title>{{ t('dollarTitle') }}</mat-card-title><mat-card-subtitle>{{ t('dollarHelp') }}</mat-card-subtitle></mat-card-header>
+    <mat-card appearance="outlined" class="block" data-testid="my-rates">
+      <mat-card-header>
+        <mat-card-title>{{ t('mineTitle', { base: household.baseCurrency() }) }}</mat-card-title>
+        <mat-card-subtitle>{{ t('mineHelp') }}</mat-card-subtitle>
+      </mat-card-header>
       <mat-card-content>
-        <mat-radio-group [value]="rates.usdRateType()" (change)="setUsd($event.value)" [disabled]="!household.canWrite()" class="dollars" [attr.aria-label]="t('dollarTitle')">
-          @for (d of dollar(); track d.type) {
-            <mat-radio-button [value]="d.type" [attr.data-usd]="d.type">
-              <span class="label">{{ t('usd.' + d.type) }}</span>
-              <span class="value">{{ money(d.rate, 'ARS') }}</span>
-            </mat-radio-button>
+        <ul class="rows">
+          @for (r of mine(); track r.code) {
+            <li [attr.data-rate]="r.code">
+              <span>1 {{ r.code }}</span><span>{{ money(r.rate, household.baseCurrency()) }}</span>
+              <span class="meta">{{ t('sources.' + r.source) }}@if (r.date) { · {{ r.date | date: 'd/M' : 'UTC' }}}</span>
+            </li>
           }
-        </mat-radio-group>
-        @if (!loading() && dollar().length === 0) {
+        </ul>
+        @if (!loading() && mine().length === 0) {
           <p class="meta">{{ t('noData') }}</p>
         }
       </mat-card-content>
     </mat-card>
 
-    @if (others().length > 0) {
-      <mat-card appearance="outlined" class="block">
-        <mat-card-header><mat-card-title>{{ t('othersTitle') }}</mat-card-title></mat-card-header>
+    @if (rates.usesArs()) {
+      <mat-card appearance="outlined" class="block" data-testid="ars-rates">
+        <mat-card-header><mat-card-title>{{ t('dollarTitle') }}</mat-card-title><mat-card-subtitle>{{ t('dollarHelp') }}</mat-card-subtitle></mat-card-header>
         <mat-card-content>
-          <ul class="rows">
-            @for (r of others(); track r.base + r.quote + r.provider) {
-              <li><span>1 {{ r.base }}</span><span>{{ money(r.rate, r.quote) }}</span><span class="meta">{{ r.provider }} · {{ r.date | date: 'd/M' : 'UTC' }}</span></li>
+          <mat-radio-group [value]="rates.usdRateType()" (change)="setUsd($event.value)" [disabled]="!household.canWrite()" class="dollars" [attr.aria-label]="t('dollarTitle')">
+            @for (d of dollar(); track d.type) {
+              <mat-radio-button [value]="d.type" [attr.data-usd]="d.type">
+                <span class="label">{{ t('usd.' + d.type) }}</span>
+                <span class="value">{{ money(d.rate, 'ARS') }}</span>
+              </mat-radio-button>
             }
-          </ul>
+          </mat-radio-group>
+          @if (!loading() && dollar().length === 0) {
+            <p class="meta">{{ t('noData') }}</p>
+          }
         </mat-card-content>
       </mat-card>
     }
@@ -54,6 +63,7 @@
                 }
               </mat-select>
             </mat-form-field>
+            @if (rates.usesArs()) {
             <mat-form-field>
               <mat-label>{{ t('type') }}</mat-label>
               <mat-select formControlName="rateType">
@@ -62,6 +72,7 @@
                 }
               </mat-select>
             </mat-form-field>
+            }
             <mat-form-field>
               <mat-label>{{ t('rate') }}</mat-label>
               <input matInput formControlName="rate" inputmode="decimal" />

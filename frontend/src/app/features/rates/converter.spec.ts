@@ -36,3 +36,11 @@ describe('Converter', () => {
     expect(new Converter([q('USD', 'ARS', 1600, 'official')], { usdRateType: 'mep' }).convert('1', 'USD', 'ARS')).toBe('1600');
   });
 });
+
+describe('balboa', () => {
+  it('vale lo mismo que el dólar aunque no haya cotizaciones', () => {
+    const c = new Converter([], { usdRateType: 'mep' });
+    expect(c.rate('PAB', 'USD')).toBe(1);
+    expect(c.convert('25.5', 'USD', 'PAB')).toBe('25.5');
+  });
+});

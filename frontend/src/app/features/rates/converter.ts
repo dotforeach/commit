@@ -20,6 +20,8 @@ export class Converter {
   private readonly pairs = new Map<string, Quote>();
 
   constructor(quotes: Quote[], private readonly opts: ConverterOptions) {
+    // El balboa circula a la par del dólar por ley: no depende de ninguna cotización.
+    quotes = [{ base: 'USD', quote: 'PAB', rateType: 'official', rate: 1, date: '1904-01-01', source: 'public' }, ...quotes];
     // Prioridad: manual más reciente > público del tipo preferido (USD/ARS) > cualquier público más reciente.
     const score = (q: Quote) => {
       const preferredUsd = q.base === 'USD' && q.quote === 'ARS' ? (q.rateType === opts.usdRateType ? 1 : 0) : 1;
@@ -40,7 +42,7 @@ export class Converter {
     if (direct) return direct.rate;
     const inverse = this.pairs.get(`${to}/${from}`);
     if (inverse) return 1 / inverse.rate;
-    for (const pivot of ['ARS', 'USD']) {
+    for (const pivot of ['USD', 'ARS']) {
       if (pivot === from || pivot === to) continue;
       const a = this.rateDirect(from, pivot);
       const b = this.rateDirect(pivot, to);

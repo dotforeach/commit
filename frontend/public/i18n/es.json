@@ -5,9 +5,9 @@
   "household": {
     "personalName": "Finanzas de {{name}}",
     "title": "Mi hogar · {{name}}",
-    "subtitle": "Compartí tus finanzas con tu pareja o tu familia. Cada persona usa su propia cuenta y su propia clave.",
+    "subtitle": "Comparte tus finanzas con tu pareja o tu familia. Cada persona usa su propia cuenta y su propia clave.",
     "membersTitle": "Miembros",
-    "you": "vos",
+    "you": "tú",
     "pending": "esperando acceso",
     "roles": {
       "OWNER": "Dueño",
@@ -21,13 +21,13 @@
     "leave": "Salir de este hogar",
     "myFingerprint": "Tu huella:",
     "inviteTitle": "Invitar a alguien",
-    "inviteHelp": "Generá un link de un solo uso (vence en 7 días) y compartilo por WhatsApp o por donde quieras.",
+    "inviteHelp": "Genera un link de un solo uso (vence en 7 días) y compártelo por WhatsApp o por donde quieras.",
     "email": "Email de la persona",
     "createLink": "Crear link",
     "link": "Link de invitación",
     "copy": "Copiar",
     "copied": "Link copiado",
-    "linkHelp": "La persona tiene que entrar con una cuenta con ese email. Cuando acepte, verificá su huella y dale acceso.",
+    "linkHelp": "La persona tiene que entrar con una cuenta con ese email. Cuando acepte, verifica su huella y dale acceso.",
     "revoke": "Revocar",
     "otherTitle": "Tus otros hogares",
     "use": "Usar este hogar",
@@ -53,7 +53,7 @@
     "removed": "Miembro quitado y clave del hogar renovada",
     "left": "Saliste del hogar",
     "switched": "Cambiaste de hogar",
-    "error": "No pudimos completar la acción. Probá de nuevo.",
+    "error": "No pudimos completar la acción. Prueba de nuevo.",
     "join": {
       "title": "Unirte a un hogar",
       "intro": "Te invitaron a compartir las finanzas de un hogar. Al aceptar, un administrador tiene que darte acceso.",
@@ -65,7 +65,7 @@
         "missing": "El link no tiene invitación.",
         "invalid": "La invitación no existe, ya se usó o venció.",
         "otherEmail": "Esta invitación es para otro email.",
-        "already": "Ya sos miembro de este hogar.",
+        "already": "Ya eres miembro de este hogar.",
         "generic": "No pudimos aceptar la invitación."
       }
     }
@@ -75,7 +75,7 @@
     "subtitle": "Tus datos se cifran en tu dispositivo: ni nosotros podemos verlos.",
     "next": "Siguiente",
     "back": "Atrás",
-    "haveAccount": "¿Ya tenés cuenta?",
+    "haveAccount": "¿Ya tienes cuenta?",
     "login": "Ingresar",
     "account": {
       "label": "Tu cuenta",
@@ -84,20 +84,20 @@
       "baseCurrency": "Moneda principal",
       "password": "Contraseña de ingreso",
       "passwordHint": "Mínimo 10 caracteres. Sirve solo para iniciar sesión.",
-      "passwordConfirm": "Repetí la contraseña"
+      "passwordConfirm": "Repite la contraseña"
     },
     "decryption": {
       "label": "Clave de descifrado",
       "whatTitle": "Una segunda clave, solo para tus datos",
       "what": "Con esta clave se cifran tus finanzas en tu dispositivo. Nunca se envía al servidor: ni el equipo de la app ni un administrador pueden leer tus datos.",
-      "warning": "Si la olvidás, solo podrás recuperar tus datos con la frase de recuperación del próximo paso.",
+      "warning": "Si la olvidas, solo podrás recuperar tus datos con la frase de recuperación del próximo paso.",
       "passphrase": "Clave de descifrado",
       "passphraseHint": "Mínimo 12 caracteres y distinta de la contraseña de ingreso. Una frase larga es ideal.",
-      "passphraseConfirm": "Repetí la clave de descifrado"
+      "passphraseConfirm": "Repite la clave de descifrado"
     },
     "phrase": {
       "label": "Frase de recuperación",
-      "intro": "Estas 24 palabras son la única forma de recuperar tus datos si olvidás la clave de descifrado. Anotalas en papel, en orden, y guardalas en un lugar seguro.",
+      "intro": "Estas 24 palabras son la única forma de recuperar tus datos si olvidas la clave de descifrado. Anótalas en papel, en orden, y guárdalas en un lugar seguro.",
       "copy": "Copiar",
       "download": "Descargar .txt",
       "warning": "No la compartas con nadie. Quien tenga esta frase puede leer tus finanzas. No la vamos a volver a mostrar.",
@@ -105,7 +105,7 @@
     },
     "check": {
       "label": "Confirmar frase",
-      "intro": "Para asegurarnos de que la anotaste bien, escribí estas palabras (las tildes son opcionales):",
+      "intro": "Para asegurarnos de que la anotaste bien, escribe estas palabras (las tildes son opcionales):",
       "word": "Palabra n.º {{n}}",
       "submit": "Crear cuenta",
       "creating": "Generando tus claves…"
@@ -114,9 +114,9 @@
       "passwordMismatch": "Las contraseñas no coinciden.",
       "passphraseMismatch": "Las claves de descifrado no coinciden.",
       "sameAsPassword": "Tiene que ser distinta de la contraseña de ingreso.",
-      "phraseMismatch": "Alguna palabra no coincide. Revisá tu frase.",
+      "phraseMismatch": "Alguna palabra no coincide. Revisa tu frase.",
       "emailTaken": "Ya existe una cuenta con ese email.",
-      "generic": "No pudimos crear la cuenta. Probá de nuevo."
+      "generic": "No pudimos crear la cuenta. Prueba de nuevo."
     }
   },
   "login": {
@@ -125,17 +125,17 @@
     "email": "Email",
     "password": "Contraseña de ingreso",
     "submit": "Ingresar",
-    "noAccount": "¿No tenés cuenta?",
+    "noAccount": "¿No tienes cuenta?",
     "register": "Crear una",
     "errors": {
       "invalidCredentials": "Email o contraseña incorrectos.",
-      "tooManyAttempts": "Demasiados intentos. Esperá un minuto y volvé a probar.",
-      "generic": "No pudimos iniciar sesión. Probá de nuevo."
+      "tooManyAttempts": "Demasiados intentos. Espera un minuto y vuelve a probar.",
+      "generic": "No pudimos iniciar sesión. Prueba de nuevo."
     }
   },
   "unlock": {
     "title": "Desbloquear tus datos",
-    "subtitle": "Tus finanzas están cifradas. Ingresá tu clave de descifrado.",
+    "subtitle": "Tus finanzas están cifradas. Ingresa tu clave de descifrado.",
     "passphrase": "Clave de descifrado",
     "hint": "No es la contraseña de ingreso.",
     "submit": "Desbloquear",
@@ -143,7 +143,7 @@
     "logout": "Cerrar sesión",
     "errors": {
       "wrongPassphrase": "Clave de descifrado incorrecta.",
-      "generic": "No pudimos desbloquear tus datos. Probá de nuevo."
+      "generic": "No pudimos desbloquear tus datos. Prueba de nuevo."
     },
     "forgot": "¿Olvidaste tu clave de descifrado?",
     "autoLocked": "Bloqueamos tus datos después de {{n}} minutos sin actividad."
@@ -171,7 +171,7 @@
     },
     "netWorth": {
       "title": "Patrimonio neto",
-      "subtitle": "Lo que tenés menos lo que debés, en tu moneda principal (dólar {{usd}}).",
+      "subtitle": "Lo que tienes menos lo que debes, en tu moneda principal.",
       "usd": {
         "mep": "MEP",
         "official": "Oficial",
@@ -182,12 +182,13 @@
         "wholesale": "Mayorista",
         "market": "Mercado"
       },
-      "detail": "Tenés {{assets}} · Debés {{liabilities}}",
+      "detail": "Tienes {{assets}} · Debes {{liabilities}}",
       "missing": "{{n}} partidas sin cotización no se sumaron.",
-      "rates": "Cotizaciones"
+      "rates": "Cotizaciones",
+      "subtitleArs": "Lo que tienes menos lo que debes, en tu moneda principal (dólar {{usd}})."
     },
     "onboarding": {
-      "title": "Empezá por acá",
+      "title": "Empieza por acá",
       "body": "Tu sueldo, tus gastos fijos y un presupuesto sugerido en 5 minutos.",
       "start": "Primeros pasos"
     },
@@ -198,16 +199,16 @@
       "open": "Ver mi progreso"
     },
     "tips": {
-      "onboarding.finish": "Terminá tus primeros pasos",
-      "debt.avalanche": "Tenés deudas caras",
-      "emergency.start": "Armá tu fondo de emergencia",
-      "budget.create": "Armá el presupuesto del mes",
+      "onboarding.finish": "Termina tus primeros pasos",
+      "debt.avalanche": "Tienes deudas caras",
+      "emergency.start": "Arma tu fondo de emergencia",
+      "budget.create": "Arma el presupuesto del mes",
       "budget.over": "Te pasaste en alguna categoría",
       "savings.low": "Estás ahorrando menos del 10%",
-      "emergency.grow": "Seguí con el fondo de emergencia",
-      "cash.idle": "Tenés pesos quietos",
-      "invest.diversify": "Diversificá",
-      "record.consistency": "Registrá todos los meses"
+      "emergency.grow": "Sigue con el fondo de emergencia",
+      "cash.idle": "Tienes dinero quieto",
+      "invest.diversify": "Diversifica",
+      "record.consistency": "Registra todos los meses"
     },
     "plan": {
       "title": "Plan mágico",
@@ -218,12 +219,12 @@
   "categories": {
     "income": {
       "salary": "Sueldo",
-      "bonus": "Aguinaldo y bonos",
+      "bonus": "Décimo tercer mes y bonos",
       "freelance": "Trabajos extra",
       "other": "Otros ingresos"
     },
     "housing": {
-      "rent": "Alquiler y expensas",
+      "rent": "Alquiler y mantenimiento",
       "utilities": "Servicios (luz, gas, agua, internet)"
     },
     "food": {
@@ -249,21 +250,21 @@
   },
   "recover": {
     "title": "Recuperar acceso a tus datos",
-    "subtitle": "Escribí tus 24 palabras de recuperación, en orden. Las tildes son opcionales.",
-    "newSubtitle": "Frase correcta. Elegí una clave de descifrado nueva.",
+    "subtitle": "Escribe tus 24 palabras de recuperación, en orden. Las tildes son opcionales.",
+    "newSubtitle": "Frase correcta. Elige una clave de descifrado nueva.",
     "phrase": "Frase de recuperación",
-    "phraseHint": "Separá las palabras con espacios.",
+    "phraseHint": "Separa las palabras con espacios.",
     "verify": "Verificar frase",
     "back": "Volver",
     "newPassphrase": "Nueva clave de descifrado",
     "newPassphraseHint": "Mínimo 12 caracteres. Tu frase de recuperación sigue sirviendo.",
-    "newPassphraseConfirm": "Repetí la nueva clave",
+    "newPassphraseConfirm": "Repite la nueva clave",
     "save": "Guardar y desbloquear",
     "errors": {
-      "invalidPhrase": "La frase no es válida: revisá que sean 24 palabras de la lista, en orden.",
+      "invalidPhrase": "La frase no es válida: revisa que sean 24 palabras de la lista, en orden.",
       "wrongPhrase": "Esa frase no corresponde a esta cuenta.",
       "mismatch": "Las claves no coinciden.",
-      "generic": "No pudimos completar la recuperación. Probá de nuevo."
+      "generic": "No pudimos completar la recuperación. Prueba de nuevo."
     }
   },
   "changePassphrase": {
@@ -272,14 +273,14 @@
     "current": "Clave de descifrado actual",
     "new": "Nueva clave de descifrado",
     "newHint": "Mínimo 12 caracteres.",
-    "confirm": "Repetí la nueva clave",
+    "confirm": "Repite la nueva clave",
     "cancel": "Cancelar",
     "save": "Cambiar clave",
     "errors": {
       "wrongCurrent": "La clave actual es incorrecta.",
       "same": "La nueva clave tiene que ser distinta de la actual.",
       "mismatch": "Las claves no coinciden.",
-      "generic": "No pudimos cambiar la clave. Probá de nuevo."
+      "generic": "No pudimos cambiar la clave. Prueba de nuevo."
     }
   },
   "nav": {
@@ -297,7 +298,7 @@
     "main": "Secciones",
     "more": "Más",
     "plan": "Plan mágico",
-    "learn": "Aprendé",
+    "learn": "Aprende",
     "login": "Ingresar",
     "register": "Crear cuenta"
   },
@@ -317,13 +318,13 @@
     "deleted": "Cuenta eliminada",
     "deleteDialog": {
       "title": "Eliminar cuenta",
-      "message": "¿Eliminar «{{name}}»? Si solo dejaste de usarla, mejor archivala: así conservás su historial.",
+      "message": "¿Eliminar «{{name}}»? Si solo dejaste de usarla, mejor archívala: así conservas su historial.",
       "confirm": "Eliminar",
       "cancel": "Cancelar"
     },
     "empty": {
       "title": "Todavía no cargaste cuentas",
-      "body": "Empezá por las que más usás: tu cuenta sueldo, la billetera virtual y el efectivo."
+      "body": "Empieza por las que más usas: tu cuenta sueldo, la billetera virtual y el efectivo."
     },
     "types": {
       "CASH": "Efectivo",
@@ -355,11 +356,11 @@
       "type": "Tipo",
       "currency": "Moneda",
       "initialBalance": "Saldo inicial",
-      "initialBalanceHint": "Lo que tenés hoy en esta cuenta. Ej.: 150.000,50",
+      "initialBalanceHint": "Lo que tienes hoy en esta cuenta. Ej.: 150.000,50",
       "initialDebt": "Deuda actual",
-      "initialDebtHint": "Lo que debés hoy en la tarjeta (sin contar cuotas futuras).",
+      "initialDebtHint": "Lo que debes hoy en la tarjeta (sin contar cuotas futuras).",
       "institution": "Banco o entidad",
-      "institutionPlaceholder": "Ej.: Banco Nación, Mercado Pago",
+      "institutionPlaceholder": "Ej.: Banco General, Yappy",
       "cardSection": "Datos de la tarjeta",
       "network": "Red",
       "lastFour": "Últimos 4 dígitos",
@@ -370,10 +371,10 @@
     },
     "errors": {
       "decimal": "Monto inválido. Ej.: 1.234,56",
-      "conflict": "La cuenta cambió en otro dispositivo. Cerrá y volvé a abrirla.",
+      "conflict": "La cuenta cambió en otro dispositivo. Cierra y vuelve a abrirla.",
       "load": "No pudimos cargar tus cuentas.",
-      "generic": "No pudimos guardar los cambios. Probá de nuevo.",
-      "hasTransactions": "Esta cuenta tiene movimientos: archivala en lugar de eliminarla."
+      "generic": "No pudimos guardar los cambios. Prueba de nuevo.",
+      "hasTransactions": "Esta cuenta tiene movimientos: archívala en lugar de eliminarla."
     },
     "balanceShort": "saldo actual",
     "debtShort": "deuda actual"
@@ -396,7 +397,7 @@
     "net": "Resultado",
     "uncategorized": "Sin categoría",
     "emptyMonth": "No hay movimientos en este mes.",
-    "needAccount": "Para cargar movimientos primero creá una cuenta.",
+    "needAccount": "Para cargar movimientos primero crea una cuenta.",
     "goToAccounts": "Ir a Cuentas",
     "modes": {
       "EXPENSE": "Gasto",
@@ -421,7 +422,7 @@
       "amount": "Monto",
       "amountOut": "Monto que sale",
       "amountIn": "Monto que entra ({{currency}})",
-      "amountInHint": "Las cuentas tienen monedas distintas: indicá cuánto llegó.",
+      "amountInHint": "Las cuentas tienen monedas distintas: indica cuánto llegó.",
       "date": "Fecha",
       "account": "Cuenta",
       "fromAccount": "Desde",
@@ -441,11 +442,11 @@
     "errors": {
       "decimal": "Monto inválido. Ej.: 1.234,56",
       "positive": "El monto tiene que ser mayor a cero.",
-      "sameAccount": "Elegí dos cuentas distintas.",
-      "noAccounts": "Primero creá una cuenta en la sección Cuentas.",
-      "conflict": "El movimiento cambió en otro dispositivo. Cerrá y volvé a abrirlo.",
+      "sameAccount": "Elige dos cuentas distintas.",
+      "noAccounts": "Primero crea una cuenta en la sección Cuentas.",
+      "conflict": "El movimiento cambió en otro dispositivo. Cierra y vuelve a abrirlo.",
       "load": "No pudimos cargar tus movimientos.",
-      "generic": "No pudimos guardar los cambios. Probá de nuevo."
+      "generic": "No pudimos guardar los cambios. Prueba de nuevo."
     },
     "fromRecurring": "Generado por un recurrente",
     "inInstallments": "en {{n}} cuotas",
@@ -468,11 +469,11 @@
     "resumed": "Recurrente reanudado: sigue desde hoy",
     "deleted": "Recurrente eliminado",
     "autoPosted": "Se registraron {{n}} movimientos recurrentes",
-    "needAccount": "Para crear recurrentes primero creá una cuenta.",
+    "needAccount": "Para crear recurrentes primero crea una cuenta.",
     "goToAccounts": "Ir a Cuentas",
     "empty": {
-      "title": "Todavía no tenés recurrentes",
-      "body": "Empezá por tu sueldo y tus gastos fijos: alquiler, expensas, servicios, suscripciones."
+      "title": "Todavía no tienes recurrentes",
+      "body": "Empieza por tu sueldo y tus gastos fijos: alquiler, mantenimiento, servicios, suscripciones."
     },
     "types": {
       "EXPENSE": "Gasto",
@@ -519,7 +520,7 @@
         "INCOME": "Ej.: Sueldo"
       },
       "amount": "Monto",
-      "amountHint": "Si varía (luz, gas), poné el estimado y confirmalo cada mes.",
+      "amountHint": "Si varía (luz, gas), pon el estimado y confírmalo cada mes.",
       "account": "Cuenta",
       "category": "Categoría",
       "noCategory": "Sin categoría",
@@ -543,7 +544,7 @@
     },
     "pending": {
       "title": "Para confirmar",
-      "subtitle": "Recurrentes que vencieron. Ajustá el monto si cambió.",
+      "subtitle": "Recurrentes que vencieron. Ajusta el monto si cambió.",
       "expected": "estimado {{amount}}",
       "more": "{{n}} más después",
       "amount": "Monto",
@@ -556,9 +557,9 @@
       "decimal": "Monto inválido. Ej.: 1.234,56",
       "positive": "El monto tiene que ser mayor a cero.",
       "endBeforeStart": "La fecha de fin no puede ser anterior a la de inicio.",
-      "conflict": "La regla cambió en otro dispositivo. Cerrá y volvé a abrirla.",
+      "conflict": "La regla cambió en otro dispositivo. Cierra y vuelve a abrirla.",
       "load": "No pudimos cargar tus recurrentes.",
-      "generic": "No pudimos guardar los cambios. Probá de nuevo."
+      "generic": "No pudimos guardar los cambios. Prueba de nuevo."
     }
   },
   "footer": {
@@ -567,7 +568,7 @@
   },
   "budget": {
     "title": "Presupuesto",
-    "subtitle": "Cuánto querés gastar en cada cosa este mes, y cómo vas.",
+    "subtitle": "Cuánto quieres gastar en cada cosa este mes, y cómo vas.",
     "month": "Mes",
     "prevMonth": "Mes anterior",
     "nextMonth": "Mes siguiente",
@@ -596,7 +597,7 @@
     "goToTransactions": "Ver los movimientos del mes",
     "empty": {
       "title": "Este mes no tiene presupuesto",
-      "body": "Elegí cuánto querés gastar en cada categoría y la app te avisa cuando te acercás al límite."
+      "body": "Elige cuánto quieres gastar en cada categoría y la app te avisa cuando te acercas al límite."
     },
     "deleteDialog": {
       "title": "Eliminar presupuesto",
@@ -611,11 +612,11 @@
       },
       "FIFTY_THIRTY_TWENTY": {
         "name": "50/30/20",
-        "help": "50% del ingreso a necesidades, 30% a deseos y 20% a ahorro y deudas. Podés sumar límites por categoría."
+        "help": "50% del ingreso a necesidades, 30% a deseos y 20% a ahorro y deudas. Puedes sumar límites por categoría."
       },
       "ENVELOPE": {
         "name": "Sobres",
-        "help": "Repartí todo tu ingreso en categorías hasta que no quede nada sin asignar."
+        "help": "Reparte todo tu ingreso en categorías hasta que no quede nada sin asignar."
       }
     },
     "dialog": {
@@ -632,7 +633,7 @@
       "expectedIncomeRequired": "Necesario para este método.",
       "useRecurring": "Usar mis ingresos recurrentes ({{amount}})",
       "categories": "Límites por categoría",
-      "categoriesHelp": "Dejá vacío lo que no quieras limitar. \"Arrastrar\" pasa lo que sobre (o lo que te pases) al mes siguiente.",
+      "categoriesHelp": "Deja vacío lo que no quieras limitar. \"Arrastrar\" pasa lo que sobre (o lo que te pases) al mes siguiente.",
       "amount": "Límite",
       "amountFor": "Límite para {{name}}",
       "rollover": "Arrastrar",
@@ -642,14 +643,14 @@
     "errors": {
       "decimal": "Monto inválido. Ej.: 1.234,56",
       "incomeRequired": "Este método necesita el ingreso esperado del mes.",
-      "conflict": "El presupuesto cambió en otro dispositivo. Cerrá y volvé a abrirlo.",
+      "conflict": "El presupuesto cambió en otro dispositivo. Cierra y vuelve a abrirlo.",
       "load": "No pudimos cargar tu presupuesto.",
-      "generic": "No pudimos guardar los cambios. Probá de nuevo."
+      "generic": "No pudimos guardar los cambios. Prueba de nuevo."
     }
   },
   "debts": {
     "title": "Deudas y tarjetas",
-    "subtitle": "Préstamos, cuotas y resúmenes: cuánto debés, cuándo vence y cómo salir más rápido.",
+    "subtitle": "Préstamos, cuotas y resúmenes: cuánto debes, cuándo vence y cómo salir más rápido.",
     "new": "Nueva deuda",
     "activeTitle": "Préstamos y deudas",
     "closedTitle": "Saldadas o cerradas",
@@ -659,7 +660,7 @@
     "viewSchedule": "Ver cronograma",
     "undoPayment": "Deshacer el último pago",
     "actions": "Acciones de {{name}}",
-    "rate": "TNA {{rate}}",
+    "rate": "Tasa {{rate}}",
     "progress": "{{paid}} de {{total}} cuotas",
     "ofOriginal": "de {{amount}}",
     "paidPct": "Pagaste el {{pct}}% del capital",
@@ -667,8 +668,8 @@
     "paymentRemoved": "Pago eliminado (y su movimiento)",
     "deleted": "Deuda eliminada",
     "empty": {
-      "title": "No tenés deudas cargadas",
-      "body": "Si tenés préstamos, deudas con alguien o tarjetas, cargalos para ver cuánto debés y cómo salir más rápido."
+      "title": "No tienes deudas cargadas",
+      "body": "Si tienes préstamos, deudas con alguien o tarjetas, cárgalos para ver cuánto debes y cómo salir más rápido."
     },
     "deleteDialog": {
       "title": "Eliminar deuda",
@@ -687,7 +688,7 @@
     "rateTypes": {
       "FIXED": "Fija",
       "VARIABLE": "Variable",
-      "INDEXED": "Ajustable (UVA/CER)",
+      "INDEXED": "Indexada (ajusta por inflación)",
       "NONE": "Sin interés"
     },
     "systems": {
@@ -710,12 +711,12 @@
     },
     "fields": {
       "name": "Nombre",
-      "namePlaceholder": "Ej.: Préstamo Banco Nación",
+      "namePlaceholder": "Ej.: Préstamo Banco General",
       "kind": "Tipo",
       "lender": "Acreedor",
       "originalAmount": "Monto original",
       "currency": "Moneda",
-      "annualRate": "Tasa nominal anual (TNA)",
+      "annualRate": "Tasa de interés anual",
       "annualRateHint": "Vacío o 0 si no tiene interés.",
       "rateType": "Tipo de tasa",
       "amortization": "Sistema",
@@ -723,7 +724,7 @@
       "startDate": "Fecha de inicio",
       "paymentDay": "Día de pago",
       "minimumPayment": "Cuota o pago mínimo",
-      "minimumPaymentHint": "Si lo dejás vacío se calcula con el sistema y el plazo.",
+      "minimumPaymentHint": "Si lo dejas vacío se calcula con el sistema y el plazo.",
       "status": "Estado"
     },
     "payment": {
@@ -736,7 +737,7 @@
       "principal": "Capital: {{amount}}",
       "save": "Registrar pago",
       "description": "Cuota {{name}}",
-      "noAccounts": "No tenés cuentas en {{currency}} para pagar esta deuda."
+      "noAccounts": "No tienes cuentas en {{currency}} para pagar esta deuda."
     },
     "schedule": {
       "title": "Cronograma de {{name}}",
@@ -750,12 +751,12 @@
     },
     "strategy": {
       "title": "Plan para salir de deudas",
-      "subtitle": "Pagás los mínimos de todas y el extra va a una por vez. Cuando una se salda, su cuota pasa a la siguiente.",
+      "subtitle": "Pagas los mínimos de todas y el extra va a una por vez. Cuando una se salda, su cuota pasa a la siguiente.",
       "extra": "Extra por mes",
-      "months": "Terminás en {{n}} meses",
+      "months": "Terminas en {{n}} meses",
       "interest": "Intereses: {{amount}}",
       "order": "Orden",
-      "stuck": "Con estos pagos no alcanzás a cubrir los intereses.",
+      "stuck": "Con estos pagos no alcanzas a cubrir los intereses.",
       "saves": "La avalancha te ahorra {{amount}} en intereses.",
       "skipped": "{{n}} deudas en otras monedas no entran (falta cotización a {{currency}}).",
       "snowball": {
@@ -764,7 +765,7 @@
       },
       "avalanche": {
         "name": "Avalancha",
-        "help": "Primero la de mayor tasa: pagás menos intereses."
+        "help": "Primero la de mayor tasa: pagas menos intereses."
       }
     },
     "cards": {
@@ -782,9 +783,9 @@
     "errors": {
       "decimal": "Monto inválido. Ej.: 1.234,56",
       "split": "El interés no puede ser negativo ni mayor que el pago.",
-      "conflict": "La deuda cambió en otro dispositivo. Cerrá y volvé a abrirla.",
+      "conflict": "La deuda cambió en otro dispositivo. Cierra y vuelve a abrirla.",
       "load": "No pudimos cargar tus deudas.",
-      "generic": "No pudimos guardar los cambios. Probá de nuevo."
+      "generic": "No pudimos guardar los cambios. Prueba de nuevo."
     },
     "magicPlan": "Plan mágico"
   },
@@ -823,9 +824,9 @@
       "targetDate": "Fecha objetivo (opcional)",
       "account": "Cuenta donde está la plata (opcional)",
       "noAccount": "Ninguna: cargo aportes a mano",
-      "accountHint": "Si elegís una cuenta, el avance es su saldo real.",
+      "accountHint": "Si eliges una cuenta, el avance es su saldo real.",
       "linked": "en {{account}}",
-      "monthly": "Ahorrá {{amount}} por mes durante {{months}} meses para llegar",
+      "monthly": "Ahorra {{amount}} por mes durante {{months}} meses para llegar",
       "remaining": "Te faltan {{amount}}",
       "reached": "¡Meta cumplida! 🎉",
       "contribute": "Aportar",
@@ -833,7 +834,7 @@
       "contributeAmount": "Monto (negativo para retirar)",
       "note": "Nota (opcional)",
       "contributed": "Aporte registrado",
-      "empty": "Todavía no tenés metas. Empezá por un fondo de emergencia: es lo primero que te protege.",
+      "empty": "Todavía no tienes metas. Empieza por un fondo de emergencia: es lo primero que te protege.",
       "deleteTitle": "Eliminar meta",
       "deleteMessage": "¿Eliminar «{{name}}»? Tu plata no se toca.",
       "deleted": "Meta eliminada"
@@ -844,22 +845,22 @@
       "institution": "Banco",
       "institutionPlaceholder": "Ej.: Banco Provincia",
       "principal": "Capital",
-      "rate": "TNA",
+      "rate": "Tasa anual",
       "account": "Sale de la cuenta",
       "accountHint": "Se descuenta como ajuste (no cuenta como gasto en tu presupuesto).",
       "start": "Constitución",
       "maturity": "Vencimiento",
-      "projection": "En {{days}} días ganás {{interest}}: cobrás {{total}}",
+      "projection": "En {{days}} días ganas {{interest}}: cobras {{total}}",
       "autoRenew": "Renovación automática",
       "create": "Constituir",
-      "rateLine": "TNA {{rate}}% · {{days}} días",
+      "rateLine": "Tasa {{rate}}% · {{days}} días",
       "maturesOn": "vence el {{date}}",
-      "expected": "Interés estimado {{interest}} · cobrás {{total}}",
+      "expected": "Interés estimado {{interest}} · cobras {{total}}",
       "daysLeft": "faltan {{n}} días",
-      "ready": "¡ya vencido, podés cobrarlo!",
+      "ready": "¡ya vencido, puedes cobrarlo!",
       "collect": "Cobrar",
       "collectTitle": "Cobrar plazo fijo de {{institution}}",
-      "collectMessage": "Vuelven {{principal}} a tu cuenta. Confirmá el interés que te acreditaron.",
+      "collectMessage": "Vuelven {{principal}} a tu cuenta. Confirma el interés que te acreditaron.",
       "interestReceived": "Interés acreditado",
       "collected": "Plazo fijo cobrado",
       "txOpen": "Plazo fijo {{institution}}",
@@ -870,7 +871,7 @@
         "RENEWED": "Renovado",
         "CANCELLED": "Cancelado"
       },
-      "empty": "No tenés plazos fijos cargados.",
+      "empty": "No tienes plazos fijos cargados.",
       "deleteTitle": "Eliminar plazo fijo",
       "deleteMessage": "¿Eliminar el plazo fijo de {{name}}? Los movimientos ya registrados se conservan.",
       "deleted": "Plazo fijo eliminado"
@@ -922,7 +923,7 @@
         "INTEREST": "Renta {{symbol}}",
         "FEE": "Comisión {{symbol}}"
       },
-      "noAccount": "Necesitás una cuenta de tipo Inversiones (broker o exchange) en la sección Cuentas.",
+      "noAccount": "Necesitas una cuenta de tipo Inversiones (broker o exchange) en la sección Cuentas.",
       "avgCost": "Costo prom.",
       "value": "Valor actual",
       "unrealized": "Gan./pérd. no realizada",
@@ -934,21 +935,21 @@
       "priceSaved": "Precio guardado",
       "note": "Valores estimados con el último precio que cargaste. Pronto, cotizaciones automáticas.",
       "recent": "Últimas operaciones",
-      "empty": "No tenés inversiones cargadas.",
+      "empty": "No tienes inversiones cargadas.",
       "deleteTitle": "Eliminar operación",
       "deleteMessage": "¿Eliminar esta operación de {{name}}? También se borra su movimiento de efectivo.",
       "deleted": "Operación eliminada"
     },
     "errors": {
       "load": "No pudimos cargar tus ahorros.",
-      "generic": "No pudimos guardar los cambios. Probá de nuevo.",
+      "generic": "No pudimos guardar los cambios. Prueba de nuevo.",
       "dates": "El vencimiento tiene que ser posterior a la constitución.",
-      "asset": "Elegí un activo o completá símbolo y nombre del nuevo."
+      "asset": "Elige un activo o completa símbolo y nombre del nuevo."
     }
   },
   "rates": {
     "title": "Cotizaciones",
-    "subtitle": "Se actualizan solas cada hora. Las que cargues vos tienen prioridad.",
+    "subtitle": "Se actualizan solas cada hora. Las que cargues tú tienen prioridad.",
     "usd": {
       "mep": "MEP",
       "official": "Oficial",
@@ -959,11 +960,11 @@
       "wholesale": "Mayorista",
       "market": "Mercado"
     },
-    "dollarTitle": "Dólar para convertir",
-    "dollarHelp": "El que se usa para pasar dólares a pesos en patrimonio, presupuesto y deudas.",
+    "dollarTitle": "Dólar en Argentina",
+    "dollarHelp": "Como usas pesos argentinos: elige el tipo de dólar para pasar de dólares a pesos.",
     "othersTitle": "Otras monedas y cripto",
     "manualTitle": "Mis cotizaciones",
-    "manualHelp": "Por ejemplo, el dólar al que compraste vos. Se usan antes que las automáticas.",
+    "manualHelp": "Por ejemplo, el dólar al que compraste tú. Se usan antes que las automáticas.",
     "from": "De",
     "to": "A",
     "type": "Tipo",
@@ -973,13 +974,20 @@
     "saved": "Tipo de dólar actualizado",
     "manualSaved": "Cotización guardada",
     "noData": "Todavía no hay cotizaciones: el servidor las trae en unos minutos.",
-    "sources": "Fuentes: DolarApi (dolarapi.com) y CoinGecko. No reciben ningún dato tuyo."
+    "sources": {
+      "ecb": "Banco Central Europeo",
+      "coingecko": "CoinGecko",
+      "fixed": "A la par por ley",
+      "manual": "Cargada por ti"
+    },
+    "mineTitle": "Tus monedas en {{base}}",
+    "mineHelp": "Cuánto vale cada moneda en tu moneda principal. Se usa para sumar cuentas y deudas en otras monedas."
   },
   "progress": {
     "title": "Mi progreso",
     "subtitle": "De 0 a 100: tu puntaje de salud financiera, tu nivel y qué hacer ahora.",
     "scoreLabel": {
-      "start": "Recién empezás",
+      "start": "Recién empiezas",
       "fair": "Vas encaminado",
       "good": "Bien",
       "great": "¡Excelente!"
@@ -989,7 +997,7 @@
     "components": {
       "savings": {
         "name": "Tasa de ahorro",
-        "value": "Ahorrás el {{pct}}% de tus ingresos (ideal: 20% o más).",
+        "value": "Ahorras el {{pct}}% de tus ingresos (ideal: 20% o más).",
         "noData": "Sin ingresos registrados en los últimos meses."
       },
       "emergency": {
@@ -1005,7 +1013,7 @@
       "budget": {
         "name": "Presupuesto",
         "value": "El {{pct}}% de tus categorías está dentro del límite.",
-        "noData": "No tenés presupuesto este mes."
+        "noData": "No tienes presupuesto este mes."
       },
       "consistency": {
         "name": "Constancia",
@@ -1017,59 +1025,59 @@
     "dismiss": "Ya está / no aplica",
     "tips": {
       "onboarding.finish": {
-        "title": "Terminá tus primeros pasos",
-        "body": "En 5 minutos cargás tu sueldo, tus gastos fijos y armamos un presupuesto sugerido.",
+        "title": "Termina tus primeros pasos",
+        "body": "En 5 minutos cargas tu sueldo, tus gastos fijos y armamos un presupuesto sugerido.",
         "action": "Empezar"
       },
       "debt.avalanche": {
-        "title": "Tenés deudas caras",
-        "body": "Las tasas altas (tarjeta financiada, préstamos personales) te comen el sueldo. Poné todo el extra en la de mayor tasa: método avalancha.",
+        "title": "Tienes deudas caras",
+        "body": "Las tasas altas (tarjeta financiada, préstamos personales) te comen el sueldo. Pon todo el extra en la de mayor tasa: método avalancha.",
         "action": "Ver mi plan"
       },
       "emergency.start": {
-        "title": "Armá tu fondo de emergencia",
-        "body": "Es lo primero que te protege de un imprevisto sin endeudarte. Empezá por un mes de gastos.",
+        "title": "Arma tu fondo de emergencia",
+        "body": "Es lo primero que te protege de un imprevisto sin endeudarte. Empieza por un mes de gastos.",
         "action": "Crear la meta"
       },
       "budget.create": {
-        "title": "Armá el presupuesto del mes",
+        "title": "Arma el presupuesto del mes",
         "body": "Decidir antes cuánto gastar en cada cosa es la forma más simple de que alcance.",
         "action": "Armar presupuesto"
       },
       "budget.over": {
         "title": "Te pasaste en alguna categoría",
-        "body": "Revisá en qué y ajustá el resto del mes, o corregí el límite si no era realista.",
+        "body": "Revisa en qué y ajusta el resto del mes, o corrige el límite si no era realista.",
         "action": "Ver presupuesto"
       },
       "savings.low": {
         "title": "Estás ahorrando menos del 10%",
-        "body": "Revisá suscripciones, delivery y gastos hormiga: suelen ser lo más fácil de recortar.",
+        "body": "Revisa suscripciones, delivery y gastos hormiga: suelen ser lo más fácil de recortar.",
         "action": "Ver mis gastos"
       },
       "emergency.grow": {
-        "title": "Seguí con el fondo de emergencia",
-        "body": "La meta recomendada son 3 a 6 meses de gastos. Automatizá un aporte el día que cobrás.",
+        "title": "Sigue con el fondo de emergencia",
+        "body": "La meta recomendada son 3 a 6 meses de gastos. Automatiza un aporte el día que cobras.",
         "action": "Ver mis metas"
       },
       "cash.idle": {
-        "title": "Tenés pesos quietos",
-        "body": "Con la inflación, la plata parada pierde valor. Con el colchón cubierto, mirá plazos fijos o FCI de liquidez.",
+        "title": "Tienes dinero quieto",
+        "body": "Con la inflación, la plata parada pierde valor. Con el colchón cubierto, mira plazos fijos o FCI de liquidez.",
         "action": "Ver opciones"
       },
       "invest.diversify": {
-        "title": "Diversificá",
-        "body": "Tenés todo en un solo tipo de inversión. Repartir entre clases (plazo fijo, FCI, CEDEARs, bonos) baja el riesgo.",
+        "title": "Diversifica",
+        "body": "Tienes todo en un solo tipo de inversión. Repartir entre clases (plazo fijo, FCI, CEDEARs, bonos) baja el riesgo.",
         "action": "Ver inversiones"
       },
       "record.consistency": {
-        "title": "Registrá todos los meses",
+        "title": "Registra todos los meses",
         "body": "Con 3 meses seguidos de movimientos, tus promedios y tu puntaje se vuelven confiables.",
         "action": "Cargar movimientos"
       }
     },
     "pathTitle": "Tu ruta",
     "levelN": "Nivel {{n}}",
-    "allDone": "¡Completaste los 7 niveles! Mantené el rumbo.",
+    "allDone": "¡Completaste los 7 niveles! Mantén el rumbo.",
     "levelUp": "¡Subiste de nivel! Completaste «{{level}}» 🎉",
     "levels": {
       "start": {
@@ -1086,7 +1094,7 @@
       },
       "debtFree": {
         "name": "Sin deudas caras",
-        "goal": "Cancelar tarjeta financiada y préstamos con tasa alta (≥30% TNA)."
+        "goal": "Cancelar tarjeta financiada y préstamos con tasa alta (≥30% anual)."
       },
       "fullFund": {
         "name": "Fondo completo",
@@ -1122,7 +1130,7 @@
         "threeMonths": "Juntar 3 meses de gastos"
       },
       "saving": {
-        "twentyPercent": "Ahorrar el 20% de lo que ganás"
+        "twentyPercent": "Ahorrar el 20% de lo que ganas"
       },
       "investing": {
         "invested": "Tener ahorros invertidos",
@@ -1133,17 +1141,17 @@
   },
   "onboarding": {
     "title": "Primeros pasos",
-    "subtitle": "Cargá lo básico y te armamos un presupuesto. Podés cambiar todo después.",
+    "subtitle": "Carga lo básico y te armamos un presupuesto. Puedes cambiar todo después.",
     "skip": "Saltar por ahora",
     "next": "Siguiente",
     "saveNext": "Guardar y seguir",
     "back": "Atrás",
     "finish": "Terminar y ver mi progreso",
-    "error": "No pudimos guardar este paso. Probá de nuevo.",
+    "error": "No pudimos guardar este paso. Prueba de nuevo.",
     "salary": {
       "label": "Tu sueldo",
-      "intro": "¿Cuánto cobrás por mes (en mano) y qué día?",
-      "account": "Cuenta donde cobrás",
+      "intro": "¿Cuánto cobras por mes (en mano) y qué día?",
+      "account": "Cuenta donde cobras",
       "newAccount": "Nombre de la cuenta",
       "defaultAccount": "Cuenta sueldo",
       "balance": "Saldo actual",
@@ -1154,7 +1162,7 @@
     },
     "fixed": {
       "label": "Gastos fijos",
-      "intro": "Completá los que tengas. Se cargan solos cada mes; los que varían te piden confirmar el monto.",
+      "intro": "Completa los que tengas. Se cargan solos cada mes; los que varían te piden confirmar el monto.",
       "variable": "varía",
       "amount": "Monto",
       "amountFor": "Monto de {{name}}",
@@ -1175,10 +1183,10 @@
     },
     "debts": {
       "label": "Tus deudas (opcional)",
-      "intro": "Préstamos, deudas con alguien, tarjeta financiada… Después podés agregar la tasa y el plazo.",
+      "intro": "Préstamos, deudas con alguien, tarjeta financiada… Después puedes agregar la tasa y el plazo.",
       "name": "Nombre",
       "nameN": "Nombre de la deuda {{n}}",
-      "balance": "Cuánto debés",
+      "balance": "Cuánto debes",
       "balanceN": "Saldo de la deuda {{n}}",
       "payment": "Cuota mensual",
       "paymentN": "Cuota de la deuda {{n}}"
@@ -1194,7 +1202,7 @@
     }
   },
   "notifications": {
-    "empty": "No tenés notificaciones.",
+    "empty": "No tienes notificaciones.",
     "markAll": "Marcar todas como leídas",
     "types": {
       "REMINDER": "Recordatorio",
@@ -1206,14 +1214,14 @@
   },
   "reminders": {
     "cardTitle": "Vence la tarjeta {{name}}",
-    "cardBody": "Tenés que pagar {{amount}} antes del {{date}}.",
-    "debtTitle": "Mañana pagás {{name}}",
+    "cardBody": "Tienes que pagar {{amount}} antes del {{date}}.",
+    "debtTitle": "Mañana pagas {{name}}",
     "debtBody": "Cuota estimada: {{amount}}.",
-    "debtBodyNoAmount": "Acordate de registrar el pago.",
+    "debtBodyNoAmount": "Acuérdate de registrar el pago.",
     "depositTitle": "Vence tu plazo fijo en {{name}}",
-    "depositBody": "Cobralo o renovalo desde Ahorro.",
-    "ruleTitle": "Confirmá «{{name}}»",
-    "ruleBody": "Revisá el monto de este mes y confirmalo."
+    "depositBody": "Cóbralo o renuévalo desde Ahorro.",
+    "ruleTitle": "Confirma «{{name}}»",
+    "ruleBody": "Revisa el monto de este mes y confírmalo."
   },
   "settings": {
     "title": "Ajustes",
@@ -1223,10 +1231,10 @@
       "toggle": "Recibir avisos",
       "unsupported": "Este navegador (o el modo desarrollo) no soporta notificaciones push. Igual vas a ver los avisos en la campana.",
       "enabled": "Listo: vas a recibir avisos en este dispositivo.",
-      "denied": "El navegador no dio permiso. Podés habilitarlo desde la configuración del sitio.",
+      "denied": "El navegador no dio permiso. Puedes habilitarlo desde la configuración del sitio.",
       "unavailable": "El servidor no tiene configurados los avisos push.",
       "disabled": "Avisos desactivados en este dispositivo.",
-      "privacy": "El aviso solo dice \"Tenés un recordatorio\": el detalle se descifra cuando abrís la app."
+      "privacy": "El aviso solo dice \"Tienes un recordatorio\": el detalle se descifra cuando abres la app."
     },
     "security": {
       "title": "Seguridad y datos",
@@ -1254,46 +1262,46 @@
     "nothing": "No hay nada urgente: ¡vas muy bien!",
     "steps": {
       "minimums": {
-        "title": "Pagá los mínimos de tus deudas ({{amount}})",
+        "title": "Paga los mínimos de tus deudas ({{amount}})",
         "why": "Es lo primero: no caer en mora evita recargos y cuida tu historial crediticio."
       },
       "shortfall": {
         "title": "Te faltan {{amount}} por mes para cubrir los mínimos",
-        "why": "Tus ingresos no alcanzan para tus gastos y deudas. Revisá el presupuesto para recortar, o hablá con tus acreedores para refinanciar antes de atrasarte."
+        "why": "Tus ingresos no alcanzan para tus gastos y deudas. Revisa el presupuesto para recortar, o habla con tus acreedores para refinanciar antes de atrasarte."
       },
       "cards": {
-        "title": "Pagá el total de tus tarjetas ({{amount}})",
+        "title": "Paga el total de tus tarjetas ({{amount}})",
         "why": "Pagar solo el mínimo financia el resto a una de las tasas más caras. Estos consumos ya están en tus gastos."
       },
       "miniFund": {
-        "title": "Armá un colchón de 1 mes de gastos: ahorrá {{amount}}",
-        "why": "Tenés {{saved}} de {{target}}. Con este colchón, un imprevisto no se convierte en una deuda nueva."
+        "title": "Arma un colchón de 1 mes de gastos: ahorra {{amount}}",
+        "why": "Tienes {{saved}} de {{target}}. Con este colchón, un imprevisto no se convierte en una deuda nueva."
       },
       "prepay": {
-        "title": "Adelantá {{amount}} a «{{name}}»",
-        "why": "Es tu deuda más cara (cuesta {{rate}} por año, en términos reales): cada peso que adelantás te ahorra intereses."
+        "title": "Adelanta {{amount}} a «{{name}}»",
+        "why": "Es tu deuda más cara (cuesta {{rate}} por año, en términos reales): cada peso que adelantas te ahorra intereses."
       },
       "dontPrepay": {
-        "title": "No adelantes estas deudas: pagá solo la cuota",
+        "title": "No adelantes estas deudas: paga solo la cuota",
         "why": "Con una inflación de {{inflation}} mensual, su tasa queda por debajo y la deuda se licúa sola. Esa plata rinde más ahorrada."
       },
       "fullFund": {
-        "title": "Completá el fondo de emergencia (3 meses): ahorrá {{amount}}",
+        "title": "Completa el fondo de emergencia (3 meses): ahorra {{amount}}",
         "why": "Con el colchón de este mes llevarías {{saved}} de {{target}}. Es tu red de seguridad ante una pérdida de ingresos."
       },
       "goal": {
-        "title": "Ahorrá {{amount}} para «{{name}}»",
+        "title": "Ahorra {{amount}} para «{{name}}»",
         "why": "Es lo que hace falta por mes para llegar a tiempo a tu meta."
       },
       "invest": {
-        "title": "Invertí {{amount}}",
-        "why": "Ya cubriste lo urgente: hacé que el resto trabaje para vos (plazo fijo, fondos, dólares, etc.)."
+        "title": "Invierte {{amount}}",
+        "why": "Ya cubriste lo urgente: haz que el resto trabaje para ti (plazo fijo, fondos, dólares, etc.)."
       }
     },
     "impact": {
-      "title": "Lo que ganás siguiendo el plan",
-      "body": "Saldrías de tus deudas en {{months}} meses en vez de {{baseline}} pagando solo mínimos, y te ahorrás {{saved}} de intereses.",
-      "rescued": "Pagando solo los mínimos no terminarías nunca (los intereses le ganan a la cuota). Con el plan, salís en {{months}} meses."
+      "title": "Lo que ganas siguiendo el plan",
+      "body": "Saldrías de tus deudas en {{months}} meses en vez de {{baseline}} pagando solo mínimos, y te ahorras {{saved}} de intereses.",
+      "rescued": "Pagando solo los mínimos no terminarías nunca (los intereses le ganan a la cuota). Con el plan, sales en {{months}} meses."
     },
     "inflation": {
       "label": "Inflación mensual esperada",
@@ -1305,7 +1313,7 @@
     "readMore": "Leer más"
   },
   "learn": {
-    "title": "Aprendé",
+    "title": "Aprende",
     "subtitle": "Guías de finanzas personales, de lo básico a lo avanzado, pensadas para Panamá. Gratis y sin registrarte.",
     "topicLabel": "Tema",
     "levelLabel": "Nivel",
@@ -1325,11 +1333,11 @@
     "empty": "No hay artículos con esos filtros.",
     "back": "Todos los artículos",
     "key": "La clave:",
-    "related": "Seguí leyendo",
+    "related": "Sigue leyendo",
     "notFound": "No encontramos ese artículo.",
-    "cta": "Llevá esto a la práctica con tus propios números.",
+    "cta": "Lleva esto a la práctica con tus propios números.",
     "ctaButton": "Crear cuenta gratis",
-    "disclaimer": "Contenido educativo general, no asesoramiento financiero, legal ni impositivo. Montos, tasas y normas pueden cambiar: verificá los valores vigentes con las entidades oficiales o un profesional."
+    "disclaimer": "Contenido educativo general, no asesoramiento financiero, legal ni impositivo. Montos, tasas y normas pueden cambiar: verifica los valores vigentes con las entidades oficiales o un profesional."
   },
   "landing": {
     "hero": {
@@ -1341,40 +1349,40 @@
       "badges": {
         "encrypted": "Cifrado de conocimiento cero",
         "free": "Gratis y de código abierto",
-        "mobile": "En el celular y la compu"
+        "mobile": "En el celular y la computadora"
       }
     },
     "preview": {
       "label": "Vista previa de la app",
       "title": "Plan mágico",
       "capacity": "Te quedan $640 por mes después de tus gastos de vida.",
-      "step1": "Pagá los mínimos de tus deudas ($180)",
-      "step2": "Pagá el total de tu tarjeta ($320)",
-      "step3": "Armá un colchón de 1 mes de gastos",
-      "step4": "Adelantá $140 a tu préstamo más caro",
+      "step1": "Paga los mínimos de tus deudas ($180)",
+      "step2": "Paga el total de tu tarjeta ($320)",
+      "step3": "Arma un colchón de 1 mes de gastos",
+      "step4": "Adelanta $140 a tu préstamo más caro",
       "score": "Salud financiera",
       "caption": "Datos de ejemplo."
     },
     "how": {
       "title": "Cómo funciona",
       "one": {
-        "title": "Cargá tu realidad",
-        "body": "Tu sueldo, tus gastos fijos y tus deudas. En 5 minutos tenés un presupuesto sugerido."
+        "title": "Carga tu realidad",
+        "body": "Tu sueldo, tus gastos fijos y tus deudas. En 5 minutos tienes un presupuesto sugerido."
       },
       "two": {
-        "title": "Seguí un plan",
+        "title": "Sigue un plan",
         "body": "El Plan mágico te dice qué pagar primero y cuánto ahorrar cada mes, con tus números."
       },
       "three": {
-        "title": "Mirá tu progreso",
+        "title": "Mira tu progreso",
         "body": "Un puntaje de salud financiera y una ruta de 7 niveles, del orden básico a invertir."
       }
     },
     "features": {
-      "title": "Todo lo que necesitás, en un solo lugar",
+      "title": "Todo lo que necesitas, en un solo lugar",
       "budget": {
         "title": "Presupuesto",
-        "body": "Topes por categoría, alertas cuando te acercás al límite y la regla 50/30/20 como punto de partida."
+        "body": "Topes por categoría, alertas cuando te acercas al límite y la regla 50/30/20 como punto de partida."
       },
       "debts": {
         "title": "Deudas y tarjetas",
@@ -1390,7 +1398,7 @@
       },
       "household": {
         "title": "En pareja o en familia",
-        "body": "Compartí un hogar con otras personas, con roles, sin perder la privacidad."
+        "body": "Comparte un hogar con otras personas, con roles, sin perder la privacidad."
       },
       "reminders": {
         "title": "Recordatorios",
@@ -1399,20 +1407,20 @@
     },
     "privacy": {
       "title": "Tus datos son tuyos. De verdad.",
-      "body": "Commit usa cifrado de conocimiento cero: tus montos, nombres y descripciones se cifran en tu dispositivo con una clave que solo vos conocés, antes de viajar al servidor.",
+      "body": "Commit usa cifrado de conocimiento cero: tus montos, nombres y descripciones se cifran en tu dispositivo con una clave que solo tú conoces, antes de viajar al servidor.",
       "point1": "Ni los administradores ni nadie con acceso al servidor pueden leer tus finanzas.",
       "point2": "Sin publicidad, sin vender datos y sin rastreadores.",
-      "point3": "Una frase de recuperación de 24 palabras te devuelve el acceso si olvidás tu clave."
+      "point3": "Una frase de recuperación de 24 palabras te devuelve el acceso si olvidas tu clave."
     },
     "learn": {
-      "title": "Aprendé finanzas",
+      "title": "Aprende finanzas",
       "body": "Más de 20 guías gratuitas, de lo básico a lo avanzado, pensadas para Panamá.",
       "all": "Ver todas",
       "minutes": "{{n}} min de lectura"
     },
     "open": {
       "title": "Gratis y de código abierto",
-      "body": "Commit es software libre bajo licencia AGPL-3.0. Podés revisar el código, auditar cómo se cifran tus datos o instalarlo en tu propio servidor.",
+      "body": "Commit es software libre bajo licencia AGPL-3.0. Puedes revisar el código, auditar cómo se cifran tus datos o instalarlo en tu propio servidor.",
       "cta": "Ver el código fuente"
     },
     "faq": {
@@ -1427,23 +1435,23 @@
       },
       "forgot": {
         "q": "¿Qué pasa si olvido mi clave de descifrado?",
-        "a": "Al registrarte recibís una frase de recuperación de 24 palabras. También otra persona de tu hogar puede devolverte el acceso. Sin ninguna de las dos, nadie puede recuperar los datos: es el precio de que nadie más pueda leerlos."
+        "a": "Al registrarte recibes una frase de recuperación de 24 palabras. También otra persona de tu hogar puede devolverte el acceso. Sin ninguna de las dos, nadie puede recuperar los datos: es el precio de que nadie más pueda leerlos."
       },
       "bank": {
         "q": "¿Se conecta con mi banco?",
-        "a": "No. Cargás tus movimientos vos: así ningún tercero accede a tus cuentas. Los gastos fijos se cargan una vez como recurrentes."
+        "a": "No. Cargas tus movimientos tú: así ningún tercero accede a tus cuentas. Los gastos fijos se cargan una vez como recurrentes."
       },
       "offline": {
         "q": "¿Funciona sin internet?",
-        "a": "Podés abrir la app y consultar tus datos guardados en el dispositivo (cifrados) sin conexión. Para registrar cambios necesitás conexión."
+        "a": "Puedes abrir la app y consultar tus datos guardados en el dispositivo (cifrados) sin conexión. Para registrar cambios necesitas conexión."
       },
       "couple": {
         "q": "¿La puedo usar en pareja?",
-        "a": "Sí. Podés invitar a otras personas a tu hogar, con roles, y ver los mismos movimientos y presupuestos."
+        "a": "Sí. Puedes invitar a otras personas a tu hogar, con roles, y ver los mismos movimientos y presupuestos."
       }
     },
     "final": {
-      "title": "Empezá hoy. Tu yo del futuro te lo va a agradecer.",
+      "title": "Empieza hoy. Tu yo del futuro te lo va a agradecer.",
       "body": "Crear tu cuenta toma un par de minutos."
     }
   }

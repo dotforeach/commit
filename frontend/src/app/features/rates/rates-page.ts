@@ -14,9 +14,12 @@ import { CurrenciesService } from '../../core/currencies/currencies.service';
 import { todayIso } from '../../core/dates/dates';
 import { HouseholdContextService } from '../../core/households/household-context.service';
 import { compareDecimals, formatMoney, parseDecimalInput } from '../../core/money/decimal';
+import { AccountsService } from '../accounts/accounts.service';
 import { RatesService, type ManualRate } from './rates.service';
 
 const USD_TYPES = ['mep', 'official', 'blue', 'ccl', 'card', 'crypto', 'wholesale'];
+/** Monedas que se muestran aunque no tengas cuentas en ellas: región, socios comerciales y cripto. */
+const RELEVANT = ['PAB', 'EUR', 'COP', 'CRC', 'MXN', 'CAD', 'GBP', 'CNY', 'BTC', 'ETH', 'USDT'];
 
 @Component({
   selector: 'app-rates-page',
@@ -28,6 +31,7 @@ export class RatesPage implements OnInit {
   readonly rates = inject(RatesService);
   readonly household = inject(HouseholdContextService);
   readonly currencies = inject(CurrenciesService);
+  private readonly accounts = inject(AccountsService);
   private readonly snack = inject(MatSnackBar);
   private readonly transloco = inject(TranslocoService);
 
@@ -40,18 +44,30 @@ export class RatesPage implements OnInit {
       return r ? [{ type, rate: r.rate, date: r.date }] : [];
     }),
   );
-  readonly others = computed(() => this.rates.publicRates().filter((r) => !(r.base === 'USD' && r.quote === 'ARS') && (r.quote === 'ARS' || r.quote === 'USD')));
+  /** Cuánto vale 1 unidad de cada moneda relevante en la moneda principal del hogar. */
+  readonly mine = computed(() => {
+    const base = this.household.baseCurrency();
+    const conv = this.rates.converter();
+    const own = this.accounts.accounts().map((a) => a.currency);
+    const codes = [...new Set([...own, ...RELEVANT, ...(this.rates.usesArs() ? ['ARS'] : [])])].filter((c) => c !== base);
+    return codes.flatMap((code) => {
+      const rate = conv.rate(code, base);
+      if (rate === null) return [];
+      const q = conv.quoteFor(base, code) ?? conv.quoteFor(code, base) ?? conv.quoteFor('USD', code) ?? conv.quoteFor(code, 'USD');
+      return [{ code, rate: rate.toFixed(rate < 1 ? 6 : 4).replace(/\.?0+$/, ''), source: q?.source === 'manual' ? 'manual' : q?.rateType === 'market' ? 'coingecko' : code === 'PAB' ? 'fixed' : 'ecb', date: q?.date ?? null }];
+    });
+  });
 
   readonly form = inject(FormBuilder).nonNullable.group({
-    base: ['USD', Validators.required],
-    quote: ['ARS', Validators.required],
-    rateType: ['mep', Validators.required],
+    base: ['EUR', Validators.required],
+    quote: [inject(HouseholdContextService).baseCurrency(), Validators.required],
+    rateType: ['official', Validators.required],
     rate: ['', Validators.required],
   });
 
   async ngOnInit() {
     try {
-      await this.rates.ensureLoaded();
+      await Promise.all([this.rates.ensureLoaded(), this.accounts.load()]);
     } finally {
       this.loading.set(false);
     }

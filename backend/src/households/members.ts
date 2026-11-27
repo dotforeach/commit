@@ -95,7 +95,7 @@ export class MembersService {
       const { count } = await tx.householdInvitation.updateMany({ where: { id: inv.id, acceptedAt: null }, data: { acceptedAt: new Date() } });
       if (count === 0) throw new NotFoundException('La invitación ya se usó');
       const exists = await tx.householdMember.findUnique({ where: { householdId_userId: { householdId: inv.householdId, userId } } });
-      if (exists) throw new ConflictException('Ya sos miembro de este hogar');
+      if (exists) throw new ConflictException('Ya eres miembro de este hogar');
       await tx.householdMember.create({ data: { householdId: inv.householdId, userId, role: inv.role, status: 'PENDING_KEY' } });
       // Aviso (sin datos financieros) a los administradores: tienen que darle acceso.
       const admins = await tx.householdMember.findMany({ where: { householdId: inv.householdId, status: 'ACTIVE', role: { in: ['OWNER', 'ADMIN'] } }, select: { userId: true } });
@@ -105,7 +105,7 @@ export class MembersService {
           householdId: inv.householdId,
           type: 'MEMBER_PENDING_KEY' as const,
           title: `${user.displayName} se sumó al hogar`,
-          body: 'Verificá su huella y dale acceso desde Mi hogar.',
+          body: 'Verifica su huella y dale acceso desde Mi hogar.',
           dedupeKey: `pending:${inv.householdId}:${userId}`,
         })),
         skipDuplicates: true,

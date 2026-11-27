@@ -34,7 +34,7 @@ model User {
   email                 String    @unique @db.Citext
   passwordHash          String // contraseña de LOGIN (scrypt, @nestjs/authentication)
   displayName           String // visible para los miembros de sus hogares
-  locale                String    @default("es-AR")
+  locale                String    @default("es-PA")
   timezone              String    @default("America/Argentina/Buenos_Aires")
   defaultHouseholdId    String?   @db.Uuid
   onboardingStep        Int       @default(0)
@@ -343,7 +343,7 @@ enum AccountType {
   CASH
   CHECKING // cuenta corriente / caja de ahorro
   SAVINGS
-  DIGITAL_WALLET // Mercado Pago, Ualá…
+  DIGITAL_WALLET // Yappy, Nequi, Mercado Pago…
   CREDIT_CARD
   INVESTMENT // broker / exchange
   LOAN

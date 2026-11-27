@@ -102,7 +102,7 @@ export class Home implements OnInit {
     const nw = this.netWorthService.netWorth();
     const c = this.currencies.get(nw.currency);
     const f = (n: number) => formatMoney(toMoneyString(n), c);
-    return { total: f(nw.total), assets: f(nw.assets), liabilities: f(nw.liabilities), missing: nw.missing, usd: this.rates.usdRateType(), negative: nw.total < 0 };
+    return { total: f(nw.total), assets: f(nw.assets), liabilities: f(nw.liabilities), missing: nw.missing, usd: this.rates.usdRateType(), ars: this.rates.usesArs(), negative: nw.total < 0 };
   });
 
   /** Al entrar: registra los recurrentes automáticos vencidos y deja visibles los pendientes. */

@@ -17,30 +17,30 @@ test('de 0 a 100: onboarding, puntaje, nivel, tips y lo que dejó armado', async
   await expect(page).toHaveURL(/\/bienvenida$/);
 
   // 1. Sueldo (sin cuentas: crea la cuenta sueldo)
-  await page.getByLabel('Saldo actual').fill('100.000');
-  await page.getByLabel('Sueldo neto mensual').fill('1.000.000');
+  await page.getByLabel('Saldo actual').fill('100,000');
+  await page.getByLabel('Sueldo neto mensual').fill('1,000,000');
   await page.getByLabel('Día de cobro').fill(safeDay);
   await page.getByRole('region', { name: 'Tu sueldo' }).getByRole('button', { name: 'Guardar y seguir' }).click();
 
   // 2. Gastos fijos
   const fixed = page.getByRole('region', { name: 'Gastos fijos' });
-  await fixed.getByLabel('Monto de Alquiler').fill('300.000');
-  await fixed.getByLabel('Monto de Luz').fill('25.000');
+  await fixed.getByLabel('Monto de Alquiler').fill('300,000');
+  await fixed.getByLabel('Monto de Luz').fill('25,000');
   for (const input of await fixed.getByLabel('Día').all()) await input.fill(safeDay);
-  await expect(fixed.getByText('Total de gastos fijos: $ 325.000,00')).toBeVisible();
+  await expect(fixed.getByText('Total de gastos fijos: $325,000.00')).toBeVisible();
   await fixed.getByRole('button', { name: 'Guardar y seguir' }).click();
 
   // 3. Deudas
   const debts = page.getByRole('region', { name: /Tus deudas/ });
   await debts.getByLabel('Nombre de la deuda 1').fill('Préstamo de mamá');
-  await debts.getByLabel('Saldo de la deuda 1').fill('200.000');
-  await debts.getByLabel('Cuota de la deuda 1').fill('20.000');
+  await debts.getByLabel('Saldo de la deuda 1').fill('200,000');
+  await debts.getByLabel('Cuota de la deuda 1').fill('20,000');
   await debts.getByRole('button', { name: 'Guardar y seguir' }).click();
 
   // 4. Presupuesto sugerido
   const budget = page.getByTestId('onboarding-budget');
-  await expect(budget).toContainText('Necesidades (50%): $ 500.000,00 · tus gastos fijos ocupan $ 325.000,00');
-  await expect(budget).toContainText('Ahorro y deudas (20%): $ 200.000,00');
+  await expect(budget).toContainText('Necesidades (50%): $500,000.00 · tus gastos fijos ocupan $325,000.00');
+  await expect(budget).toContainText('Ahorro y deudas (20%): $200,000.00');
   await page.getByRole('button', { name: 'Terminar y ver mi progreso' }).click();
   await expect(page).toHaveURL(/\/progreso$/, { timeout: 15_000 });
 
@@ -66,7 +66,7 @@ test('de 0 a 100: onboarding, puntaje, nivel, tips y lo que dejó armado', async
   await expect(page.locator('li[data-rule="Luz"]')).toContainText('con confirmación');
   await page.getByRole('link', { name: 'Presupuesto', exact: true }).click();
   await expect(page.getByTestId('budget-summary')).toContainText('50/30/20');
-  await expect(page.locator('li[data-budget-item="Alquiler y expensas"]')).toContainText('$ 300.000,00');
+  await expect(page.locator('li[data-budget-item="Alquiler y mantenimiento"]')).toContainText('$300,000.00');
 
   // Inicio: sin el aviso de primeros pasos y con el puntaje
   await page.getByRole('link', { name: 'Inicio' }).click();
@@ -79,7 +79,7 @@ test('de 0 a 100: onboarding, puntaje, nivel, tips y lo que dejó armado', async
   for (let i = 1; i <= 5; i++) {
     await page.getByRole('button', { name: 'Nuevo movimiento' }).click();
     await dialog.getByLabel('Monto', { exact: true }).fill(String(1000 * i));
-    await pick(page, 'Cuenta', 'Cuenta sueldo · ARS');
+    await pick(page, 'Cuenta', 'Cuenta sueldo · USD');
     await dialog.getByLabel('Descripción').fill(`Gasto ${i}`);
     await dialog.getByRole('button', { name: 'Guardar' }).click();
     await expect(page.locator(`li[data-tx="Gasto ${i}"]`)).toBeVisible();

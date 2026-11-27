@@ -19,7 +19,7 @@ async function expense(page: Page, amount: string, description: string) {
   await page.getByRole('button', { name: 'Nuevo movimiento' }).click();
   const dialog = page.getByRole('dialog');
   await dialog.getByLabel('Monto', { exact: true }).fill(amount);
-  await pick(page, 'Cuenta', 'Banco · ARS');
+  await pick(page, 'Cuenta', 'Banco · USD');
   await dialog.getByLabel('Descripción').fill(description);
   await dialog.getByRole('button', { name: 'Guardar' }).click();
   await expect(page.locator(`li[data-tx="${description}"]`)).toBeVisible();
@@ -29,11 +29,11 @@ test('offline: datos cifrados en el dispositivo, lectura sin conexión, sync inc
   const passphrase = 'clave de descifrado offline';
   await registerViaUi(page, { name: 'Oli Offline', email: `e2e-offline-${Date.now()}@example.com`, password: 'contraseña-de-ingreso-1', passphrase });
   await page.getByRole('link', { name: 'Cuentas' }).click();
-  await createAccount(page, { name: 'Banco', type: 'Cuenta bancaria', initial: '50.000' });
+  await createAccount(page, { name: 'Banco', type: 'Cuenta bancaria', initial: '50,000' });
   await page.getByRole('link', { name: 'Movimientos' }).click();
-  await expense(page, '1.500', 'Panadería secreta');
+  await expense(page, '1,500', 'Panadería secreta');
   await page.getByRole('link', { name: 'Cuentas' }).click();
-  await expect(page.locator('li[data-account="Banco"] .value')).toHaveText('$ 48.500,00');
+  await expect(page.locator('li[data-account="Banco"] .value')).toHaveText('$48,500.00');
 
   // Lo guardado en el dispositivo está cifrado
   const dump = await cacheDump(page);
@@ -47,7 +47,7 @@ test('offline: datos cifrados en el dispositivo, lectura sin conexión, sync inc
   await expect(page).toHaveURL(/\/inicio$/, { timeout: 15_000 });
   await expect(page.getByTestId('offline-banner')).toBeVisible();
   await page.getByRole('link', { name: 'Cuentas' }).click();
-  await expect(page.locator('li[data-account="Banco"] .value')).toHaveText('$ 48.500,00');
+  await expect(page.locator('li[data-account="Banco"] .value')).toHaveText('$48,500.00');
 
   // Con conexión otra vez: un movimiento nuevo llega por la sincronización incremental
   await context.setOffline(false);
@@ -56,7 +56,7 @@ test('offline: datos cifrados en el dispositivo, lectura sin conexión, sync inc
   await page.getByRole('button', { name: 'Bloquear' }).click();
   await unlock(page, passphrase);
   await page.getByRole('link', { name: 'Cuentas' }).click();
-  await expect(page.locator('li[data-account="Banco"] .value')).toHaveText('$ 48.000,00');
+  await expect(page.locator('li[data-account="Banco"] .value')).toHaveText('$48,000.00');
   await expect(page.getByTestId('offline-banner')).toHaveCount(0);
 
   // Cerrar sesión borra la caché del dispositivo

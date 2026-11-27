@@ -26,7 +26,7 @@ test('olvidé la clave: recupero con la frase y después la cambio desde ajustes
   await page.getByLabel('Frase de recuperación').fill(phrase.map(strip).join('   '));
   await page.getByRole('button', { name: 'Verificar frase' }).click();
   await page.getByLabel('Nueva clave de descifrado').fill(recovered);
-  await page.getByLabel('Repetí la nueva clave').fill(recovered);
+  await page.getByLabel('Repite la nueva clave').fill(recovered);
   await page.getByRole('button', { name: 'Guardar y desbloquear' }).click();
   await expect(page).toHaveURL(/\/inicio$/, { timeout: 30_000 });
   await expect(household).toBeVisible();
@@ -42,7 +42,7 @@ test('olvidé la clave: recupero con la frase y después la cambio desde ajustes
   await page.getByRole('link', { name: 'Cambiar clave de descifrado' }).click();
   await page.getByLabel('Clave de descifrado actual').fill('no es esta clave');
   await page.getByLabel('Nueva clave de descifrado').fill(changed);
-  await page.getByLabel('Repetí la nueva clave').fill(changed);
+  await page.getByLabel('Repite la nueva clave').fill(changed);
   await page.getByRole('button', { name: 'Cambiar clave' }).click();
   await expect(page.getByRole('alert')).toHaveText('La clave actual es incorrecta.', { timeout: 15_000 });
   await page.getByLabel('Clave de descifrado actual').fill(recovered);

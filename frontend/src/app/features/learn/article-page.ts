@@ -32,7 +32,7 @@ export class ArticlePage {
     const title = inject(Title);
     effect(() => {
       const a = this.article();
-      title.setTitle(a ? `${a.title} · Commit` : 'Aprendé · Commit');
+      title.setTitle(a ? `${a.title} · Commit` : 'Aprende · Commit');
       if (typeof window !== 'undefined') window.scrollTo({ top: 0 });
     });
   }

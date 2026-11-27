@@ -23,12 +23,12 @@ test('cuentas: alta, tarjeta, edición, archivo, borrado y todo cifrado', async 
   await page.getByRole('button', { name: 'Nueva cuenta' }).click();
   const dialog = page.getByRole('dialog');
   await dialog.getByLabel('Nombre').fill('Cuenta sueldo');
-  await dialog.getByLabel('Saldo inicial').fill('150.000,5');
-  await dialog.getByLabel('Banco o entidad').fill('Banco Nación');
+  await dialog.getByLabel('Saldo inicial').fill('150,000.5');
+  await dialog.getByLabel('Banco o entidad').fill('Banco General');
   await dialog.getByRole('button', { name: 'Guardar' }).click();
   const sueldo = page.locator('li[data-account="Cuenta sueldo"]');
-  await expect(sueldo).toContainText('$ 150.000,50');
-  await expect(sueldo).toContainText('Cuenta bancaria · Banco Nación');
+  await expect(sueldo).toContainText('$150,000.50');
+  await expect(sueldo).toContainText('Cuenta bancaria · Banco General');
 
   // Monto inválido: no deja guardar
   await page.getByRole('button', { name: 'Nueva cuenta' }).click();
@@ -46,14 +46,14 @@ test('cuentas: alta, tarjeta, edición, archivo, borrado y todo cifrado', async 
   await page.getByRole('option', { name: 'Tarjeta de crédito' }).click();
   await dialog.getByRole('combobox', { name: 'Moneda' }).click();
   await page.getByRole('option', { name: 'USD · Dólar estadounidense' }).click();
-  await dialog.getByLabel('Deuda actual').fill('320,75');
+  await dialog.getByLabel('Deuda actual').fill('320.75');
   await dialog.getByLabel('Últimos 4 dígitos').fill('4321');
-  await dialog.getByLabel('Límite de compra').fill('2.000');
+  await dialog.getByLabel('Límite de compra').fill('2,000');
   await dialog.getByLabel('Día de cierre').fill('24');
   await dialog.getByLabel('Día de vencimiento').fill('6');
   await dialog.getByRole('button', { name: 'Guardar' }).click();
   const visa = page.locator('li[data-account="Visa Galicia"]');
-  await expect(visa).toContainText('US$ 320,75');
+  await expect(visa).toContainText('$320.75');
   await expect(visa).toContainText('•••• 4321');
   await expect(visa).toContainText('cierra el 24, vence el 6');
 
@@ -90,11 +90,11 @@ test('cuentas: alta, tarjeta, edición, archivo, borrado y todo cifrado', async 
   await expect(page).toHaveURL(/\/inicio$/, { timeout: 15_000 });
   await page.getByRole('link', { name: 'Cuentas' }).click();
   await page.getByRole('button', { name: 'Archivadas (1)' }).click();
-  await expect(visa).toContainText('US$ 320,75');
+  await expect(visa).toContainText('$320.75');
 
   // Nada sensible viajó en claro
   const all = sent.join('\n');
-  for (const secret of ['Cuenta sueldo', 'Banco Nación', 'Visa Galicia', '4321', '150000', '320.75', '2000']) {
+  for (const secret of ['Cuenta sueldo', 'Banco General', 'Visa Galicia', '4321', '150000', '320.75', '2000']) {
     expect(all).not.toContain(secret);
   }
 });

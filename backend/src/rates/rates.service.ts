@@ -2,9 +2,9 @@ import { Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service.js';
 import { RateSources } from './rate-sources.js';
 
-/** Fecha "de hoy" en Argentina (las cotizaciones se guardan una por día). */
-export function argentinaToday(now = new Date()): Date {
-  const iso = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Argentina/Buenos_Aires' }).format(now);
+/** Fecha "de hoy" en Panamá (las cotizaciones se guardan una por día). */
+export function ratesToday(now = new Date()): Date {
+  const iso = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Panama' }).format(now);
   return new Date(`${iso}T00:00:00.000Z`);
 }
 
@@ -21,7 +21,7 @@ export class RatesService {
   async refresh(): Promise<number> {
     const rates = await this.sources.fetchAll();
     const known = new Set((await this.prisma.currency.findMany({ select: { code: true } })).map((c) => c.code));
-    const date = argentinaToday();
+    const date = ratesToday();
     let saved = 0;
     for (const r of rates) {
       if (!known.has(r.base) || !known.has(r.quote)) continue;
@@ -38,7 +38,7 @@ export class RatesService {
 
   /** La cotización más reciente de cada par/tipo/proveedor (de los últimos 30 días). */
   async latest() {
-    const since = argentinaToday();
+    const since = ratesToday();
     since.setUTCDate(since.getUTCDate() - 30);
     const rows = await this.prisma.exchangeRate.findMany({ where: { date: { gte: since } }, orderBy: { date: 'desc' } });
     const seen = new Set<string>();

@@ -4,7 +4,7 @@ import request from 'supertest';
 import type { App } from 'supertest/types.js';
 import { PrismaService } from '../src/prisma/prisma.service.js';
 import { RateSources, type PublicRate } from '../src/rates/rate-sources.js';
-import { argentinaToday, RatesService } from '../src/rates/rates.service.js';
+import { ratesToday, RatesService } from '../src/rates/rates.service.js';
 import { b64, buildRegistration, createTestApp } from './helpers.js';
 
 /** Fuente falsa: los tests nunca llaman a internet. */
@@ -49,7 +49,7 @@ describe('Cotizaciones (e2e)', () => {
     expect(await svc.refresh()).toBe(1);
     fake.rates = [{ base: 'USD', quote: 'ARS', rateType: 'mep', rate: '1670.5', provider: 'test' }];
     await svc.refresh();
-    const rows = await prisma.exchangeRate.findMany({ where: { provider: 'test', date: argentinaToday() } });
+    const rows = await prisma.exchangeRate.findMany({ where: { provider: 'test', date: ratesToday() } });
     expect(rows).toHaveLength(1);
     expect(rows[0].rate.toString()).toBe('1670.5');
 

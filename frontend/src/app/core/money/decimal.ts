@@ -3,37 +3,38 @@
  * Hasta 15 dígitos enteros y 4 decimales (Decimal(19,4)).
  */
 const CANONICAL = /^-?\d{1,15}(\.\d{1,4})?$/;
-/** Entero con puntos de miles bien agrupados: "1.234.567". */
-const THOUSANDS = /^-?\d{1,3}(\.\d{3})+$/;
+/** Entero con separador de miles bien agrupado: "1,234,567" o "1.234.567". */
+const THOUSANDS = { ',': /^-?\d{1,3}(,\d{3})+$/, '.': /^-?\d{1,3}(\.\d{3})+$/ };
 
-function stripThousands(int: string): string | null {
-  if (!int.includes('.')) return int;
-  return THOUSANDS.test(int) ? int.replace(/\./g, '') : null;
+function stripThousands(int: string, sep: ',' | '.'): string | null {
+  if (!int.includes(',') && !int.includes('.')) return int;
+  return THOUSANDS[sep].test(int) ? int.split(sep).join('') : null;
 }
 
+/** Formato de números de la app (Panamá): punto decimal y coma de miles. */
+export const NUMBER_LOCALE = 'es-PA';
+
 /**
- * Interpreta lo que escribe el usuario. Acepta "1.234,56" (es-AR), "1234,56", "1234.56" y "-500".
- * Con coma, la coma es el separador decimal y los puntos son de miles. Sin coma, un único punto
- * seguido de 1 o 2 dígitos es decimal; si no, los puntos son de miles ("1.500" = 1500).
+ * Interpreta un monto escrito por la persona. Formato de Panamá ("1,234.56"), tolerante:
+ * - con punto y coma, el último que aparece es el decimal ("1,234.56" y también "1.234,56");
+ * - solo puntos: uno solo es decimal ("12.5"); varios son de miles ("1.234.567");
+ * - solo comas: una sola seguida de exactamente 3 dígitos es de miles ("1,500"); si no, decimal ("12,5").
  */
 export function parseDecimalInput(input: string): string | null {
   let s = input.trim().replace(/\s/g, '').replace(/^\+/, '');
   if (s === '') return null;
-  if (s.includes(',')) {
-    const parts = s.split(',');
-    if (parts.length > 2) return null;
-    const int = stripThousands(parts[0]);
-    if (int === null) return null;
-    s = `${int}.${parts[1]}`;
-  } else {
-    const parts = s.split('.');
-    const isDecimalPoint = parts.length === 2 && parts[1].length >= 1 && parts[1].length <= 2;
-    if (!isDecimalPoint) {
-      const int = stripThousands(s);
-      if (int === null) return null;
-      s = int;
-    }
-  }
+  const lastDot = s.lastIndexOf('.');
+  const lastComma = s.lastIndexOf(',');
+  let decimalSep: '.' | ',' | null = null;
+  if (lastDot >= 0 && lastComma >= 0) decimalSep = lastDot > lastComma ? '.' : ',';
+  else if (lastDot >= 0) decimalSep = s.split('.').length === 2 ? '.' : null;
+  else if (lastComma >= 0) decimalSep = s.split(',').length === 2 && !/,\d{3}$/.test(s) ? ',' : null;
+  const thousandsSep = decimalSep === '.' ? ',' : decimalSep === ',' ? '.' : lastDot >= 0 ? '.' : ',';
+  const [intRaw, frac, extra] = decimalSep ? s.split(decimalSep) : [s];
+  if (extra !== undefined) return null;
+  const int = stripThousands(intRaw, thousandsSep);
+  if (int === null) return null;
+  s = frac !== undefined ? `${int}.${frac}` : int;
   if (!CANONICAL.test(s)) return null;
   return normalize(s);
 }
@@ -56,20 +57,22 @@ export function isCanonicalDecimal(value: string): boolean {
  * Formatea para mostrar. Usa Intl con el código de moneda cuando es ISO 4217;
  * para cripto (USDT, BTC) muestra el número y el símbolo.
  */
-export function formatMoney(amount: string, currency: { code: string; symbol: string; decimals: number }, locale = 'es-AR') {
+export function formatMoney(amount: string, currency: { code: string; symbol: string; decimals: number }, locale = NUMBER_LOCALE) {
   const negative = amount.startsWith('-');
   const [int, frac = ''] = amount.replace('-', '').split('.');
   const digits = `${frac}${'0'.repeat(currency.decimals)}`.slice(0, currency.decimals);
   // Intl formatea el entero como BigInt (sin pérdida) y armamos los decimales a mano.
   const intPart = new Intl.NumberFormat(locale).format(BigInt(int));
-  const decimalSep = new Intl.NumberFormat(locale).formatToParts(1.1).find((p) => p.type === 'decimal')?.value ?? ',';
+  const decimalSep = new Intl.NumberFormat(locale).formatToParts(1.1).find((p) => p.type === 'decimal')?.value ?? '.';
   const number = currency.decimals > 0 ? `${intPart}${decimalSep}${digits}` : intPart;
-  return `${negative ? '-' : ''}${currency.symbol} ${number}`;
+  // "$1,234.50" para el dólar; el resto, con espacio: "B/. 1,234.50", "€ 10.00".
+  const space = currency.symbol === '$' ? '' : ' ';
+  return `${negative ? '-' : ''}${currency.symbol}${space}${number}`;
 }
 
-/** Valor para editar en un input (formato es-AR, sin símbolo): "1234.5" → "1234,5". */
+/** Valor para editar en un input (punto decimal, sin símbolo ni separador de miles). */
 export function toInputValue(amount: string): string {
-  return amount.replace('.', ',');
+  return amount;
 }
 
 // ── Aritmética exacta: enteros escalados a 4 decimales con BigInt ─────────────

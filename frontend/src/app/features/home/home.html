@@ -54,7 +54,13 @@
       <mat-card-header>
         <mat-icon mat-card-avatar fontSet="material-symbols-outlined" aria-hidden="true">account_balance</mat-icon>
         <mat-card-title>{{ t('netWorth.title') }}</mat-card-title>
-        <mat-card-subtitle>{{ t('netWorth.subtitle', { usd: t('netWorth.usd.' + netWorth().usd) }) }}</mat-card-subtitle>
+        <mat-card-subtitle>
+          @if (netWorth().ars) {
+            {{ t('netWorth.subtitleArs', { usd: t('netWorth.usd.' + netWorth().usd) }) }}
+          } @else {
+            {{ t('netWorth.subtitle') }}
+          }
+        </mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
         <p class="nw-total" [class.neg]="netWorth().negative" data-testid="net-worth-total">{{ netWorth().total }}</p>

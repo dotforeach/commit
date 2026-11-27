@@ -64,7 +64,7 @@ export class TradeDialog {
 
   private readonly v = toSignal(this.form.valueChanges, { initialValue: this.form.getRawValue() });
   readonly type = computed(() => this.v().type ?? 'BUY');
-  private readonly currency = computed(() => this.accountsSvc.accounts().find((a) => a.id === this.v().accountId)?.currency ?? 'ARS');
+  private readonly currency = computed(() => this.accountsSvc.accounts().find((a) => a.id === this.v().accountId)?.currency ?? 'USD');
   /** Activos que cotizan en la moneda de la cuenta. */
   readonly assets = computed(() => this.savings.assets().filter((a) => a.currency === this.currency()));
   readonly creatingAsset = computed(() => !this.v().assetId);

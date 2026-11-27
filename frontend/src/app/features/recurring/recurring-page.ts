@@ -59,7 +59,7 @@ export class RecurringPage implements OnInit {
   }
 
   money(r: RecurringRule) {
-    const currency = this.accounts.accounts().find((a) => a.id === r.accountId)?.currency ?? 'ARS';
+    const currency = this.accounts.accounts().find((a) => a.id === r.accountId)?.currency ?? 'USD';
     return `${r.type === 'INCOME' ? '+' : '-'}${formatMoney(r.amount, this.currencies.get(currency))}`;
   }
 

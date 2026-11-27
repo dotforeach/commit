@@ -16,7 +16,8 @@ import { RegistrationService } from '../../../core/auth/registration.service';
 import { generateRecoveryPhrase, sameWord } from '../../../core/crypto/recovery-phrase';
 import { differentFrom, matchValidator } from '../../../shared/validators';
 
-const CURRENCIES = ['ARS', 'USD', 'UYU', 'CLP', 'BRL', 'PYG', 'BOB', 'PEN', 'COP', 'MXN', 'EUR'];
+/** Panamá primero (dólar); el resto, por cercanía. */
+const CURRENCIES = ['USD', 'PAB', 'COP', 'CRC', 'MXN', 'GTQ', 'DOP', 'HNL', 'NIO', 'PEN', 'BRL', 'CLP', 'ARS', 'UYU', 'PYG', 'BOB', 'EUR'];
 
 /** Tres posiciones distintas al azar (1..24) para confirmar que la frase fue anotada. */
 function pickPositions(): number[] {
@@ -63,7 +64,7 @@ export class Register {
     {
       displayName: ['', [Validators.required, Validators.maxLength(80)]],
       email: ['', [Validators.required, Validators.email]],
-      baseCurrency: ['ARS', Validators.required],
+      baseCurrency: ['USD', Validators.required],
       password: ['', [Validators.required, Validators.minLength(10)]],
       passwordConfirm: ['', Validators.required],
     },
