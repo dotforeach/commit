@@ -49,8 +49,8 @@ test('olvidé la clave: recupero con la frase y después la cambio desde ajustes
   await page.getByRole('button', { name: 'Cambiar clave' }).click();
   await expect(page).toHaveURL(/\/inicio$/, { timeout: 30_000 });
 
-  // Tras recargar, solo la última clave desbloquea; la frase sigue funcionando
-  await page.reload();
+  // Tras bloquear, solo la última clave desbloquea; la frase sigue funcionando
+  await page.getByRole('button', { name: 'Bloquear' }).click();
   await unlock(page, recovered);
   await expect(page.getByRole('alert')).toHaveText('Clave de descifrado incorrecta.', { timeout: 15_000 });
   await unlock(page, changed);

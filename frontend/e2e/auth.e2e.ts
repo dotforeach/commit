@@ -34,9 +34,26 @@ test('registro → datos cifrados → bloqueo → desbloqueo → recarga → log
   await page.getByRole('button', { name: 'Desbloquear' }).click();
   await expect(page.getByText('Finanzas de Ana Prueba')).toBeVisible({ timeout: 15_000 });
 
-  // Recargar: la sesión sigue (cookie de refresh) pero las claves no (solo en memoria)
+  // Recargar (F5): la pestaña sigue desbloqueada, sin pedir la clave
+  await page.reload();
+  await expect(page).toHaveURL(/\/inicio$/);
+  await expect(page.getByText('Finanzas de Ana Prueba')).toBeVisible({ timeout: 15_000 });
+  // Lo guardado en la pestaña está cifrado (no son las claves en claro)
+  const stored = await page.evaluate(() => sessionStorage.getItem('commit.session.keys') ?? '');
+  expect(stored).toMatch(/^[A-Za-z0-9+/=]+\.[A-Za-z0-9+/=]+$/);
+
+  // Otra pestaña no hereda el desbloqueo: pide la clave
+  const other = await page.context().newPage();
+  await other.goto('/inicio');
+  await expect(other).toHaveURL(/\/desbloquear$/);
+  await other.close();
+
+  // Bloquear borra lo guardado: al recargar pide la clave
+  await page.getByRole('button', { name: 'Bloquear' }).click();
+  await expect(page).toHaveURL(/\/desbloquear$/);
   await page.reload();
   await expect(page).toHaveURL(/\/desbloquear$/);
+  expect(await page.evaluate(() => sessionStorage.getItem('commit.session.keys'))).toBeNull();
   await page.getByLabel('Clave de descifrado').fill(passphrase);
   await page.getByRole('button', { name: 'Desbloquear' }).click();
   await expect(page.getByText('Finanzas de Ana Prueba')).toBeVisible({ timeout: 15_000 });

@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { createAccount, pick, registerViaUi, unlock } from './helpers';
+import { createAccount, pick, registerViaUi } from './helpers';
 
 test('cotizaciones: manual con prioridad, patrimonio neto consolidado y presupuesto convertido', async ({ page }) => {
   await registerViaUi(page, {
@@ -35,7 +35,6 @@ test('cotizaciones: manual con prioridad, patrimonio neto consolidado y presupue
     await blue.click();
     await expect(page.getByText('Tipo de dólar actualizado')).toBeVisible();
     await page.reload();
-    await unlock(page, 'clave de descifrado de cotizaciones');
     await page.getByRole('link', { name: 'Cotizaciones' }).click();
     await expect(page.locator('mat-radio-button[data-usd="blue"] input')).toBeChecked();
   }

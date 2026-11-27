@@ -9,7 +9,8 @@ import { clearRefreshCookie, REFRESH_COOKIE, setRefreshCookie } from './refresh-
 const REFRESH_TTL_MS = 30 * 24 * 3600 * 1000;
 
 /** Límite estricto (por IP) solo donde se prueban credenciales; refresh y logout usan uno amplio. */
-const CREDENTIALS_LIMIT = { default: { ttl: 60_000, limit: 10 } };
+// Se lee al cargar el módulo (los decoradores no tienen acceso a ConfigService); se valida en env.schema.
+const CREDENTIALS_LIMIT = { default: { ttl: 60_000, limit: Number(process.env['AUTH_RATE_LIMIT'] ?? 10) || 10 } };
 const SESSION_LIMIT = { default: { ttl: 60_000, limit: 120 } };
 
 @Public()

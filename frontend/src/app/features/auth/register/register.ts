@@ -122,7 +122,13 @@ export class Register {
       });
       await this.router.navigate(['/inicio']);
     } catch (e) {
-      this.error.set(e instanceof HttpErrorResponse && e.status === 409 ? 'errors.emailTaken' : 'errors.generic');
+      this.error.set(
+        e instanceof HttpErrorResponse && e.status === 409
+          ? 'errors.emailTaken'
+          : e instanceof HttpErrorResponse && e.status === 429
+            ? 'errors.tooManyAttempts'
+            : 'errors.generic',
+      );
     } finally {
       this.busy.set(false);
     }

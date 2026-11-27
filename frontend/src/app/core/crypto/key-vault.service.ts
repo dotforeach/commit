@@ -1,4 +1,5 @@
 import { Injectable, computed, signal } from '@angular/core';
+import { forgetIdentity, persistIdentity, restoreIdentity } from './session-keys';
 import type { MeResponse } from '../api/api.types';
 import { openPrivateKeys, sealPrivateKeys, wipeIdentity, type Identity } from './identity';
 import { DEFAULT_KDF_PARAMS, deriveKeyFromPassphrase, randomSalt } from './kdf';
@@ -79,6 +80,22 @@ export class KeyVaultService {
   async unlockWithIdentity(me: MeResponse, identity: Identity): Promise<void> {
     await this.loadHouseholdKeys(me, identity);
     this.identity.set(identity);
+    await persistIdentity(identity);
+  }
+
+  /** Tras recargar la pestaña: reabre la bóveda con las claves guardadas en esta pestaña (si hay). */
+  async tryRestore(me: MeResponse): Promise<boolean> {
+    if (this.isUnlocked()) return true;
+    const identity = await restoreIdentity();
+    if (!identity) return false;
+    try {
+      await this.loadHouseholdKeys(me, identity);
+      this.identity.set(identity);
+      return true;
+    } catch {
+      await forgetIdentity();
+      return false;
+    }
   }
 
   /**
@@ -162,6 +179,7 @@ export class KeyVaultService {
   setUnlocked(identity: Identity, householdKeys: Map<string, Map<number, Uint8Array>>) {
     this.householdKeys = householdKeys;
     this.identity.set(identity);
+    void persistIdentity(identity);
   }
 
   householdKey(householdId: string, version: number): Uint8Array {
@@ -171,6 +189,7 @@ export class KeyVaultService {
   }
 
   async lock(): Promise<void> {
+    await forgetIdentity();
     const s = await getSodium();
     const identity = this.identity();
     if (identity) await wipeIdentity(identity);

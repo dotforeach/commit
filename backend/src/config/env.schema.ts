@@ -15,6 +15,8 @@ export const envSchema = z.object({
   /** Job de recordatorios (cada minuto). */
   REMINDERS_JOB: z.stringbool().default(true),
   RATES_REFRESH: z.stringbool().default(true),
+  /** Intentos de login/registro por minuto y por IP (protege contra fuerza bruta). Subirlo solo en desarrollo. */
+  AUTH_RATE_LIMIT: z.coerce.number().int().positive().default(10),
   CORS_ORIGINS: z
     .string()
     .default('http://localhost:4200')

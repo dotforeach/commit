@@ -2,6 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { Injectable, NgZone, effect, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { KeyVaultService } from './key-vault.service';
+import { touchSessionActivity } from './session-keys';
 
 const STORAGE_KEY = 'finanzas.autoLockMinutes';
 export const AUTO_LOCK_OPTIONS = [5, 15, 30, 60, 0] as const; // 0 = nunca
@@ -23,7 +24,12 @@ export class AutoLockService {
   private timer: ReturnType<typeof setInterval> | null = null;
 
   constructor() {
-    const touch = () => (this.lastActivity = Date.now());
+    const touch = () => {
+      const now = Date.now();
+      // sessionStorage se escribe como mucho cada 5 s
+      if (now - this.lastActivity > 5_000) touchSessionActivity(now);
+      this.lastActivity = now;
+    };
     for (const ev of ['pointerdown', 'keydown', 'wheel', 'touchstart']) this.doc.addEventListener(ev, touch, { passive: true });
     this.doc.addEventListener('visibilitychange', () => {
       if (this.doc.visibilityState === 'visible') this.check();

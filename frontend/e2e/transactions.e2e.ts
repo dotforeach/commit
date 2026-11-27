@@ -101,8 +101,6 @@ test('movimientos: saldos, totales, transferencia entre monedas, edición y borr
   await page.getByRole('button', { name: 'Mes anterior' }).click();
   await expect(page.getByText('No hay movimientos en este mes.')).toBeVisible();
   await page.reload();
-  await page.getByLabel('Clave de descifrado').fill('clave de descifrado de movimientos');
-  await page.getByRole('button', { name: 'Desbloquear' }).click();
   await page.getByRole('link', { name: 'Cuentas' }).click();
   await expect(balanceOf(page, 'Banco')).toHaveText('$590,000.00', { timeout: 15_000 });
 

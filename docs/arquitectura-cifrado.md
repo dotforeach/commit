@@ -70,6 +70,14 @@ Los registros se guardan **cifrados** en IndexedDB y se sincronizan con `GET /sy
 
 Pendiente para el módulo de sync: una `revision` asignada por secuencia puede hacerse visible fuera de orden entre transacciones concurrentes. El endpoint debe devolver solo hasta una marca de agua segura (p. ej. basada en `pg_current_snapshot()`), no simplemente el máximo visto.
 
+## Recargar la pestaña (F5)
+
+Para no pedir la clave de descifrado en cada recarga, al desbloquear se guarda **solo el par de claves de la persona**, cifrado con AES-GCM usando una llave de WebCrypto **no exportable** (en IndexedDB). El texto cifrado va a `sessionStorage`, que pertenece a esa pestaña y se borra al cerrarla. Al recargar se descifra y se vuelven a abrir y verificar las claves de los hogares (con datos frescos del servidor).
+
+- Se borra al **bloquear**, al **cerrar sesión** y por **inactividad**. Si el tiempo de bloqueo automático pasó desde la última actividad, no se restaura.
+- Otra pestaña, una ventana nueva o el navegador reabierto **piden la clave**.
+- Límite: un script malicioso ejecutándose en el sitio podría usar esa llave mientras la pestaña está abierta, igual que podría leer las claves de la memoria. No agrega exposición frente a quien no tiene acceso al navegador desbloqueado.
+
 ## Recordatorios
 
 El navegador agenda `reminders` con `remindAt` en claro y el texto cifrado. Un job de BullMQ crea, a esa hora, una `notification` por miembro activo con el mismo payload cifrado. El servidor conoce cuándo, no qué ni cuánto.

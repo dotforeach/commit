@@ -25,8 +25,7 @@ test('hogar compartido: invitar, aceptar, verificar huella, dar acceso, ver dato
   // Invitado: con su propia cuenta abre el link y acepta; queda esperando acceso
   await registerViaUi(b, { name: 'Max Invitado', email: guestEmail, password: 'contraseña-de-ingreso-2', passphrase: 'clave de descifrado de Max' });
   await b.goto(link.replace(/^https?:\/\/[^/]+/, ''));
-  await b.getByLabel('Clave de descifrado').fill('clave de descifrado de Max'); // tras ir a otra URL hay que desbloquear
-  await b.getByRole('button', { name: 'Desbloquear' }).click();
+  // La pestaña sigue desbloqueada al abrir el link: no pide la clave
   await expect(b).toHaveURL(/\/unirme\?token=/, { timeout: 15_000 });
   await b.getByRole('button', { name: 'Aceptar invitación' }).click();
   await expect(b.getByTestId('join-pending')).toBeVisible();
@@ -34,8 +33,6 @@ test('hogar compartido: invitar, aceptar, verificar huella, dar acceso, ver dato
 
   // Dueña: ve al invitado pendiente con la MISMA huella y le da acceso
   await a.reload();
-  await a.getByLabel('Clave de descifrado').fill('clave de descifrado de Lu');
-  await a.getByRole('button', { name: 'Desbloquear' }).click();
   await expect(a).toHaveURL(/\/hogar$/, { timeout: 15_000 });
   const pending = a.locator(`li[data-member="${guestEmail}"]`);
   await expect(pending).toContainText('esperando acceso');
@@ -47,9 +44,7 @@ test('hogar compartido: invitar, aceptar, verificar huella, dar acceso, ver dato
   await expect(pending).not.toContainText('esperando acceso');
 
   // Invitado: pasa al hogar compartido y ve los datos descifrados con la clave compartida
-  await b.goto('/hogar');
-  await b.getByLabel('Clave de descifrado').fill('clave de descifrado de Max');
-  await b.getByRole('button', { name: 'Desbloquear' }).click();
+  await b.goto('/hogar'); // sigue desbloqueada y trae las claves nuevas del servidor
   await expect(b).toHaveURL(/\/hogar$/, { timeout: 15_000 });
   const shared = b.locator('li[data-household="Finanzas de Lu Dueña"]');
   await expect(shared).toBeVisible();
@@ -69,8 +64,6 @@ test('hogar compartido: invitar, aceptar, verificar huella, dar acceso, ver dato
 
   // Invitado: al volver a entrar ya no tiene ese hogar (vuelve al suyo)
   await b.reload();
-  await b.getByLabel('Clave de descifrado').fill('clave de descifrado de Max');
-  await b.getByRole('button', { name: 'Desbloquear' }).click();
   await expect(b).toHaveURL(/\/cuentas$/, { timeout: 15_000 });
   await expect(b.locator('li[data-account="Casa"]')).toHaveCount(0);
 

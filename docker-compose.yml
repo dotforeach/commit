@@ -60,6 +60,8 @@ services:
     environment:
       <<: *backend-env
       NODE_ENV: development
+      # Solo en desarrollo: los e2e registran muchas cuentas por minuto (producción usa 10).
+      AUTH_RATE_LIMIT: 200
       CORS_ORIGINS: http://localhost:4200
     volumes:
       - ./backend:/app

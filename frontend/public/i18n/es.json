@@ -116,8 +116,10 @@
       "sameAsPassword": "Tiene que ser distinta de la contraseña de ingreso.",
       "phraseMismatch": "Alguna palabra no coincide. Revisa tu frase.",
       "emailTaken": "Ya existe una cuenta con ese email.",
-      "generic": "No pudimos crear la cuenta. Prueba de nuevo."
-    }
+      "generic": "No pudimos crear la cuenta. Prueba de nuevo.",
+      "tooManyAttempts": "Demasiados intentos. Espera un minuto y vuelve a probar."
+    },
+    "backHome": "Volver a la página principal"
   },
   "login": {
     "title": "Ingresar",
@@ -131,7 +133,8 @@
       "invalidCredentials": "Email o contraseña incorrectos.",
       "tooManyAttempts": "Demasiados intentos. Espera un minuto y vuelve a probar.",
       "generic": "No pudimos iniciar sesión. Prueba de nuevo."
-    }
+    },
+    "backHome": "Volver a la página principal"
   },
   "unlock": {
     "title": "Desbloquear tus datos",
@@ -300,7 +303,8 @@
     "plan": "Plan mágico",
     "learn": "Aprende",
     "login": "Ingresar",
-    "register": "Crear cuenta"
+    "register": "Crear cuenta",
+    "brandHome": "Commit, ir a la página principal"
   },
   "accounts": {
     "title": "Cuentas",

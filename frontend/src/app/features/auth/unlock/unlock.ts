@@ -58,6 +58,7 @@ export class Unlock {
   }
 
   async logout() {
+    await this.vault.lock();
     await this.auth.logout();
     this.session.clear();
     await this.router.navigate(['/ingresar']);

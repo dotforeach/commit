@@ -1,6 +1,7 @@
 import { inject } from '@angular/core';
 import { Router, type CanActivateFn } from '@angular/router';
 import { KeyVaultService } from '../crypto/key-vault.service';
+import { SessionService } from '../session/session.service';
 import { AuthService } from './auth.service';
 
 const RETURN_KEY = 'finanzas.returnTo';
@@ -27,20 +28,29 @@ export const authGuard: CanActivateFn = async (_route, state) => {
 };
 
 /** Requiere además las claves desbloqueadas. */
-export const unlockedGuard: CanActivateFn = (_route, state) => {
+export const unlockedGuard: CanActivateFn = async (_route, state) => {
   const vault = inject(KeyVaultService);
+  const session = inject(SessionService);
+  const router = inject(Router);
   if (vault.isUnlocked()) return true;
+  // F5: si esta pestaña ya estaba desbloqueada, se restaura sin pedir la clave.
+  try {
+    const me = session.me() ?? (await session.load());
+    if (await vault.tryRestore(me)) return true;
+  } catch {
+    // sin sesión o sin red: sigue al desbloqueo
+  }
   remember(state.url);
-  return inject(Router).createUrlTree(['/desbloquear']);
+  return router.createUrlTree(['/desbloquear']);
 };
 
 /** Para login/registro: si ya hay sesión, va directo a desbloquear o al inicio. */
 export const guestGuard: CanActivateFn = async () => {
   const auth = inject(AuthService);
-  const vault = inject(KeyVaultService);
   const router = inject(Router);
   if (!(await auth.ensureSession())) return true;
-  return router.createUrlTree([vault.isUnlocked() ? '/inicio' : '/desbloquear']);
+  // /inicio (con unlockedGuard) restaura la pestaña o manda a desbloquear.
+  return router.createUrlTree(['/inicio']);
 };
 
 /** La landing es para visitantes: con sesión iniciada, "/" lleva a Inicio. */
