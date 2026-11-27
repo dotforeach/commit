@@ -12,12 +12,24 @@ server {
   gzip on;
   gzip_types text/css application/javascript application/json image/svg+xml;
 
+  # IP real de la persona: detrás de un balanceador (Azure Container Apps), la última IP no privada
+  # de X-Forwarded-For. Se reenvía limpia al backend (los límites de intentos son por IP).
+  set_real_ip_from 10.0.0.0/8;
+  set_real_ip_from 100.64.0.0/10;
+  set_real_ip_from 172.16.0.0/12;
+  set_real_ip_from 192.168.0.0/16;
+  real_ip_header X-Forwarded-For;
+  real_ip_recursive on;
+
   location /api/ {
     proxy_pass ${BACKEND_UPSTREAM};
     proxy_http_version 1.1;
-    proxy_set_header Host $host;
+    # Host del backend (en Container Apps el enrutamiento interno depende de él)
+    proxy_set_header Host ${BACKEND_HOST};
+    proxy_ssl_server_name on;
+    proxy_set_header X-Forwarded-Host $host;
     proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-For $remote_addr;
     proxy_set_header X-Forwarded-Proto $scheme;
   }
 

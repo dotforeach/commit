@@ -39,7 +39,14 @@ import { RedisModule } from './redis/redis.module.js';
         return {
           // Prefijo propio por entorno: los tests no comparten colas con el contenedor de desarrollo.
           prefix: config.get('QUEUE_PREFIX', { infer: true }),
-          connection: { host: url.hostname, port: Number(url.port || 6379), password: decodeURIComponent(url.password) || undefined, maxRetriesPerRequest: null },
+          connection: {
+            host: url.hostname,
+            port: Number(url.port || 6379),
+            password: decodeURIComponent(url.password) || undefined,
+            maxRetriesPerRequest: null,
+            // rediss:// (Azure Managed Redis y otros servicios administrados) exige TLS
+            ...(url.protocol === 'rediss:' ? { tls: { servername: url.hostname } } : {}),
+          },
         };
       },
     }),

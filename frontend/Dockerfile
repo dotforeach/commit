@@ -27,7 +27,8 @@ RUN pnpm run build --configuration production
 
 # ── Producción: nginx sirve la SPA y hace proxy de /api ─────────
 FROM nginx:stable-alpine AS prod
-ENV BACKEND_UPSTREAM=http://backend:3000
+ENV BACKEND_UPSTREAM=http://backend:3000 \
+    BACKEND_HOST=backend:3000
 COPY nginx/default.conf.template /etc/nginx/templates/default.conf.template
 COPY --from=build /app/dist/frontend/browser /usr/share/nginx/html
 EXPOSE 8080

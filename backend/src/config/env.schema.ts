@@ -50,6 +50,8 @@ export const envSchema = z.object({
   MAIL_FROM: z.string().default('Commit <no-reply@commit.local>'),
   /** URL pública de la app, para los enlaces de los correos. */
   APP_URL: z.string().default('http://localhost:4200'),
+  /** Proxies delante del backend (para leer la IP real). Compose: 1 (nginx). Azure: 2 (balanceador + nginx). */
+  TRUST_PROXY: z.coerce.number().int().min(0).max(5).default(1),
   CORS_ORIGINS: z
     .string()
     .default('http://localhost:4200')

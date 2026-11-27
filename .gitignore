@@ -18,3 +18,6 @@ graphify-out/cache/
 
 # graphify: estado interno (contiene rutas locales); se versiona solo el grafo y el reporte
 graphify-out/.graphify_*
+
+# Secretos generados para Azure (no se versionan)
+infra/.secrets.*.env

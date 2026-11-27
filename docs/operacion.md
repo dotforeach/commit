@@ -56,6 +56,7 @@ Se definen en `.env` (ver `.env.example`). La columna **Compose** indica si `doc
 | `PUBLIC_URL` | `http://localhost:8080` | Sí | Origen permitido por CORS en producción |
 | `FRONTEND_PORT` | `8080` | Sí | Puerto publicado por nginx |
 | `AUTH_RATE_LIMIT` | `10` | Solo dev (`200`) | Intentos de login/registro por minuto e IP |
+| `TRUST_PROXY` | `1` | **No** | Proxies delante del backend para leer la IP real (compose: nginx = 1; Azure: balanceador + nginx = 2) |
 
 ### Correo
 

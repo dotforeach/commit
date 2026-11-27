@@ -176,6 +176,7 @@ services:
     restart: unless-stopped
     environment:
       BACKEND_UPSTREAM: http://backend:3000
+      BACKEND_HOST: backend:3000
     ports:
       - "${FRONTEND_PORT:-8080}:8080"
     depends_on:

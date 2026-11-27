@@ -21,7 +21,7 @@ const app = await NestFactory.create<NestExpressApplication>(AppModule, {
 
 const config = app.get<ConfigService<Env, true>>(ConfigService);
 
-app.set('trust proxy', 1);
+app.set('trust proxy', config.get('TRUST_PROXY', { infer: true }));
 app.disable('x-powered-by');
 app.use(cookieParser());
 app.useGlobalPipes(new StandardSchemaValidationPipe());
