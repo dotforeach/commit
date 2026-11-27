@@ -28,12 +28,14 @@
             </mat-form-field>
             <mat-form-field>
               <mat-label>{{ t('account.password') }}</mat-label>
-              <input matInput type="password" formControlName="password" autocomplete="new-password" />
+              <input matInput type="password" formControlName="password" autocomplete="new-password" #pw6 />
+          <app-password-toggle matSuffix [for]="pw6" />
               <mat-hint>{{ t('account.passwordHint') }}</mat-hint>
             </mat-form-field>
             <mat-form-field>
               <mat-label>{{ t('account.passwordConfirm') }}</mat-label>
-              <input matInput type="password" formControlName="passwordConfirm" autocomplete="new-password" />
+              <input matInput type="password" formControlName="passwordConfirm" autocomplete="new-password" #pw7 />
+          <app-password-toggle matSuffix [for]="pw7" />
             </mat-form-field>
             @if (account.hasError('mismatch') && account.controls.passwordConfirm.touched) {
               <p class="error">{{ t('errors.passwordMismatch') }}</p>
@@ -57,7 +59,8 @@
             </div>
             <mat-form-field>
               <mat-label>{{ t('decryption.passphrase') }}</mat-label>
-              <input matInput type="password" formControlName="passphrase" autocomplete="off" />
+              <input matInput type="password" formControlName="passphrase" autocomplete="off" #pw8 />
+          <app-password-toggle matSuffix [for]="pw8" />
               <mat-hint>{{ t('decryption.passphraseHint') }}</mat-hint>
               @if (decryption.controls.passphrase.hasError('sameAsPassword')) {
                 <mat-error>{{ t('errors.sameAsPassword') }}</mat-error>
@@ -65,7 +68,8 @@
             </mat-form-field>
             <mat-form-field>
               <mat-label>{{ t('decryption.passphraseConfirm') }}</mat-label>
-              <input matInput type="password" formControlName="passphraseConfirm" autocomplete="off" />
+              <input matInput type="password" formControlName="passphraseConfirm" autocomplete="off" #pw9 />
+          <app-password-toggle matSuffix [for]="pw9" />
             </mat-form-field>
             @if (decryption.hasError('mismatch') && decryption.controls.passphraseConfirm.touched) {
               <p class="error">{{ t('errors.passphraseMismatch') }}</p>

@@ -21,7 +21,8 @@
         <p>{{ t('locked') }}</p>
         <mat-form-field subscriptSizing="dynamic">
           <mat-label>{{ t('token') }}</mat-label>
-          <input matInput type="password" name="token" [(ngModel)]="token" autocomplete="off" />
+          <input matInput type="password" name="token" [(ngModel)]="token" autocomplete="off" #pw10 />
+          <app-password-toggle matSuffix [for]="pw10" />
         </mat-form-field>
         <button mat-flat-button type="submit">{{ t('enter') }}</button>
       </form>

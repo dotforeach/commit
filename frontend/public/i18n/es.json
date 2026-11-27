@@ -1761,5 +1761,9 @@
     "updated": "Actualizado a las {{time}}",
     "every": "se actualiza cada 10 s",
     "backendDown": "El backend no responde."
+  },
+  "passwordToggle": {
+    "show": "Mostrar lo escrito",
+    "hide": "Ocultar lo escrito"
   }
 }

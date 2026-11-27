@@ -1,3 +1,4 @@
+import { PasswordToggle } from '../../../shared/password-toggle/password-toggle';
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -17,7 +18,7 @@ import { matchValidator } from '../../../shared/validators';
 /** "Olvidé mi clave de descifrado": la frase abre las claves y se define una clave nueva. */
 @Component({
   selector: 'app-recover',
-  imports: [
+  imports: [PasswordToggle, 
     ReactiveFormsModule,
     RouterLink,
     TranslocoDirective,

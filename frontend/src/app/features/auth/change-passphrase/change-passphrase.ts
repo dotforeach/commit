@@ -1,3 +1,4 @@
+import { PasswordToggle } from '../../../shared/password-toggle/password-toggle';
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -16,7 +17,7 @@ import { matchValidator } from '../../../shared/validators';
 /** Cambiar la clave de descifrado. Pide la actual aunque la bóveda esté abierta (equipo desatendido). */
 @Component({
   selector: 'app-change-passphrase',
-  imports: [
+  imports: [PasswordToggle, 
     ReactiveFormsModule,
     RouterLink,
     TranslocoDirective,

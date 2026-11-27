@@ -1,4 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
+import { PasswordToggle } from '../../../shared/password-toggle/password-toggle';
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -11,7 +12,7 @@ import { AuthService } from '../../../core/auth/auth.service';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, RouterLink, TranslocoDirective, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule],
+  imports: [PasswordToggle, ReactiveFormsModule, RouterLink, TranslocoDirective, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule],
   templateUrl: './login.html',
   styleUrl: '../_auth-shared.scss',
 })

@@ -9,16 +9,19 @@
       <form [formGroup]="form" class="form" (ngSubmit)="submit()">
         <mat-form-field>
           <mat-label>{{ t('current') }}</mat-label>
-          <input matInput type="password" formControlName="current" autocomplete="off" />
+          <input matInput type="password" formControlName="current" autocomplete="off" #pw3 />
+          <app-password-toggle matSuffix [for]="pw3" />
         </mat-form-field>
         <mat-form-field>
           <mat-label>{{ t('new') }}</mat-label>
-          <input matInput type="password" formControlName="passphrase" autocomplete="off" />
+          <input matInput type="password" formControlName="passphrase" autocomplete="off" #pw4 />
+          <app-password-toggle matSuffix [for]="pw4" />
           <mat-hint>{{ t('newHint') }}</mat-hint>
         </mat-form-field>
         <mat-form-field>
           <mat-label>{{ t('confirm') }}</mat-label>
-          <input matInput type="password" formControlName="passphraseConfirm" autocomplete="off" />
+          <input matInput type="password" formControlName="passphraseConfirm" autocomplete="off" #pw5 />
+          <app-password-toggle matSuffix [for]="pw5" />
         </mat-form-field>
         @if (form.hasError('mismatch') && form.controls.passphraseConfirm.touched) {
           <p class="error">{{ t('errors.mismatch') }}</p>

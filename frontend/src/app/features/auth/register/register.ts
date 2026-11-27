@@ -1,3 +1,4 @@
+import { PasswordToggle } from '../../../shared/password-toggle/password-toggle';
 import { Component, computed, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -31,7 +32,7 @@ function pickPositions(): number[] {
 
 @Component({
   selector: 'app-register',
-  imports: [
+  imports: [PasswordToggle, 
     ReactiveFormsModule,
     RouterLink,
     TranslocoDirective,

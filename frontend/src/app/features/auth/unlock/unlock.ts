@@ -1,3 +1,4 @@
+import { PasswordToggle } from '../../../shared/password-toggle/password-toggle';
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -16,7 +17,7 @@ import { SessionService } from '../../../core/session/session.service';
 
 @Component({
   selector: 'app-unlock',
-  imports: [
+  imports: [PasswordToggle, 
     ReactiveFormsModule,
     RouterLink,
     TranslocoDirective,

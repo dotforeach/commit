@@ -1,5 +1,6 @@
 import { DatePipe, KeyValuePipe } from '@angular/common';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { PasswordToggle } from '../../shared/password-toggle/password-toggle';
 import { Component, DestroyRef, computed, inject, signal, type OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -66,7 +67,7 @@ const TOKEN_KEY = 'commit.statusToken';
 
 @Component({
   selector: 'app-status-page',
-  imports: [DatePipe, KeyValuePipe, FormsModule, TranslocoDirective, MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule],
+  imports: [PasswordToggle, DatePipe, KeyValuePipe, FormsModule, TranslocoDirective, MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule],
   templateUrl: './status-page.html',
   styleUrl: './status-page.scss',
 })
