@@ -17,6 +17,8 @@ interface NavItem {
   label: string;
   icon: string;
   primary: boolean;
+  /** Solo en el panel "Más" del celular (en escritorio se llega desde Inicio y Deudas). */
+  mobileOnly?: boolean;
 }
 
 const NAV: NavItem[] = [
@@ -28,6 +30,7 @@ const NAV: NavItem[] = [
   { path: '/deudas', label: 'nav.debts', icon: 'credit_card', primary: true },
   { path: '/ahorro', label: 'nav.savings', icon: 'savings', primary: false },
   { path: '/cuentas', label: 'nav.accounts', icon: 'account_balance_wallet', primary: false },
+  { path: '/plan', label: 'nav.plan', icon: 'auto_awesome', primary: false, mobileOnly: true },
 ];
 
 @Component({
@@ -48,7 +51,7 @@ export class App {
   /** Secciones: las principales van fijas en la barra inferior del celular; el resto, en "Más". */
   protected readonly navPrimary = NAV.filter((i) => i.primary);
   protected readonly navSecondary = NAV.filter((i) => !i.primary);
-  protected readonly navDesktop = NAV;
+  protected readonly navDesktop = NAV.filter((i) => !i.mobileOnly);
   private readonly url = toSignal(inject(Router).events.pipe(filter((e) => e instanceof NavigationEnd), map((e) => e.urlAfterRedirects)), { initialValue: '' });
   protected readonly moreOpen = signal(false);
   protected readonly inSecondary = computed(() => this.navSecondary.some((i) => this.url().startsWith(i.path)));

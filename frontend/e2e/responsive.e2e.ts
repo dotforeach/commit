@@ -23,7 +23,7 @@ test('celular: barra inferior, panel "Más" y nada se sale de la pantalla', asyn
   }
 
   // "Más": abre el panel, navega y se cierra; queda marcado como activo
-  for (const [link, url] of [['Mi progreso', /\/progreso$/], ['Recurrentes', /\/recurrentes$/], ['Ahorro', /\/ahorro$/], ['Cuentas', /\/cuentas$/]] as const) {
+  for (const [link, url] of [['Mi progreso', /\/progreso$/], ['Recurrentes', /\/recurrentes$/], ['Ahorro', /\/ahorro$/], ['Cuentas', /\/cuentas$/], ['Plan mágico', /\/plan$/]] as const) {
     await page.getByTestId('nav-more').click();
     await page.locator('#nav-more-panel').getByRole('link', { name: link }).click();
     await expect(page).toHaveURL(url);
