@@ -31,11 +31,13 @@ test('cotizaciones: manual con prioridad, patrimonio neto consolidado y presupue
   // Cambiar el tipo de dólar se guarda (la cotización propia sigue mandando)
   await page.getByRole('link', { name: 'Cotizaciones' }).click();
   const blue = page.locator('mat-radio-button[data-usd="blue"]');
+  await blue.waitFor({ timeout: 10_000 }).catch(() => undefined); // espera a que carguen las cotizaciones
   if (await blue.count()) {
     await blue.click();
     await expect(page.getByText('Tipo de dólar actualizado')).toBeVisible();
+    // Al recargar se queda en Cotizaciones (el enlace "Cotizaciones" solo está en Inicio)
     await page.reload();
-    await page.getByRole('link', { name: 'Cotizaciones' }).click();
+    await expect(page).toHaveURL(/\/cotizaciones$/);
     await expect(page.locator('mat-radio-button[data-usd="blue"] input')).toBeChecked();
   }
 
