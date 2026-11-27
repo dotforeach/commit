@@ -4,6 +4,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import type { Env } from './config/env.schema.js';
 import { NotificationsModule } from './notifications/notifications.module.js';
 import { ReceiptsModule } from './receipts/receipts.module.js';
+import { StatusModule } from './status/status.module.js';
 import { ProgressModule } from './progress/progress.js';
 import { RatesModule } from './rates/rates.module.js';
 import { APP_GUARD } from '@nestjs/core';
@@ -60,6 +61,7 @@ import { RedisModule } from './redis/redis.module.js';
     ProgressModule,
     NotificationsModule,
     ReceiptsModule,
+    StatusModule,
   ],
   providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }],
 })

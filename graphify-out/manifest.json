@@ -30,15 +30,15 @@
     "semantic_hash": ""
   },
   "backend/src/app.module.ts": {
-    "mtime": 1795748282.1687813,
-    "seen": 1795752665.414815,
-    "ast_hash": "dc9f83c4c89b8059e1390b5321d8a4f5",
+    "mtime": 1795752994.1071167,
+    "seen": 1795753476.656586,
+    "ast_hash": "2fa909e2bc0712da9db5436895cc9134",
     "semantic_hash": ""
   },
   "backend/src/config/env.schema.ts": {
-    "mtime": 1795748282.1691432,
-    "seen": 1795752665.4151769,
-    "ast_hash": "2501791402ad86b337751e5e2477462e",
+    "mtime": 1795752994.1069314,
+    "seen": 1795753476.656971,
+    "ast_hash": "6d761247589d4495ccea4daec0806e06",
     "semantic_hash": ""
   },
   "backend/src/health/database.health.ts": {
@@ -108,9 +108,9 @@
     "semantic_hash": ""
   },
   "docker-compose.yml": {
-    "mtime": 1795752451.2776337,
-    "seen": 1795752665.4165719,
-    "ast_hash": "122167e3eb1f18621bcd5b5b00ad93ac",
+    "mtime": 1795753197.3318357,
+    "seen": 1795753476.6586518,
+    "ast_hash": "705531afb3c60292058cfe4317e71e68",
     "semantic_hash": ""
   },
   "frontend/.vscode/extensions.json": {
@@ -162,9 +162,9 @@
     "semantic_hash": ""
   },
   "frontend/src/app/app.routes.ts": {
-    "mtime": 1795748282.173248,
-    "seen": 1795752665.4170082,
-    "ast_hash": "925827cc8737573e97151508d58dfd0f",
+    "mtime": 1795753069.7029064,
+    "seen": 1795753476.6592782,
+    "ast_hash": "f6d208ad029d2ed3a67d628d7c31fe6d",
     "semantic_hash": ""
   },
   "frontend/src/app/app.spec.ts": {
@@ -174,9 +174,9 @@
     "semantic_hash": ""
   },
   "frontend/src/app/app.ts": {
-    "mtime": 1795748282.1734767,
-    "seen": 1795752665.4170291,
-    "ast_hash": "59c368b0fcd5ab84ba8fcebca0500a5b",
+    "mtime": 1795753069.703206,
+    "seen": 1795753476.6593,
+    "ast_hash": "df55ebd234dbfac15dcf270e525eed82",
     "semantic_hash": ""
   },
   "frontend/src/main.ts": {
@@ -216,9 +216,9 @@
     "semantic_hash": ""
   },
   "frontend/src/app/app.html": {
-    "mtime": 1795748282.1731122,
-    "seen": 1795752665.420213,
-    "ast_hash": "8307854b3fdada46149e316f0974fb96",
+    "mtime": 1795753069.7030334,
+    "seen": 1795753476.663326,
+    "ast_hash": "99914fe8ea08f27267001830567aa9da",
     "semantic_hash": ""
   },
   "frontend/src/index.html": {
@@ -228,9 +228,9 @@
     "semantic_hash": ""
   },
   "frontend/public/i18n/es.json": {
-    "mtime": 1795748282.1728735,
-    "seen": 1795752665.4169862,
-    "ast_hash": "3662dd36c680fb709b1c751d002908b6",
+    "mtime": 1795753069.7050354,
+    "seen": 1795753476.6592371,
+    "ast_hash": "9956c4c98867336a7b2d2775d540a683",
     "semantic_hash": ""
   },
   "frontend/src/app/core/i18n/transloco-loader.ts": {
@@ -2163,6 +2163,48 @@
     "mtime": 1795752333.0593474,
     "seen": 1795752665.420907,
     "ast_hash": "586d5345307eded40195abce83f61e2e",
+    "semantic_hash": ""
+  },
+  "backend/src/status/status.controller.spec.ts": {
+    "mtime": 1795753197.3127632,
+    "seen": 1795753476.657989,
+    "ast_hash": "e437576fe3b422f77100f6f05c3e0b9d",
+    "semantic_hash": ""
+  },
+  "backend/src/status/status.controller.ts": {
+    "mtime": 1795752994.0696297,
+    "seen": 1795753476.65799,
+    "ast_hash": "598614b8ac7a0a8d1ac98068998f360f",
+    "semantic_hash": ""
+  },
+  "backend/src/status/status.module.ts": {
+    "mtime": 1795752994.0715537,
+    "seen": 1795753476.657991,
+    "ast_hash": "e07df43155a6b3aab931b15818817092",
+    "semantic_hash": ""
+  },
+  "backend/src/status/status.service.ts": {
+    "mtime": 1795753053.1970534,
+    "seen": 1795753476.657991,
+    "ast_hash": "495d1ae12b199611205fabdfea994a2a",
+    "semantic_hash": ""
+  },
+  "frontend/e2e/status.e2e.ts": {
+    "mtime": 1795753091.4490733,
+    "seen": 1795753476.6591098,
+    "ast_hash": "6f0e57ebbf8301357dd33db47ea6fa8b",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/status/status-page.ts": {
+    "mtime": 1795753161.875135,
+    "seen": 1795753476.662705,
+    "ast_hash": "0e26df47206b1c3506beeccfa6b0abd8",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/status/status-page.html": {
+    "mtime": 1795753161.8752723,
+    "seen": 1795753476.664124,
+    "ast_hash": "a5913eca694a12a5221699a2b4bdd056",
     "semantic_hash": ""
   },
   "backend/pnpm-lock.yaml": {

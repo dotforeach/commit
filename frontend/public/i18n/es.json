@@ -311,7 +311,8 @@
       "light": "Tema: claro (toca para oscuro)",
       "dark": "Tema: oscuro (toca para seguir al sistema)"
     },
-    "review": "Por revisar"
+    "review": "Por revisar",
+    "status": "Estado"
   },
   "accounts": {
     "title": "Cuentas",
@@ -1708,5 +1709,57 @@
     "note": "El cobro se habilitará cuando se configure el proveedor de pagos. Puedes cancelar cuando quieras.",
     "error": "No se pudo iniciar el pago.",
     "back": "Volver a Ajustes"
+  },
+  "status": {
+    "title": "Estado de la infraestructura",
+    "subtitle": "Lo que está corriendo ahora mismo, verificado en vivo cada 10 segundos. Toca un componente para ver sus detalles.",
+    "allUp": "Todo funcionando",
+    "someDown": "{{n}} con problemas",
+    "refresh": "Actualizar",
+    "locked": "En producción, esta página requiere el token de operador.",
+    "token": "Token de operador",
+    "enter": "Ver estado",
+    "diagramLabel": "Diagrama de la infraestructura con el estado de cada componente",
+    "zones": {
+      "app": "Aplicación",
+      "data": "Datos y servicios internos",
+      "external": "Servicios externos"
+    },
+    "nodes": {
+      "browser": "Navegador / PWA",
+      "frontend": "Frontend",
+      "backend": "Backend API",
+      "postgres": "PostgreSQL",
+      "redis": "Redis",
+      "queues": "Colas (BullMQ)",
+      "ocr": "OCR (RapidOCR)",
+      "whatsapp": "WhatsApp (Meta)",
+      "ai": "IA (Claude)",
+      "rates": "Cotizaciones",
+      "push": "Web Push"
+    },
+    "states": {
+      "up": "Funcionando",
+      "down": "Caído",
+      "disabled": "Desactivado",
+      "configured": "Configurado"
+    },
+    "descriptions": {
+      "browser": "Tu navegador: descifra y cifra los datos con tus claves.",
+      "frontend": "La app Angular (Vite en desarrollo, nginx en producción).",
+      "backend": "API NestJS: autenticación, datos cifrados, colas y servicios.",
+      "postgres": "Base de datos: guarda los datos cifrados.",
+      "redis": "Sesiones de refresco, códigos de vinculación y colas.",
+      "queues": "Trabajos en segundo plano: recordatorios, cotizaciones y comprobantes.",
+      "ocr": "Lee el texto de las facturas en nuestro servidor.",
+      "whatsapp": "Recibe fotos de facturas por WhatsApp. Se muestra si está configurado; no se le hacen llamadas de prueba.",
+      "ai": "Extrae y clasifica los datos de las facturas. Se muestra si está configurado; no se le hacen llamadas de prueba.",
+      "rates": "Cotizaciones de los últimos 7 días por fuente (BCE, CoinGecko, DolarApi).",
+      "push": "Notificaciones en el dispositivo (VAPID)."
+    },
+    "latency": "latencia",
+    "updated": "Actualizado a las {{time}}",
+    "every": "se actualiza cada 10 s",
+    "backendDown": "El backend no responde."
   }
 }

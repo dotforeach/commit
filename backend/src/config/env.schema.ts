@@ -40,6 +40,8 @@ export const envSchema = z.object({
   RECEIPTS_MONTHLY_LIMIT: z.coerce.number().int().positive().default(100),
   /** Exigir suscripción activa para procesar facturas (en desarrollo, false). */
   SUBSCRIPTIONS_ENFORCED: z.stringbool().default(false),
+  /** Token de operador para ver /estado en producción (vacío = no accesible en producción). */
+  STATUS_TOKEN: z.string().default(''),
   CORS_ORIGINS: z
     .string()
     .default('http://localhost:4200')

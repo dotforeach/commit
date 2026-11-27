@@ -1,0 +1,86 @@
+<ng-container *transloco="let t; prefix: 'status'">
+  <section class="page">
+    <header class="head">
+      <div>
+        <h2>{{ t('title') }}</h2>
+        <p class="subtitle">{{ t('subtitle') }}</p>
+      </div>
+      <div class="summary" data-testid="status-summary">
+        <span class="pill" [class.bad]="summary().down > 0">
+          <span class="dot" [class.down]="summary().down > 0"></span>
+          {{ summary().down > 0 ? t('someDown', { n: summary().down }) : t('allUp') }}
+        </span>
+        <button mat-button (click)="refresh()" [disabled]="loading()">
+          <mat-icon fontSet="material-symbols-outlined">refresh</mat-icon>{{ t('refresh') }}
+        </button>
+      </div>
+    </header>
+
+    @if (error() === 'locked') {
+      <form class="token" (ngSubmit)="unlock()">
+        <p>{{ t('locked') }}</p>
+        <mat-form-field subscriptSizing="dynamic">
+          <mat-label>{{ t('token') }}</mat-label>
+          <input matInput type="password" name="token" [(ngModel)]="token" autocomplete="off" />
+        </mat-form-field>
+        <button mat-flat-button type="submit">{{ t('enter') }}</button>
+      </form>
+    } @else {
+      <div class="diagram" role="img" [attr.aria-label]="t('diagramLabel')">
+        <svg viewBox="0 0 1170 600" xmlns="http://www.w3.org/2000/svg">
+          <!-- Zonas -->
+          <rect class="zone" x="5" y="80" width="695" height="510" rx="20" />
+          <text class="zone-label" x="22" y="106">{{ t('zones.app') }}</text>
+          <rect class="zone" x="722" y="80" width="216" height="510" rx="20" />
+          <text class="zone-label" x="738" y="92">{{ t('zones.data') }}</text>
+          <rect class="zone external" x="948" y="15" width="216" height="575" rx="20" />
+          <text class="zone-label" x="962" y="27">{{ t('zones.external') }}</text>
+
+          @for (e of edges(); track e.key) {
+            <path class="edge" [attr.d]="e.d" [class]="'edge ' + e.state" />
+          }
+
+          @for (b of boxes; track b.id) {
+            <g class="node" [class]="'node ' + stateOf(b.id)" [class.selected]="selected() === b.id"
+               [attr.transform]="'translate(' + b.x + ',' + b.y + ')'" (click)="selected.set(b.id)"
+               (keydown.enter)="selected.set(b.id)" tabindex="0" role="button" [attr.aria-label]="t('nodes.' + b.id) + ': ' + t('states.' + stateOf(b.id))"
+               [attr.data-node]="b.id" [attr.data-state]="stateOf(b.id)">
+              <rect [attr.width]="W" [attr.height]="H" rx="14" />
+              <text class="icon" x="16" y="44">{{ b.icon }}</text>
+              <text class="name" x="52" y="30">{{ t('nodes.' + b.id) }}</text>
+              <text class="sub" x="52" y="50">{{ t('states.' + stateOf(b.id)) }}{{ latency(b.id) ? ' · ' + latency(b.id) : '' }}</text>
+              <circle class="led" [attr.cx]="W - 16" cy="16" r="5" />
+            </g>
+          }
+        </svg>
+      </div>
+
+      @if (selectedNode(); as n) {
+        <aside class="details" data-testid="status-details">
+          <h3>{{ t('nodes.' + n.id) }} <span class="state" [class]="'state ' + n.state">{{ t('states.' + n.state) }}</span></h3>
+          <p class="meta">{{ t('descriptions.' + n.id) }}</p>
+          <dl>
+            @if (n.latencyMs !== null) {
+              <dt>{{ t('latency') }}</dt><dd>{{ n.latencyMs }} ms</dd>
+            }
+            @for (kv of n.details | keyvalue; track kv.key) {
+              <dt>{{ kv.key }}</dt><dd>{{ kv.value ?? '—' }}</dd>
+            }
+          </dl>
+        </aside>
+      }
+
+      <p class="meta foot">
+        {{ t('updated', { time: (lastOk() | date: 'HH:mm:ss') ?? '—' }) }} · {{ t('every') }}
+        @if (error() === 'down') {
+          · <span class="err">{{ t('backendDown') }}</span>
+        }
+      </p>
+      <div class="legend">
+        @for (s of ['up', 'configured', 'disabled', 'down']; track s) {
+          <span><span class="dot" [class]="'dot ' + s"></span>{{ t('states.' + s) }}</span>
+        }
+      </div>
+    }
+  </section>
+</ng-container>

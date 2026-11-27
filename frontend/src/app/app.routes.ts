@@ -40,6 +40,12 @@ export const routes: Routes = [
     loadComponent: () => import('./features/tools/debit-card-page').then((m) => m.DebitCardPage),
   },
   {
+    // Sin guard: en desarrollo es abierta; en producción el backend exige el token de operador.
+    path: 'estado',
+    title: 'Estado de la infraestructura · Commit',
+    loadComponent: () => import('./features/status/status-page').then((m) => m.StatusPage),
+  },
+  {
     path: 'aprende/:slug',
     loadComponent: () => import('./features/learn/article-page').then((m) => m.ArticlePage),
   },

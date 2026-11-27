@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, isDevMode, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { filter, map } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
@@ -53,6 +53,7 @@ export class App {
   protected readonly auth = inject(AuthService);
   protected readonly theme = inject(ThemeService);
   protected readonly version = APP_VERSION;
+  protected readonly devMode = isDevMode();
 
   /** Secciones: las principales van fijas en la barra inferior del celular; el resto, en "Más". */
   protected readonly navPrimary = NAV.filter((i) => i.primary);

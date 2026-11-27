@@ -92,5 +92,8 @@
     <a href="https://github.com/dotforeach/commit" target="_blank" rel="noopener">{{ t('footer.source') }}</a> ·
     <a routerLink="/aprende">{{ t('nav.learn') }}</a> ·
     <a routerLink="/herramientas">{{ t('nav.tools') }}</a>
+    @if (devMode) {
+      · <a routerLink="/estado" data-testid="footer-status">{{ t('nav.status') }}</a>
+    }
   </footer>
 </ng-container>
