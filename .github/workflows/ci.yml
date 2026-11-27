@@ -68,6 +68,17 @@ jobs:
     needs: [backend, frontend]
     steps:
       - uses: actions/checkout@v4
+      # Dependencias ANTES de levantar el stack: el compose monta un volumen en frontend/node_modules y
+      # Docker crearía esa carpeta como root, y pnpm ya no podría escribir ahí.
+      - uses: pnpm/action-setup@v4
+        with: { package_json_file: frontend/package.json }
+      - uses: actions/setup-node@v4
+        with: { node-version: 24, cache: pnpm, cache-dependency-path: frontend/pnpm-lock.yaml }
+      - name: Dependencias y navegador de Playwright
+        working-directory: frontend
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm exec playwright install --with-deps chromium
       - name: Entorno de prueba
         run: |
           cp .env.example .env
@@ -83,15 +94,11 @@ jobs:
           done
           docker compose --profile dev logs --tail 80 backend-dev frontend-dev
           exit 1
-      - uses: pnpm/action-setup@v4
-        with: { package_json_file: frontend/package.json }
-      - uses: actions/setup-node@v4
-        with: { node-version: 24, cache: pnpm, cache-dependency-path: frontend/pnpm-lock.yaml }
-      - working-directory: frontend
-        run: |
-          pnpm install --frozen-lockfile
-          pnpm exec playwright install --with-deps chromium
-          pnpm e2e
+      - name: E2E
+        working-directory: frontend
+        run: pnpm e2e
+      - if: failure()
+        run: docker compose --profile dev logs --tail 120 backend-dev frontend-dev
       - if: failure()
         uses: actions/upload-artifact@v4
         with: { name: playwright-report, path: frontend/test-results, retention-days: 7 }
