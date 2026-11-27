@@ -76,7 +76,7 @@ jobs:
         run: docker compose --profile dev up -d --build
       - name: Esperar a que responda
         run: |
-          for i in $(seq 1 90); do
+          for _ in $(seq 1 90); do
             code=$(curl -s -o /dev/null -w '%{http_code}' http://localhost:4200/api/status || true)
             [ "$code" = "200" ] && curl -sf -o /dev/null http://localhost:4200/ && exit 0
             sleep 5

@@ -12,9 +12,9 @@
     "semantic_hash": ""
   },
   "backend/package.json": {
-    "mtime": 1795793323.3858345,
-    "seen": 1795793324.8759098,
-    "ast_hash": "7c7ebb3554efa716b259f55dac37ceef",
+    "mtime": 1795794300.7847788,
+    "seen": 1795794751.3658519,
+    "ast_hash": "e156c99c623d0edaca793e17006d500a",
     "semantic_hash": ""
   },
   "backend/pnpm-workspace.yaml": {
@@ -30,15 +30,15 @@
     "semantic_hash": ""
   },
   "backend/src/app.module.ts": {
-    "mtime": 1795753513.5731087,
-    "seen": 1795753938.6550112,
-    "ast_hash": "2fa909e2bc0712da9db5436895cc9134",
+    "mtime": 1795794172.1346967,
+    "seen": 1795794751.365982,
+    "ast_hash": "0445fd74c7fbf50bc1ee1eaa2710527f",
     "semantic_hash": ""
   },
   "backend/src/config/env.schema.ts": {
-    "mtime": 1795793323.3893733,
-    "seen": 1795793324.875941,
-    "ast_hash": "f602ccd05e8c965170c365e3a95a95b5",
+    "mtime": 1795794154.429781,
+    "seen": 1795794751.36643,
+    "ast_hash": "fe4f49f7c775560b0a77f2e133b0ba3b",
     "semantic_hash": ""
   },
   "backend/src/health/database.health.ts": {
@@ -60,9 +60,9 @@
     "semantic_hash": ""
   },
   "backend/src/main.ts": {
-    "mtime": 1795748282.1692607,
-    "seen": 1795752665.415576,
-    "ast_hash": "70bb9fde8b5cbaadd4f45a1d98ae1224",
+    "mtime": 1795794154.4300506,
+    "seen": 1795794751.3668768,
+    "ast_hash": "8994073dcfb2740c3733917315b231e0",
     "semantic_hash": ""
   },
   "backend/src/prisma/prisma.module.ts": {
@@ -108,9 +108,9 @@
     "semantic_hash": ""
   },
   "docker-compose.yml": {
-    "mtime": 1795793323.3922713,
-    "seen": 1795793324.8760052,
-    "ast_hash": "2dcf51b6aa04f1e64edae5d34ac20b0d",
+    "mtime": 1795794154.4296367,
+    "seen": 1795794751.3682292,
+    "ast_hash": "539ec491bee488f2cc125ca7d4512048",
     "semantic_hash": ""
   },
   "frontend/.vscode/extensions.json": {
@@ -966,9 +966,9 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1795793323.3856177,
-    "seen": 1795793324.876145,
-    "ast_hash": "ccc5230b02e5d4deca5b0c335230a3eb",
+    "mtime": 1795794437.3018796,
+    "seen": 1795794751.3732102,
+    "ast_hash": "5f4277c3fb318b0aa57f3b7c1793adaa",
     "semantic_hash": ""
   },
   "backend/src/budgets/budgets.controller.ts": {
@@ -2232,9 +2232,9 @@
     "semantic_hash": ""
   },
   "docs/operacion.md": {
-    "mtime": 1795793323.3931577,
-    "seen": 1795793324.876148,
-    "ast_hash": "ac1c5a95c70d75acefd16ff4db733512",
+    "mtime": 1795794470.1066406,
+    "seen": 1795794751.3732831,
+    "ast_hash": "191262d5ea1f75f0f42744ddf2188c55",
     "semantic_hash": ""
   },
   "backend/prisma/migrations/20261127022859_whatsapp_receipts/migration.sql": {
@@ -2351,10 +2351,52 @@
     "ast_hash": "e2538ff405498ed0034053cafbeb4864",
     "semantic_hash": ""
   },
+  ".github/workflows/ci.yml": {
+    "mtime": 1795794292.088309,
+    "seen": 1795794751.365762,
+    "ast_hash": "066da38617baca34b34f5052210a9b7d",
+    "semantic_hash": ""
+  },
+  ".github/workflows/deploy.yml": {
+    "mtime": 1795794292.0904324,
+    "seen": 1795794751.365765,
+    "ast_hash": "927f3257f83010a7b71344e72e9a91df",
+    "semantic_hash": ""
+  },
+  "infra/scripts/bootstrap.sh": {
+    "mtime": 1795794333.539205,
+    "seen": 1795794751.3731892,
+    "ast_hash": "e6390522b6e47838ecca105e88f4e613",
+    "semantic_hash": ""
+  },
+  "infra/scripts/deploy.sh": {
+    "mtime": 1795794333.5348973,
+    "seen": 1795794751.3731892,
+    "ast_hash": "9b3e24b00066cbbfd9b5c6fe94ae407c",
+    "semantic_hash": ""
+  },
+  "infra/scripts/domains.sh": {
+    "mtime": 1795794333.5412552,
+    "seen": 1795794751.37319,
+    "ast_hash": "6cd5871843525379c322ed2ae50bc21c",
+    "semantic_hash": ""
+  },
+  "infra/scripts/smoke.sh": {
+    "mtime": 1795794341.0246122,
+    "seen": 1795794751.37319,
+    "ast_hash": "a9a8137de89653170c971c47f6015f11",
+    "semantic_hash": ""
+  },
+  "docs/despliegue-azure.md": {
+    "mtime": 1795794437.1100059,
+    "seen": 1795794751.3732638,
+    "ast_hash": "f7c65aa0591c12a73386bb84e41c778a",
+    "semantic_hash": ""
+  },
   "backend/pnpm-lock.yaml": {
-    "mtime": 1795793323.3866882,
-    "seen": 1795793324.876182,
-    "ast_hash": "9d157b42ae11a24edcc4784a2b918b57",
+    "mtime": 1795794300.898859,
+    "seen": 1795794751.3743622,
+    "ast_hash": "0d1f8d715dfc471453b1794b0e282da4",
     "semantic_hash": ""
   },
   "frontend/pnpm-lock.yaml": {

@@ -114,6 +114,8 @@ cd backend && node -e "import('web-push').then(w => console.log(w.generateVAPIDK
 | `REMINDERS_JOB` | `true` | **No** | Disparar recordatorios cada minuto |
 | `QUEUE_PREFIX` | `bull` | **No** | Prefijo de las colas en Redis (los tests usan uno propio por worker) |
 
+Sin los jobs internos (`RATES_REFRESH=false`, `REMINDERS_JOB=false`, como en Azure), las mismas tareas corren de a una pasada con `node dist/cron.js reminders` y `node dist/cron.js rates` (solo usan PostgreSQL). Ver [despliegue-azure.md](despliegue-azure.md).
+
 ## Migraciones
 
 ```bash

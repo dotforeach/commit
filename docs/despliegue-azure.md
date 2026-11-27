@@ -1,6 +1,6 @@
 # Despliegue en Azure
 
-Commit corre en **Azure Container Apps** (región **North Central US**), con dos ambientes completos: **staging** y **producción**. La infraestructura está como código (Bicep, en `infra/`) y GitHub Actions despliega solo: CI → staging → aprobación → producción.
+Commit corre en **Azure Container Apps** (región **North Central US**) en su versión **económica y bajo demanda**, con dos ambientes: **staging** y **producción**. La infraestructura está como código (Bicep, en `infra/`) y GitHub Actions despliega solo: CI → staging → aprobación → producción.
 
 ## Arquitectura
 
@@ -10,41 +10,80 @@ flowchart LR
     META["WhatsApp (Meta)"] -->|webhook| API
 
     subgraph shared["rg-commit-shared"]
-        ACR[("Container Registry<br/>commit-backend · commit-frontend<br/>commit-migrate · commit-ocr")]
+        ACR[("Container Registry")]
+        PG[("PostgreSQL 18 · B1ms<br/>commit_staging · commit_prod")]
+        BAK[("Blob Storage · Cool<br/>respaldos cifrados")]
     end
 
-    subgraph env["rg-commit-prod (y rg-commit-staging, igual)"]
-        subgraph cae["Container Apps Environment · commit-prod-env"]
-            WEB["commit-web<br/>nginx + SPA<br/>commit.atheneox.com"]
-            API["commit-api<br/>NestJS<br/>api-commit.atheneox.com"]
-            OCR["commit-ocr<br/>(opcional, interno)"]
-            JOB["commit-migrate<br/>job de migraciones"]
+    subgraph env["rg-commit-prod (staging igual, sin respaldo)"]
+        subgraph cae["Container Apps (solo consumo)"]
+            WEB["commit-web<br/>nginx + SPA<br/>0 → 2 réplicas"]
+            subgraph apiapp["commit-api · 0 → 1 réplica"]
+                API["api<br/>NestJS"]
+                RD["redis<br/>localhost"]
+            end
+            OCR["commit-ocr<br/>opcional · 0 → 1"]
+            CRON["commit-reminders · cada 5 min<br/>commit-rates · cada hora"]
+            JOB["commit-migrate<br/>en cada despliegue"]
+            BJ["commit-backup<br/>diario 02:00 Panamá"]
         end
-        PG[("PostgreSQL 18<br/>Flexible Server")]
-        RD[("Azure Managed Redis")]
-        LOG["Log Analytics<br/>(logs propios)"]
+        FILES[("Azure Files<br/>archivo de Redis")]
     end
 
     WEB -->|/api| API
+    API --- RD
+    RD --- FILES
     API --> PG
-    API --> RD
     API -.-> OCR
+    CRON --> PG
     JOB --> PG
+    BJ -->|pg_dump + age| BAK
+    BJ --> PG
     ACR -. imágenes .-> cae
-    cae -.-> LOG
     API -->|SMTP| MAIL["Resend"]
 ```
 
 | Recurso | Nombre | Notas |
 |---|---|---|
 | Grupos | `rg-commit-shared`, `rg-commit-staging`, `rg-commit-prod` | Región `northcentralus` |
-| Registro | `commitacr<sufijo>` | Compartido; las apps leen con identidad administrada (sin contraseñas) |
-| Frontend | `commit-web` | nginx; sirve la app y reenvía `/api` al backend |
-| Backend | `commit-api` | También expuesto en `api-…` para webhooks (Meta) y `/health`, `/ready` |
-| Migraciones | `commit-migrate` (job) | Se ejecuta en cada despliegue, **antes** de actualizar las apps |
+| Registro | `commitacr<sufijo>` (Basic) | Compartido; las apps leen con identidad administrada (sin contraseñas) |
+| PostgreSQL | `commit-pg-<sufijo>` (B1ms, PG 18) | **Compartido**: una base y un rol por ambiente (`commit_staging`, `commit_prod`); cada rol solo puede entrar a su base. TLS obligatorio, `citext` habilitado |
+| Frontend | `commit-web` | nginx; sirve la app y reenvía `/api` al backend. Escala a 0 |
+| Backend | `commit-api` | NestJS + **Redis en la misma réplica** (solo `localhost`). Escala a 0, máximo 1 réplica |
+| Archivo de Redis | `commitrs<env><sufijo>` (Azure Files) | Redis guarda una foto cada minuto si hubo cambios y al apagarse: las sesiones sobreviven al escalado a 0 |
+| Tareas programadas | `commit-reminders` (`*/5 * * * *`), `commit-rates` (`7 * * * *`) | `node dist/cron.js <tarea>`: solo usan PostgreSQL |
+| Migraciones | `commit-migrate` | Se ejecuta en cada despliegue, **antes** de actualizar las apps |
+| Respaldo | `commit-backup` (solo en prod) | Diario, respalda las dos bases |
+| Respaldos | `commitbak<sufijo>` (Blob, Cool) | Sin acceso por clave (solo identidades de Entra), borrado recuperable 7 días |
 | OCR | `commit-ocr` | Opcional (`enableOcr`), escala a 0 |
-| Base de datos | `commit-<env>-pg-<sufijo>` | PostgreSQL 18, extensión `citext` habilitada, TLS obligatorio |
-| Redis | `commit-<env>-redis-<sufijo>` | Azure Managed Redis (TLS, `noeviction` para las colas) |
+
+## Bajo demanda: qué implica
+
+- **Arranque en frío**: tras unos minutos sin uso, web y api se apagan. El primer pedido los despierta y tarda **unos 10–20 s**. La app es PWA, así que la pantalla carga al instante desde la caché; lo que tarda es la primera consulta.
+- **Recordatorios**: se revisan cada 5 minutos (`remindersSchedule`), aunque el backend esté apagado.
+- **WhatsApp**: el webhook despierta el backend; si la respuesta tarda, Meta reintenta.
+- **Redis**: es la única copia de sesiones y colas, por eso el backend tiene **máximo 1 réplica**. Si se cae sin apagarse bien, se pierde como mucho el último minuto (las personas afectadas vuelven a iniciar sesión). Durante un despliegue conviven brevemente dos réplicas; las sesiones creadas en esos segundos pueden perderse.
+- **Escalar**: cuando haya tráfico real, se cambia Redis a Azure Managed Redis y se sube `maxReplicas`.
+
+## Respaldos
+
+| Capa | Qué es | Retención | Costo |
+|---|---|---|---|
+| Automático de Azure | Restauración a cualquier minuto (PITR) del servidor | 7 días | Gratis hasta 32 GB |
+| **Diario externo** | `pg_dump` de cada base, **cifrado con age** y subido a Blob Storage | **30 diarios + 12 mensuales** | Centavos al mes |
+
+- El respaldo se cifra **antes de salir del contenedor** con una clave pública. La clave privada la genera `bootstrap.sh` en `infra/.secrets.backup-age.key`: **guárdala en tu gestor de contraseñas y bórrala de la máquina**. Sin ella, los respaldos no se pueden abrir (ni Azure ni nadie puede leerlos).
+- La retención la aplica Blob Storage con una política de ciclo de vida (`daily/` 30 días, `monthly/` 365 días).
+- Probar o restaurar:
+
+```bash
+# descargar y descifrar (para inspeccionar con pg_restore -l)
+infra/scripts/restore.sh 2026-11-27 commit_prod ~/ruta/backup-age.key
+# restaurar sobre una base (¡reemplaza su contenido!)
+infra/scripts/restore.sh 2026-11-27 commit_prod ~/ruta/backup-age.key "postgresql://…/commit_restore?sslmode=require"
+```
+
+Recomendado: probar una restauración una vez al mes en una base aparte.
 
 ## Dominios
 
@@ -57,16 +96,17 @@ Certificados administrados por Azure (gratis). `infra/scripts/domains.sh <env>` 
 
 ## Costo estimado (precios públicos de North Central US)
 
-| Recurso | Staging | Producción |
-|---|---|---|
-| PostgreSQL 18 (B1ms / B2s) + 32 GB | ≈ $16 | ≈ $53 |
-| Azure Managed Redis (Balanced B0) | ≈ $12 | ≈ $12 |
-| Container Apps (consumo; el backend siempre encendido por las colas) | ≈ $8 | ≈ $18 |
-| Log Analytics (30 días) | ≈ $2 | ≈ $4 |
-| Container Registry Basic (compartido) | ≈ $5 | — |
-| **Total mensual aproximado** | **≈ $43** | **≈ $87** |
+| Recurso | Costo aprox./mes |
+|---|---|
+| PostgreSQL 18 B1ms compartido + 32 GB | ≈ $16 (gratis 12 meses si la cuenta tiene el beneficio de cuenta nueva) |
+| Container Registry Basic | ≈ $5 |
+| Container Apps (web, api y tareas, bajo demanda) | ≈ $2–6 (gran parte entra en la cuota gratis mensual) |
+| Redis (contenedor) + Azure Files | ≈ $2–4 |
+| Respaldos en Blob (Cool) | < $1 |
+| Log Analytics (tope de 1 GB/día) | ≈ $0 (5 GB/mes gratis) |
+| **Total, ambos ambientes** | **≈ $25–32** |
 
-Estimaciones: verifica con la [calculadora de Azure](https://azure.microsoft.com/pricing/calculator/). Para ahorrar al inicio, producción puede arrancar con PostgreSQL B1ms (≈ $16) y subir cuando haga falta.
+Container Apps incluye por suscripción y por mes 180 000 vCPU-s, 360 000 GiB-s y 2 millones de pedidos gratis. Verifica con la [calculadora de Azure](https://azure.microsoft.com/pricing/calculator/).
 
 ## CI/CD (GitHub Actions)
 
@@ -81,8 +121,8 @@ flowchart LR
 ```
 
 - `.github/workflows/ci.yml`: backend (typecheck, lint, unitarios y e2e con PostgreSQL 18 y Redis), frontend (íconos, unitarios, build) y e2e en navegador con el stack completo.
-- `.github/workflows/deploy.yml`: se dispara cuando el CI pasa en `main` (o a mano). Etiqueta las imágenes con el SHA del commit.
-- **Autenticación OIDC**: GitHub obtiene un token temporal de Azure; no se guarda ninguna contraseña de Azure. La aplicación `commit-github-deploy` solo puede usarse desde este repo en los ambientes `staging` y `production`.
+- `.github/workflows/deploy.yml`: se dispara cuando el CI pasa en `main` (o a mano). Construye `commit-backend`, `commit-migrate`, `commit-frontend`, `commit-ocr` y `commit-backup`, etiquetadas con el SHA del commit.
+- **Autenticación OIDC**: GitHub obtiene un token temporal de Azure; no se guarda ninguna contraseña de Azure. La aplicación `commit-github-deploy` solo puede usarse desde este repo en los ambientes `staging` y `production`, y solo tiene permisos sobre los grupos de Commit.
 
 ### Configuración en GitHub (Settings → Environments)
 
@@ -90,11 +130,12 @@ Crea los ambientes **`staging`** y **`production`** y en cada uno:
 
 | Tipo | Nombre | Valor |
 |---|---|---|
-| Variable | `ACR_NAME` | Nombre del registro (lo imprime `bootstrap.sh`) |
+| Variable | `ACR_NAME` | Lo imprime `bootstrap.sh` |
 | Secreto | `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_SUBSCRIPTION_ID` | Los imprime `bootstrap.sh` |
-| Secreto | `PG_ADMIN_PASSWORD`, `JWT_SECRET`, `STATUS_TOKEN` | De `infra/.secrets.<env>.env` (generados, distintos por ambiente) |
+| Secreto | `DB_PASSWORD`, `JWT_SECRET`, `STATUS_TOKEN` | De `infra/.secrets.<env>.env` (distintos por ambiente) |
 | Secreto | `SMTP_URL` | `smtps://resend:<API_KEY>@smtp.resend.com:465` |
 | Secreto (opcional) | `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `ANTHROPIC_API_KEY` | Push e IA |
+| Solo production | Secreto `PG_ADMIN_PASSWORD` y variable `BACKUP_AGE_RECIPIENT` | Para el respaldo diario (`infra/.secrets.shared.env` y la clave pública que imprime `bootstrap.sh`) |
 
 En **production**, activa **Required reviewers**: cada pase a producción espera tu aprobación.
 
@@ -102,17 +143,17 @@ En **production**, activa **Required reviewers**: cada pase a producción espera
 
 ```bash
 az login                                   # tu sesión
-infra/scripts/bootstrap.sh                 # grupos, registro, OIDC, secretos, imágenes y primer despliegue
+infra/scripts/bootstrap.sh                 # grupos, compartidos, roles de base, OIDC, secretos, imágenes y primer despliegue
 infra/scripts/domains.sh staging           # muestra los registros DNS
 infra/scripts/domains.sh staging --bind    # cuando propaguen
 infra/scripts/domains.sh prod && infra/scripts/domains.sh prod --bind
 ```
 
-`bootstrap.sh` compila las primeras imágenes **en Azure** (`az acr build`), porque la Mac es ARM y Azure ejecuta x86.
+`bootstrap.sh` es idempotente y compila las primeras imágenes **en Azure** (`az acr build`), porque la Mac es ARM y Azure ejecuta x86. Para crear los roles de base abre una regla de firewall temporal solo para tu IP y la borra al terminar.
 
 ## Detalles de producción
 
-- **IP real**: nginx toma la IP de la persona desde `X-Forwarded-For` (última IP no privada) y el backend confía en 2 saltos (`TRUST_PROXY=2`): balanceador de Azure y nginx. Los límites de intentos de ingreso son por persona, no globales.
+- **IP real**: nginx toma la IP de la persona desde `X-Forwarded-For` y el backend confía en 2 saltos (`TRUST_PROXY=2`): balanceador de Azure y nginx. Los límites de intentos de ingreso son por persona.
 - **Llamadas directas a `api-…`**: existen para el webhook de Meta y las verificaciones de salud. Una llamada directa con `X-Forwarded-For` falso podría alterar la IP que ve el límite de intentos; la app usa siempre el camino por nginx.
 - **Secretos opcionales**: si una variable opcional (SMTP, IA, WhatsApp, push) no tiene valor, no se declara y la función queda desactivada.
 - **`/estado`** en producción requiere `STATUS_TOKEN`.

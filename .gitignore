@@ -20,4 +20,4 @@ graphify-out/cache/
 graphify-out/.graphify_*
 
 # Secretos generados para Azure (no se versionan)
-infra/.secrets.*.env
+infra/.secrets*
