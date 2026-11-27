@@ -4,7 +4,7 @@
 #  2. Recursos compartidos: registro, PostgreSQL 18 y almacenamiento de respaldos
 #  3. Roles de base de datos por ambiente (commit_staging, commit_prod)
 #  4. Identidad administrada para GitHub Actions con OIDC (sin contraseñas) y permisos mínimos
-#  5. Primeras imágenes (compiladas en Azure, x86) y primer despliegue de staging y prod
+#  5. Primeras imágenes (x86, con BuildKit) y primer despliegue de staging y prod
 set -euo pipefail
 LOCATION="${LOCATION:-northcentralus}"
 REPO="${REPO:-dotforeach/commit}"
@@ -48,12 +48,12 @@ echo "Registro: $ACR_NAME · PostgreSQL: $PG_HOST"
 
 # ── 3. Roles de base de datos (regla de firewall temporal para esta máquina) ──
 MYIP=$(curl -s https://api.ipify.org)
-az postgres flexible-server firewall-rule create -g rg-commit-shared -n "$PG_SERVER" -r bootstrap-tmp --start-ip-address "$MYIP" --end-ip-address "$MYIP" -o none
-trap 'az postgres flexible-server firewall-rule delete -g rg-commit-shared -n "$PG_SERVER" -r bootstrap-tmp --yes -o none 2>/dev/null || true' EXIT
+az postgres flexible-server firewall-rule create -g rg-commit-shared --server-name "$PG_SERVER" --name bootstrap-tmp --start-ip-address "$MYIP" --end-ip-address "$MYIP" -o none
+trap 'az postgres flexible-server firewall-rule delete -g rg-commit-shared --server-name "$PG_SERVER" --name bootstrap-tmp --yes -o none 2>/dev/null || true' EXIT
 for ENV in staging prod; do
   DB_PASSWORD=$(grep '^DB_PASSWORD=' "$SECRETS.$ENV.env" | cut -d= -f2-)
   R="commit_$ENV"
-  docker run --rm -e PGPASSWORD="$PG_ADMIN_PASSWORD" postgres:18-alpine psql -v ON_ERROR_STOP=1 -q \
+  docker run --rm -i -e PGPASSWORD="$PG_ADMIN_PASSWORD" postgres:18-alpine psql -v ON_ERROR_STOP=1 -q \
     "host=$PG_HOST user=$PG_ADMIN dbname=postgres sslmode=require" <<SQL
 DO \$\$ BEGIN
   IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = '$R') THEN CREATE ROLE $R LOGIN PASSWORD '$DB_PASSWORD';
@@ -65,8 +65,13 @@ REVOKE ALL ON DATABASE $R FROM PUBLIC;
 GRANT CONNECT ON DATABASE $R TO $R;
 \c $R
 CREATE EXTENSION IF NOT EXISTS citext;
+-- En Azure, public no es del dueño de la base (pg_database_owner): dárselo al rol del ambiente
+ALTER SCHEMA public OWNER TO $R;
 SQL
-  echo "Rol y base $R listos"
+  # Verificar de verdad: el rol entra a su base con su contraseña
+  docker run --rm -e PGPASSWORD="$DB_PASSWORD" postgres:18-alpine psql -tAc "select 1" \
+    "host=$PG_HOST user=$R dbname=$R sslmode=require" | grep -q 1 || { echo "✗ El rol $R no puede entrar"; exit 1; }
+  echo "Rol y base $R listos (verificado)"
 done
 
 # ── 4. GitHub Actions con OIDC ──
@@ -83,17 +88,24 @@ done
 grant() { az role assignment create --assignee-object-id "$SP" --assignee-principal-type ServicePrincipal --role "$1" --scope "$2" -o none; }
 for rg in rg-commit-staging rg-commit-prod; do grant Contributor "/subscriptions/$SUB/resourceGroups/$rg"; done
 grant AcrPush "$(az acr show -n "$ACR_NAME" --query id -o tsv)"
-# Leer el PostgreSQL compartido y asignar AcrPull / escritura de respaldos a las identidades de cada ambiente
+# Asignar AcrPull / escritura de respaldos a las identidades de cada ambiente
+# Leer los compartidos; en Noxi (grupo del ambiente noxi-env): registrar los discos de Redis y unir las apps
 grant Reader "/subscriptions/$SUB/resourceGroups/rg-commit-shared"
+grant Contributor "/subscriptions/$SUB/resourceGroups/Noxi"
 grant "Role Based Access Control Administrator" "/subscriptions/$SUB/resourceGroups/rg-commit-shared"
 
-# ── 5. Imágenes (compiladas en Azure) y primer despliegue ──
+# ── 5. Imágenes y primer despliegue ──
+# Se compilan acá para x86 (linux/amd64) con BuildKit (los Dockerfiles usan caché de pnpm, que el
+# compilador de ACR no soporta) y se suben directo al registro. Después las compila el CI.
 TAG="bootstrap-$(git rev-parse --short HEAD)"
-az acr build -r "$ACR_NAME" -t "commit-backend:$TAG" --target prod backend -o none
-az acr build -r "$ACR_NAME" -t "commit-migrate:$TAG" --target migrate backend -o none
-az acr build -r "$ACR_NAME" -t "commit-frontend:$TAG" --target prod frontend -o none
-az acr build -r "$ACR_NAME" -t "commit-ocr:$TAG" ocr -o none
-az acr build -r "$ACR_NAME" -t "commit-backup:$TAG" infra/backup -o none
+R="$ACR_NAME.azurecr.io"
+az acr login -n "$ACR_NAME" -o none
+img() { docker buildx build --platform linux/amd64 --push "$@"; }
+img --target prod    -t "$R/commit-backend:$TAG"  backend
+img --target migrate -t "$R/commit-migrate:$TAG"  backend
+img --target prod    -t "$R/commit-frontend:$TAG" frontend
+img                  -t "$R/commit-backup:$TAG"   infra/backup
+[ "${WITH_OCR:-false}" = true ] && img -t "$R/commit-ocr:$TAG" ocr
 
 for ENV in staging prod; do
   ( set -a; . "$SECRETS.$ENV.env"; [ "$ENV" = prod ] && . "$SECRETS.shared.env"; BACKUP_AGE_RECIPIENT="$BACKUP_AGE_RECIPIENT"; set +a

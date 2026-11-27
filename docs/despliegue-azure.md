@@ -16,15 +16,15 @@ flowchart LR
     end
 
     subgraph env["rg-commit-prod (staging igual, sin respaldo)"]
-        subgraph cae["Container Apps (solo consumo)"]
-            WEB["commit-web<br/>nginx + SPA<br/>0 → 2 réplicas"]
-            subgraph apiapp["commit-api · 0 → 1 réplica"]
+        subgraph cae["noxi-env · grupo Noxi · Container Apps compartido (apps de rg-commit-prod)"]
+            WEB["commit-prod-web<br/>nginx + SPA<br/>0 → 2 réplicas"]
+            subgraph apiapp["commit-prod-api · 0 → 1 réplica"]
                 API["api<br/>NestJS"]
                 RD["redis<br/>localhost"]
             end
-            OCR["commit-ocr<br/>opcional · 0 → 1"]
-            CRON["commit-reminders · cada 5 min<br/>commit-rates · cada hora"]
-            JOB["commit-migrate<br/>en cada despliegue"]
+            OCR["commit-prod-ocr<br/>opcional · 0 → 1"]
+            CRON["commit-prod-reminders · cada 5 min<br/>commit-prod-rates · cada hora"]
+            JOB["commit-prod-migrate<br/>en cada despliegue"]
             BJ["commit-backup<br/>diario 02:00 Panamá"]
         end
         FILES[("Azure Files<br/>archivo de Redis")]
@@ -40,22 +40,24 @@ flowchart LR
     BJ -->|pg_dump + age| BAK
     BJ --> PG
     ACR -. imágenes .-> cae
+    cae -.-> LOGS["Log Analytics<br/>(grupo Noxi)"]
     API -->|SMTP| MAIL["Resend"]
 ```
 
 | Recurso | Nombre | Notas |
 |---|---|---|
-| Grupos | `rg-commit-shared`, `rg-commit-staging`, `rg-commit-prod` | Región `northcentralus` |
+| Grupos | `rg-commit-shared`, `rg-commit-staging`, `rg-commit-prod` (y `Noxi`, ver abajo) | Región `northcentralus` |
 | Registro | `commitacr<sufijo>` (Basic) | Compartido; las apps leen con identidad administrada (sin contraseñas) |
 | PostgreSQL | `commit-pg-<sufijo>` (B1ms, PG 18) | **Compartido**: una base y un rol por ambiente (`commit_staging`, `commit_prod`); cada rol solo puede entrar a su base. TLS obligatorio, `citext` habilitado |
-| Frontend | `commit-web` | nginx; sirve la app y reenvía `/api` al backend. Escala a 0 |
-| Backend | `commit-api` | NestJS + **Redis en la misma réplica** (solo `localhost`). Escala a 0, máximo 1 réplica |
+| Ambiente de Container Apps | `noxi-env` (en el grupo `Noxi`, con su red `noxi-vnet` y sus logs) | **Compartido** por staging y prod. La suscripción (Azure for Students) admite **un solo ambiente** y Azure no permite renombrarlos: se reutiliza el de un proyecto anterior, ya sin otros recursos y etiquetado `app=commit`. Solo consumo, sin costo fijo. Las apps de cada ambiente viven en su grupo y llevan el ambiente en el nombre |
+| Frontend | `commit-<env>-web` | nginx; sirve la app y reenvía `/api` al backend. Escala a 0 |
+| Backend | `commit-<env>-api` | NestJS + **Redis en la misma réplica** (solo `localhost`). Escala a 0, máximo 1 réplica |
 | Archivo de Redis | `commitrs<env><sufijo>` (Azure Files) | Redis guarda una foto cada minuto si hubo cambios y al apagarse: las sesiones sobreviven al escalado a 0 |
-| Tareas programadas | `commit-reminders` (`*/5 * * * *`), `commit-rates` (`7 * * * *`) | `node dist/cron.js <tarea>`: solo usan PostgreSQL |
-| Migraciones | `commit-migrate` | Se ejecuta en cada despliegue, **antes** de actualizar las apps |
+| Tareas programadas | `commit-<env>-reminders` (`*/5 * * * *`), `commit-<env>-rates` (`7 * * * *`) | `node dist/cron.js <tarea>`: solo usan PostgreSQL |
+| Migraciones | `commit-<env>-migrate` | Se ejecuta en cada despliegue, **antes** de actualizar las apps |
 | Respaldo | `commit-backup` (solo en prod) | Diario, respalda las dos bases |
 | Respaldos | `commitbak<sufijo>` (Blob, Cool) | Sin acceso por clave (solo identidades de Entra), borrado recuperable 7 días |
-| OCR | `commit-ocr` | Opcional (`enableOcr`), escala a 0 |
+| OCR | `commit-<env>-ocr` | Opcional (`enableOcr`), escala a 0 |
 
 ## Bajo demanda: qué implica
 
@@ -149,7 +151,7 @@ infra/scripts/domains.sh staging --bind    # cuando propaguen
 infra/scripts/domains.sh prod && infra/scripts/domains.sh prod --bind
 ```
 
-`bootstrap.sh` es idempotente y compila las primeras imágenes **en Azure** (`az acr build`), porque la Mac es ARM y Azure ejecuta x86. Para crear los roles de base abre una regla de firewall temporal solo para tu IP y la borra al terminar.
+`bootstrap.sh` es idempotente y compila las primeras imágenes para x86 (`docker buildx --platform linux/amd64`, la Mac es ARM) y las sube al registro; el compilador de ACR no soporta la caché de BuildKit que usan los Dockerfiles. El OCR solo se compila con `WITH_OCR=true`. Para crear los roles de base abre una regla de firewall temporal solo para tu IP y la borra al terminar.
 
 ## Detalles de producción
 

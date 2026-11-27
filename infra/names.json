@@ -2,5 +2,7 @@
   "acr": "commitacr",
   "pg": "commit-pg",
   "pgAdmin": "commitadmin",
-  "backups": "commitbak"
+  "backups": "commitbak",
+  "env": "noxi-env",
+  "envGroup": "Noxi"
 }

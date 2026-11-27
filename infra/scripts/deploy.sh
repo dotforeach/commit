@@ -5,17 +5,18 @@
 set -euo pipefail
 : "${RG:?}" "${PARAMS:?}" "${ACR_NAME:?}" "${IMAGE_TAG:?}"
 REGISTRY="$ACR_NAME.azurecr.io"
+JOB="commit-${RG#rg-commit-}-migrate"   # rg-commit-prod → commit-prod-migrate
 
 migrate() {
   echo "▶ Migraciones con $IMAGE_TAG"
-  az containerapp job update -g "$RG" -n commit-migrate --image "$REGISTRY/commit-migrate:$IMAGE_TAG" -o none
+  az containerapp job update -g "$RG" -n "$JOB" --image "$REGISTRY/commit-migrate:$IMAGE_TAG" -o none
   local exec status=""
-  exec=$(az containerapp job start -g "$RG" -n commit-migrate --query name -o tsv)
+  exec=$(az containerapp job start -g "$RG" -n "$JOB" --query name -o tsv)
   for _ in $(seq 1 60); do
-    status=$(az containerapp job execution show -g "$RG" -n commit-migrate --job-execution-name "$exec" --query properties.status -o tsv)
+    status=$(az containerapp job execution show -g "$RG" -n "$JOB" --job-execution-name "$exec" --query properties.status -o tsv)
     case "$status" in
       Succeeded) echo "  migraciones aplicadas"; return 0 ;;
-      Failed|Stopped|Degraded) echo "✗ Las migraciones fallaron ($status). Logs: az containerapp job logs show -g $RG -n commit-migrate --execution $exec --container migrate"; exit 1 ;;
+      Failed|Stopped|Degraded) echo "✗ Las migraciones fallaron ($status). Logs: az containerapp job logs show -g $RG -n "$JOB" --execution $exec --container migrate"; exit 1 ;;
     esac
     sleep 10
   done
@@ -23,11 +24,15 @@ migrate() {
 }
 
 FIRST=true
-az containerapp job show -g "$RG" -n commit-migrate -o none 2>/dev/null && FIRST=false
+az containerapp job show -g "$RG" -n "$JOB" -o none 2>/dev/null && FIRST=false
 $FIRST || migrate
 
 echo "▶ Infraestructura y apps ($RG, $IMAGE_TAG)"
-az deployment group create -g "$RG" -f infra/main.bicep -p "$PARAMS" --name "commit-${IMAGE_TAG:0:40}" -o none
+# Un reintento: ARM a veces falla al leer un recurso recién creado (ResourceNotFound transitorio)
+az deployment group create -g "$RG" -f infra/main.bicep -p "$PARAMS" --name "commit-${IMAGE_TAG:0:40}" -o none || {
+  echo "  reintentando el despliegue en 30 s…"; sleep 30
+  az deployment group create -g "$RG" -f infra/main.bicep -p "$PARAMS" --name "commit-${IMAGE_TAG:0:40}-r" -o none
+}
 
 $FIRST && migrate
 echo "✔ Desplegado $IMAGE_TAG en $RG"

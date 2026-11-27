@@ -2,6 +2,7 @@
 //  - registro de imágenes (ACR Basic)
 //  - un solo PostgreSQL 18 (B1ms) con una base por ambiente
 //  - almacenamiento de los respaldos diarios cifrados (Blob, nivel Cool)
+//  (el ambiente de Container Apps es noxi-env, en el grupo Noxi: la suscripción admite uno solo)
 targetScope = 'resourceGroup'
 
 param location string = resourceGroup().location

@@ -2,7 +2,7 @@
 //  - web, api y ocr escalan a cero (el primer pedido tras un rato sin uso los despierta)
 //  - Redis va como contenedor junto al backend, con su archivo en Azure Files (no se pierden sesiones)
 //  - recordatorios y cotizaciones corren como tareas programadas (no hace falta el backend encendido)
-//  - PostgreSQL y el registro son compartidos (infra/shared.bicep)
+//  - PostgreSQL y el registro son compartidos (infra/shared.bicep); el ambiente es noxi-env
 // Uso: az deployment group create -g rg-commit-<env> -f infra/main.bicep -p infra/<env>.bicepparam
 targetScope = 'resourceGroup'
 
@@ -63,7 +63,7 @@ var acrServer = '${acrName}.azurecr.io'
 var backupsAccount = '${names.backups}${suffix}'
 var prefix = 'commit-${env}'
 var tags = { app: 'commit', env: env }
-var appUrl = empty(webDomain) ? 'https://commit-web.${cae.properties.defaultDomain}' : 'https://${webDomain}'
+var appUrl = empty(webDomain) ? 'https://${prefix}-web.${cae.properties.defaultDomain}' : 'https://${webDomain}'
 var dbName = 'commit_${env}'
 
 resource pg 'Microsoft.DBforPostgreSQL/flexibleServers@2024-08-01' existing = {
@@ -72,25 +72,11 @@ resource pg 'Microsoft.DBforPostgreSQL/flexibleServers@2024-08-01' existing = {
 }
 var pgHost = pg.properties.fullyQualifiedDomainName
 
-// ── Logs propios del ambiente (sin telemetría externa) ──
-resource logs 'Microsoft.OperationalInsights/workspaces@2023-09-01' = {
-  name: '${prefix}-logs'
-  location: location
-  tags: tags
-  properties: { sku: { name: 'PerGB2018' }, retentionInDays: 30, workspaceCapping: { dailyQuotaGb: 1 } }
-}
-
-// Ambiente solo de consumo: no tiene costo fijo
-resource cae 'Microsoft.App/managedEnvironments@2024-03-01' = {
-  name: '${prefix}-env'
-  location: location
-  tags: tags
-  properties: {
-    appLogsConfiguration: {
-      destination: 'log-analytics'
-      logAnalyticsConfiguration: { customerId: logs.properties.customerId, sharedKey: logs.listKeys().primarySharedKey }
-    }
-  }
+// Ambiente de Container Apps compartido (noxi-env, grupo Noxi: la suscripción admite uno solo y Azure
+// no permite renombrarlo). Las apps viven en el grupo de cada ambiente y llevan el ambiente en el nombre.
+resource cae 'Microsoft.App/managedEnvironments@2024-03-01' existing = {
+  name: names.env
+  scope: resourceGroup(names.envGroup)
 }
 
 // Identidad de las apps: leer imágenes del registro (y, en prod, escribir respaldos)
@@ -121,11 +107,15 @@ resource redisShare 'Microsoft.Storage/storageAccounts/fileServices/shares@2023-
   properties: { shareQuota: 1, accessTier: 'TransactionOptimized' }
 }
 
-resource caeStorage 'Microsoft.App/managedEnvironments/storages@2024-03-01' = {
-  parent: cae
-  name: 'redisdata'
-  properties: {
-    azureFile: { accountName: redisStorage.name, accountKey: redisStorage.listKeys().keys[0].value, shareName: 'redis', accessMode: 'ReadWrite' }
+module caeStorage 'env-storage.bicep' = {
+  name: '${prefix}-redis-storage'
+  scope: resourceGroup(names.envGroup)
+  params: {
+    environmentName: names.env
+    storageName: 'redis-${env}'
+    accountName: redisStorage.name
+    accountKey: redisStorage.listKeys().keys[0].value
+    shareName: 'redis'
   }
   dependsOn: [redisShare]
 }
@@ -155,7 +145,7 @@ var backendSecrets = concat([
 var plainOptional = filter([
   { name: 'WHATSAPP_PHONE_NUMBER_ID', value: whatsappPhoneNumberId }
   { name: 'WHATSAPP_DISPLAY_NUMBER', value: whatsappDisplayNumber }
-  { name: 'OCR_URL', value: enableOcr ? 'http://commit-ocr' : '' }
+  { name: 'OCR_URL', value: enableOcr ? 'http://${prefix}-ocr' : '' }
 ], e => !empty(e.value))
 
 var backendEnv = concat([
@@ -181,13 +171,14 @@ var identityConfig = { type: 'UserAssigned', userAssignedIdentities: { '${identi
 
 // ── Backend API + Redis (bajo demanda) ──
 resource api 'Microsoft.App/containerApps@2024-03-01' = {
-  name: 'commit-api'
+  name: '${prefix}-api'
   location: location
   tags: tags
   identity: identityConfig
   dependsOn: [acrPull, caeStorage]
   properties: {
     managedEnvironmentId: cae.id
+    workloadProfileName: 'Consumption'
     configuration: {
       activeRevisionsMode: 'Single'
       ingress: { external: true, targetPort: 3000, transport: 'auto', allowInsecure: false }
@@ -218,7 +209,7 @@ resource api 'Microsoft.App/containerApps@2024-03-01' = {
           volumeMounts: [{ volumeName: 'redis-data', mountPath: '/data' }]
         }
       ]
-      volumes: [{ name: 'redis-data', storageType: 'AzureFile', storageName: 'redisdata' }]
+      volumes: [{ name: 'redis-data', storageType: 'AzureFile', storageName: 'redis-${env}' }]
       // Máximo 1: el Redis de la réplica es la única copia de sesiones y colas
       scale: { minReplicas: 0, maxReplicas: 1, rules: [{ name: 'http', http: { metadata: { concurrentRequests: '50' } } }] }
     }
@@ -227,13 +218,14 @@ resource api 'Microsoft.App/containerApps@2024-03-01' = {
 
 // ── Frontend (nginx: SPA + proxy de /api al backend), bajo demanda ──
 resource web 'Microsoft.App/containerApps@2024-03-01' = {
-  name: 'commit-web'
+  name: '${prefix}-web'
   location: location
   tags: tags
   identity: identityConfig
   dependsOn: [acrPull]
   properties: {
     managedEnvironmentId: cae.id
+    workloadProfileName: 'Consumption'
     configuration: {
       ingress: { external: true, targetPort: 8080, transport: 'auto', allowInsecure: false }
       registries: registries
@@ -257,13 +249,14 @@ resource web 'Microsoft.App/containerApps@2024-03-01' = {
 
 // ── OCR (opcional, interno, bajo demanda) ──
 resource ocr 'Microsoft.App/containerApps@2024-03-01' = if (enableOcr) {
-  name: 'commit-ocr'
+  name: '${prefix}-ocr'
   location: location
   tags: tags
   identity: identityConfig
   dependsOn: [acrPull]
   properties: {
     managedEnvironmentId: cae.id
+    workloadProfileName: 'Consumption'
     configuration: {
       ingress: { external: false, targetPort: 8000, transport: 'http', allowInsecure: true }
       registries: registries
@@ -283,13 +276,14 @@ var jobBase = {
 
 // Migraciones: el CI la ejecuta en cada despliegue, antes de actualizar las apps
 resource migrate 'Microsoft.App/jobs@2024-03-01' = {
-  name: 'commit-migrate'
+  name: '${prefix}-migrate'
   location: location
   tags: tags
   identity: identityConfig
   dependsOn: [acrPull]
   properties: {
     environmentId: jobBase.environmentId
+    workloadProfileName: 'Consumption'
     configuration: {
       triggerType: 'Manual'
       replicaTimeout: 600
@@ -313,8 +307,8 @@ resource migrate 'Microsoft.App/jobs@2024-03-01' = {
 
 // Recordatorios y cotizaciones: una pasada y se apaga (node dist/cron.js <tarea>)
 var cronTasks = [
-  { name: 'commit-reminders', task: 'reminders', schedule: remindersSchedule }
-  { name: 'commit-rates', task: 'rates', schedule: ratesSchedule }
+  { name: '${prefix}-reminders', task: 'reminders', schedule: remindersSchedule }
+  { name: '${prefix}-rates', task: 'rates', schedule: ratesSchedule }
 ]
 
 resource crons 'Microsoft.App/jobs@2024-03-01' = [for t in cronTasks: {
@@ -325,6 +319,7 @@ resource crons 'Microsoft.App/jobs@2024-03-01' = [for t in cronTasks: {
   dependsOn: [acrPull]
   properties: {
     environmentId: jobBase.environmentId
+    workloadProfileName: 'Consumption'
     configuration: {
       triggerType: 'Schedule'
       replicaTimeout: 300
@@ -362,6 +357,7 @@ resource backup 'Microsoft.App/jobs@2024-03-01' = if (env == 'prod') {
   dependsOn: [acrPull, backupWriter]
   properties: {
     environmentId: jobBase.environmentId
+    workloadProfileName: 'Consumption'
     configuration: {
       triggerType: 'Schedule'
       replicaTimeout: 1800
