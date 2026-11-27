@@ -65,6 +65,8 @@ describe('Facturas por WhatsApp (e2e)', () => {
     reg.keys.publicKey = b64(box.publicKey);
     const res = await request(app.getHttpServer()).post('/api/auth/register').send(reg).expect(201);
     users.push(reg.userId);
+    // Vincular WhatsApp y suscribirse requieren el correo verificado
+    await prisma.user.update({ where: { id: reg.userId }, data: { emailVerifiedAt: new Date() } });
     return { userId: reg.userId, auth: { Authorization: `Bearer ${res.body.accessToken}` }, box };
   }
 

@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, inject, signal, type OnInit } from '@angular/core';
+import { Component, computed, inject, signal, type OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -7,6 +7,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { TranslocoDirective } from '@jsverse/transloco';
+import { SessionService } from '../../core/session/session.service';
 import { ReceiptsService } from './receipts.service';
 
 /** Ajustes → WhatsApp: consentimiento explícito, código de vinculación y estado. */
@@ -44,6 +45,8 @@ import { ReceiptsService } from './receipts.service';
                 <a mat-flat-button [href]="c.waLink" target="_blank" rel="noopener">{{ t('openWhatsapp') }}</a>
               }
               <p class="meta">{{ t('codeExpires') }}</p>
+            } @else if (!verified()) {
+              <p data-testid="wa-verify-first">{{ t('verifyFirst') }}</p>
             } @else {
               <div class="privacy" data-testid="wa-privacy">
                 <strong>{{ t('privacyTitle') }}</strong>
@@ -65,7 +68,7 @@ import { ReceiptsService } from './receipts.service';
           @if (receipts.status()?.linked) {
             <button mat-button (click)="receipts.unlink()">{{ t('unlink') }}</button>
             <a mat-button routerLink="/por-revisar">{{ t('review') }}</a>
-          } @else if (!code()) {
+          } @else if (!code() && verified()) {
             <button mat-flat-button (click)="link()" [disabled]="!consent || busy()" data-testid="wa-link">{{ t('link') }}</button>
           }
           <a mat-button routerLink="/suscripcion">{{ t('plans') }}</a>
@@ -76,6 +79,8 @@ import { ReceiptsService } from './receipts.service';
 })
 export class WhatsappCard implements OnInit {
   readonly receipts = inject(ReceiptsService);
+  private readonly session = inject(SessionService);
+  readonly verified = computed(() => !!this.session.me()?.user.emailVerifiedAt);
   consent = false;
   readonly busy = signal(false);
   readonly code = signal<{ code: string; expiresAt: string; waLink: string | null } | null>(null);

@@ -29,6 +29,10 @@ x-backend-env: &backend-env
   WHATSAPP_GRAPH_VERSION: ${WHATSAPP_GRAPH_VERSION:-v23.0}
   SUBSCRIPTIONS_ENFORCED: ${SUBSCRIPTIONS_ENFORCED:-false}
   STATUS_TOKEN: ${STATUS_TOKEN:-}
+  # Correo (vacío: en desarrollo se registra en el log; en producción no se envía)
+  SMTP_URL: ${SMTP_URL:-}
+  SMTP_STARTTLS: ${SMTP_STARTTLS:-required}
+  MAIL_FROM: ${MAIL_FROM:-Commit <no-reply@commit.local>}
   PORT: 3000
 
 services:
@@ -77,6 +81,10 @@ services:
       NODE_ENV: development
       # Solo en desarrollo: los e2e registran muchas cuentas por minuto (producción usa 10).
       AUTH_RATE_LIMIT: 200
+      # Correo de desarrollo: Mailpit (bandeja en http://localhost:8025, no envía nada de verdad)
+      SMTP_URL: smtp://mailpit:1025
+      SMTP_STARTTLS: never
+      APP_URL: http://localhost:4200
       CORS_ORIGINS: http://localhost:4200
     volumes:
       - ./backend:/app
@@ -114,6 +122,14 @@ services:
     ports:
       - "127.0.0.1:8090:8000"
 
+  # Bandeja de correo de desarrollo: http://localhost:8025 (SMTP en mailpit:1025)
+  mailpit:
+    profiles: [dev]
+    image: axllent/mailpit:latest
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8025:8025"
+
   adminer:
     profiles: [dev]
     image: adminer:latest
@@ -147,6 +163,7 @@ services:
       <<: *backend-env
       NODE_ENV: production
       CORS_ORIGINS: ${PUBLIC_URL:-http://localhost:8080}
+      APP_URL: ${PUBLIC_URL:-http://localhost:8080}
     depends_on:
       migrate: { condition: service_completed_successfully }
       redis: { condition: service_healthy }

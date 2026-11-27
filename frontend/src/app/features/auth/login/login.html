@@ -18,6 +18,7 @@
         @if (error(); as key) {
           <p class="error" role="alert">{{ t(key) }}</p>
         }
+        <p class="forgot"><a routerLink="/olvide-contrasena" data-testid="forgot-link">{{ t('forgot') }}</a></p>
         <div class="actions">
           <button mat-flat-button type="submit" [disabled]="busy() || form.invalid">{{ t('submit') }}</button>
         </div>

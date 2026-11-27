@@ -16,7 +16,10 @@ Los datos financieros se cifran **en tu dispositivo** (conocimiento cero): ni el
 | **Facturas por WhatsApp** *(opcional, suscripción)* | Foto → OCR propio → IA → bandeja **Por revisar** con recomendación de cuenta y categoría |
 | **Público, sin cuenta** | Landing, **Aprende** (25 artículos) y **Herramientas** (interés compuesto, hipoteca, tarjetas de crédito y débito con tasas de referencia de bancos de Panamá) |
 | **Experiencia** | PWA instalable, modo sin conexión (lectura), responsive con barra inferior en el celular, modo claro/oscuro/sistema, hogares compartidos |
+| **Cuenta** | Verificación de correo, bienvenida, olvidé mi contraseña, cambiar contraseña y correo, cerrar sesión en todos lados, aviso de ingreso nuevo y eliminar la cuenta |
 | **Operación** | Página **/estado** con el diagrama de la infraestructura en vivo |
+
+**Todo es gratis.** Lo único opcional y de pago son las **facturas por WhatsApp** ($2 al mes o $20 al año), porque usan servicios con costo (WhatsApp, OCR e IA). El registro no pide suscripción.
 
 ## Arquitectura en una imagen
 
@@ -51,7 +54,7 @@ docker compose --profile dev up --build       # desarrollo: http://localhost:420
 docker compose --profile prod up --build -d   # producción: http://localhost:8080
 ```
 
-En desarrollo también quedan **Adminer** en http://localhost:8081 (servidor `postgres`) y la página **/estado**.
+En desarrollo también quedan **Adminer** en http://localhost:8081 (servidor `postgres`), **Mailpit** en http://localhost:8025 (los correos de la app) y la página **/estado**.
 
 ### Servicios opcionales
 
@@ -61,6 +64,7 @@ En desarrollo también quedan **Adminer** en http://localhost:8081 (servidor `po
 | Facturas por WhatsApp | Credenciales `WHATSAPP_*` de Meta | [docs/facturas-whatsapp.md](docs/facturas-whatsapp.md) |
 | Extracción con IA | `ANTHROPIC_API_KEY` | [docs/facturas-whatsapp.md](docs/facturas-whatsapp.md) |
 | Notificaciones push | `VAPID_*` | [docs/operacion.md](docs/operacion.md) |
+| Correo (Resend, Azure u otro SMTP) | `SMTP_URL`, `MAIL_FROM` | [docs/operacion.md](docs/operacion.md) |
 
 Sin estas variables, cada función queda desactivada y la app lo indica. Todas las variables están descritas en [docs/operacion.md](docs/operacion.md).
 

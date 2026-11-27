@@ -4,7 +4,8 @@ import { Throttle } from '@nestjs/throttler';
 import type { Request, Response } from 'express';
 import { credentialsSchema, registerSchema, type Credentials, type RegisterInput } from './auth.schemas.js';
 import { AuthService } from './auth.service.js';
-import { clearRefreshCookie, REFRESH_COOKIE, setRefreshCookie } from './refresh-cookie.js';
+import { AccountService } from './account.service.js';
+import { clearRefreshCookie, DEVICE_COOKIE, REFRESH_COOKIE, setDeviceCookie, setRefreshCookie } from './refresh-cookie.js';
 
 const REFRESH_TTL_MS = 30 * 24 * 3600 * 1000;
 
@@ -19,21 +20,25 @@ export class AuthController {
   constructor(
     private readonly auth: AuthService,
     private readonly tokens: TokenService,
+    private readonly account: AccountService,
   ) {}
 
   @Post('register')
   @Throttle(CREDENTIALS_LIMIT)
-  async register(@Body({ schema: registerSchema }) body: RegisterInput, @Res({ passthrough: true }) res: Response) {
+  async register(@Body({ schema: registerSchema }) body: RegisterInput, @Req() req: Request, @Res({ passthrough: true }) res: Response) {
     const user = await this.auth.register(body);
+    setDeviceCookie(res, await this.account.rememberDevice(user.id, req.cookies?.[DEVICE_COOKIE], req.headers['user-agent'], false));
+    await this.account.sendVerification(user.id); // un fallo de correo no impide registrarse
     return this.issue(user.id, res);
   }
 
   @Post('login')
   @HttpCode(200)
   @Throttle(CREDENTIALS_LIMIT)
-  async login(@Body({ schema: credentialsSchema }) body: Credentials, @Res({ passthrough: true }) res: Response) {
+  async login(@Body({ schema: credentialsSchema }) body: Credentials, @Req() req: Request, @Res({ passthrough: true }) res: Response) {
     const user = await this.auth.verifyCredentials(body.email, body.password);
     if (!user) throw new UnauthorizedException('Email o contraseña incorrectos');
+    setDeviceCookie(res, await this.account.rememberDevice(user.id, req.cookies?.[DEVICE_COOKIE], req.headers['user-agent'], true));
     return this.issue(user.id, res);
   }
 

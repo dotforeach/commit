@@ -63,6 +63,11 @@ export class AuthService {
     }
   }
 
+  /** Tras cambiar la contraseña: el servidor abre una sesión nueva para este dispositivo. */
+  adoptTokens(tokens: TokenResponse) {
+    this.setTokens(tokens);
+  }
+
   private setTokens({ accessToken }: TokenResponse) {
     this.token.set(accessToken);
   }

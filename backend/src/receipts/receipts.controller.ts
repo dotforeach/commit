@@ -5,6 +5,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import type { Queue } from 'bullmq';
 import type { Request } from 'express';
 import { z } from 'zod';
+import { AccountService } from '../auth/account.service.js';
 import { toBase64 } from '../common/base64.js';
 import { receiptExtractionSchema } from './receipt.schema.js';
 import { RECEIPTS_QUEUE, type ReceiptJob } from './receipts.processor.js';
@@ -18,7 +19,10 @@ const MAX_IMAGE = 8 * 1024 * 1024;
 /** Lo que usa la app: vincular WhatsApp, bandeja "Por revisar" (sellada) y suscripción. */
 @Controller('me')
 export class ReceiptsController {
-  constructor(private readonly receipts: ReceiptsService) {}
+  constructor(
+    private readonly receipts: ReceiptsService,
+    private readonly account: AccountService,
+  ) {}
 
   @Get('whatsapp')
   status(@CurrentUser('id') userId: string) {
@@ -26,7 +30,8 @@ export class ReceiptsController {
   }
 
   @Post('whatsapp/link-code')
-  linkCode(@CurrentUser('id') userId: string, @Body({ schema: linkSchema }) _body: z.infer<typeof linkSchema>) {
+  async linkCode(@CurrentUser('id') userId: string, @Body({ schema: linkSchema }) _body: z.infer<typeof linkSchema>) {
+    await this.account.assertVerified(userId);
     return this.receipts.createLinkCode(userId);
   }
 
@@ -66,7 +71,8 @@ export class ReceiptsController {
 
   /** Sin proveedor de pago configurado todavía: se informa. */
   @Post('subscription/checkout')
-  checkout(@Body({ schema: planSchema }) _body: z.infer<typeof planSchema>) {
+  async checkout(@CurrentUser('id') userId: string, @Body({ schema: planSchema }) _body: z.infer<typeof planSchema>) {
+    await this.account.assertVerified(userId);
     throw new BadRequestException('El cobro todavía no está disponible: falta configurar el proveedor de pago.');
   }
 

@@ -34,6 +34,7 @@ flowchart LR
 | Migraciones | Al arrancar `backend-dev` | Servicio `migrate` antes del `backend` |
 | Service worker / PWA | No | Sí |
 | `/estado` | Abierto | Solo con `STATUS_TOKEN` |
+| Correo | Mailpit (http://localhost:8025) | SMTP de `SMTP_URL` |
 | Atajos de prueba (`dev-sample`, `dev-activate`) | Sí | Bloqueados |
 
 Pesos de referencia de las imágenes de producción: `frontend` ≈ 115 MB, `backend` ≈ 500 MB, `ocr` ≈ 1 GB.
@@ -52,6 +53,26 @@ Se definen en `.env` (ver `.env.example`). La columna **Compose** indica si `doc
 | `PUBLIC_URL` | `http://localhost:8080` | Sí | Origen permitido por CORS en producción |
 | `FRONTEND_PORT` | `8080` | Sí | Puerto publicado por nginx |
 | `AUTH_RATE_LIMIT` | `10` | Solo dev (`200`) | Intentos de login/registro por minuto e IP |
+
+### Correo
+
+| Variable | Por defecto | Compose | Descripción |
+|---|---|---|---|
+| `SMTP_URL` | vacía (dev: Mailpit) | Sí | Servidor SMTP como URL. Sin ella: en desarrollo se registra en el log; en producción no se envía |
+| `SMTP_STARTTLS` | `required` | Sí | `required`, `opportunistic` o `never` (solo Mailpit) |
+| `MAIL_FROM` | `Commit <no-reply@commit.local>` | Sí | Remitente (usa un dominio verificado en tu proveedor) |
+| `APP_URL` | `http://localhost:4200` | Sí (prod: `PUBLIC_URL`) | Base de los enlaces de los correos |
+
+Proveedores probados por configuración (cualquier SMTP sirve):
+
+```bash
+# Resend
+SMTP_URL=smtps://resend:<API_KEY>@smtp.resend.com:465
+# Azure Communication Services (dominio propio verificado + app de Entra + "SMTP Username")
+SMTP_URL=smtp://<SMTP_USERNAME>:<CLIENT_SECRET>@smtp.azurecomm.net:587
+```
+
+En desarrollo, **Mailpit** recibe todos los correos sin enviarlos: http://localhost:8025. Los correos de la cuenta (verificación, bienvenida, contraseña, cambios de correo y de clave, ingreso desde un dispositivo nuevo, cuenta eliminada) **nunca incluyen datos financieros**.
 
 ### Notificaciones push
 

@@ -79,7 +79,8 @@ flowchart LR
 
 | Módulo | Responsabilidad |
 |---|---|
-| `auth`, `users` | Registro, login (scrypt), access token en memoria + refresh rotativo en cookie, claves públicas y privadas **cifradas** |
+| `auth`, `users` | Registro, login (scrypt), access token en memoria + refresh rotativo en cookie, claves públicas y privadas **cifradas**; ciclo de la cuenta: verificación de correo, contraseña olvidada y cambios, cambio de correo, dispositivos conocidos, cierre de sesiones y eliminación (anonimiza si compartía hogares) |
+| `mail` | Correos transaccionales con `@nestjs/mail` por SMTP (Mailpit en desarrollo); sin datos financieros |
 | `households` | Hogares, miembros, roles, invitaciones y envoltorios de la clave del hogar |
 | `accounts` … `investments` | CRUD de filas con metadatos en claro y `payload` cifrado; sincronización por `revision` |
 | `rates` | Cotizaciones públicas cada hora (cola `rates`) |
@@ -93,6 +94,7 @@ flowchart LR
 |---|---|---|
 | `/`, `/aprende`, `/herramientas` | Público | Landing, artículos y calculadoras |
 | `/registro`, `/ingresar`, `/desbloquear`, `/recuperar` | Sesión | Cuenta, clave de descifrado y frase de recuperación |
+| `/verificar-correo`, `/olvide-contrasena`, `/restablecer-contrasena`, `/confirmar-correo` | Público | Enlaces que llegan por correo |
 | `/inicio`, `/movimientos`, `/presupuesto`, `/deudas`, `/ahorro`, `/cuentas`, `/recurrentes` | Desbloqueado | Finanzas del hogar |
 | `/plan`, `/progreso` | Desbloqueado | Plan mágico y salud financiera |
 | `/por-revisar`, `/suscripcion` | Desbloqueado | Facturas recibidas y planes |

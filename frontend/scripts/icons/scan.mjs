@@ -27,7 +27,8 @@ function* files(dir) {
 
 /**
  * Busca, de forma conservadora (mejor de más que de menos):
- * - en plantillas: el texto dentro de <mat-icon> y los literales de sus interpolaciones;
+ * - en plantillas: el texto dentro de <mat-icon> o de elementos con la clase material-symbols-outlined,
+ *   y los literales de sus interpolaciones;
  * - en TypeScript: cualquier literal que sea un nombre de ícono válido (íconos en datos: menú, cuentas, categorías…).
  */
 export function usedIcons(valid = validIconNames()) {
@@ -37,8 +38,13 @@ export function usedIcons(valid = validIconNames()) {
   };
   for (const file of files(join(root, 'src/app'))) {
     const src = readFileSync(file, 'utf8');
-    for (const m of src.matchAll(/<mat-icon\b[^>]*>([\s\S]*?)<\/mat-icon>/g)) {
-      const inner = m[1].trim();
+    // <mat-icon>…</mat-icon> y cualquier elemento con la clase material-symbols-outlined
+    const tags = [
+      ...src.matchAll(/<mat-icon\b[^>]*>([\s\S]*?)<\/mat-icon>/g),
+      ...src.matchAll(/<(\w+)\b[^>]*class="[^"]*material-symbols-outlined[^"]*"[^>]*>([^<]*)<\/\1>/g),
+    ].map((m) => (m.length === 2 ? m[1] : m[2]));
+    for (const raw of tags) {
+      const inner = (raw ?? '').trim();
       if (!inner.includes('{{')) add(inner, file);
       for (const lit of inner.matchAll(/'([a-z0-9_]+)'/g)) add(lit[1], file);
     }

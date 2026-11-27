@@ -20,3 +20,14 @@ export function setRefreshCookie(res: Response, token: string, maxAgeMs: number)
 export function clearRefreshCookie(res: Response) {
   res.clearCookie(REFRESH_COOKIE, cookieOptions());
 }
+
+/** Identificador aleatorio del dispositivo (para avisar de ingresos nuevos). Mismas protecciones. */
+export const DEVICE_COOKIE = 'did';
+
+export function setDeviceCookie(res: Response, id: string) {
+  res.cookie(DEVICE_COOKIE, id, { ...cookieOptions(), maxAge: 365 * 24 * 3600 * 1000 });
+}
+
+export function clearDeviceCookie(res: Response) {
+  res.clearCookie(DEVICE_COOKIE, cookieOptions());
+}

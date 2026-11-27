@@ -54,6 +54,29 @@ export const routes: Routes = [
     canActivate: [guestGuard],
     loadComponent: () => import('./features/auth/register/register').then((m) => m.Register),
   },
+  // Enlaces que llegan por correo (públicos: pueden abrirse en otro navegador)
+  {
+    path: 'verificar-correo',
+    title: 'Confirmar correo · Commit',
+    loadComponent: () => import('./features/auth/account-links/verify-email').then((m) => m.VerifyEmailPage),
+  },
+  {
+    path: 'confirmar-correo',
+    title: 'Confirmar correo nuevo · Commit',
+    data: { mode: 'change' },
+    loadComponent: () => import('./features/auth/account-links/verify-email').then((m) => m.VerifyEmailPage),
+  },
+  {
+    path: 'olvide-contrasena',
+    title: 'Olvidé mi contraseña · Commit',
+    canActivate: [guestGuard],
+    loadComponent: () => import('./features/auth/account-links/forgot-password').then((m) => m.ForgotPasswordPage),
+  },
+  {
+    path: 'restablecer-contrasena',
+    title: 'Nueva contraseña · Commit',
+    loadComponent: () => import('./features/auth/account-links/reset-password').then((m) => m.ResetPasswordPage),
+  },
   {
     path: 'ingresar',
     canActivate: [guestGuard],

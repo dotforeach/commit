@@ -134,7 +134,8 @@
       "tooManyAttempts": "Demasiados intentos. Espera un minuto y vuelve a probar.",
       "generic": "No pudimos iniciar sesión. Prueba de nuevo."
     },
-    "backHome": "Volver a la página principal"
+    "backHome": "Volver a la página principal",
+    "forgot": "¿Olvidaste tu contraseña?"
   },
   "unlock": {
     "title": "Desbloquear tus datos",
@@ -1446,7 +1447,7 @@
       "title": "Preguntas frecuentes",
       "free": {
         "q": "¿Es gratis?",
-        "a": "Sí. Commit es software libre: no tiene planes pagos ni publicidad."
+        "a": "Sí. Todo Commit es gratis y de código abierto. Lo único opcional y de pago son las facturas por WhatsApp ($2 al mes o $20 al año), porque usan servicios con costo (WhatsApp, lectura de texto e IA)."
       },
       "privacy": {
         "q": "¿Pueden ver mis datos?",
@@ -1477,6 +1478,19 @@
       "title": "Herramientas gratuitas",
       "body": "Calculadoras de interés compuesto, hipoteca y tarjetas, con tasas de referencia de bancos de Panamá.",
       "all": "Ver herramientas"
+    },
+    "pricing": {
+      "title": "Precios claros",
+      "free": {
+        "title": "Commit",
+        "body": "Presupuesto, deudas y tarjetas, ahorro, Plan mágico, progreso, Aprende, herramientas, hogares compartidos y modo sin conexión. Sin límites ni publicidad."
+      },
+      "paid": {
+        "title": "Facturas por WhatsApp",
+        "price": "$2/mes o $20/año",
+        "body": "Envía fotos de tus facturas y se cargan solas con recomendación de cuenta y categoría. Opcional: es lo único que tiene costo, porque usa WhatsApp, lectura de texto e inteligencia artificial."
+      },
+      "note": "Te registras gratis, sin tarjeta. La suscripción es opcional y la cancelas cuando quieras."
     }
   },
   "tools": {
@@ -1681,7 +1695,8 @@
     "unlink": "Desvincular",
     "review": "Ver por revisar",
     "link": "Obtener código",
-    "plans": "Planes"
+    "plans": "Planes",
+    "verifyFirst": "Para activar las facturas por WhatsApp, primero confirma tu correo (te enviamos un enlace; puedes reenviarlo en Cuenta y seguridad)."
   },
   "subscription": {
     "title": "Suscripción Commit",
@@ -1765,5 +1780,101 @@
   "passwordToggle": {
     "show": "Mostrar lo escrito",
     "hide": "Ocultar lo escrito"
+  },
+  "verifyBanner": {
+    "text": "Confirma tu correo ({{email}}): te enviamos un enlace.",
+    "resend": "Reenviar",
+    "sent": "Enviado"
+  },
+  "accountLinks": {
+    "invalid": "El enlace no es válido o ya venció. Pide uno nuevo.",
+    "goApp": "Ir a Commit",
+    "verify": {
+      "title": "Confirmar correo",
+      "ok": "¡Listo! Tu correo quedó confirmado."
+    },
+    "change": {
+      "title": "Confirmar correo nuevo",
+      "ok": "¡Listo! Tu cuenta ahora usa el correo nuevo."
+    },
+    "forgot": {
+      "title": "¿Olvidaste tu contraseña?",
+      "subtitle": "Te enviamos un enlace para elegir una nueva.",
+      "email": "Correo",
+      "submit": "Enviar enlace",
+      "back": "Volver a ingresar",
+      "note": "Esto cambia tu contraseña de INGRESO. Tus datos siguen cifrados con tu clave de descifrado; si la olvidaste, usa tu frase de recuperación al desbloquear.",
+      "sent": "Si hay una cuenta con ese correo, te llegará un enlace en unos minutos. Revisa también la carpeta de spam.",
+      "error": "No pudimos enviar el enlace. Prueba de nuevo en un momento."
+    },
+    "reset": {
+      "title": "Elige una contraseña nueva",
+      "subtitle": "Cerraremos las sesiones abiertas en tus otros dispositivos.",
+      "password": "Contraseña nueva",
+      "confirm": "Repite la contraseña nueva",
+      "hint": "Al menos 10 caracteres.",
+      "mismatch": "Las contraseñas no coinciden.",
+      "invalid": "El enlace no es válido o ya venció. Pide uno nuevo.",
+      "submit": "Guardar contraseña",
+      "done": "Listo: ya puedes ingresar con tu contraseña nueva.",
+      "login": "Ir a ingresar"
+    }
+  },
+  "accountSecurity": {
+    "title": "Cuenta y seguridad",
+    "verified": "Correo confirmado",
+    "unverified": "Correo sin confirmar",
+    "resend": "Reenviar enlace",
+    "changeEmail": "Cambiar correo",
+    "newEmail": "Correo nuevo",
+    "password": "Contraseña de ingreso",
+    "emailNote": "Te enviaremos un enlace al correo nuevo y un aviso al actual.",
+    "sendConfirmation": "Enviar confirmación",
+    "passwordTitle": "Contraseña de ingreso",
+    "passwordNote": "Para entrar a tu cuenta. No abre tus datos.",
+    "changePassword": "Cambiar",
+    "currentPassword": "Contraseña actual",
+    "newPassword": "Contraseña nueva",
+    "passwordHint": "Al menos 10 caracteres. Se cerrarán las sesiones en tus otros dispositivos.",
+    "save": "Guardar",
+    "passphraseTitle": "Clave de descifrado",
+    "passphraseNote": "Abre tus datos cifrados. Te avisaremos por correo cuando cambie.",
+    "changePassphrase": "Cambiar",
+    "sessionsTitle": "Sesiones",
+    "sessionsNote": "Cierra la sesión en todos tus dispositivos, incluido este.",
+    "revokeAll": "Cerrar en todos lados",
+    "deleteTitle": "Eliminar cuenta",
+    "deleteNote": "Borra tu cuenta y tus datos personales. No se puede deshacer.",
+    "delete": "Eliminar",
+    "deleteWarning": "Se borran tus hogares personales con todos sus datos, tus suscripciones y tu vínculo con WhatsApp. En hogares que compartes, los datos del hogar quedan para los demás miembros.",
+    "typeDelete": "Escribe ELIMINAR para confirmar",
+    "deleteForever": "Eliminar mi cuenta para siempre",
+    "resent": "Te enviamos un enlace nuevo.",
+    "passwordChanged": "Contraseña cambiada. Cerramos tus otras sesiones.",
+    "emailSent": "Revisa tu correo nuevo para confirmar el cambio.",
+    "revoked": "Cerramos la sesión en todos tus dispositivos.",
+    "deleted": "Tu cuenta fue eliminada.",
+    "errors": {
+      "wrongPassword": "La contraseña no es correcta.",
+      "emailTaken": "Ese correo ya está en uso.",
+      "tooMany": "Demasiados intentos. Espera un momento.",
+      "error": "No se pudo completar. Prueba de nuevo."
+    }
+  },
+  "homeReceipts": {
+    "title": "Facturas por WhatsApp",
+    "pitch": "Envía una foto de tu factura y se carga sola: comercio, monto, ITBMS y categoría sugerida.",
+    "active": "Plan {{plan}} activo",
+    "plans": {
+      "MONTHLY": "mensual",
+      "YEARLY": "anual"
+    },
+    "pending": "por revisar",
+    "review": "Revisar",
+    "monthly": "$2 al mes",
+    "yearly": "$20 al año (ahorras $4)",
+    "free": "Todo lo demás de Commit es gratis, para siempre.",
+    "how": "Cómo funciona",
+    "subscribe": "Ver planes"
   }
 }

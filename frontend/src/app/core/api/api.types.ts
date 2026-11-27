@@ -15,6 +15,7 @@ export interface MeResponse {
     defaultHouseholdId: string | null;
     onboardingStep: number;
     onboardingCompletedAt: string | null;
+    emailVerifiedAt: string | null;
   };
   keys: {
     keyVersion: number;

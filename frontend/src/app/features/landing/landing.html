@@ -116,6 +116,22 @@
       </div>
     </section>
 
+    <!-- Precios -->
+    <section class="section" aria-labelledby="pricing-title" data-testid="pricing">
+      <h2 id="pricing-title">{{ t('pricing.title') }}</h2>
+      <ul class="features pricing">
+        <li>
+          <h3>{{ t('pricing.free.title') }} · <strong>$0</strong></h3>
+          <p>{{ t('pricing.free.body') }}</p>
+        </li>
+        <li>
+          <h3>{{ t('pricing.paid.title') }} · <strong>{{ t('pricing.paid.price') }}</strong></h3>
+          <p>{{ t('pricing.paid.body') }}</p>
+        </li>
+      </ul>
+      <p class="subtitle">{{ t('pricing.note') }}</p>
+    </section>
+
     <!-- Libre -->
     <section class="section open" aria-labelledby="open-title">
       <h2 id="open-title">{{ t('open.title') }}</h2>

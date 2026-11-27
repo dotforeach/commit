@@ -6,7 +6,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { TranslocoDirective } from '@jsverse/transloco';
+import { AccountService } from './core/auth/account.service';
 import { AuthService } from './core/auth/auth.service';
+import { SessionService } from './core/session/session.service';
 import { AutoLockService } from './core/crypto/auto-lock.service';
 import { KeyVaultService } from './core/crypto/key-vault.service';
 import { APP_VERSION } from './core/version';
@@ -52,6 +54,9 @@ export class App {
   readonly cache = inject(OfflineCacheService);
   protected readonly auth = inject(AuthService);
   protected readonly theme = inject(ThemeService);
+  protected readonly session = inject(SessionService);
+  private readonly account = inject(AccountService);
+  protected readonly resent = signal(false);
   protected readonly version = APP_VERSION;
   protected readonly devMode = isDevMode();
 
@@ -62,6 +67,11 @@ export class App {
   private readonly url = toSignal(inject(Router).events.pipe(filter((e) => e instanceof NavigationEnd), map((e) => e.urlAfterRedirects)), { initialValue: '' });
   protected readonly moreOpen = signal(false);
   protected readonly inSecondary = computed(() => this.navSecondary.some((i) => this.url().startsWith(i.path)));
+
+  async resendVerification() {
+    await this.account.resendVerification().catch(() => null);
+    this.resent.set(true);
+  }
 
   async lock() {
     await this.vault.lock();

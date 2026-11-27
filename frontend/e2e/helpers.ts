@@ -82,3 +82,31 @@ export async function pick(page: Page, label: string, option: string) {
   await page.getByRole('dialog').getByRole('combobox', { name: label, exact: true }).click();
   await page.getByRole('option', { name: option, exact: true }).click();
 }
+
+const MAILPIT = 'http://localhost:8025/api/v1';
+
+/** Último correo a esa dirección con ese asunto (Mailpit, bandeja de desarrollo) y su enlace. */
+export async function mailLink(page: Page, to: string, subject: RegExp): Promise<string> {
+  let link = '';
+  await expect
+    .poll(
+      async () => {
+        const res = await page.request.get(`${MAILPIT}/search?query=${encodeURIComponent(`to:"${to}"`)}`);
+        const { messages } = (await res.json()) as { messages: { ID: string; Subject: string }[] };
+        const m = messages.find((x) => subject.test(x.Subject));
+        if (!m) return '';
+        const full = (await (await page.request.get(`${MAILPIT}/message/${m.ID}`)).json()) as { Text: string };
+        link = /https?:\/\/\S+token=[\w-]+/.exec(full.Text)?.[0] ?? '';
+        return link;
+      },
+      { timeout: 15_000 },
+    )
+    .not.toBe('');
+  return link.replace(/^https?:\/\/[^/]+/, ''); // mismo origen que el test
+}
+
+/** Confirma el correo siguiendo el enlace que llegó a Mailpit. */
+export async function verifyEmail(page: Page, email: string) {
+  await page.goto(await mailLink(page, email, /Confirma tu correo/));
+  await expect(page.getByTestId('link-ok')).toBeVisible();
+}

@@ -1,5 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
-import { createAccount, registerViaUi } from './helpers';
+import { createAccount, registerViaUi, verifyEmail } from './helpers';
 
 /** Simula un comprobante ya procesado (sin Meta ni IA): el backend lo sella para el usuario. */
 async function devReceipt(page: Page, extraction: Record<string, unknown>) {
@@ -28,7 +28,10 @@ const receipt = {
 };
 
 test('facturas: vincular WhatsApp con consentimiento, revisar la recomendación y aceptarla', async ({ page }) => {
-  await registerViaUi(page, { name: 'Fac Turas', email: `e2e-receipts-${Date.now()}@example.com`, password: 'contraseña-de-ingreso-1', passphrase: 'clave de descifrado facturas' });
+  const email = `e2e-receipts-${Date.now()}@example.com`;
+  await registerViaUi(page, { name: 'Fac Turas', email, password: 'contraseña-de-ingreso-1', passphrase: 'clave de descifrado facturas' });
+  await verifyEmail(page, email); // vincular WhatsApp requiere el correo confirmado
+  await page.goto('/inicio');
   await page.getByRole('link', { name: 'Cuentas' }).click();
   await createAccount(page, { name: 'Banco General', type: 'Cuenta bancaria', initial: '500' });
 

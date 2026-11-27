@@ -3,6 +3,9 @@ import { AuthenticationModule } from '@nestjs/authentication';
 import { ConfigService } from '@nestjs/config';
 import type { Env } from '../config/env.schema.js';
 import { UsersModule } from '../users/users.module.js';
+import { AppMailModule } from '../mail/app-mail.module.js';
+import { AccountController, AccountPublicController } from './account.controller.js';
+import { AccountService } from './account.service.js';
 import { AuthController } from './auth.controller.js';
 import { AuthService } from './auth.service.js';
 import { JwtAuth } from './jwt-auth.provider.js';
@@ -18,8 +21,10 @@ import { RedisRefreshTokenStore } from './redis-refresh-token.store.js';
       }),
     }),
     UsersModule,
+    AppMailModule,
   ],
-  controllers: [AuthController],
-  providers: [AuthService, JwtAuth, RedisRefreshTokenStore],
+  controllers: [AuthController, AccountPublicController, AccountController],
+  providers: [AuthService, JwtAuth, RedisRefreshTokenStore, AccountService],
+  exports: [AccountService],
 })
 export class AuthModule {}

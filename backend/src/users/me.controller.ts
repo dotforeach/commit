@@ -63,6 +63,7 @@ export class MeController {
         defaultHouseholdId: user.defaultHouseholdId,
         onboardingStep: user.onboardingStep,
         onboardingCompletedAt: user.onboardingCompletedAt,
+        emailVerifiedAt: user.emailVerifiedAt,
       },
       keys: {
         keyVersion: keys.keyVersion,

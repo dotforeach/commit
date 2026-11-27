@@ -1,3 +1,4 @@
+import { HomeReceiptsCard } from '../receipts/home-receipts-card';
 import { Component, computed, inject, resource, type OnInit } from '@angular/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -30,7 +31,7 @@ import { TransactionsService } from '../transactions/transactions.service';
 
 @Component({
   selector: 'app-home',
-  imports: [MatProgressBarModule, PendingList, RouterLink, TranslocoDirective, MatButtonModule, MatCardModule, MatIconModule],
+  imports: [HomeReceiptsCard, MatProgressBarModule, PendingList, RouterLink, TranslocoDirective, MatButtonModule, MatCardModule, MatIconModule],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })

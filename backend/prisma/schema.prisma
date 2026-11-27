@@ -35,11 +35,13 @@ model User {
   passwordHash          String // contraseña de LOGIN (scrypt, @nestjs/authentication)
   displayName           String // visible para los miembros de sus hogares
   locale                String    @default("es-PA")
-  timezone              String    @default("America/Argentina/Buenos_Aires")
+  timezone              String    @default("America/Panama")
   defaultHouseholdId    String?   @db.Uuid
   onboardingStep        Int       @default(0)
   onboardingCompletedAt DateTime? @db.Timestamptz
   emailVerifiedAt       DateTime? @db.Timestamptz
+  /// Cuenta eliminada y anonimizada (se conserva solo para verificar claves que compartió en hogares).
+  deletedAt             DateTime? @db.Timestamptz
   createdAt             DateTime  @default(now()) @db.Timestamptz
   updatedAt             DateTime  @updatedAt @db.Timestamptz
 
@@ -60,6 +62,8 @@ model User {
   receiptInbox        ReceiptInboxItem[]
   receiptEvents       ReceiptEvent[]
   subscription        Subscription?
+  accountTokens       AccountToken[]
+  knownDevices        KnownDevice[]
 
   @@map("users")
 }
@@ -1117,4 +1121,47 @@ model Subscription {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("subscriptions")
+}
+
+// ─────────────────────────────────────────────────────────────
+// Cuenta: verificación de correo, contraseña olvidada, cambio de correo y dispositivos
+// ─────────────────────────────────────────────────────────────
+
+enum AccountTokenType {
+  VERIFY_EMAIL
+  RESET_PASSWORD
+  CHANGE_EMAIL
+}
+
+/// Enlaces de un solo uso que se envían por correo. Se guarda solo el hash SHA-256 del token.
+model AccountToken {
+  id        String           @id @default(uuid(7)) @db.Uuid
+  userId    String           @db.Uuid
+  type      AccountTokenType
+  tokenHash String           @unique
+  /// Solo para CHANGE_EMAIL: el correo nuevo a confirmar.
+  newEmail  String?          @db.Citext
+  expiresAt DateTime         @db.Timestamptz
+  usedAt    DateTime?        @db.Timestamptz
+  createdAt DateTime         @default(now()) @db.Timestamptz
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, type])
+  @@map("account_tokens")
+}
+
+/// Dispositivos desde los que se ingresó (cookie aleatoria, se guarda su hash) para avisar de ingresos nuevos.
+model KnownDevice {
+  id          String   @id @default(uuid(7)) @db.Uuid
+  userId      String   @db.Uuid
+  deviceHash  String
+  label       String // "Chrome en macOS": sin IP ni ubicación
+  firstSeenAt DateTime @default(now()) @db.Timestamptz
+  lastSeenAt  DateTime @default(now()) @db.Timestamptz
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, deviceHash])
+  @@map("known_devices")
 }

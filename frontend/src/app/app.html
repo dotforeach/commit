@@ -45,6 +45,13 @@
       </nav>
     }
   </mat-toolbar>
+  @if (vault.isUnlocked() && session.me() && !session.me()!.user.emailVerifiedAt) {
+    <p class="verify-banner" role="status" data-testid="verify-banner">
+      <span class="material-symbols-outlined" aria-hidden="true">mark_email_unread</span>
+      <span>{{ t('verifyBanner.text', { email: session.me()!.user.email }) }}</span>
+      <button mat-button (click)="resendVerification()" [disabled]="resent()">{{ resent() ? t('verifyBanner.sent') : t('verifyBanner.resend') }}</button>
+    </p>
+  }
   @if (cache.offline()) {
     <p class="offline" role="status" data-testid="offline-banner">
       <span class="material-symbols-outlined" aria-hidden="true">cloud_off</span>{{ t('offline') }}

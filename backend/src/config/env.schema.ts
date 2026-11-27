@@ -42,6 +42,14 @@ export const envSchema = z.object({
   SUBSCRIPTIONS_ENFORCED: z.stringbool().default(false),
   /** Token de operador para ver /estado en producción (vacío = no accesible en producción). */
   STATUS_TOKEN: z.string().default(''),
+  // ── Correo (verificación, contraseña olvidada, avisos) ──
+  /** SMTP como URL: smtps://resend:<API_KEY>@smtp.resend.com:465 · smtp://<usuario>:<secreto>@smtp.azurecomm.net:587 */
+  SMTP_URL: z.string().default(''),
+  /** STARTTLS: required (por defecto), opportunistic o never (solo para Mailpit en desarrollo). */
+  SMTP_STARTTLS: z.enum(['required', 'opportunistic', 'never']).default('required'),
+  MAIL_FROM: z.string().default('Commit <no-reply@commit.local>'),
+  /** URL pública de la app, para los enlaces de los correos. */
+  APP_URL: z.string().default('http://localhost:4200'),
   CORS_ORIGINS: z
     .string()
     .default('http://localhost:4200')
