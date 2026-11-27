@@ -1,3 +1,4 @@
+import { ThemeService } from '../../core/theme/theme.service';
 import { Component, inject, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -37,6 +38,22 @@ import { MatFormFieldModule } from '@angular/material/form-field';
         </mat-card>
         <mat-card appearance="outlined" class="block">
           <mat-card-header>
+            <mat-icon mat-card-avatar fontSet="material-symbols-outlined" aria-hidden="true">contrast</mat-icon>
+            <mat-card-title>{{ t('appearance.title') }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <mat-form-field subscriptSizing="dynamic" class="autolock">
+              <mat-label>{{ t('appearance.theme') }}</mat-label>
+              <mat-select [value]="theme.preference()" (selectionChange)="theme.set($event.value)" data-testid="theme-select">
+                <mat-option value="system">{{ t('appearance.system') }}</mat-option>
+                <mat-option value="light">{{ t('appearance.light') }}</mat-option>
+                <mat-option value="dark">{{ t('appearance.dark') }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+        <mat-card appearance="outlined" class="block">
+          <mat-card-header>
             <mat-icon mat-card-avatar fontSet="material-symbols-outlined" aria-hidden="true">lock</mat-icon>
             <mat-card-title>{{ t('security.title') }}</mat-card-title>
           </mat-card-header>
@@ -69,6 +86,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   `,
 })
 export class SettingsPage {
+  readonly theme = inject(ThemeService);
   readonly notifications = inject(NotificationsService);
   readonly autoLock = inject(AutoLockService);
   readonly lockOptions = AUTO_LOCK_OPTIONS;

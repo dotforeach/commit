@@ -10,6 +10,7 @@ import { AuthService } from './core/auth/auth.service';
 import { AutoLockService } from './core/crypto/auto-lock.service';
 import { KeyVaultService } from './core/crypto/key-vault.service';
 import { APP_VERSION } from './core/version';
+import { ThemeService } from './core/theme/theme.service';
 import { OfflineCacheService } from './core/offline/offline-cache.service';
 import { NotificationsBell } from './features/notifications/notifications-bell';
 
@@ -32,6 +33,7 @@ const NAV: NavItem[] = [
   { path: '/ahorro', label: 'nav.savings', icon: 'savings', primary: false },
   { path: '/cuentas', label: 'nav.accounts', icon: 'account_balance_wallet', primary: false },
   { path: '/plan', label: 'nav.plan', icon: 'auto_awesome', primary: false, mobileOnly: true },
+  { path: '/herramientas', label: 'nav.tools', icon: 'calculate', primary: false, mobileOnly: true },
 ];
 
 @Component({
@@ -48,6 +50,7 @@ export class App {
   protected readonly autoLock = inject(AutoLockService);
   readonly cache = inject(OfflineCacheService);
   protected readonly auth = inject(AuthService);
+  protected readonly theme = inject(ThemeService);
   protected readonly version = APP_VERSION;
 
   /** Secciones: las principales van fijas en la barra inferior del celular; el resto, en "Más". */

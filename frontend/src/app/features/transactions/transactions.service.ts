@@ -86,6 +86,7 @@ export class TransactionsService {
   async load(): Promise<void> {
     this.loading.set(true);
     const key = `tx:${this.household.requireHousehold().id}`;
+    const epoch = this.offlineCache.epoch; // si se cierra sesión mientras carga, no se escribe
     try {
       const cached = await this.offlineCache.read<{ cursor: string; items: Record<string, TransactionDto> }>(key);
       const items = { ...(cached?.items ?? {}) };
@@ -112,7 +113,7 @@ export class TransactionsService {
         this.offlineCache.offline.set(false);
         this.cursor = cursor;
         this.dtos = new Map(Object.entries(items));
-        this.persist();
+        this.persist(epoch);
       } catch (e) {
         if (!isNetworkError(e) || !cached) throw e;
         this.offlineCache.offline.set(true);
@@ -151,9 +152,9 @@ export class TransactionsService {
   }
 
   /** Guarda en la caché local el estado cifrado actual. */
-  private persist() {
+  private persist(epoch = this.offlineCache.epoch) {
     const hid = this.household.household()?.id;
-    if (hid) void this.offlineCache.write(`tx:${hid}`, { cursor: this.cursor, items: Object.fromEntries(this.dtos) });
+    if (hid) void this.offlineCache.write(`tx:${hid}`, { cursor: this.cursor, items: Object.fromEntries(this.dtos) }, epoch);
   }
 
   /** Incorpora movimientos que creó otro flujo (p. ej. ocurrencias de recurrentes). */

@@ -16,6 +16,11 @@ export const isNetworkError = (e: unknown) => e instanceof HttpErrorResponse && 
 export class OfflineCacheService {
   readonly offline = signal(typeof navigator !== 'undefined' && !navigator.onLine);
   private db: Promise<IDBDatabase | null> | null = null;
+  /**
+   * Sube con cada clear(). Una respuesta pedida antes de cerrar sesión que llega después
+   * no debe volver a escribir en el dispositivo: se descarta si la época cambió.
+   */
+  epoch = 0;
 
   constructor() {
     if (typeof window !== 'undefined') {
@@ -45,9 +50,10 @@ export class OfflineCacheService {
     });
   }
 
-  async write(key: string, value: unknown): Promise<void> {
+  async write(key: string, value: unknown, epoch = this.epoch): Promise<void> {
+    if (epoch !== this.epoch) return;
     const db = await this.open();
-    if (!db) return;
+    if (!db || epoch !== this.epoch) return;
     await new Promise<void>((resolve) => {
       const tx = db.transaction(STORE, 'readwrite');
       tx.objectStore(STORE).put(value, key);
@@ -58,6 +64,7 @@ export class OfflineCacheService {
 
   /** Borra todo (al cerrar sesión: nada del usuario queda en el dispositivo). */
   async clear(): Promise<void> {
+    this.epoch++;
     const db = await this.open();
     if (!db) return;
     await new Promise<void>((resolve) => {
@@ -70,10 +77,11 @@ export class OfflineCacheService {
 
   /** Pide a la red y guarda; sin conexión devuelve lo último guardado (o el error si no hay nada). */
   async cached<T>(key: string, fetch: () => Promise<T>): Promise<T> {
+    const epoch = this.epoch;
     try {
       const value = await fetch();
       this.offline.set(false);
-      void this.write(key, value);
+      void this.write(key, value, epoch);
       return value;
     } catch (e) {
       if (!isNetworkError(e)) throw e;

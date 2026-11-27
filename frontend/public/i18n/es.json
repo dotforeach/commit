@@ -304,7 +304,10 @@
     "learn": "Aprende",
     "login": "Ingresar",
     "register": "Crear cuenta",
-    "brandHome": "Commit, ir a la página principal"
+    "brandHome": "Commit, ir a la página principal",
+    "tools": "Herramientas",
+    "darkMode": "Activar modo oscuro",
+    "lightMode": "Activar modo claro"
   },
   "accounts": {
     "title": "Cuentas",
@@ -1249,6 +1252,13 @@
       "never": "Nunca",
       "minutes": "Tras {{n}} minutos sin actividad",
       "autoLockHint": "Al bloquear, tus claves y tus datos descifrados se borran de la memoria."
+    },
+    "appearance": {
+      "title": "Apariencia",
+      "theme": "Tema",
+      "system": "Igual que el sistema",
+      "light": "Claro",
+      "dark": "Oscuro"
     }
   },
   "offline": "Sin conexión: estás viendo tus datos guardados en este dispositivo (solo lectura).",
@@ -1457,6 +1467,112 @@
     "final": {
       "title": "Empieza hoy. Tu yo del futuro te lo va a agradecer.",
       "body": "Crear tu cuenta toma un par de minutos."
+    },
+    "tools": {
+      "title": "Herramientas gratuitas",
+      "body": "Calculadoras de interés compuesto, hipoteca y tarjetas, con tasas de referencia de bancos de Panamá.",
+      "all": "Ver herramientas"
+    }
+  },
+  "tools": {
+    "title": "Herramientas",
+    "subtitle": "Calculadoras gratuitas para decidir con números: ahorro, hipoteca y tarjetas. No necesitas cuenta y nada sale de tu navegador.",
+    "back": "Todas las herramientas",
+    "source": "Fuente",
+    "disclaimer": "Son estimaciones educativas, no ofertas de un banco. Las tasas de referencia se revisaron el {{date}}; cada banco define la tasa final según tu perfil.",
+    "compound": {
+      "title": "Interés compuesto",
+      "summary": "Cuánto crece tu ahorro con aportes mensuales y el paso del tiempo.",
+      "subtitle": "Mira cómo los intereses generan más intereses. Cambia los valores y el resultado se actualiza al instante.",
+      "initial": "Monto inicial",
+      "monthly": "Aporte mensual",
+      "rate": "Tasa de interés anual",
+      "years": "Años",
+      "hint": "Capitalización mensual; los aportes se suman al final de cada mes.",
+      "final": "Tendrás en {{years}} años",
+      "contributed": "Lo que aportaste",
+      "interest": "Intereses ganados",
+      "effective": "Equivale a una tasa efectiva anual de {{rate}}.",
+      "yearN": "Año {{n}}"
+    },
+    "mortgage": {
+      "title": "Hipoteca",
+      "summary": "Tu cuota mensual, los intereses totales y cómo baja la deuda, con tasas de bancos de Panamá.",
+      "subtitle": "Calcula la cuota de un préstamo hipotecario con cuota fija (sistema francés).",
+      "price": "Precio de la vivienda",
+      "down": "Abono inicial",
+      "rate": "Tasa de interés anual",
+      "presets": "Tasas de referencia por banco",
+      "average": "Promedio del sistema",
+      "years": "Plazo (años)",
+      "subsidy": "Interés preferencial (opcional)",
+      "points": "puntos",
+      "subsidyYears": "Años con interés preferencial",
+      "subsidyHint": "Si tu vivienda califica para interés preferencial, ingresa cuántos puntos descuenta y por cuántos años. Los montos y requisitos dependen de la ley vigente: confírmalos con tu banco y el MIVIOT.",
+      "payment": "Cuota mensual",
+      "paymentFirst": "Cuota con interés preferencial",
+      "paymentLater": "Cuota después del subsidio",
+      "loan": "Monto del préstamo",
+      "totalInterest": "Intereses totales",
+      "affordability": "Para que la cuota no pase del 30 % de tus ingresos, necesitarías ganar al menos {{income}} al mes.",
+      "year": "Año",
+      "interestCol": "Intereses",
+      "principalCol": "Capital",
+      "balanceCol": "Saldo"
+    },
+    "credit": {
+      "title": "Tarjeta de crédito",
+      "summary": "Cuánto tardas en pagar tu saldo y cuánto te cuesta pagar solo el mínimo.",
+      "subtitle": "Compara pagar solo el mínimo contra un pago fijo, con las tasas publicadas por Acodeco.",
+      "balance": "Saldo de la tarjeta",
+      "rate": "Tasa de interés anual",
+      "minimumPct": "Pago mínimo (% del saldo)",
+      "minimumFloor": "Pago mínimo, monto mínimo",
+      "minimumHint": "El cálculo del mínimo cambia según el banco: revisa tu estado de cuenta y ajústalo.",
+      "fixed": "Pago fijo mensual",
+      "onlyMinimum": "Pagando solo el mínimo",
+      "withFixed": "Pagando {{amount}} al mes",
+      "months": "{{n}} meses",
+      "never": "No terminas nunca",
+      "interestPaid": "Pagas {{amount}} de intereses",
+      "payFull": "Pagando el total cada mes",
+      "payFullHint": "Sin intereses: es la forma de usar la tarjeta a tu favor.",
+      "saving": "Con el pago fijo ahorras {{amount}} en intereses y terminas {{months}} meses antes.",
+      "monthlyInterest": "Este mes, tu saldo genera unos {{amount}} de intereses."
+    },
+    "debit": {
+      "title": "Tarjeta de débito",
+      "summary": "Cuánto te cuesta tu cuenta al año, y si conviene pagar con débito o con crédito.",
+      "subtitle": "Dos herramientas: compara el costo anual de cuentas con tarjeta de débito, y decide con qué tarjeta pagar una compra.",
+      "costsTitle": "Costo anual de tu cuenta",
+      "rule": "En Panamá, las cuentas de ahorro no pueden cobrar manejo de cuenta, saldo mínimo ni inactividad (salvo cuentas de planilla). Revisa los demás cargos en el tarifario de tu banco.",
+      "averageBalance": "Saldo promedio en la cuenta",
+      "name": "Cuenta",
+      "annualFees": "Cargos fijos al año",
+      "otherAtm": "Retiros en cajeros de otros bancos (por mes)",
+      "otherAtmFee": "Costo por retiro en otro cajero",
+      "extraTeller": "Retiros en ventanilla con cargo (por mes)",
+      "tellerFee": "Costo por retiro en ventanilla",
+      "rate": "Tasa que paga la cuenta",
+      "perYear": "al año (neto)",
+      "breakdown": "Cargos {{fees}} − intereses ganados {{interest}}",
+      "costsHint": "Los valores iniciales son de ejemplo: cámbialos con los del tarifario de cada banco. La cuenta marcada es la más barata.",
+      "vsTitle": "¿Débito o crédito para esta compra?",
+      "amount": "Monto de la compra",
+      "cashback": "Cashback o puntos de la tarjeta de crédito",
+      "cardRate": "Tasa de la tarjeta de crédito",
+      "months": "Meses en que la pagarías si la financias",
+      "options": {
+        "debit": "Con débito",
+        "creditFull": "Con crédito, pagando el total",
+        "creditFinanced": "Con crédito, financiada"
+      },
+      "optionHint": {
+        "debit": "Sin costo extra y sin deuda.",
+        "creditFull": "Ganas {{cashback}} de cashback y no pagas intereses.",
+        "creditFinanced": "Pagas {{interest}} de intereses y ganas {{cashback}} de cashback."
+      },
+      "vsHint": "Negativo = ahorras; positivo = te cuesta. La tarjeta de crédito conviene solo si pagas el total antes del vencimiento."
     }
   }
 }

@@ -162,9 +162,9 @@
     "semantic_hash": ""
   },
   "frontend/src/app/app.routes.ts": {
-    "mtime": 1795741729.8343656,
-    "seen": 1795745225.655474,
-    "ast_hash": "aa134960a952ff410ca204abc0164394",
+    "mtime": 1795745449.6180003,
+    "seen": 1795746188.468311,
+    "ast_hash": "a23acb29b0959eade5d5e0f140d79a82",
     "semantic_hash": ""
   },
   "frontend/src/app/app.spec.ts": {
@@ -174,9 +174,9 @@
     "semantic_hash": ""
   },
   "frontend/src/app/app.ts": {
-    "mtime": 1795739896.8790271,
-    "seen": 1795741385.94011,
-    "ast_hash": "0ecfc56d9b01c3237d5a877939570cd9",
+    "mtime": 1795745449.6181278,
+    "seen": 1795746188.468332,
+    "ast_hash": "033221766f32b770485dfb256917e082",
     "semantic_hash": ""
   },
   "frontend/src/main.ts": {
@@ -216,21 +216,21 @@
     "semantic_hash": ""
   },
   "frontend/src/app/app.html": {
-    "mtime": 1795742714.634179,
-    "seen": 1795745225.658259,
-    "ast_hash": "e3e8b356888cd42cab6df41f35fa882d",
+    "mtime": 1795745449.6178672,
+    "seen": 1795746188.471613,
+    "ast_hash": "cf408855075b29d245408f1137bd2857",
     "semantic_hash": ""
   },
   "frontend/src/index.html": {
-    "mtime": 1795738127.0586123,
-    "seen": 1795738132.103719,
-    "ast_hash": "e0388316279a3cfcc9108ab36145be96",
+    "mtime": 1795745449.6185346,
+    "seen": 1795746188.472319,
+    "ast_hash": "6edb6a583f4e0a55f41c6a87f2dd6be4",
     "semantic_hash": ""
   },
   "frontend/public/i18n/es.json": {
-    "mtime": 1795743494.0364232,
-    "seen": 1795745225.655473,
-    "ast_hash": "2a42981e3dc5dfff51f040a3ac1d7477",
+    "mtime": 1795745449.6176875,
+    "seen": 1795746188.4682891,
+    "ast_hash": "d9ee77083e6ed5a028000c23139d39c6",
     "semantic_hash": ""
   },
   "frontend/src/app/core/i18n/transloco-loader.ts": {
@@ -834,9 +834,9 @@
     "semantic_hash": ""
   },
   "frontend/src/app/features/transactions/transactions.service.ts": {
-    "mtime": 1795721307.3818793,
-    "seen": 1795721517.824948,
-    "ast_hash": "fd5e6c1e272e395258bcccb1dcbf358d",
+    "mtime": 1795745982.7059226,
+    "seen": 1795746188.471415,
+    "ast_hash": "10a788497bc57ff42226ff3e76380699",
     "semantic_hash": ""
   },
   "frontend/src/app/features/transactions/transaction-dialog/transaction-dialog.html": {
@@ -1584,9 +1584,9 @@
     "semantic_hash": ""
   },
   "frontend/src/app/features/settings/settings-page.ts": {
-    "mtime": 1795738127.058315,
-    "seen": 1795738132.102745,
-    "ast_hash": "c02c7ed422005808403e737cdbf4ad7d",
+    "mtime": 1795745449.6184192,
+    "seen": 1795746188.471267,
+    "ast_hash": "7b4046c060cbc4330d6f5504787255ab",
     "semantic_hash": ""
   },
   "frontend/public/icons/icon-128x128.png": {
@@ -1734,9 +1734,9 @@
     "semantic_hash": ""
   },
   "frontend/src/app/core/offline/offline-cache.service.ts": {
-    "mtime": 1795721098.7782342,
-    "seen": 1795721517.824893,
-    "ast_hash": "5dfb3787af5e1fdad238e1e06f9a321c",
+    "mtime": 1795745982.705612,
+    "seen": 1795746188.469171,
+    "ast_hash": "6990015221f137b16b83b6256ff82d2d",
     "semantic_hash": ""
   },
   "frontend/src/app/core/selective-preloading.ts": {
@@ -1902,9 +1902,9 @@
     "semantic_hash": ""
   },
   "frontend/src/app/features/landing/landing.html": {
-    "mtime": 1795739896.879339,
-    "seen": 1795741385.943053,
-    "ast_hash": "46e29440dc7098953c8ac69ba29637db",
+    "mtime": 1795745449.6182697,
+    "seen": 1795746188.471958,
+    "ast_hash": "683f984e5b5bf06898d70f51bef505cb",
     "semantic_hash": ""
   },
   "frontend/src/app/features/learn/article-page.html": {
@@ -1947,6 +1947,90 @@
     "mtime": 1795742730.86155,
     "seen": 1795745225.655957,
     "ast_hash": "cb4aa3fdc756ef4bbaa030858bc2d266",
+    "semantic_hash": ""
+  },
+  "frontend/e2e/tools.e2e.ts": {
+    "mtime": 1795745462.6471145,
+    "seen": 1795746188.4681852,
+    "ast_hash": "bdd31f41563a9ed5e761b72d61bcc29e",
+    "semantic_hash": ""
+  },
+  "frontend/public/theme-init.js": {
+    "mtime": 1795745449.6312714,
+    "seen": 1795746188.4682891,
+    "ast_hash": "28b5605a016f3ab86377767053dd1498",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/core/offline/offline-cache.service.spec.ts": {
+    "mtime": 1795745992.544572,
+    "seen": 1795746188.469171,
+    "ast_hash": "4c92c749c2b3758262021791a47663ef",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/core/theme/theme.service.ts": {
+    "mtime": 1795745449.6314552,
+    "seen": 1795746188.469218,
+    "ast_hash": "844e08a40b5e36b444cd0cfed81ac57a",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/tools/bank-rates.ts": {
+    "mtime": 1795745449.6316156,
+    "seen": 1795746188.4712682,
+    "ast_hash": "a4439280c0018831fd5ba97a4ab6d5c8",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/tools/compound-page.ts": {
+    "mtime": 1795745723.5442996,
+    "seen": 1795746188.4712682,
+    "ast_hash": "d668c93893dc8b04ec398c1d1b382d96",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/tools/credit-card-page.ts": {
+    "mtime": 1795745449.6318552,
+    "seen": 1795746188.4712691,
+    "ast_hash": "7f83b5e7ae419a954c131884070311fa",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/tools/debit-card-page.ts": {
+    "mtime": 1795745449.6319776,
+    "seen": 1795746188.4712691,
+    "ast_hash": "4541d2f8658f72333ddc79707d6aca81",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/tools/mortgage-page.ts": {
+    "mtime": 1795745449.6320887,
+    "seen": 1795746188.4712698,
+    "ast_hash": "b69210e7b395131e878f65047b468e1c",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/tools/tool-base.ts": {
+    "mtime": 1795745687.7442112,
+    "seen": 1795746188.4712708,
+    "ast_hash": "a4e3acea222996829cb64ba965a1a233",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/tools/tools-math.spec.ts": {
+    "mtime": 1795745449.6322832,
+    "seen": 1795746188.4712708,
+    "ast_hash": "1426c60df3fedc3433b0c09ad7443099",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/tools/tools-math.ts": {
+    "mtime": 1795745449.632394,
+    "seen": 1795746188.471272,
+    "ast_hash": "f9ef5cbeac226740bdc4dd2a06a2e433",
+    "semantic_hash": ""
+  },
+  "frontend/src/app/features/tools/tools-page.ts": {
+    "mtime": 1795745449.6324818,
+    "seen": 1795746188.471272,
+    "ast_hash": "cb9202cce2790bbc87492c054999808a",
+    "semantic_hash": ""
+  },
+  "imgs/Captura de pantalla 2026-11-26 a las 9.19.29\u202fp.\u202fm..png": {
+    "mtime": 1795745978.212835,
+    "seen": 1795746188.472482,
+    "ast_hash": "969254601de4c2585ef090d9d5e4168f",
     "semantic_hash": ""
   },
   "backend/pnpm-lock.yaml": {

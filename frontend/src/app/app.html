@@ -14,6 +14,9 @@
       @defer (on idle) {
         <app-notifications-bell />
       }
+      <a mat-icon-button routerLink="/herramientas" [attr.aria-label]="t('nav.tools')" data-testid="nav-tools" class="hide-xs">
+        <mat-icon fontSet="material-symbols-outlined">calculate</mat-icon>
+      </a>
       <a mat-icon-button routerLink="/aprende" [attr.aria-label]="t('nav.learn')" data-testid="nav-learn">
         <mat-icon fontSet="material-symbols-outlined">school</mat-icon>
       </a>
@@ -23,9 +26,16 @@
       <button mat-icon-button (click)="lock()" [attr.aria-label]="t('nav.lock')">
         <mat-icon fontSet="material-symbols-outlined">lock</mat-icon>
       </button>
+      <button mat-icon-button (click)="theme.toggle()" [attr.aria-label]="t(theme.isDark() ? 'nav.lightMode' : 'nav.darkMode')" data-testid="theme-toggle" class="hide-xs">
+        <mat-icon fontSet="material-symbols-outlined">{{ theme.isDark() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+      </button>
     } @else if (!auth.isAuthenticated()) {
       <span class="spacer"></span>
       <nav class="guest-nav" [attr.aria-label]="t('nav.main')">
+        <button mat-icon-button (click)="theme.toggle()" [attr.aria-label]="t(theme.isDark() ? 'nav.lightMode' : 'nav.darkMode')" data-testid="theme-toggle">
+          <mat-icon fontSet="material-symbols-outlined">{{ theme.isDark() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+        </button>
+        <a mat-button routerLink="/herramientas" class="hide-xs">{{ t('nav.tools') }}</a>
         <a mat-button routerLink="/aprende" class="hide-xs">{{ t('nav.learn') }}</a>
         <a mat-button routerLink="/ingresar">{{ t('nav.login') }}</a>
         <a mat-flat-button routerLink="/registro" class="hide-xs">{{ t('nav.register') }}</a>
@@ -77,6 +87,7 @@
   <footer class="footer">
     {{ t('footer.license') }} ·
     <a href="https://github.com/dotforeach/commit" target="_blank" rel="noopener">{{ t('footer.source') }}</a> ·
-    <a routerLink="/aprende">{{ t('nav.learn') }}</a>
+    <a routerLink="/aprende">{{ t('nav.learn') }}</a> ·
+    <a routerLink="/herramientas">{{ t('nav.tools') }}</a>
   </footer>
 </ng-container>

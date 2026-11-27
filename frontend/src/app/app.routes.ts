@@ -15,6 +15,31 @@ export const routes: Routes = [
     loadComponent: () => import('./features/learn/learn-page').then((m) => m.LearnPage),
   },
   {
+    path: 'herramientas',
+    title: 'Herramientas · Commit',
+    loadComponent: () => import('./features/tools/tools-page').then((m) => m.ToolsPage),
+  },
+  {
+    path: 'herramientas/interes-compuesto',
+    title: 'Calculadora de interés compuesto · Commit',
+    loadComponent: () => import('./features/tools/compound-page').then((m) => m.CompoundPage),
+  },
+  {
+    path: 'herramientas/hipoteca',
+    title: 'Calculadora de hipoteca · Commit',
+    loadComponent: () => import('./features/tools/mortgage-page').then((m) => m.MortgagePage),
+  },
+  {
+    path: 'herramientas/tarjeta-de-credito',
+    title: 'Calculadora de tarjeta de crédito · Commit',
+    loadComponent: () => import('./features/tools/credit-card-page').then((m) => m.CreditCardPage),
+  },
+  {
+    path: 'herramientas/tarjeta-de-debito',
+    title: 'Tarjeta de débito · Commit',
+    loadComponent: () => import('./features/tools/debit-card-page').then((m) => m.DebitCardPage),
+  },
+  {
     path: 'aprende/:slug',
     loadComponent: () => import('./features/learn/article-page').then((m) => m.ArticlePage),
   },
