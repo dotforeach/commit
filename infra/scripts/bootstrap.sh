@@ -101,6 +101,11 @@ grant AcrPush "$(az acr show -n "$ACR_NAME" --query id -o tsv)"
 grant Reader "/subscriptions/$SUB/resourceGroups/rg-commit-shared"
 grant Contributor "/subscriptions/$SUB/resourceGroups/Noxi"
 grant "Role Based Access Control Administrator" "/subscriptions/$SUB/resourceGroups/rg-commit-shared"
+# Crear los despliegues anidados de main.bicep en el grupo compartido (rol mínimo, sin acceso a los recursos)
+SHARED="/subscriptions/$SUB/resourceGroups/rg-commit-shared"
+az role definition list --custom-role-only true --query "[?roleName=='Commit Deployments (shared)'].roleName" -o tsv | grep -q . || \
+  az role definition create -o none --role-definition "{\"Name\":\"Commit Deployments (shared)\",\"Description\":\"Despliegues ARM anidados en rg-commit-shared\",\"Actions\":[\"Microsoft.Resources/deployments/*\",\"Microsoft.Resources/subscriptions/resourceGroups/read\"],\"NotActions\":[],\"AssignableScopes\":[\"$SHARED\"]}"
+for _ in $(seq 1 12); do grant "Commit Deployments (shared)" "$SHARED" 2>/dev/null && break; sleep 10; done  # el rol nuevo tarda en propagarse
 
 # ── 5. Imágenes y primer despliegue ──
 # Se compilan acá para x86 (linux/amd64) con BuildKit (los Dockerfiles usan caché de pnpm, que el
