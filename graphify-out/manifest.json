@@ -174,8 +174,8 @@
     "semantic_hash": ""
   },
   "frontend/src/app/app.ts": {
-    "mtime": 1795745449.6181278,
-    "seen": 1795746188.468332,
+    "mtime": 1795746267.031333,
+    "seen": 1795746483.983038,
     "ast_hash": "033221766f32b770485dfb256917e082",
     "semantic_hash": ""
   },
@@ -216,9 +216,9 @@
     "semantic_hash": ""
   },
   "frontend/src/app/app.html": {
-    "mtime": 1795745449.6178672,
-    "seen": 1795746188.471613,
-    "ast_hash": "cf408855075b29d245408f1137bd2857",
+    "mtime": 1795746267.0312076,
+    "seen": 1795746483.98314,
+    "ast_hash": "a54aa6d7a21a4151137577b48f6597c5",
     "semantic_hash": ""
   },
   "frontend/src/index.html": {
@@ -228,9 +228,9 @@
     "semantic_hash": ""
   },
   "frontend/public/i18n/es.json": {
-    "mtime": 1795745449.6176875,
-    "seen": 1795746188.4682891,
-    "ast_hash": "d9ee77083e6ed5a028000c23139d39c6",
+    "mtime": 1795746251.018113,
+    "seen": 1795746483.9830341,
+    "ast_hash": "ffcad02a95ac5160b1d917bb8533366e",
     "semantic_hash": ""
   },
   "frontend/src/app/core/i18n/transloco-loader.ts": {
@@ -1950,9 +1950,9 @@
     "semantic_hash": ""
   },
   "frontend/e2e/tools.e2e.ts": {
-    "mtime": 1795745462.6471145,
-    "seen": 1795746188.4681852,
-    "ast_hash": "bdd31f41563a9ed5e761b72d61bcc29e",
+    "mtime": 1795746251.0182204,
+    "seen": 1795746483.983029,
+    "ast_hash": "4f33de79364103f6c4c1bbba386ffba9",
     "semantic_hash": ""
   },
   "frontend/public/theme-init.js": {
@@ -1968,9 +1968,9 @@
     "semantic_hash": ""
   },
   "frontend/src/app/core/theme/theme.service.ts": {
-    "mtime": 1795745449.6314552,
-    "seen": 1795746188.469218,
-    "ast_hash": "844e08a40b5e36b444cd0cfed81ac57a",
+    "mtime": 1795746251.0164034,
+    "seen": 1795746483.9830642,
+    "ast_hash": "9f4f0fb4c9a5276babc243d751f76587",
     "semantic_hash": ""
   },
   "frontend/src/app/features/tools/bank-rates.ts": {
@@ -2031,6 +2031,12 @@
     "mtime": 1795745978.212835,
     "seen": 1795746188.472482,
     "ast_hash": "969254601de4c2585ef090d9d5e4168f",
+    "semantic_hash": ""
+  },
+  "backend/prisma/migrations/20261127000000_panama_currencies/migration.sql": {
+    "mtime": 1795741729.8277116,
+    "seen": 1795746189.4638212,
+    "ast_hash": "aee051d14163d79f7978da79c994770a",
     "semantic_hash": ""
   },
   "backend/pnpm-lock.yaml": {

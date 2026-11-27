@@ -26,14 +26,14 @@
       <button mat-icon-button (click)="lock()" [attr.aria-label]="t('nav.lock')">
         <mat-icon fontSet="material-symbols-outlined">lock</mat-icon>
       </button>
-      <button mat-icon-button (click)="theme.toggle()" [attr.aria-label]="t(theme.isDark() ? 'nav.lightMode' : 'nav.darkMode')" data-testid="theme-toggle" class="hide-xs">
-        <mat-icon fontSet="material-symbols-outlined">{{ theme.isDark() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+      <button mat-icon-button (click)="theme.cycle()" [attr.aria-label]="t('nav.theme.' + theme.preference())" [attr.title]="t('nav.theme.' + theme.preference())" data-testid="theme-toggle" class="hide-xs">
+        <mat-icon fontSet="material-symbols-outlined">{{ theme.icon() }}</mat-icon>
       </button>
     } @else if (!auth.isAuthenticated()) {
       <span class="spacer"></span>
       <nav class="guest-nav" [attr.aria-label]="t('nav.main')">
-        <button mat-icon-button (click)="theme.toggle()" [attr.aria-label]="t(theme.isDark() ? 'nav.lightMode' : 'nav.darkMode')" data-testid="theme-toggle">
-          <mat-icon fontSet="material-symbols-outlined">{{ theme.isDark() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+        <button mat-icon-button (click)="theme.cycle()" [attr.aria-label]="t('nav.theme.' + theme.preference())" [attr.title]="t('nav.theme.' + theme.preference())" data-testid="theme-toggle">
+          <mat-icon fontSet="material-symbols-outlined">{{ theme.icon() }}</mat-icon>
         </button>
         <a mat-button routerLink="/herramientas" class="hide-xs">{{ t('nav.tools') }}</a>
         <a mat-button routerLink="/aprende" class="hide-xs">{{ t('nav.learn') }}</a>

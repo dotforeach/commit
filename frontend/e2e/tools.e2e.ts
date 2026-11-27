@@ -42,6 +42,10 @@ test('modo oscuro: se activa, se recuerda al recargar y sigue al sistema por def
   await page.goto('/');
   const bg = () => page.evaluate(() => getComputedStyle(document.body).backgroundColor);
   const light = await bg();
+  // Sistema → Claro → Oscuro → Sistema
+  await expect(page.locator('html')).not.toHaveAttribute('data-theme', /.+/);
+  await page.getByTestId('theme-toggle').click();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
   await page.getByTestId('theme-toggle').click();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
   await expect.poll(bg).not.toBe(light);
@@ -50,7 +54,8 @@ test('modo oscuro: se activa, se recuerda al recargar y sigue al sistema por def
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
   await expect.poll(bg).toBe(dark);
   await page.getByTestId('theme-toggle').click();
-  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+  await expect(page.locator('html')).not.toHaveAttribute('data-theme', /.+/);
+  expect(await page.evaluate(() => localStorage.getItem('commit.theme'))).toBeNull();
 
   // Sin preferencia guardada, sigue al sistema
   await page.evaluate(() => localStorage.removeItem('commit.theme'));

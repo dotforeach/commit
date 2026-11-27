@@ -34,10 +34,14 @@ export class ThemeService {
     this.preference.set(p);
   }
 
-  /** Botón de la barra: alterna entre claro y oscuro (deja de seguir al sistema). */
-  toggle() {
-    this.set(this.isDark() ? 'light' : 'dark');
+  /** Botón de la barra: Sistema → Claro → Oscuro → Sistema. */
+  cycle() {
+    const next: Record<ThemePreference, ThemePreference> = { system: 'light', light: 'dark', dark: 'system' };
+    this.set(next[this.preference()]);
   }
+
+  /** Ícono del modo actual. */
+  readonly icon = computed(() => ({ system: 'brightness_auto', light: 'light_mode', dark: 'dark_mode' })[this.preference()]);
 
   private read(): ThemePreference {
     try {

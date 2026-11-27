@@ -306,8 +306,11 @@
     "register": "Crear cuenta",
     "brandHome": "Commit, ir a la página principal",
     "tools": "Herramientas",
-    "darkMode": "Activar modo oscuro",
-    "lightMode": "Activar modo claro"
+    "theme": {
+      "system": "Tema: igual que el sistema (toca para claro)",
+      "light": "Tema: claro (toca para oscuro)",
+      "dark": "Tema: oscuro (toca para seguir al sistema)"
+    }
   },
   "accounts": {
     "title": "Cuentas",
