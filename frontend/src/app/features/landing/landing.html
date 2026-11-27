@@ -114,6 +114,18 @@
         </div>
         <a mat-button routerLink="/herramientas" data-testid="landing-tools">{{ t('tools.all') }}</a>
       </div>
+      <p><a mat-stroked-button routerLink="/herramientas/impuestos" data-testid="landing-tax">{{ t('tools.tax') }}</a></p>
+    </section>
+
+    <!-- Fintech -->
+    <section class="section" aria-labelledby="fintech-title">
+      <div class="section-head">
+        <div>
+          <h2 id="fintech-title">{{ t('fintech.title') }}</h2>
+          <p class="subtitle">{{ t('fintech.body') }}</p>
+        </div>
+        <a mat-button routerLink="/fintech" data-testid="landing-fintech">{{ t('fintech.all') }}</a>
+      </div>
     </section>
 
     <!-- Precios -->

@@ -218,6 +218,11 @@
       "title": "Plan mágico",
       "subtitle": "Qué pagar primero y cuánto ahorrar este mes, según tus datos.",
       "open": "Ver mi plan"
+    },
+    "tax": {
+      "title": "¿Cuánto te descuentan del salario?",
+      "subtitle": "Seguro Social, Seguro Educativo e ISR: calcula tu salario neto.",
+      "open": "Calcular"
     }
   },
   "categories": {
@@ -313,7 +318,8 @@
       "dark": "Tema: oscuro (toca para seguir al sistema)"
     },
     "review": "Por revisar",
-    "status": "Estado"
+    "status": "Estado",
+    "fintech": "Fintech"
   },
   "accounts": {
     "title": "Cuentas",
@@ -1477,7 +1483,8 @@
     "tools": {
       "title": "Herramientas gratuitas",
       "body": "Calculadoras de interés compuesto, hipoteca y tarjetas, con tasas de referencia de bancos de Panamá.",
-      "all": "Ver herramientas"
+      "all": "Ver herramientas",
+      "tax": "¿Cuánto te descuentan del salario? Calcúlalo"
     },
     "pricing": {
       "title": "Precios claros",
@@ -1491,6 +1498,11 @@
         "body": "Envía fotos de tus facturas y se cargan solas con recomendación de cuenta y categoría. Opcional: es lo único que tiene costo, porque usa WhatsApp, lectura de texto e inteligencia artificial."
       },
       "note": "Te registras gratis, sin tarjeta. La suscripción es opcional y la cancelas cuando quieras."
+    },
+    "fintech": {
+      "title": "Apps fintech en Panamá",
+      "body": "Billeteras, inversión y cripto disponibles en Panamá: qué hace cada una, quién la supervisa y qué tener en cuenta. Con fuentes.",
+      "all": "Ver las apps"
     }
   },
   "tools": {
@@ -1592,6 +1604,39 @@
         "creditFinanced": "Pagas {{interest}} de intereses y ganas {{cashback}} de cashback."
       },
       "vsHint": "Negativo = ahorras; positivo = te cuesta. La tarjeta de crédito conviene solo si pagas el total antes del vencimiento."
+    },
+    "tax": {
+      "title": "Calculadora de impuestos de Panamá",
+      "summary": "Tu salario neto después del Seguro Social, el Seguro Educativo y el ISR, y una tabla por rangos.",
+      "subtitle": "Cuánto te descuentan por ley de tu salario como asalariado en Panamá.",
+      "mine": "Tu salario",
+      "salary": "Salario bruto mensual",
+      "net": "Te queda",
+      "perMonth": "al mes",
+      "total": "Descuentos",
+      "ofSalary": "{{pct}} % de tu salario",
+      "isr": "ISR",
+      "ss": "Seguro Social",
+      "se": "Seguro Educativo",
+      "rangeTitle": "Compara rangos de salario",
+      "from": "Desde (mensual)",
+      "to": "Hasta (mensual)",
+      "step": "Incremento",
+      "period": "Mostrar",
+      "monthly": "mensual",
+      "biweekly": "quincenal",
+      "colSalary": "Salario ({{period}})",
+      "colNet": "Con descuento",
+      "colTotal": "Descuentos totales",
+      "truncated": "Se muestran las primeras {{max}} filas: usa un incremento mayor.",
+      "invalidRange": "Revisa el rango: \"hasta\" tiene que ser mayor o igual que \"desde\".",
+      "howTitle": "Cómo se calcula",
+      "how": {
+        "ss": "Seguro Social 9.75 % y Seguro Educativo 1.25 % del salario bruto. Puedes cambiar los porcentajes si tu caso es distinto.",
+        "isr": "ISR: se proyecta tu ingreso anual como salario × 13 (12 meses más el décimo tercer mes) y se aplica la tabla: 0 % hasta $11,000; 15 % del excedente hasta $50,000; y $5,850 más 25 % de lo que pase de $50,000. El resultado se reparte en 13 pagos.",
+        "deductions": "Es la retención habitual de planilla. No incluye deducciones personales (intereses hipotecarios, gastos médicos o educativos), que bajan el impuesto en la declaración anual.",
+        "public": "Servidores públicos: en general aplican los mismos porcentajes; confirma con tu oficina de recursos humanos."
+      }
     }
   },
   "review": {
@@ -1876,5 +1921,30 @@
     "free": "Todo lo demás de Commit es gratis, para siempre.",
     "how": "Cómo funciona",
     "subscribe": "Ver planes"
+  },
+  "fintech": {
+    "title": "Fintech en Panamá",
+    "subtitle": "Apps e iniciativas financieras que puedes usar en Panamá: billeteras y pagos, inversión y cripto. Qué hace cada una, quién la supervisa y qué revisar antes de usarla.",
+    "filter": "Filtrar por categoría",
+    "all": "Todas",
+    "categories": {
+      "payments": "Billeteras y pagos",
+      "investing": "Inversión",
+      "crypto": "Cripto"
+    },
+    "costs": "Costos",
+    "regulation": "Supervisión",
+    "claimed": "(lo afirma la empresa; verifícalo en el registro oficial)",
+    "caveats": "Qué tener en cuenta",
+    "visit": "Sitio oficial",
+    "sources": "Fuentes",
+    "verify": {
+      "title": "Cómo verificar una fintech antes de darle tu dinero",
+      "license": "Busca su licencia o registro: la Superintendencia del Mercado de Valores (inversiones) o la Superintendencia de Bancos (bancos y sujetos obligados).",
+      "deposit": "Una billetera, una app de cripto o una de factoring no es un depósito bancario: entiende quién guarda tu dinero y qué pasa si la empresa cierra.",
+      "returns": "Desconfía de rendimientos altos \"garantizados\": a más rendimiento, más riesgo.",
+      "start": "Empieza con montos pequeños y prueba retirar antes de mover más dinero."
+    },
+    "disclaimer": "Contenido informativo, sin afiliación ni recomendación de inversión. Datos revisados el {{date}}: las condiciones cambian, confírmalas en el sitio oficial de cada empresa."
   }
 }

@@ -14,7 +14,7 @@ Los datos financieros se cifran **en tu dispositivo** (conocimiento cero): ni el
 | **Plan mágico** | Qué pagar primero y cuánto ahorrar cada mes, con inflación opcional; calculado en el navegador |
 | **Mi progreso** | Puntaje de salud financiera, ruta de 7 niveles y consejos |
 | **Facturas por WhatsApp** *(opcional, suscripción)* | Foto → OCR propio → IA → bandeja **Por revisar** con recomendación de cuenta y categoría |
-| **Público, sin cuenta** | Landing, **Aprende** (25 artículos) y **Herramientas** (interés compuesto, hipoteca, tarjetas de crédito y débito con tasas de referencia de bancos de Panamá) |
+| **Público, sin cuenta** | Landing, **Aprende** (25 artículos), **Herramientas** (impuestos de Panamá, interés compuesto, hipoteca, tarjetas de crédito y débito con tasas de referencia de bancos de Panamá) y **Fintech** (billeteras, inversión y cripto disponibles en Panamá, con fuentes) |
 | **Experiencia** | PWA instalable, modo sin conexión (lectura), responsive con barra inferior en el celular, modo claro/oscuro/sistema, hogares compartidos |
 | **Cuenta** | Verificación de correo, bienvenida, olvidé mi contraseña, cambiar contraseña y correo, cerrar sesión en todos lados, aviso de ingreso nuevo y eliminar la cuenta |
 | **Operación** | Página **/estado** con el diagrama de la infraestructura en vivo |
