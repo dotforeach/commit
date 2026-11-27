@@ -2364,21 +2364,21 @@
     "semantic_hash": ""
   },
   "infra/scripts/bootstrap.sh": {
-    "mtime": 1795796116.596608,
-    "seen": 1795796128.407616,
-    "ast_hash": "25d16295b5b140b145e279d4f0ff74d2",
+    "mtime": 1795807254.4579568,
+    "seen": 1795807936.6487172,
+    "ast_hash": "dd5086797bae3a3aac3d4dcd7ad33674",
     "semantic_hash": ""
   },
   "infra/scripts/deploy.sh": {
-    "mtime": 1795795473.2117267,
-    "seen": 1795795603.137132,
-    "ast_hash": "7ad024e72541bdd27413cab15212d57a",
+    "mtime": 1795806789.7336776,
+    "seen": 1795807936.6487172,
+    "ast_hash": "136c7bb840c71ac2b9489bcad01465db",
     "semantic_hash": ""
   },
   "infra/scripts/domains.sh": {
-    "mtime": 1795794333.5412552,
-    "seen": 1795794751.37319,
-    "ast_hash": "6cd5871843525379c322ed2ae50bc21c",
+    "mtime": 1795805913.0919638,
+    "seen": 1795807936.648718,
+    "ast_hash": "8d540061f2a73093048b9291d077b87f",
     "semantic_hash": ""
   },
   "infra/scripts/smoke.sh": {
@@ -2388,9 +2388,9 @@
     "semantic_hash": ""
   },
   "docs/despliegue-azure.md": {
-    "mtime": 1795796116.5970569,
-    "seen": 1795796128.4076228,
-    "ast_hash": "513c089a1b4dad2ef93f0e44a1d3c55d",
+    "mtime": 1795805939.9325254,
+    "seen": 1795807936.648723,
+    "ast_hash": "3b1c310b589369e0ca6817c4023ef88b",
     "semantic_hash": ""
   },
   "backend/src/cron.ts": {
@@ -2412,9 +2412,9 @@
     "semantic_hash": ""
   },
   "infra/names.json": {
-    "mtime": 1795795299.7573557,
-    "seen": 1795795603.13713,
-    "ast_hash": "9fd92868cf8c3673143530b56472e35f",
+    "mtime": 1795805913.090841,
+    "seen": 1795807936.648716,
+    "ast_hash": "c747547f97407a1ac23c99290a2d29cf",
     "semantic_hash": ""
   },
   "infra/scripts/restore.sh": {

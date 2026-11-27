@@ -1,17 +1,17 @@
 # Graph Report - commit  (2026-11-27)
 
 ## Corpus Check
-- 361 files · ~168,770 words
+- 361 files · ~169,072 words
 - Verdict: corpus is large enough that graph structure adds value.
-- Unclassified: 56 file(s) not represented in the graph (top: .scss 26, (none) 16, .bicep 3)
+- Unclassified: 57 file(s) not represented in the graph (top: .scss 26, (none) 16, .bicep 4)
 
 ## Summary
-- 3038 nodes · 7453 edges · 164 communities (107 shown, 57 thin omitted)
+- 3039 nodes · 7455 edges · 162 communities (105 shown, 57 thin omitted)
 - Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 211 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `29c3076f`
+- Built from commit: `69ba9707`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -103,11 +103,9 @@
 - tools-math.ts
 - Register
 - Facturas por WhatsApp
-- rates.e2e-spec.ts
 - Unlock
 - AccountService
 - RuleDialog
-- savings.e2e-spec.ts
 - adminer
 - AccountsPage
 - Frontend
@@ -180,9 +178,9 @@
 1. `@nestjs/common` - 90 edges
 2. `@angular/core` - 90 edges
 3. `PrismaService` - 75 edges
-4. `@angular/material` - 57 edges
-5. `@jsverse/transloco` - 57 edges
-6. `parseDecimalInput()` - 57 edges
+4. `parseDecimalInput()` - 57 edges
+5. `@angular/material` - 57 edges
+6. `@jsverse/transloco` - 57 edges
 7. `@angular/common` - 49 edges
 8. `@angular/router` - 47 edges
 9. `KeyVaultService` - 46 edges
@@ -203,7 +201,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (164 total, 57 thin omitted)
+## Communities (162 total, 57 thin omitted)
 
 ### Community 0 - "SavingsService"
 Cohesion: 0.06
@@ -218,8 +216,8 @@ Cohesion: 0.05
 Nodes (44): build, serve, test, builder, configurations, defaultConfiguration, options, cli (+36 more)
 
 ### Community 3 - "members.ts"
-Cohesion: 0.12
-Nodes (9): RegisterInput, AuthService, JwtAuth, memberKeySignedMessage(), AuthUser, @nestjs/authentication, AuthenticationTypes, authUserSelect (+1 more)
+Cohesion: 0.11
+Nodes (10): RegisterInput, AuthService, JwtAuth, memberKeySignedMessage(), verifyEd25519(), AuthUser, @nestjs/authentication, AuthenticationTypes (+2 more)
 
 ### Community 4 - "dependencies"
 Cohesion: 0.07
@@ -246,8 +244,8 @@ Cohesion: 0.06
 Nodes (30): compilerOptions, rootDir, exclude, extends, include, compilerOptions, allowSyntheticDefaultImports, declaration (+22 more)
 
 ### Community 11 - "test/helpers.ts"
-Cohesion: 0.17
-Nodes (19): newUser(), payload(), payload(), setup(), payload(), setup(), b64(), buildRegistration() (+11 more)
+Cohesion: 0.14
+Nodes (24): cookieOf(), register(), newUser(), payload(), payload(), setup(), payload(), setup() (+16 more)
 
 ### Community 12 - "dependencies"
 Cohesion: 0.11
@@ -258,8 +256,8 @@ Cohesion: 0.06
 Nodes (31): DebtDialog, Amortization, amortizationSchedule(), frenchPayment(), monthlyRate(), outstandingBalance(), round2(), ScheduleRow (+23 more)
 
 ### Community 14 - "frontend/package.json"
-Cohesion: 0.17
-Nodes (8): coinGecko, COINS, DOLAR_CASAS, dolarApiItem, FIXED, frankfurter, mid(), RateSources
+Cohesion: 0.13
+Nodes (11): coinGecko, COINS, DOLAR_CASAS, dolarApiItem, FIXED, frankfurter, mid(), PublicRate (+3 more)
 
 ### Community 15 - "postgres"
 Cohesion: 0.22
@@ -393,10 +391,6 @@ Nodes (31): CurrenciesService, Currency, fromIsoDate(), monthOf(), todayIso(), H
 Cohesion: 0.16
 Nodes (5): AccountService, deviceLabel(), sha256(), TTL, Recipient
 
-### Community 58 - "PrismaService"
-Cohesion: 0.13
-Nodes (4): CurrenciesController, PrismaService, cookieOf(), register()
-
 ### Community 59 - "src/transactions/transactions.service.ts"
 Cohesion: 0.07
 Nodes (21): SAFE_LAG_MS, syncPage(), SyncQuery, syncQuerySchema, TransactionsController, uuid, CreateTransactionsInput, createTransactionsSchema (+13 more)
@@ -481,14 +475,6 @@ Nodes (16): CardPayoff, cardPayoff(), CardPayoffInput, compoundGrowth(), Compoun
 Cohesion: 0.25
 Nodes (8): Componentes, Configurar Meta (WhatsApp Cloud API), Costos aproximados por persona y mes, Cómo se recomienda la cuenta y la categoría, Facturas por WhatsApp, Pendiente, Privacidad: una excepción explícita al conocimiento cero, Probar sin Meta ni IA (desarrollo)
 
-### Community 88 - "rates.e2e-spec.ts"
-Cohesion: 0.50
-Nodes (3): PublicRate, FakeSources, user()
-
-### Community 92 - "savings.e2e-spec.ts"
-Cohesion: 0.83
-Nodes (3): linked(), payload(), setup()
-
 ### Community 93 - "adminer"
 Cohesion: 0.25
 Nodes (8): depends_on, environment, image, ports, profiles, restart, ADMINER_DEFAULT_SERVER, adminer
@@ -498,8 +484,8 @@ Cohesion: 0.14
 Nodes (12): Additional Resources, Building, Code scaffolding, Development server, Frontend, Running end-to-end tests, Running unit tests, components (+4 more)
 
 ### Community 96 - "keys.service.ts"
-Cohesion: 0.12
-Nodes (7): verifyEd25519(), AppMailModule, UpdateKeysInput, updateKeysSchema, KeysService, MeController, UsersModule
+Cohesion: 0.13
+Nodes (6): AppMailModule, UpdateKeysInput, updateKeysSchema, KeysService, MeController, UsersModule
 
 ### Community 97 - "production"
 Cohesion: 0.50
@@ -633,23 +619,27 @@ Nodes (5): environment, if, name, runs-on, build
 Cohesion: 0.50
 Nodes (4): name, needs, runs-on, e2e
 
+### Community 167 - "bootstrap.sh"
+Cohesion: 0.60
+Nodes (3): grant(), img(), bootstrap.sh script
+
 ## Knowledge Gaps
 - **57 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `@nestjs/common` connect `app.module.ts` to `members.ts`, `dependencies`, `status.service.ts`, `accounts.schemas.ts`, `Env`, `test/helpers.ts`, `frontend/package.json`, `status.service.ts`, `auth.controller.ts`, `keys.e2e-spec.ts`, `deposits.ts`, `health.controller.ts`, `budgets/budgets.service.ts`, `recurring.schemas.ts`, `installments/installments.service.ts`, `AccountService`, `PrismaService`, `src/transactions/transactions.service.ts`, `account.controller.ts`, `.require`, `backend/package.json`, `receipts.controller.ts`, `rates.e2e-spec.ts`, `savings.e2e-spec.ts`, `keys.service.ts`, `notifications.module.ts`?**
+- **Why does `@angular/core` connect `@angular/core` to `SavingsService`, `articles.ts`, `parseDecimalInput`, `goal-dialog.ts`, `home.ts`, `home.ts`, `dependencies`, `key-vault.service.ts`, `home.ts`, `debit-card-page.ts`, `features/accounts/accounts.service.ts`, `debts-page.ts`, `frontend/package.json`?**
   _High betweenness centrality (0.046) - this node is a cross-community bridge._
 - **Should `SavingsService` be split into smaller, more focused modules?**
   _Cohesion score 0.05844155844155844 - nodes in this community are weakly interconnected._
-- **Why does `@angular/core` connect `@angular/core` to `SavingsService`, `articles.ts`, `parseDecimalInput`, `goal-dialog.ts`, `home.ts`, `home.ts`, `dependencies`, `key-vault.service.ts`, `home.ts`, `debit-card-page.ts`, `features/accounts/accounts.service.ts`, `debts-page.ts`, `frontend/package.json`?**
-  _High betweenness centrality (0.027) - this node is a cross-community bridge._
+- **Why does `@nestjs/common` connect `app.module.ts` to `members.ts`, `dependencies`, `status.service.ts`, `accounts.schemas.ts`, `Env`, `test/helpers.ts`, `frontend/package.json`, `status.service.ts`, `auth.controller.ts`, `keys.e2e-spec.ts`, `deposits.ts`, `health.controller.ts`, `budgets/budgets.service.ts`, `recurring.schemas.ts`, `installments/installments.service.ts`, `AccountService`, `PrismaService`, `src/transactions/transactions.service.ts`, `account.controller.ts`, `.require`, `backend/package.json`, `receipts.controller.ts`, `keys.service.ts`, `notifications.module.ts`?**
+  _High betweenness centrality (0.042) - this node is a cross-community bridge._
 - **Should `frontend` be split into smaller, more focused modules?**
   _Cohesion score 0.046464646464646465 - nodes in this community are weakly interconnected._
 - **Why does `@playwright/test` connect `e2e/helpers.ts` to `frontend/package.json`?**
-  _High betweenness centrality (0.019) - this node is a cross-community bridge._
+  _High betweenness centrality (0.022) - this node is a cross-community bridge._
 - **Should `members.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.12 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.11083743842364532 - nodes in this community are weakly interconnected._
 - **Should `dependencies` be split into smaller, more focused modules?**
   _Cohesion score 0.06666666666666667 - nodes in this community are weakly interconnected._
