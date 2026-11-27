@@ -5,6 +5,7 @@ import { TranslocoDirective } from '@jsverse/transloco';
 import { CHECKED_AT } from './bank-rates';
 
 export const TOOLS = [
+  { slug: 'impuestos', key: 'tax', icon: 'receipt_long' },
   { slug: 'interes-compuesto', key: 'compound', icon: 'trending_up' },
   { slug: 'hipoteca', key: 'mortgage', icon: 'home' },
   { slug: 'tarjeta-de-credito', key: 'credit', icon: 'credit_card' },

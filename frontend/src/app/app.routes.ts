@@ -40,6 +40,16 @@ export const routes: Routes = [
     loadComponent: () => import('./features/tools/debit-card-page').then((m) => m.DebitCardPage),
   },
   {
+    path: 'herramientas/impuestos',
+    title: 'Calculadora de impuestos de Panamá · Commit',
+    loadComponent: () => import('./features/tools/tax-page').then((m) => m.TaxPage),
+  },
+  {
+    path: 'fintech',
+    title: 'Fintech en Panamá · Commit',
+    loadComponent: () => import('./features/fintech/fintech-page').then((m) => m.FintechPage),
+  },
+  {
     // Sin guard: en desarrollo es abierta; en producción el backend exige el token de operador.
     path: 'estado',
     title: 'Estado de la infraestructura · Commit',

@@ -20,6 +20,9 @@
       <a mat-icon-button routerLink="/herramientas" [attr.aria-label]="t('nav.tools')" data-testid="nav-tools" class="hide-xs">
         <mat-icon fontSet="material-symbols-outlined">calculate</mat-icon>
       </a>
+      <a mat-icon-button routerLink="/fintech" [attr.aria-label]="t('nav.fintech')" [attr.title]="t('nav.fintech')" data-testid="nav-fintech" class="hide-xs">
+        <mat-icon fontSet="material-symbols-outlined">rocket_launch</mat-icon>
+      </a>
       <a mat-icon-button routerLink="/aprende" [attr.aria-label]="t('nav.learn')" data-testid="nav-learn">
         <mat-icon fontSet="material-symbols-outlined">school</mat-icon>
       </a>
@@ -39,6 +42,7 @@
           <mat-icon fontSet="material-symbols-outlined">{{ theme.icon() }}</mat-icon>
         </button>
         <a mat-button routerLink="/herramientas" class="hide-xs">{{ t('nav.tools') }}</a>
+        <a mat-button routerLink="/fintech" class="hide-xs" data-testid="guest-fintech">{{ t('nav.fintech') }}</a>
         <a mat-button routerLink="/aprende" class="hide-xs">{{ t('nav.learn') }}</a>
         <a mat-button routerLink="/ingresar">{{ t('nav.login') }}</a>
         <a mat-flat-button routerLink="/registro" class="hide-xs">{{ t('nav.register') }}</a>
@@ -98,7 +102,8 @@
     {{ t('footer.license') }} ·
     <a href="https://github.com/dotforeach/commit" target="_blank" rel="noopener">{{ t('footer.source') }}</a> ·
     <a routerLink="/aprende">{{ t('nav.learn') }}</a> ·
-    <a routerLink="/herramientas">{{ t('nav.tools') }}</a>
+    <a routerLink="/herramientas">{{ t('nav.tools') }}</a> ·
+    <a routerLink="/fintech">{{ t('nav.fintech') }}</a>
     @if (devMode) {
       · <a routerLink="/estado" data-testid="footer-status">{{ t('nav.status') }}</a>
     }

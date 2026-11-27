@@ -4,7 +4,7 @@ test('herramientas: públicas, con tasas de bancos y resultados correctos', asyn
   await page.goto('/');
   await page.getByTestId('landing-tools').click();
   await expect(page).toHaveURL(/\/herramientas$/);
-  await expect(page.locator('[data-tool]')).toHaveCount(4);
+  await expect(page.locator('[data-tool]')).toHaveCount(5);
 
   // Interés compuesto: 1,000 sin aportes al 12% por 1 año ≈ $1,126.83
   await page.locator('[data-tool="interes-compuesto"]').click();

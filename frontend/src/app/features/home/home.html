@@ -28,6 +28,17 @@
 
     <app-home-receipts-card />
 
+    <mat-card appearance="outlined" data-testid="home-tax">
+      <mat-card-header>
+        <mat-icon mat-card-avatar fontSet="material-symbols-outlined" aria-hidden="true">receipt_long</mat-icon>
+        <mat-card-title>{{ t('tax.title') }}</mat-card-title>
+        <mat-card-subtitle>{{ t('tax.subtitle') }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-actions align="end">
+        <a mat-button routerLink="/herramientas/impuestos">{{ t('tax.open') }}</a>
+      </mat-card-actions>
+    </mat-card>
+
     <mat-card appearance="outlined" class="progress-card" data-testid="home-progress">
       <mat-card-header>
         <mat-icon mat-card-avatar fontSet="material-symbols-outlined" aria-hidden="true">insights</mat-icon>

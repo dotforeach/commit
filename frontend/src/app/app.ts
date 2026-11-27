@@ -37,6 +37,7 @@ const NAV: NavItem[] = [
   { path: '/plan', label: 'nav.plan', icon: 'auto_awesome', primary: false, mobileOnly: true },
   { path: '/por-revisar', label: 'nav.review', icon: 'receipt_long', primary: false, mobileOnly: true },
   { path: '/herramientas', label: 'nav.tools', icon: 'calculate', primary: false, mobileOnly: true },
+  { path: '/fintech', label: 'nav.fintech', icon: 'rocket_launch', primary: false, mobileOnly: true },
 ];
 
 @Component({

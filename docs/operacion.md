@@ -140,6 +140,8 @@ La página `/estado` dibuja la infraestructura y verifica en vivo, cada 10 s: Po
 | Contenido | Archivo | Cómo actualizar |
 |---|---|---|
 | Tasas de referencia de bancos (hipotecas y tarjetas) | `frontend/src/app/features/tools/bank-rates.ts` | Revisa las fuentes enlazadas (tarifario de la Superintendencia de Bancos, estudio de Acodeco), cambia valores y fuentes, y actualiza `CHECKED_AT` |
+| Impuestos sobre el salario (SS, SE, tabla del ISR) | `frontend/src/app/features/tools/tax-math.ts` | Cambia `PANAMA_TAX` y `TAX_SOURCES` si cambia la ley; el test `tax-math.spec.ts` fija los valores de referencia |
+| Apps fintech | `frontend/src/app/features/fintech/fintech-data.ts` | Solo con fuente; marca `claimed: true` lo que afirma la empresa sin verificar; actualiza `FINTECH_CHECKED_AT` |
 | Artículos de *Aprende* | `frontend/src/app/features/learn/articles/*.ts` | Cada artículo tiene nivel, tema y bloques; el test `articles.spec.ts` exige 3 niveles por tema y enlaces válidos |
 | "Leer más" desde consejos y Plan mágico | `frontend/src/app/features/learn/links.ts` | Mapa consejo → artículo |
 | Monedas del catálogo | Migraciones `seed_currencies` y `panama_currencies` | Agregar con una migración nueva (`ON CONFLICT DO NOTHING`) |
