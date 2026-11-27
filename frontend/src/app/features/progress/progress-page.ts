@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { RouterLink } from '@angular/router';
+import { TIP_ARTICLE } from '../learn/links';
 import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 import type { ScoreComponent } from './progress-engine';
 import { ProgressService } from './progress.service';
@@ -26,6 +27,7 @@ export const LEVEL_ICONS: Record<string, string> = {
   styleUrl: './progress-page.scss',
 })
 export class ProgressPage implements OnInit {
+  readonly articleFor = TIP_ARTICLE;
   readonly progress = inject(ProgressService);
   private readonly snack = inject(MatSnackBar);
   private readonly transloco = inject(TranslocoService);

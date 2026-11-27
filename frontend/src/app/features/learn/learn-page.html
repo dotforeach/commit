@@ -1,0 +1,44 @@
+<ng-container *transloco="let t; prefix: 'learn'">
+  <section class="page learn">
+    <header>
+      <h2>{{ t('title') }}</h2>
+      <p class="subtitle">{{ t('subtitle') }}</p>
+    </header>
+
+    <div class="filters">
+      <mat-chip-listbox [attr.aria-label]="t('topicLabel')" [value]="topic()" (change)="topic.set($event.value ?? null)">
+        @for (tp of topics; track tp) {
+          <mat-chip-option [value]="tp">{{ t('topics.' + tp) }}</mat-chip-option>
+        }
+      </mat-chip-listbox>
+      <mat-chip-listbox [attr.aria-label]="t('levelLabel')" [value]="level()" (change)="level.set($event.value ?? null)">
+        @for (lv of levels; track lv) {
+          <mat-chip-option [value]="lv">{{ t('levels.' + lv) }}</mat-chip-option>
+        }
+      </mat-chip-listbox>
+    </div>
+
+    <ul class="grid" data-testid="articles">
+      @for (a of articles(); track a.slug) {
+        <li>
+          <a class="article-card" [routerLink]="['/aprende', a.slug]" [attr.data-article]="a.slug">
+            <span class="badges">
+              <span class="badge level-{{ a.level }}">{{ t('levels.' + a.level) }}</span>
+              <span class="badge">{{ t('topics.' + a.topic) }}</span>
+              @if (a.region === 'AR') {
+                <span class="badge region">{{ t('regionAR') }}</span>
+              }
+            </span>
+            <strong>{{ a.title }}</strong>
+            <span class="summary">{{ a.summary }}</span>
+            <span class="meta">{{ t('minutes', { n: minutes(a) }) }}</span>
+          </a>
+        </li>
+      } @empty {
+        <li class="meta">{{ t('empty') }}</li>
+      }
+    </ul>
+
+    <p class="meta disclaimer">{{ t('disclaimer') }}</p>
+  </section>
+</ng-container>

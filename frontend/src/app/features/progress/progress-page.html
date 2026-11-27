@@ -48,6 +48,9 @@
             </mat-card-content>
             <mat-card-actions align="end">
               <button mat-button (click)="dismiss(tip.key)">{{ t('dismiss') }}</button>
+              @if (articleFor[tip.key]) {
+                <a mat-button [routerLink]="['/aprende', articleFor[tip.key]]">{{ t('readMore') }}</a>
+              }
               <a mat-flat-button [routerLink]="tip.route">{{ t('tips.' + tip.key + '.action') }}</a>
             </mat-card-actions>
           </mat-card>

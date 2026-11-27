@@ -1,8 +1,23 @@
 import type { Routes } from '@angular/router';
-import { authGuard, guestGuard, unlockedGuard } from './core/auth/guards';
+import { authGuard, guestGuard, landingGuard, unlockedGuard } from './core/auth/guards';
 
 export const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'inicio' },
+  {
+    path: '',
+    pathMatch: 'full',
+    title: 'Commit · Tus finanzas de 0 a 100',
+    canActivate: [landingGuard],
+    loadComponent: () => import('./features/landing/landing').then((m) => m.Landing),
+  },
+  {
+    path: 'aprende',
+    title: 'Aprendé · Commit',
+    loadComponent: () => import('./features/learn/learn-page').then((m) => m.LearnPage),
+  },
+  {
+    path: 'aprende/:slug',
+    loadComponent: () => import('./features/learn/article-page').then((m) => m.ArticlePage),
+  },
   {
     path: 'registro',
     canActivate: [guestGuard],
@@ -102,5 +117,5 @@ export const routes: Routes = [
     canActivate: [authGuard, unlockedGuard],
     loadComponent: () => import('./features/household/join-page').then((m) => m.JoinPage),
   },
-  { path: '**', redirectTo: 'inicio' },
+  { path: '**', redirectTo: '' },
 ];

@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { TranslocoDirective } from '@jsverse/transloco';
+import { AuthService } from './core/auth/auth.service';
 import { AutoLockService } from './core/crypto/auto-lock.service';
 import { KeyVaultService } from './core/crypto/key-vault.service';
 import { APP_VERSION } from './core/version';
@@ -46,6 +47,7 @@ export class App {
   /** Se instancia con la app: vigila la inactividad. */
   protected readonly autoLock = inject(AutoLockService);
   readonly cache = inject(OfflineCacheService);
+  protected readonly auth = inject(AuthService);
   protected readonly version = APP_VERSION;
 
   /** Secciones: las principales van fijas en la barra inferior del celular; el resto, en "Más". */

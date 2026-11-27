@@ -15,6 +15,7 @@ import { formatMoney, parseDecimalInput } from '../../core/money/decimal';
 import { toMoney } from '../debts/debt-math';
 import type { PlanStep } from './plan-engine';
 import { PlanService } from './plan.service';
+import { PLAN_ARTICLE } from '../learn/links';
 
 const ICONS: Record<PlanStep['kind'], string> = {
   minimums: 'event_available',
@@ -57,6 +58,7 @@ export class PlanPage implements OnInit {
   readonly input = this.service.input;
   readonly icons = ICONS;
   readonly links = LINKS;
+  readonly articles = PLAN_ARTICLE;
   /** Número de paso visible (los informativos también cuentan). */
   readonly steps = computed(() => this.plan().steps.map((s, i) => ({ ...s, n: i + 1 })));
 

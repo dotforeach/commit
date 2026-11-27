@@ -1,0 +1,137 @@
+<ng-container *transloco="let t; prefix: 'landing'">
+  <div class="landing">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-text">
+        <p class="eyebrow">{{ t('hero.eyebrow') }}</p>
+        <h2 class="hero-title" data-testid="landing-title">{{ t('hero.title') }}</h2>
+        <p class="hero-lead">{{ t('hero.lead') }}</p>
+        <div class="hero-actions">
+          <a mat-flat-button routerLink="/registro" data-testid="landing-cta">{{ t('hero.cta') }}</a>
+          <a mat-stroked-button routerLink="/aprende">{{ t('hero.learn') }}</a>
+        </div>
+        <ul class="hero-badges">
+          <li><mat-icon fontSet="material-symbols-outlined" aria-hidden="true">lock</mat-icon>{{ t('hero.badges.encrypted') }}</li>
+          <li><mat-icon fontSet="material-symbols-outlined" aria-hidden="true">volunteer_activism</mat-icon>{{ t('hero.badges.free') }}</li>
+          <li><mat-icon fontSet="material-symbols-outlined" aria-hidden="true">smartphone</mat-icon>{{ t('hero.badges.mobile') }}</li>
+        </ul>
+      </div>
+
+      <!-- Vista previa ilustrativa (datos de ejemplo) -->
+      <figure class="preview" [attr.aria-label]="t('preview.label')">
+        <div class="device">
+          <div class="device-bar">
+            <mat-icon fontSet="material-symbols-outlined" aria-hidden="true">savings</mat-icon>
+            <span>Commit</span>
+          </div>
+          <p class="device-title">✨ {{ t('preview.title') }}</p>
+          <p class="device-capacity">{{ t('preview.capacity') }}</p>
+          <ol class="device-steps">
+            <li><mat-icon fontSet="material-symbols-outlined" aria-hidden="true">event_available</mat-icon><span>{{ t('preview.step1') }}</span></li>
+            <li><mat-icon fontSet="material-symbols-outlined" aria-hidden="true">credit_card</mat-icon><span>{{ t('preview.step2') }}</span></li>
+            <li><mat-icon fontSet="material-symbols-outlined" aria-hidden="true">shield</mat-icon><span>{{ t('preview.step3') }}</span></li>
+            <li><mat-icon fontSet="material-symbols-outlined" aria-hidden="true">trending_down</mat-icon><span>{{ t('preview.step4') }}</span></li>
+          </ol>
+          <div class="device-score">
+            <span>{{ t('preview.score') }}</span>
+            <strong>72 / 100</strong>
+          </div>
+        </div>
+        <figcaption>{{ t('preview.caption') }}</figcaption>
+      </figure>
+    </section>
+
+    <!-- Cómo funciona -->
+    <section class="section" aria-labelledby="how-title">
+      <h2 id="how-title">{{ t('how.title') }}</h2>
+      <ol class="steps">
+        @for (s of steps; track s; let i = $index) {
+          <li>
+            <span class="step-n">{{ i + 1 }}</span>
+            <h3>{{ t('how.' + s + '.title') }}</h3>
+            <p>{{ t('how.' + s + '.body') }}</p>
+          </li>
+        }
+      </ol>
+    </section>
+
+    <!-- Funcionalidades -->
+    <section class="section" aria-labelledby="features-title">
+      <h2 id="features-title">{{ t('features.title') }}</h2>
+      <ul class="features">
+        @for (f of features; track f.key) {
+          <li>
+            <mat-icon fontSet="material-symbols-outlined" aria-hidden="true">{{ f.icon }}</mat-icon>
+            <h3>{{ t('features.' + f.key + '.title') }}</h3>
+            <p>{{ t('features.' + f.key + '.body') }}</p>
+          </li>
+        }
+      </ul>
+    </section>
+
+    <!-- Privacidad -->
+    <section class="section privacy" aria-labelledby="privacy-title">
+      <mat-icon class="big-icon" fontSet="material-symbols-outlined" aria-hidden="true">encrypted</mat-icon>
+      <div>
+        <h2 id="privacy-title">{{ t('privacy.title') }}</h2>
+        <p>{{ t('privacy.body') }}</p>
+        <ul>
+          <li>{{ t('privacy.point1') }}</li>
+          <li>{{ t('privacy.point2') }}</li>
+          <li>{{ t('privacy.point3') }}</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Aprendé -->
+    <section class="section" aria-labelledby="learn-title">
+      <div class="section-head">
+        <div>
+          <h2 id="learn-title">{{ t('learn.title') }}</h2>
+          <p class="subtitle">{{ t('learn.body') }}</p>
+        </div>
+        <a mat-button routerLink="/aprende">{{ t('learn.all') }}</a>
+      </div>
+      <ul class="articles">
+        @for (a of articles; track a.slug) {
+          <li>
+            <a [routerLink]="['/aprende', a.slug]">
+              <strong>{{ a.title }}</strong>
+              <span>{{ a.summary }}</span>
+              <span class="meta">{{ t('learn.minutes', { n: a.minutes }) }}</span>
+            </a>
+          </li>
+        }
+      </ul>
+    </section>
+
+    <!-- Libre -->
+    <section class="section open" aria-labelledby="open-title">
+      <h2 id="open-title">{{ t('open.title') }}</h2>
+      <p>{{ t('open.body') }}</p>
+      <a mat-stroked-button href="https://github.com/dotforeach/commit" target="_blank" rel="noopener">
+        <mat-icon fontSet="material-symbols-outlined" aria-hidden="true">code</mat-icon>{{ t('open.cta') }}
+      </a>
+    </section>
+
+    <!-- Preguntas frecuentes -->
+    <section class="section" aria-labelledby="faq-title">
+      <h2 id="faq-title">{{ t('faq.title') }}</h2>
+      <div class="faq">
+        @for (q of faqs; track q) {
+          <details>
+            <summary>{{ t('faq.' + q + '.q') }}</summary>
+            <p>{{ t('faq.' + q + '.a') }}</p>
+          </details>
+        }
+      </div>
+    </section>
+
+    <!-- Cierre -->
+    <section class="final">
+      <h2>{{ t('final.title') }}</h2>
+      <p>{{ t('final.body') }}</p>
+      <a mat-flat-button routerLink="/registro">{{ t('hero.cta') }}</a>
+    </section>
+  </div>
+</ng-container>

@@ -56,7 +56,10 @@
                 }
               }
             </div>
-            <a mat-button class="go" [routerLink]="links[s.kind]">{{ t('go') }}</a>
+            <div class="actions">
+              <a mat-button class="go" [routerLink]="links[s.kind]">{{ t('go') }}</a>
+              <a mat-button [routerLink]="['/aprende', articles[s.kind]]">{{ t('readMore') }}</a>
+            </div>
           </li>
         } @empty {
           <li class="step"><p>{{ t('nothing') }}</p></li>

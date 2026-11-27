@@ -46,8 +46,21 @@
     color: var(--mat-sys-on-surface-variant);
   }
 
-  .go {
+  .actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
     flex-shrink: 0;
+  }
+
+  @media (max-width: 599px) {
+    flex-wrap: wrap;
+
+    .actions {
+      flex-direction: row;
+      width: 100%;
+      justify-content: flex-end;
+    }
   }
 }
 

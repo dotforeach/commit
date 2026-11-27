@@ -147,3 +147,15 @@
     }
   }
 }
+
+.guest-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+@media (max-width: 599px) {
+  .hide-xs {
+    display: none !important;
+  }
+}

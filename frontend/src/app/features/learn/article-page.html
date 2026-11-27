@@ -1,0 +1,74 @@
+<ng-container *transloco="let t; prefix: 'learn'">
+  <article class="page reading">
+    <a mat-button routerLink="/aprende" class="back">
+      <mat-icon fontSet="material-symbols-outlined" aria-hidden="true">arrow_back</mat-icon>{{ t('back') }}
+    </a>
+    @if (article(); as a) {
+      <header>
+        <span class="badges">
+          <span class="badge level-{{ a.level }}">{{ t('levels.' + a.level) }}</span>
+          <span class="badge">{{ t('topics.' + a.topic) }}</span>
+          @if (a.region === 'AR') {
+            <span class="badge region">{{ t('regionAR') }}</span>
+          }
+        </span>
+        <h2 data-testid="article-title">{{ a.title }}</h2>
+        <p class="lead">{{ a.summary }}</p>
+        <p class="meta">{{ t('minutes', { n: minutes() }) }}</p>
+      </header>
+
+      <div class="content">
+        @for (b of a.blocks; track $index) {
+          @if ('h' in b) {
+            <h3>{{ b.h }}</h3>
+          } @else if ('p' in b) {
+            <p>{{ b.p }}</p>
+          } @else if ('ul' in b) {
+            <ul>
+              @for (i of b.ul; track $index) {
+                <li>{{ i }}</li>
+              }
+            </ul>
+          } @else if ('ol' in b) {
+            <ol>
+              @for (i of b.ol; track $index) {
+                <li>{{ i }}</li>
+              }
+            </ol>
+          } @else {
+            <aside class="key">
+              <mat-icon fontSet="material-symbols-outlined" aria-hidden="true">lightbulb</mat-icon>
+              <p><strong>{{ t('key') }}</strong> {{ b.tip }}</p>
+            </aside>
+          }
+        }
+      </div>
+
+      <p class="meta disclaimer">{{ t('disclaimer') }}</p>
+
+      @if (!auth.isAuthenticated()) {
+        <aside class="cta">
+          <p>{{ t('cta') }}</p>
+          <a mat-flat-button routerLink="/registro">{{ t('ctaButton') }}</a>
+        </aside>
+      }
+
+      @if (related().length > 0) {
+        <h3 class="related-title">{{ t('related') }}</h3>
+        <ul class="grid">
+          @for (r of related(); track r.slug) {
+            <li>
+              <a class="article-card" [routerLink]="['/aprende', r.slug]">
+                <span class="badges"><span class="badge level-{{ r.level }}">{{ t('levels.' + r.level) }}</span></span>
+                <strong>{{ r.title }}</strong>
+                <span class="summary">{{ r.summary }}</span>
+              </a>
+            </li>
+          }
+        </ul>
+      }
+    } @else {
+      <p role="alert">{{ t('notFound') }}</p>
+    }
+  </article>
+</ng-container>

@@ -1,0 +1,71 @@
+.landing { max-width: 1120px; margin: 0 auto; padding: 0 16px 48px; }
+h2 { font: var(--mat-sys-headline-medium); margin: 0 0 16px; }
+h3 { font: var(--mat-sys-title-medium); margin: 8px 0 4px; }
+p { margin: 0; }
+.subtitle, .meta, .hero-lead, .hero-badges, .device-capacity, .steps p, .features p, .open p, .faq p, .articles span:not(.meta), figcaption {
+  color: var(--mat-sys-on-surface-variant);
+}
+.meta, .device-capacity, figcaption { font: var(--mat-sys-body-small); }
+mat-icon { color: var(--mat-sys-primary); flex-shrink: 0; }
+
+// Hero
+.hero { display: grid; grid-template-columns: 1.1fr 0.9fr; align-items: center; gap: 48px; padding: 56px 0 48px; }
+.eyebrow { font: var(--mat-sys-label-large); color: var(--mat-sys-primary); text-transform: uppercase; letter-spacing: 0.08em; }
+.hero-title { margin: 12px 0 16px; font: var(--mat-sys-display-medium); letter-spacing: -0.02em; }
+.hero-lead { font: var(--mat-sys-title-large); font-weight: 400; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 28px 0 20px; }
+.hero-badges, .steps, .features, .articles, .device-steps { list-style: none; padding: 0; margin: 0; }
+.hero-badges { display: flex; flex-wrap: wrap; gap: 8px 20px; }
+.hero-badges li, .device-bar, .device-steps li { display: flex; align-items: center; gap: 8px; }
+.preview { margin: 0; display: grid; justify-items: center; gap: 12px; }
+.device {
+  width: min(100%, 340px); padding: 16px; border-radius: 28px;
+  background: var(--mat-sys-surface-container-lowest); border: 1px solid var(--mat-sys-outline-variant); box-shadow: var(--mat-sys-level3);
+}
+.device-bar { font: var(--mat-sys-title-medium); padding-bottom: 12px; border-bottom: 1px solid var(--mat-sys-outline-variant); }
+.device-title { margin-top: 16px; font: var(--mat-sys-title-large); }
+.device-steps { margin: 12px 0; display: grid; gap: 8px; }
+.device-steps li { padding: 10px 12px; border: 1px solid var(--mat-sys-outline-variant); border-radius: 12px; }
+.device-score, .final { background: var(--mat-sys-primary-container); color: var(--mat-sys-on-primary-container); }
+.device-score { display: flex; justify-content: space-between; padding: 12px; border-radius: 12px; }
+
+// Secciones
+.section { padding: 40px 0; border-top: 1px solid var(--mat-sys-outline-variant); }
+.section-head { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.section-head h2 { margin-bottom: 4px; }
+.steps, .features, .articles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.step-n {
+  display: inline-grid; place-items: center; width: 36px; height: 36px; border-radius: 50%;
+  background: var(--mat-sys-primary); color: var(--mat-sys-on-primary); font: var(--mat-sys-title-medium);
+}
+.features li { padding: 20px; border-radius: 16px; background: var(--mat-sys-surface-container-low); }
+.privacy { display: flex; gap: 24px; }
+.privacy .big-icon { width: 56px; height: 56px; font-size: 56px; }
+.privacy ul { margin: 12px 0 0; padding-left: 20px; display: grid; gap: 6px; }
+.articles a {
+  display: flex; flex-direction: column; gap: 8px; height: 100%; box-sizing: border-box; padding: 16px;
+  border: 1px solid var(--mat-sys-outline-variant); border-radius: 16px; color: inherit; text-decoration: none;
+  &:hover, &:focus-visible { border-color: var(--mat-sys-primary); }
+}
+.articles span:not(.meta) { flex: 1; }
+.open p { max-width: 680px; margin-bottom: 16px; }
+.faq { display: grid; gap: 8px; max-width: 760px; }
+.faq details { padding: 14px 16px; border: 1px solid var(--mat-sys-outline-variant); border-radius: 12px; }
+.faq summary { cursor: pointer; font: var(--mat-sys-title-small); }
+.faq p { margin-top: 8px; }
+.final { display: grid; justify-items: center; gap: 12px; text-align: center; margin-top: 16px; padding: 48px 24px; border-radius: 28px; }
+.final h2 { margin: 0; }
+
+// Responsive
+@media (max-width: 899px) {
+  .hero { grid-template-columns: 1fr; gap: 32px; padding-top: 32px; }
+  .hero-title { font: var(--mat-sys-display-small); }
+  .steps, .features, .articles { grid-template-columns: 1fr; }
+}
+@media (min-width: 600px) and (max-width: 899px) {
+  .features { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 599px) {
+  .hero-lead { font: var(--mat-sys-title-medium); }
+  .privacy { flex-direction: column; }
+}

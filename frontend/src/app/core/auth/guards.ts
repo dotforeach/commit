@@ -42,3 +42,10 @@ export const guestGuard: CanActivateFn = async () => {
   if (!(await auth.ensureSession())) return true;
   return router.createUrlTree([vault.isUnlocked() ? '/inicio' : '/desbloquear']);
 };
+
+/** La landing es para visitantes: con sesión iniciada, "/" lleva a Inicio. */
+export const landingGuard: CanActivateFn = async () => {
+  const auth = inject(AuthService);
+  const router = inject(Router);
+  return (await auth.ensureSession()) ? router.createUrlTree(['/inicio']) : true;
+};

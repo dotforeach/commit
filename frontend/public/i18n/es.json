@@ -296,7 +296,10 @@
     "settings": "Ajustes",
     "main": "Secciones",
     "more": "Más",
-    "plan": "Plan mágico"
+    "plan": "Plan mágico",
+    "learn": "Aprendé",
+    "login": "Ingresar",
+    "register": "Crear cuenta"
   },
   "accounts": {
     "title": "Cuentas",
@@ -1125,7 +1128,8 @@
         "invested": "Tener ahorros invertidos",
         "diversified": "Repartirlos en 2 tipos o más"
       }
-    }
+    },
+    "readMore": "Leer más"
   },
   "onboarding": {
     "title": "Primeros pasos",
@@ -1297,6 +1301,150 @@
       "save": "Guardar",
       "clear": "Quitar"
     },
-    "disclaimer": "Es una guía automática basada en tus datos, no asesoramiento financiero profesional."
+    "disclaimer": "Es una guía automática basada en tus datos, no asesoramiento financiero profesional.",
+    "readMore": "Leer más"
+  },
+  "learn": {
+    "title": "Aprendé",
+    "subtitle": "Guías de finanzas personales, de lo básico a lo avanzado, pensadas para Panamá. Gratis y sin registrarte.",
+    "topicLabel": "Tema",
+    "levelLabel": "Nivel",
+    "topics": {
+      "personal": "Finanzas personales",
+      "deudas": "Deudas y crédito",
+      "pareja": "Pareja y familia",
+      "inversion": "Ahorro e inversión"
+    },
+    "levels": {
+      "basico": "Básico",
+      "intermedio": "Intermedio",
+      "avanzado": "Avanzado"
+    },
+    "regionAR": "Referente: Argentina",
+    "minutes": "{{n}} min de lectura",
+    "empty": "No hay artículos con esos filtros.",
+    "back": "Todos los artículos",
+    "key": "La clave:",
+    "related": "Seguí leyendo",
+    "notFound": "No encontramos ese artículo.",
+    "cta": "Llevá esto a la práctica con tus propios números.",
+    "ctaButton": "Crear cuenta gratis",
+    "disclaimer": "Contenido educativo general, no asesoramiento financiero, legal ni impositivo. Montos, tasas y normas pueden cambiar: verificá los valores vigentes con las entidades oficiales o un profesional."
+  },
+  "landing": {
+    "hero": {
+      "eyebrow": "Finanzas personales, gratis y privadas",
+      "title": "Tus finanzas, de 0 a 100.",
+      "lead": "Commit te ayuda a ordenar gastos, salir de deudas, ahorrar e invertir, con un plan claro para cada mes. Tus datos se cifran en tu dispositivo: ni nosotros podemos verlos.",
+      "cta": "Crear cuenta gratis",
+      "learn": "Aprender finanzas",
+      "badges": {
+        "encrypted": "Cifrado de conocimiento cero",
+        "free": "Gratis y de código abierto",
+        "mobile": "En el celular y la compu"
+      }
+    },
+    "preview": {
+      "label": "Vista previa de la app",
+      "title": "Plan mágico",
+      "capacity": "Te quedan $640 por mes después de tus gastos de vida.",
+      "step1": "Pagá los mínimos de tus deudas ($180)",
+      "step2": "Pagá el total de tu tarjeta ($320)",
+      "step3": "Armá un colchón de 1 mes de gastos",
+      "step4": "Adelantá $140 a tu préstamo más caro",
+      "score": "Salud financiera",
+      "caption": "Datos de ejemplo."
+    },
+    "how": {
+      "title": "Cómo funciona",
+      "one": {
+        "title": "Cargá tu realidad",
+        "body": "Tu sueldo, tus gastos fijos y tus deudas. En 5 minutos tenés un presupuesto sugerido."
+      },
+      "two": {
+        "title": "Seguí un plan",
+        "body": "El Plan mágico te dice qué pagar primero y cuánto ahorrar cada mes, con tus números."
+      },
+      "three": {
+        "title": "Mirá tu progreso",
+        "body": "Un puntaje de salud financiera y una ruta de 7 niveles, del orden básico a invertir."
+      }
+    },
+    "features": {
+      "title": "Todo lo que necesitás, en un solo lugar",
+      "budget": {
+        "title": "Presupuesto",
+        "body": "Topes por categoría, alertas cuando te acercás al límite y la regla 50/30/20 como punto de partida."
+      },
+      "debts": {
+        "title": "Deudas y tarjetas",
+        "body": "Saldo, cuotas, fechas de corte y pago, y una comparación de estrategias para salir más rápido."
+      },
+      "plan": {
+        "title": "Plan mágico",
+        "body": "Ordena tus prioridades: mínimos, tarjetas, fondo de emergencia, deudas caras, metas e inversión."
+      },
+      "savings": {
+        "title": "Ahorro e inversión",
+        "body": "Metas con fecha, fondo de emergencia, plazos fijos e inversiones, en varias monedas."
+      },
+      "household": {
+        "title": "En pareja o en familia",
+        "body": "Compartí un hogar con otras personas, con roles, sin perder la privacidad."
+      },
+      "reminders": {
+        "title": "Recordatorios",
+        "body": "Avisos antes de cada vencimiento para no pagar recargos ni intereses de más."
+      }
+    },
+    "privacy": {
+      "title": "Tus datos son tuyos. De verdad.",
+      "body": "Commit usa cifrado de conocimiento cero: tus montos, nombres y descripciones se cifran en tu dispositivo con una clave que solo vos conocés, antes de viajar al servidor.",
+      "point1": "Ni los administradores ni nadie con acceso al servidor pueden leer tus finanzas.",
+      "point2": "Sin publicidad, sin vender datos y sin rastreadores.",
+      "point3": "Una frase de recuperación de 24 palabras te devuelve el acceso si olvidás tu clave."
+    },
+    "learn": {
+      "title": "Aprendé finanzas",
+      "body": "Más de 20 guías gratuitas, de lo básico a lo avanzado, pensadas para Panamá.",
+      "all": "Ver todas",
+      "minutes": "{{n}} min de lectura"
+    },
+    "open": {
+      "title": "Gratis y de código abierto",
+      "body": "Commit es software libre bajo licencia AGPL-3.0. Podés revisar el código, auditar cómo se cifran tus datos o instalarlo en tu propio servidor.",
+      "cta": "Ver el código fuente"
+    },
+    "faq": {
+      "title": "Preguntas frecuentes",
+      "free": {
+        "q": "¿Es gratis?",
+        "a": "Sí. Commit es software libre: no tiene planes pagos ni publicidad."
+      },
+      "privacy": {
+        "q": "¿Pueden ver mis datos?",
+        "a": "No. Tus datos financieros se cifran en tu dispositivo con tu clave de descifrado antes de enviarse. En el servidor solo hay datos cifrados."
+      },
+      "forgot": {
+        "q": "¿Qué pasa si olvido mi clave de descifrado?",
+        "a": "Al registrarte recibís una frase de recuperación de 24 palabras. También otra persona de tu hogar puede devolverte el acceso. Sin ninguna de las dos, nadie puede recuperar los datos: es el precio de que nadie más pueda leerlos."
+      },
+      "bank": {
+        "q": "¿Se conecta con mi banco?",
+        "a": "No. Cargás tus movimientos vos: así ningún tercero accede a tus cuentas. Los gastos fijos se cargan una vez como recurrentes."
+      },
+      "offline": {
+        "q": "¿Funciona sin internet?",
+        "a": "Podés abrir la app y consultar tus datos guardados en el dispositivo (cifrados) sin conexión. Para registrar cambios necesitás conexión."
+      },
+      "couple": {
+        "q": "¿La puedo usar en pareja?",
+        "a": "Sí. Podés invitar a otras personas a tu hogar, con roles, y ver los mismos movimientos y presupuestos."
+      }
+    },
+    "final": {
+      "title": "Empezá hoy. Tu yo del futuro te lo va a agradecer.",
+      "body": "Crear tu cuenta toma un par de minutos."
+    }
   }
 }
