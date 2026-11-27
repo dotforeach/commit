@@ -1368,9 +1368,9 @@
     "semantic_hash": ""
   },
   "backend/src/rates/rates.processor.ts": {
-    "mtime": 1795717175.402436,
-    "seen": 1795717555.5423841,
-    "ast_hash": "8d54d7512f533987a72d87bb7150600d",
+    "mtime": 1795795173.344344,
+    "seen": 1795795603.13118,
+    "ast_hash": "b2e73eb6a40012d01b54b8611b0a382c",
     "semantic_hash": ""
   },
   "backend/src/rates/rates.service.ts": {
@@ -1512,9 +1512,9 @@
     "semantic_hash": ""
   },
   "backend/src/notifications/notifications.module.ts": {
-    "mtime": 1795748282.1693802,
-    "seen": 1795752665.4156,
-    "ast_hash": "ac83b798f794bb1975ecae0f7ef61bfd",
+    "mtime": 1795795173.343974,
+    "seen": 1795795603.130977,
+    "ast_hash": "d78c50b29ef3a12f5ec2976269c1a533",
     "semantic_hash": ""
   },
   "backend/src/notifications/push.service.ts": {
@@ -2232,9 +2232,9 @@
     "semantic_hash": ""
   },
   "docs/operacion.md": {
-    "mtime": 1795794470.1066406,
-    "seen": 1795794751.3732831,
-    "ast_hash": "191262d5ea1f75f0f42744ddf2188c55",
+    "mtime": 1795795581.4518647,
+    "seen": 1795795603.137277,
+    "ast_hash": "34bb6ead381fb99bab06fd383440cce4",
     "semantic_hash": ""
   },
   "backend/prisma/migrations/20261127022859_whatsapp_receipts/migration.sql": {
@@ -2352,27 +2352,27 @@
     "semantic_hash": ""
   },
   ".github/workflows/ci.yml": {
-    "mtime": 1795794292.088309,
-    "seen": 1795794751.365762,
-    "ast_hash": "066da38617baca34b34f5052210a9b7d",
+    "mtime": 1795795525.820392,
+    "seen": 1795795603.129782,
+    "ast_hash": "b99dec2ce0991023b8ae734d32e317b9",
     "semantic_hash": ""
   },
   ".github/workflows/deploy.yml": {
-    "mtime": 1795794292.0904324,
-    "seen": 1795794751.365765,
-    "ast_hash": "927f3257f83010a7b71344e72e9a91df",
+    "mtime": 1795795518.4409099,
+    "seen": 1795795603.129785,
+    "ast_hash": "abf8e0f79cfa4a4c0e1ac68093134d52",
     "semantic_hash": ""
   },
   "infra/scripts/bootstrap.sh": {
-    "mtime": 1795794333.539205,
-    "seen": 1795794751.3731892,
-    "ast_hash": "e6390522b6e47838ecca105e88f4e613",
+    "mtime": 1795795473.2140129,
+    "seen": 1795795603.137131,
+    "ast_hash": "8f9c37b05ec4e426e998c453ef9fb119",
     "semantic_hash": ""
   },
   "infra/scripts/deploy.sh": {
-    "mtime": 1795794333.5348973,
-    "seen": 1795794751.3731892,
-    "ast_hash": "9b3e24b00066cbbfd9b5c6fe94ae407c",
+    "mtime": 1795795473.2117267,
+    "seen": 1795795603.137132,
+    "ast_hash": "7ad024e72541bdd27413cab15212d57a",
     "semantic_hash": ""
   },
   "infra/scripts/domains.sh": {
@@ -2388,9 +2388,39 @@
     "semantic_hash": ""
   },
   "docs/despliegue-azure.md": {
-    "mtime": 1795794437.1100059,
-    "seen": 1795794751.3732638,
-    "ast_hash": "f7c65aa0591c12a73386bb84e41c778a",
+    "mtime": 1795795570.7004645,
+    "seen": 1795795603.137259,
+    "ast_hash": "2b9010f372000370d5eb9082f2ee2c4d",
+    "semantic_hash": ""
+  },
+  "backend/src/cron.ts": {
+    "mtime": 1795795173.3102171,
+    "seen": 1795795603.1305,
+    "ast_hash": "1deea3550e2889916f27149e708f1bb9",
+    "semantic_hash": ""
+  },
+  "backend/test/cron.e2e-spec.ts": {
+    "mtime": 1795795209.6965034,
+    "seen": 1795795603.131897,
+    "ast_hash": "742bed23f7f67998764a7631d480bb15",
+    "semantic_hash": ""
+  },
+  "infra/backup/backup.sh": {
+    "mtime": 1795795396.3096924,
+    "seen": 1795795603.13713,
+    "ast_hash": "7bd5a37798a887ac95ddb88473075ab2",
+    "semantic_hash": ""
+  },
+  "infra/names.json": {
+    "mtime": 1795795299.7573557,
+    "seen": 1795795603.13713,
+    "ast_hash": "9fd92868cf8c3673143530b56472e35f",
+    "semantic_hash": ""
+  },
+  "infra/scripts/restore.sh": {
+    "mtime": 1795795396.3138695,
+    "seen": 1795795603.137153,
+    "ast_hash": "dae9e97af0b1dfc8edcd87b30622be87",
     "semantic_hash": ""
   },
   "backend/pnpm-lock.yaml": {

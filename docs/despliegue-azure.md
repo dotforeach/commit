@@ -122,7 +122,7 @@ flowchart LR
 
 - `.github/workflows/ci.yml`: backend (typecheck, lint, unitarios y e2e con PostgreSQL 18 y Redis), frontend (íconos, unitarios, build) y e2e en navegador con el stack completo.
 - `.github/workflows/deploy.yml`: se dispara cuando el CI pasa en `main` (o a mano). Construye `commit-backend`, `commit-migrate`, `commit-frontend`, `commit-ocr` y `commit-backup`, etiquetadas con el SHA del commit.
-- **Autenticación OIDC**: GitHub obtiene un token temporal de Azure; no se guarda ninguna contraseña de Azure. La aplicación `commit-github-deploy` solo puede usarse desde este repo en los ambientes `staging` y `production`, y solo tiene permisos sobre los grupos de Commit.
+- **Autenticación OIDC**: GitHub obtiene un token temporal de Azure; no se guarda ninguna contraseña de Azure. La identidad administrada `commit-github-deploy` (en `rg-commit-shared`, no una aplicación del directorio) solo puede usarse desde este repo en los ambientes `staging` y `production`, y solo tiene permisos sobre los grupos de Commit.
 
 ### Configuración en GitHub (Settings → Environments)
 

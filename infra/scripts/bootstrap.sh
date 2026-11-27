@@ -3,7 +3,7 @@
 #  1. Grupos de recursos y secretos generados (infra/.secrets.*, no se versionan)
 #  2. Recursos compartidos: registro, PostgreSQL 18 y almacenamiento de respaldos
 #  3. Roles de base de datos por ambiente (commit_staging, commit_prod)
-#  4. Aplicación de Entra para GitHub Actions con OIDC (sin contraseñas) y permisos mínimos
+#  4. Identidad administrada para GitHub Actions con OIDC (sin contraseñas) y permisos mínimos
 #  5. Primeras imágenes (compiladas en Azure, x86) y primer despliegue de staging y prod
 set -euo pipefail
 LOCATION="${LOCATION:-northcentralus}"
@@ -27,7 +27,7 @@ for ENV in staging prod; do
 DB_PASSWORD=$(pw)
 JWT_SECRET=$(openssl rand -base64 48 | tr -d '\n')
 STATUS_TOKEN=$(openssl rand -hex 24)
-SMTP_URL=
+SMTP_URL=${SMTP_URL:-}
 VAPID_PUBLIC_KEY=
 VAPID_PRIVATE_KEY=
 ANTHROPIC_API_KEY=
@@ -70,16 +70,16 @@ SQL
 done
 
 # ── 4. GitHub Actions con OIDC ──
-APP_ID=$(az ad app list --display-name commit-github-deploy --query '[0].appId' -o tsv)
-[ -n "$APP_ID" ] || APP_ID=$(az ad app create --display-name commit-github-deploy --query appId -o tsv)
-az ad sp show --id "$APP_ID" -o none 2>/dev/null || az ad sp create --id "$APP_ID" -o none
+# Identidad administrada (no una aplicación de Entra): vive en la suscripción y no toca el directorio
+# de la organización. Solo la puede usar este repo, desde los ambientes staging y production.
+az identity create -g rg-commit-shared -n commit-github-deploy -l "$LOCATION" --tags app=commit -o none
+APP_ID=$(az identity show -g rg-commit-shared -n commit-github-deploy --query clientId -o tsv)
+SP=$(az identity show -g rg-commit-shared -n commit-github-deploy --query principalId -o tsv)
 for ENV in staging production; do
-  NAME="github-$ENV"
-  az ad app federated-credential list --id "$APP_ID" --query "[?name=='$NAME'].name" -o tsv | grep -q . || \
-    az ad app federated-credential create --id "$APP_ID" -o none --parameters \
-      "{\"name\":\"$NAME\",\"issuer\":\"https://token.actions.githubusercontent.com\",\"subject\":\"repo:$REPO:environment:$ENV\",\"audiences\":[\"api://AzureADTokenExchange\"]}"
+  az identity federated-credential show -g rg-commit-shared --identity-name commit-github-deploy -n "github-$ENV" -o none 2>/dev/null || \
+    az identity federated-credential create -g rg-commit-shared --identity-name commit-github-deploy -n "github-$ENV" -o none \
+      --issuer https://token.actions.githubusercontent.com --subject "repo:$REPO:environment:$ENV" --audiences api://AzureADTokenExchange
 done
-SP=$(az ad sp show --id "$APP_ID" --query id -o tsv)
 grant() { az role assignment create --assignee-object-id "$SP" --assignee-principal-type ServicePrincipal --role "$1" --scope "$2" -o none; }
 for rg in rg-commit-staging rg-commit-prod; do grant Contributor "/subscriptions/$SUB/resourceGroups/$rg"; done
 grant AcrPush "$(az acr show -n "$ACR_NAME" --query id -o tsv)"
