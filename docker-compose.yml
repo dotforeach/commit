@@ -14,6 +14,15 @@ x-backend-env: &backend-env
   VAPID_PUBLIC_KEY: ${VAPID_PUBLIC_KEY:-}
   VAPID_PRIVATE_KEY: ${VAPID_PRIVATE_KEY:-}
   VAPID_SUBJECT: ${VAPID_SUBJECT:-mailto:admin@example.com}
+  # Facturas por WhatsApp (opcional; sin estas variables la función queda desactivada)
+  WHATSAPP_VERIFY_TOKEN: ${WHATSAPP_VERIFY_TOKEN:-}
+  WHATSAPP_APP_SECRET: ${WHATSAPP_APP_SECRET:-}
+  WHATSAPP_TOKEN: ${WHATSAPP_TOKEN:-}
+  WHATSAPP_PHONE_NUMBER_ID: ${WHATSAPP_PHONE_NUMBER_ID:-}
+  WHATSAPP_DISPLAY_NUMBER: ${WHATSAPP_DISPLAY_NUMBER:-}
+  ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+  OCR_URL: ${OCR_URL:-}
+  SUBSCRIPTIONS_ENFORCED: ${SUBSCRIPTIONS_ENFORCED:-false}
   PORT: 3000
 
 services:
@@ -91,7 +100,7 @@ services:
     depends_on:
       - backend-dev
 
-  # OCR propio (PaddleOCR) para facturas. Opcional y pesado: docker compose --profile ocr up -d ocr
+  # OCR propio (RapidOCR: modelos de PaddleOCR sobre ONNX) para facturas. Opcional: docker compose --profile ocr up -d ocr
   ocr:
     profiles: [ocr]
     build: ./ocr

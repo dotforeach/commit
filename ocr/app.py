@@ -1,22 +1,23 @@
-"""Servicio de OCR propio (PaddleOCR). Recibe una imagen y devuelve el texto. No guarda nada."""
-import numpy as np
+"""Servicio de OCR propio (RapidOCR: modelos de PaddleOCR sobre ONNX Runtime). No guarda nada."""
 import cv2
+import numpy as np
 from fastapi import FastAPI, HTTPException, Request
-from paddleocr import PaddleOCR
+from rapidocr import RapidOCR
 
 app = FastAPI(title="Commit OCR")
-# Modelo latino (incluye español). Sin corrección de orientación de documento: son fotos de recibos.
-ocr = PaddleOCR(lang="es", use_doc_orientation_classify=False, use_doc_unwarping=False, use_textline_orientation=True)
+engine = RapidOCR()
 
 MAX_BYTES = 8 * 1024 * 1024
 
 
-def _texts(result) -> list[str]:
-    lines: list[str] = []
-    for page in result or []:
-        data = page if isinstance(page, dict) else getattr(page, "json", {}).get("res", {})
-        lines.extend(t for t in (data.get("rec_texts") or []) if t)
-    return lines
+def _texts(out) -> list[str]:
+    """RapidOCR 2+ devuelve un objeto con .txts; versiones anteriores, (resultado, tiempos)."""
+    txts = getattr(out, "txts", None)
+    if txts is not None:
+        return [t for t in txts if t]
+    if isinstance(out, tuple) and out and out[0]:
+        return [r[1] for r in out[0] if len(r) > 1 and r[1]]
+    return []
 
 
 @app.get("/health")
@@ -32,5 +33,5 @@ async def read(request: Request):
     image = cv2.imdecode(np.frombuffer(body, np.uint8), cv2.IMREAD_COLOR)
     if image is None:
         raise HTTPException(status_code=400, detail="No es una imagen válida")
-    lines = _texts(ocr.predict(image))
+    lines = _texts(engine(image))
     return {"text": "\n".join(lines), "lines": len(lines)}

@@ -1,4 +1,4 @@
-paddlepaddle==3.*
-paddleocr==3.*
+rapidocr==3.*
+onnxruntime==1.*
 fastapi==0.*
 uvicorn==0.*
