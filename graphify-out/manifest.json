@@ -108,9 +108,9 @@
     "semantic_hash": ""
   },
   "docker-compose.yml": {
-    "mtime": 1795753513.5739076,
-    "seen": 1795753938.6571991,
-    "ast_hash": "705531afb3c60292058cfe4317e71e68",
+    "mtime": 1795754559.5517168,
+    "seen": 1795754783.8982022,
+    "ast_hash": "06b7236786254a3bf86f196c7ab1ffb5",
     "semantic_hash": ""
   },
   "frontend/.vscode/extensions.json": {
@@ -2232,9 +2232,9 @@
     "semantic_hash": ""
   },
   "docs/operacion.md": {
-    "mtime": 1795754438.6513808,
-    "seen": 1795754502.1349812,
-    "ast_hash": "6ee6c2f98c77bbf948e694b775390096",
+    "mtime": 1795754559.5521202,
+    "seen": 1795754783.9028292,
+    "ast_hash": "9b8c45d6849c31f3d061e5da54eb157c",
     "semantic_hash": ""
   },
   "backend/pnpm-lock.yaml": {

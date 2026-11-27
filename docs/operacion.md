@@ -75,10 +75,10 @@ cd backend && node -e "import('web-push').then(w => console.log(w.generateVAPIDK
 | `ANTHROPIC_API_KEY` | vacía | Sí | Extracción con IA |
 | `OCR_URL` | vacía | Sí | `http://ocr:8000` con el perfil `ocr` levantado |
 | `SUBSCRIPTIONS_ENFORCED` | `false` | Sí | `true` en producción para exigir suscripción |
-| `EXTRACTION_MODEL` | `claude-opus-5-5` | **No** | Modelo de extracción |
-| `RECEIPTS_MONTHLY_LIMIT` | `100` | **No** | Comprobantes por persona y mes |
-| `PHONE_HASH_KEY` | derivada de `JWT_SECRET` | **No** | Clave del HMAC del número |
-| `WHATSAPP_GRAPH_VERSION` | `v23.0` | **No** | Versión de la Graph API de Meta |
+| `EXTRACTION_MODEL` | `claude-opus-5-5` | Sí | Modelo de extracción |
+| `RECEIPTS_MONTHLY_LIMIT` | `100` | Sí | Comprobantes por persona y mes |
+| `PHONE_HASH_KEY` | derivada de `JWT_SECRET` | Sí | Clave del HMAC del número. Cambiarla desvincula los números ya vinculados |
+| `WHATSAPP_GRAPH_VERSION` | `v23.0` | Sí | Versión de la Graph API de Meta |
 
 ### Operación interna
 
