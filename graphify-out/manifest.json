@@ -162,8 +162,8 @@
     "semantic_hash": ""
   },
   "frontend/src/app/app.routes.ts": {
-    "mtime": 1795721307.3814588,
-    "seen": 1795721517.8248699,
+    "mtime": 1795737622.58759,
+    "seen": 1795737626.018976,
     "ast_hash": "8417ff0bcd44c12306b8488745079896",
     "semantic_hash": ""
   },
@@ -174,9 +174,9 @@
     "semantic_hash": ""
   },
   "frontend/src/app/app.ts": {
-    "mtime": 1795722379.3326209,
-    "seen": 1795722603.736935,
-    "ast_hash": "4956414040dee190986f145f0131e55b",
+    "mtime": 1795737743.395339,
+    "seen": 1795738019.8213298,
+    "ast_hash": "401535b60eca171bd46a1dc0126dba93",
     "semantic_hash": ""
   },
   "frontend/src/main.ts": {
@@ -216,21 +216,21 @@
     "semantic_hash": ""
   },
   "frontend/src/app/app.html": {
-    "mtime": 1795722379.3324685,
-    "seen": 1795722603.739726,
-    "ast_hash": "88138a4f7db32dd2452715af5549308c",
+    "mtime": 1795737743.3952203,
+    "seen": 1795738019.824618,
+    "ast_hash": "944b0924c3eddc6f5728eaa820370c1b",
     "semantic_hash": ""
   },
   "frontend/src/index.html": {
-    "mtime": 1795722379.3323803,
-    "seen": 1795722603.740366,
-    "ast_hash": "6f6595caa07c09f115abd6e910c0d940",
+    "mtime": 1795737658.9446044,
+    "seen": 1795738019.825259,
+    "ast_hash": "e0388316279a3cfcc9108ab36145be96",
     "semantic_hash": ""
   },
   "frontend/public/i18n/es.json": {
-    "mtime": 1795722379.3319917,
-    "seen": 1795722603.736894,
-    "ast_hash": "42dadf8f365d60a14dd4a97ea93c6c1f",
+    "mtime": 1795737658.9463959,
+    "seen": 1795738019.821268,
+    "ast_hash": "9d7a087d4e57f46268ba503562429690",
     "semantic_hash": ""
   },
   "frontend/src/app/core/i18n/transloco-loader.ts": {
@@ -498,8 +498,8 @@
     "semantic_hash": ""
   },
   "frontend/src/app/features/home/home.html": {
-    "mtime": 1795717963.071329,
-    "seen": 1795718354.519828,
+    "mtime": 1795737622.5898137,
+    "seen": 1795737626.022592,
     "ast_hash": "90bbc71fe1c43d3fcba3568cc6bd328e",
     "semantic_hash": ""
   },
@@ -1134,8 +1134,8 @@
     "semantic_hash": ""
   },
   "frontend/src/app/features/debts/debt-math.ts": {
-    "mtime": 1795715187.7141619,
-    "seen": 1795715287.270807,
+    "mtime": 1795737622.5880198,
+    "seen": 1795737626.02071,
     "ast_hash": "d4953ef6fcbfa040b9b75d340acde411",
     "semantic_hash": ""
   },
@@ -1182,8 +1182,8 @@
     "semantic_hash": ""
   },
   "frontend/src/app/features/debts/debts-page.ts": {
-    "mtime": 1795717281.9846559,
-    "seen": 1795717555.5444689,
+    "mtime": 1795737622.5896573,
+    "seen": 1795737626.020737,
     "ast_hash": "ca813f2b62a53565bb7f6279179c82eb",
     "semantic_hash": ""
   },
@@ -1212,8 +1212,8 @@
     "semantic_hash": ""
   },
   "frontend/src/app/features/debts/debts-page.html": {
-    "mtime": 1795715724.3510952,
-    "seen": 1795715953.738524,
+    "mtime": 1795737622.5884364,
+    "seen": 1795737626.022562,
     "ast_hash": "a91e153fafe80c817c2bf176c360a1f1",
     "semantic_hash": ""
   },
@@ -1482,8 +1482,8 @@
     "semantic_hash": ""
   },
   "frontend/src/app/features/progress/progress.service.ts": {
-    "mtime": 1795721118.4937148,
-    "seen": 1795721517.824928,
+    "mtime": 1795737622.590046,
+    "seen": 1795737626.021268,
     "ast_hash": "6a77bf0876169983e6d7d05447ee560e",
     "semantic_hash": ""
   },
@@ -1584,9 +1584,9 @@
     "semantic_hash": ""
   },
   "frontend/src/app/features/settings/settings-page.ts": {
-    "mtime": 1795720801.8808832,
-    "seen": 1795721043.9086778,
-    "ast_hash": "3c967a81ea1382673b03b1af649eb605",
+    "mtime": 1795737743.3955536,
+    "seen": 1795738019.824244,
+    "ast_hash": "c02c7ed422005808403e737cdbf4ad7d",
     "semantic_hash": ""
   },
   "frontend/public/icons/icon-128x128.png": {
@@ -1785,6 +1785,12 @@
     "mtime": 1795722379.3317103,
     "seen": 1795722603.737749,
     "ast_hash": "844d99c4b93172358616c7c64f6c318a",
+    "semantic_hash": ""
+  },
+  "frontend/e2e/responsive.e2e.ts": {
+    "mtime": 1795737765.263061,
+    "seen": 1795738019.821146,
+    "ast_hash": "6be066693210f2be56fc744f1a14edb1",
     "semantic_hash": ""
   },
   "backend/pnpm-lock.yaml": {

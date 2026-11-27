@@ -288,7 +288,9 @@
     "savings": "Ahorro",
     "progress": "Mi progreso",
     "notifications": "Notificaciones",
-    "settings": "Ajustes"
+    "settings": "Ajustes",
+    "main": "Secciones",
+    "more": "Más"
   },
   "accounts": {
     "title": "Cuentas",

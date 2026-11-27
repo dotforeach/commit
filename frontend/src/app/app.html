@@ -3,15 +3,10 @@
     <mat-icon fontSet="material-symbols-outlined" aria-hidden="true">savings</mat-icon>
     <h1 class="app-title">{{ t('app.name') }} <span class="app-version" data-testid="app-version">{{ version }}</span></h1>
     @if (vault.isUnlocked()) {
-      <nav class="nav">
-        <a mat-button routerLink="/inicio" routerLinkActive="active">{{ t('nav.home') }}</a>
-        <a mat-button routerLink="/progreso" routerLinkActive="active">{{ t('nav.progress') }}</a>
-        <a mat-button routerLink="/movimientos" routerLinkActive="active">{{ t('nav.transactions') }}</a>
-        <a mat-button routerLink="/presupuesto" routerLinkActive="active">{{ t('nav.budget') }}</a>
-        <a mat-button routerLink="/recurrentes" routerLinkActive="active">{{ t('nav.recurring') }}</a>
-        <a mat-button routerLink="/deudas" routerLinkActive="active">{{ t('nav.debts') }}</a>
-        <a mat-button routerLink="/ahorro" routerLinkActive="active">{{ t('nav.savings') }}</a>
-        <a mat-button routerLink="/cuentas" routerLinkActive="active">{{ t('nav.accounts') }}</a>
+      <nav class="nav" [attr.aria-label]="t('nav.main')">
+        @for (item of navDesktop; track item.path) {
+          <a mat-button [routerLink]="item.path" routerLinkActive="active">{{ t(item.label) }}</a>
+        }
       </nav>
       <span class="spacer"></span>
       @defer (on idle) {
@@ -30,9 +25,42 @@
       <span class="material-symbols-outlined" aria-hidden="true">cloud_off</span>{{ t('offline') }}
     </p>
   }
-  <main>
+  <main [class.with-bottom-nav]="vault.isUnlocked()">
     <router-outlet />
   </main>
+  @if (vault.isUnlocked()) {
+    <!-- Celular: barra inferior con las secciones más usadas y "Más" para el resto. -->
+    <nav class="bottom-nav" [attr.aria-label]="t('nav.main')" data-testid="bottom-nav">
+      @for (item of navPrimary; track item.path) {
+        <a [routerLink]="item.path" routerLinkActive="active" ariaCurrentWhenActive="page">
+          <mat-icon fontSet="material-symbols-outlined" aria-hidden="true">{{ item.icon }}</mat-icon>
+          <span>{{ t(item.label) }}</span>
+        </a>
+      }
+      <button
+        type="button"
+        [class.active]="inSecondary() || moreOpen()"
+        [attr.aria-expanded]="moreOpen()"
+        aria-controls="nav-more-panel"
+        (click)="moreOpen.set(!moreOpen())"
+        data-testid="nav-more"
+      >
+        <mat-icon fontSet="material-symbols-outlined" aria-hidden="true">menu</mat-icon>
+        <span>{{ t('nav.more') }}</span>
+      </button>
+    </nav>
+    @if (moreOpen()) {
+      <div class="more-backdrop" (click)="moreOpen.set(false)" aria-hidden="true"></div>
+      <div class="more-panel" id="nav-more-panel" role="region" [attr.aria-label]="t('nav.more')">
+        @for (item of navSecondary; track item.path) {
+          <a [routerLink]="item.path" routerLinkActive="active" (click)="moreOpen.set(false)">
+            <mat-icon fontSet="material-symbols-outlined" aria-hidden="true">{{ item.icon }}</mat-icon>
+            <span>{{ t(item.label) }}</span>
+          </a>
+        }
+      </div>
+    }
+  }
   <!-- AGPL-3.0, sección 13: quien usa la app por red debe poder obtener su código fuente. -->
   <footer class="footer">
     {{ t('footer.license') }} ·
