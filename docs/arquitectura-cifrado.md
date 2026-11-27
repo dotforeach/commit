@@ -76,6 +76,10 @@ sequenceDiagram
 1. Con la frase de recuperación: abre las privadas y define una clave de descifrado nueva. No se pierde nada.
 2. Sin clave ni frase: el usuario resetea sus claves (`keyVersion + 1`). Sus membresías pasan a `PENDING_KEY` y otro miembro ACTIVE (OWNER/ADMIN) del hogar le vuelve a compartir la clave. **Los hogares donde era el único miembro (incluido el personal) se pierden**: nadie más tenía la clave.
 
+**Contraseña de ingreso olvidada**: se restablece con un enlace por correo (1 h, un solo uso) y se cierran todas las sesiones. No afecta los datos: siguen cifrados con la clave de descifrado, que nunca pasa por el servidor. Por eso ningún correo puede devolver el acceso a los datos; para eso existe la frase de recuperación.
+
+**Eliminar la cuenta**: se borra todo lo personal (hogares donde la persona es el único miembro, suscripción, WhatsApp, notificaciones). Si comparte hogares, los datos del hogar quedan para los demás miembros y la cuenta se **anonimiza**: sin correo, nombre, contraseña ni claves privadas cifradas. Se conserva solo su clave pública, porque los demás la necesitan para verificar la firma de las claves del hogar que ella les envolvió.
+
 ## Caché offline
 
 Las respuestas de la API se guardan en IndexedDB **tal como llegan, es decir, cifradas**, y se descifran en memoria tras ingresar la clave. Sin conexión, la app abre lo guardado en **modo solo lectura** (lo que se intente guardar sin conexión falla con un aviso; no se encola).

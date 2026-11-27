@@ -30,6 +30,7 @@ flowchart TB
         AI["IA: Claude API"]
         FX["Cotizaciones: BCE vía Frankfurter,<br/>CoinGecko, DolarApi"]
         PUSH["Servicios de Web Push<br/>del navegador"]
+        SMTP["Proveedor de correo SMTP<br/>Resend · Azure · otro"]
     end
 
     BR -->|HTTPS| NG
@@ -43,12 +44,14 @@ flowchart TB
     BE -.-> AI
     BE --> FX
     BE -.-> PUSH
+    BE -->|verificación, contraseña, avisos| SMTP
 ```
 
 | Servicio compose | Perfil | Función |
 |---|---|---|
 | `postgres`, `redis` | siempre | Datos (cifrados) y sesiones, códigos temporales y colas |
 | `backend-dev`, `frontend-dev`, `adminer` | `dev` | Desarrollo con recarga en caliente (http://localhost:4200) |
+| `mailpit` | `dev` | Bandeja de correo de prueba (http://localhost:8025): recibe los correos sin enviarlos |
 | `migrate`, `backend`, `frontend` | `prod` | Producción: migraciones, API y nginx (http://localhost:8080) |
 | `ocr` | `ocr` | OCR propio para facturas, opcional |
 
@@ -60,6 +63,7 @@ flowchart LR
         AUTH[auth] --- USERS[users]
         HH[households] --- CUR[currencies]
         HEALTH[health] --- STATUS[status]
+        MAIL[mail]
     end
     subgraph Finanzas["Datos financieros (payload cifrado)"]
         ACC[accounts] --- TX[transactions]
@@ -120,6 +124,46 @@ sequenceDiagram
     Note over N: Argon2id (Web Worker) → abre las claves privadas<br/>→ abre las claves de los hogares
     N->>N: guarda el par de claves cifrado en la pestaña (F5 sin clave)
     Note over N,B: La clave de descifrado nunca sale del navegador
+```
+
+### Verificación de correo y bienvenida
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor P as Persona
+    participant N as Navegador
+    participant B as Backend
+    participant M as Correo (SMTP)
+    N->>B: POST /api/auth/register
+    B->>B: crea un token de un solo uso (se guarda su hash SHA-256)
+    B->>M: "Confirma tu correo" con el enlace (vence en 24 h)
+    Note over N: la app se puede usar de inmediato,<br/>con un aviso hasta confirmar
+    P->>N: abre el enlace /verificar-correo?token=…
+    N->>B: POST /api/auth/verify-email
+    B->>B: marca el token como usado (atómico) y emailVerifiedAt
+    B->>M: correo de bienvenida
+    Note over B: vincular WhatsApp y suscribirse exigen el correo confirmado
+```
+
+### Olvidé mi contraseña de ingreso
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor P as Persona
+    participant N as Navegador
+    participant B as Backend
+    participant M as Correo (SMTP)
+    P->>N: correo en /olvide-contrasena
+    N->>B: POST /api/auth/forgot-password
+    B-->>N: 204 siempre (no revela si la cuenta existe)
+    B->>M: enlace para restablecer (1 h, un solo uso), si la cuenta existe
+    P->>N: abre /restablecer-contrasena?token=… y elige una nueva
+    N->>B: POST /api/auth/reset-password
+    B->>B: guarda el hash nuevo y cierra todas las sesiones
+    B->>M: aviso "tu contraseña cambió"
+    Note over N,B: los datos siguen cifrados con la clave de descifrado:<br/>esta contraseña solo sirve para ingresar
 ```
 
 ### Guardar un movimiento
@@ -226,6 +270,8 @@ erDiagram
     USER ||--o| WHATSAPP_LINK : "número (solo HMAC)"
     USER ||--o{ RECEIPT_INBOX_ITEM : "comprobantes sellados"
     USER ||--o| SUBSCRIPTION : "plan $2 o $20"
+    USER ||--o{ ACCOUNT_TOKEN : "enlaces por correo (hash)"
+    USER ||--o{ KNOWN_DEVICE : "dispositivos (hash)"
 
     TRANSACTION {
         uuid id
@@ -239,6 +285,12 @@ erDiagram
     RECEIPT_INBOX_ITEM {
         uuid id
         bytes sealed "crypto_box_seal para la persona"
+    }
+    ACCOUNT_TOKEN {
+        enum type "VERIFY_EMAIL · RESET_PASSWORD · CHANGE_EMAIL"
+        string tokenHash "SHA-256 del token"
+        datetime expiresAt
+        datetime usedAt
     }
 ```
 

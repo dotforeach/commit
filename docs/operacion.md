@@ -9,6 +9,8 @@ flowchart LR
     subgraph dev["docker compose --profile dev"]
         FD["frontend-dev<br/>Vite :4200"] --> BD["backend-dev<br/>Nest --watch"]
         AD["adminer :8081"]
+        MP["mailpit :8025<br/>bandeja de correo"]
+        BD -->|SMTP| MP
     end
     subgraph prod["docker compose --profile prod"]
         MG["migrate<br/>(una vez)"] --> BP["backend<br/>node dist/main.js"]
@@ -25,6 +27,7 @@ flowchart LR
     BP --> PG & RD
     BD -.-> OCR
     BP -.-> OCR
+    BP -->|SMTP_URL| EXT["Proveedor SMTP<br/>Resend · Azure"]
 ```
 
 | | Desarrollo | Producción |

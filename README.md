@@ -35,6 +35,7 @@ flowchart LR
     B -.->|opcional| A["IA (Claude)"]
     B --> X["Cotizaciones públicas<br/>BCE · CoinGecko · DolarApi"]
     B -.->|opcional| WP["Web Push"]
+    B -->|SMTP| M["Correo<br/>Resend · Azure · Mailpit (dev)"]
 ```
 
 Más detalle (módulos, flujos y modelo de datos) en [docs/arquitectura.md](docs/arquitectura.md).

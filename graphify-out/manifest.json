@@ -240,9 +240,9 @@
     "semantic_hash": ""
   },
   "docs/arquitectura-cifrado.md": {
-    "mtime": 1795754784.2469022,
-    "seen": 1795789369.7155771,
-    "ast_hash": "08b9e4d6be5f86133de6c187d7ddc8c7",
+    "mtime": 1795793311.5579073,
+    "seen": 1795793322.994922,
+    "ast_hash": "151caab50bede43db1c346cb9f50bc41",
     "semantic_hash": ""
   },
   "backend/src/auth/auth.controller.ts": {
@@ -966,9 +966,9 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1795793009.675522,
-    "seen": 1795793246.5068219,
-    "ast_hash": "59fa1939263b3980a8e3ec9d8abc41a9",
+    "mtime": 1795793311.55678,
+    "seen": 1795793322.994903,
+    "ast_hash": "ccc5230b02e5d4deca5b0c335230a3eb",
     "semantic_hash": ""
   },
   "backend/src/budgets/budgets.controller.ts": {
@@ -2220,9 +2220,9 @@
     "semantic_hash": ""
   },
   "docs/arquitectura.md": {
-    "mtime": 1795793009.675797,
-    "seen": 1795793246.506868,
-    "ast_hash": "5bfbe7e71de5c4cc2358ef862f2b65ed",
+    "mtime": 1795793311.5574334,
+    "seen": 1795793322.994923,
+    "ast_hash": "0a5bb3bef194901490f08cc4969a3377",
     "semantic_hash": ""
   },
   "docs/facturas-whatsapp.md": {
@@ -2232,9 +2232,9 @@
     "semantic_hash": ""
   },
   "docs/operacion.md": {
-    "mtime": 1795793009.6750073,
-    "seen": 1795793246.506887,
-    "ast_hash": "eac7ed5578deb1dafffb75401fc84bd4",
+    "mtime": 1795793311.5576937,
+    "seen": 1795793322.994941,
+    "ast_hash": "ac1c5a95c70d75acefd16ff4db733512",
     "semantic_hash": ""
   },
   "frontend/e2e/icons.e2e.ts": {
