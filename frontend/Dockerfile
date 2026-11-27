@@ -22,7 +22,8 @@ CMD ["pnpm", "ng", "serve", "--host", "0.0.0.0", "--port", "4200", "--poll", "10
 FROM deps AS build
 ENV NG_CLI_ANALYTICS=false
 COPY . .
-RUN pnpm ng build --configuration production
+# Incluye la verificación de íconos (scripts/icons): falla si falta alguno en la fuente recortada.
+RUN pnpm run build --configuration production
 
 # ── Producción: nginx sirve la SPA y hace proxy de /api ─────────
 FROM nginx:stable-alpine AS prod

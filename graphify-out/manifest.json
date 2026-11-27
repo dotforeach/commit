@@ -108,8 +108,8 @@
     "semantic_hash": ""
   },
   "docker-compose.yml": {
-    "mtime": 1795754559.5517168,
-    "seen": 1795754783.8982022,
+    "mtime": 1795754784.2466197,
+    "seen": 1795789369.711169,
     "ast_hash": "06b7236786254a3bf86f196c7ab1ffb5",
     "semantic_hash": ""
   },
@@ -132,15 +132,15 @@
     "semantic_hash": ""
   },
   "frontend/angular.json": {
-    "mtime": 1795720753.693929,
-    "seen": 1795721043.906126,
-    "ast_hash": "f3b3af76df0b662e6c32f2bb071df133",
+    "mtime": 1795788990.3335674,
+    "seen": 1795789369.711225,
+    "ast_hash": "74b3b4fdb8f9e34c4e4c6b13d3f25ba4",
     "semantic_hash": ""
   },
   "frontend/package.json": {
-    "mtime": 1795722379.3311992,
-    "seen": 1795722603.736843,
-    "ast_hash": "b24d7ae6786d4d299cc26d3c3799d29a",
+    "mtime": 1795789090.495478,
+    "seen": 1795789369.711676,
+    "ast_hash": "211582d17d13386b6d165488a87ab8b7",
     "semantic_hash": ""
   },
   "frontend/pnpm-workspace.yaml": {
@@ -240,8 +240,8 @@
     "semantic_hash": ""
   },
   "docs/arquitectura-cifrado.md": {
-    "mtime": 1795754457.8572924,
-    "seen": 1795754502.134979,
+    "mtime": 1795754784.2469022,
+    "seen": 1795789369.7155771,
     "ast_hash": "08b9e4d6be5f86133de6c187d7ddc8c7",
     "semantic_hash": ""
   },
@@ -966,8 +966,8 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1795754321.8585043,
-    "seen": 1795754502.134961,
+    "mtime": 1795754784.2464225,
+    "seen": 1795789369.715559,
     "ast_hash": "fbca868cb2a4a6058b8979546c365100",
     "semantic_hash": ""
   },
@@ -2220,21 +2220,51 @@
     "semantic_hash": ""
   },
   "docs/arquitectura.md": {
-    "mtime": 1795754367.8119476,
-    "seen": 1795754502.1349802,
+    "mtime": 1795754784.2471306,
+    "seen": 1795789369.7155771,
     "ast_hash": "38d5a17fbccde832d76cfda6c0046e3b",
     "semantic_hash": ""
   },
   "docs/facturas-whatsapp.md": {
-    "mtime": 1795754394.1732867,
-    "seen": 1795754502.1349812,
+    "mtime": 1795754784.2473915,
+    "seen": 1795789369.715578,
     "ast_hash": "b117e7339fa83e92e085c143cd008645",
     "semantic_hash": ""
   },
   "docs/operacion.md": {
-    "mtime": 1795754559.5521202,
-    "seen": 1795754783.9028292,
-    "ast_hash": "9b8c45d6849c31f3d061e5da54eb157c",
+    "mtime": 1795789133.1413157,
+    "seen": 1795789369.7155788,
+    "ast_hash": "cdf0fee818b7af14537e8499ceaff3c8",
+    "semantic_hash": ""
+  },
+  "frontend/e2e/icons.e2e.ts": {
+    "mtime": 1795789098.9917626,
+    "seen": 1795789369.711353,
+    "ast_hash": "03d05e8155fa98f4933e00bec17c4753",
+    "semantic_hash": ""
+  },
+  "frontend/scripts/icons/available.json": {
+    "mtime": 1795789090.6597667,
+    "seen": 1795789369.711765,
+    "ast_hash": "8139c6fd1dff2c1c63059ac82464df6b",
+    "semantic_hash": ""
+  },
+  "frontend/scripts/icons/icons.json": {
+    "mtime": 1795789121.5298815,
+    "seen": 1795789369.711765,
+    "ast_hash": "cf07cdc1841228d7edd85359694c0ff7",
+    "semantic_hash": ""
+  },
+  "frontend/scripts/icons/scan.mjs": {
+    "mtime": 1795789090.4874341,
+    "seen": 1795789369.711766,
+    "ast_hash": "98c47e6b26e682f095e116943249a8d7",
+    "semantic_hash": ""
+  },
+  "frontend/scripts/icons/subset.py": {
+    "mtime": 1795789090.4872417,
+    "seen": 1795789369.711767,
+    "ast_hash": "070e0aad022d371d41e0fa76b8e6e09a",
     "semantic_hash": ""
   },
   "backend/pnpm-lock.yaml": {

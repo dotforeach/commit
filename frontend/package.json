@@ -4,11 +4,13 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "node scripts/icons/scan.mjs --check && ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
+    "test": "node scripts/icons/scan.mjs --check && ng test",
     "e2e": "playwright test",
-    "api:types": "openapi-typescript src/app/core/api/openapi.json -o src/app/core/api/openapi.d.ts"
+    "api:types": "openapi-typescript src/app/core/api/openapi.json -o src/app/core/api/openapi.d.ts",
+    "icons:check": "node scripts/icons/scan.mjs --check",
+    "icons:subset": "python3 scripts/icons/subset.py --available && node scripts/icons/scan.mjs --write && python3 scripts/icons/subset.py"
   },
   "private": true,
   "packageManager": "pnpm@12.23.0",

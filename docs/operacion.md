@@ -117,6 +117,19 @@ La página `/estado` dibuja la infraestructura y verifica en vivo, cada 10 s: Po
 | "Leer más" desde consejos y Plan mágico | `frontend/src/app/features/learn/links.ts` | Mapa consejo → artículo |
 | Monedas del catálogo | Migraciones `seed_currencies` y `panama_currencies` | Agregar con una migración nueva (`ON CONFLICT DO NOTHING`) |
 | Textos de la app | `frontend/public/i18n/es.json` | Español de Panamá, trato de **tú** |
+| Íconos (fuente recortada) | `frontend/scripts/icons/` | Ver abajo |
+
+### Íconos
+
+La fuente Material Symbols está **recortada** a los íconos que usa la app (≈ 147 kB en vez de 3.8 MB). Al agregar un ícono nuevo:
+
+```bash
+cd frontend
+pip install fonttools brotli   # una sola vez
+pnpm icons:subset              # detecta los íconos en uso y regenera public/fonts/material-symbols-outlined-subset.woff2
+```
+
+Si te olvidas, `pnpm build` y `pnpm test` fallan con `pnpm icons:check`, indicando qué ícono falta y dónde se usa. El e2e `e2e/icons.e2e.ts` recorre las pantallas y verifica que ningún ícono se vea como texto.
 
 ## Seguridad operativa
 
