@@ -41,7 +41,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
             <mat-card-title>{{ t('security.title') }}</mat-card-title>
           </mat-card-header>
           <mat-card-content>
-            <mat-form-field>
+            <mat-form-field subscriptSizing="dynamic" class="autolock">
               <mat-label>{{ t('security.autoLock') }}</mat-label>
               <mat-select [value]="autoLock.minutes()" (selectionChange)="autoLock.setMinutes($event.value)">
                 @for (m of lockOptions; track m) {
@@ -63,6 +63,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   styles: `
     .page { max-width: 720px; margin: 0 auto; padding: 24px 16px; }
     .block { margin: 16px 0; }
+    .autolock { width: 100%; max-width: 360px; }
+    mat-card-actions { flex-wrap: wrap; }
     .meta { color: var(--mat-sys-on-surface-variant); }
   `,
 })

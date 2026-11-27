@@ -93,3 +93,24 @@
 .error {
   color: var(--mat-sys-error);
 }
+
+// ── Celular ──────────────────────────────────────────────────────────────────
+@media (max-width: 599px) {
+  .page {
+    padding: 16px 12px;
+  }
+
+  // Título arriba y acciones debajo, sin aplastar los botones.
+  .head {
+    flex-wrap: wrap;
+    gap: 8px;
+
+    > :first-child {
+      flex: 1 1 100%;
+    }
+
+    .mat-mdc-button-base {
+      flex-shrink: 0;
+    }
+  }
+}

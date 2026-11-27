@@ -37,3 +37,19 @@ body {
   height: 100%;
 }
 /* You can add global styles to this file, and also import other style files */
+
+// ── Celular ──────────────────────────────────────────────────────────────────
+@media (max-width: 599px) {
+  // Los pares de campos (monto/fecha, tasa/tipo…) se apilan: en dos columnas se cortan las etiquetas.
+  .mat-mdc-dialog-container .mat-mdc-dialog-content .row,
+  app-onboarding-page .row {
+    grid-template-columns: 1fr !important;
+    flex-direction: column;
+  }
+
+  // Diálogos casi a pantalla completa (por defecto, Material los limita al 80% del ancho).
+  .cdk-overlay-pane.mat-mdc-dialog-panel {
+    width: calc(100vw - 24px) !important;
+    max-width: none !important;
+  }
+}
