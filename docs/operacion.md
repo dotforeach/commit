@@ -56,6 +56,7 @@ Se definen en `.env` (ver `.env.example`). La columna **Compose** indica si `doc
 | `PUBLIC_URL` | `http://localhost:8080` | Sí | Origen permitido por CORS en producción |
 | `FRONTEND_PORT` | `8080` | Sí | Puerto publicado por nginx |
 | `AUTH_RATE_LIMIT` | `10` | Solo dev (`200`) | Intentos de login/registro por minuto e IP |
+| `TRUST_PROXY` | `1` | **No** | Proxies delante del backend para leer la IP real (compose: nginx = 1; Azure: balanceador + nginx = 2) |
 
 ### Correo
 
@@ -112,6 +113,8 @@ cd backend && node -e "import('web-push').then(w => console.log(w.generateVAPIDK
 | `RATES_REFRESH` | `true` | **No** | Actualizar cotizaciones cada hora |
 | `REMINDERS_JOB` | `true` | **No** | Disparar recordatorios cada minuto |
 | `QUEUE_PREFIX` | `bull` | **No** | Prefijo de las colas en Redis (los tests usan uno propio por worker) |
+
+Sin los jobs internos (`RATES_REFRESH=false`, `REMINDERS_JOB=false`, como en Azure), las mismas tareas corren de a una pasada con `node dist/cron.js reminders` y `node dist/cron.js rates` (solo usan PostgreSQL). Ver [despliegue-azure.md](despliegue-azure.md).
 
 ## Migraciones
 

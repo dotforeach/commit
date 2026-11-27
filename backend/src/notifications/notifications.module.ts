@@ -33,6 +33,8 @@ export class RemindersScheduler implements OnApplicationBootstrap {
 
   async onApplicationBootstrap() {
     if (!this.config.get('REMINDERS_JOB', { infer: true })) {
+      // Sin el job interno (p. ej. Azure: lo dispara una tarea programada): limpiar el programado previo
+      await this.queue.removeJobScheduler('reminders-every-minute');
       this.logger.log('Job de recordatorios desactivado');
       return;
     }

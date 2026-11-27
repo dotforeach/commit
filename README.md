@@ -93,6 +93,7 @@ cd frontend && pnpm api:types       # regenera los tipos; si un pedido no coinci
 | [docs/arquitectura-cifrado.md](docs/arquitectura-cifrado.md) | Cifrado de conocimiento cero: claves, payload, recuperación y límites |
 | [docs/facturas-whatsapp.md](docs/facturas-whatsapp.md) | Facturas por WhatsApp: configuración en Meta, OCR, IA, privacidad y costos |
 | [docs/operacion.md](docs/operacion.md) | Variables de entorno, despliegue, migraciones, estado y mantenimiento de contenidos |
+| [docs/despliegue-azure.md](docs/despliegue-azure.md) | Azure Container Apps (staging y producción), dominios, costos y CI/CD con GitHub Actions |
 
 ## Licencia
 

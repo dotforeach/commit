@@ -35,6 +35,7 @@ export class RatesScheduler implements OnApplicationBootstrap {
 
   async onApplicationBootstrap() {
     if (!this.config.get('RATES_REFRESH', { infer: true })) {
+      await this.queue.removeJobScheduler('rates-hourly');
       this.logger.log('Actualización automática de cotizaciones desactivada');
       return;
     }
