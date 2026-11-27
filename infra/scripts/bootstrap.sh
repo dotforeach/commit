@@ -80,10 +80,18 @@ done
 az identity create -g rg-commit-shared -n commit-github-deploy -l "$LOCATION" --tags app=commit -o none
 APP_ID=$(az identity show -g rg-commit-shared -n commit-github-deploy --query clientId -o tsv)
 SP=$(az identity show -g rg-commit-shared -n commit-github-deploy --query principalId -o tsv)
+# GitHub puede enviar el sujeto con nombres (repo:dueño/repo:…) o con IDs (repo:dueño@ID/repo@ID:…):
+# se registran ambos formatos.
+OWNER_ID=$(curl -s "https://api.github.com/users/${REPO%%/*}" | jq -r .id)
+REPO_ID=$(curl -s "https://api.github.com/repos/$REPO" | jq -r .id)
+fed() { # nombre sujeto
+  az identity federated-credential show -g rg-commit-shared --identity-name commit-github-deploy -n "$1" -o none 2>/dev/null || \
+    az identity federated-credential create -g rg-commit-shared --identity-name commit-github-deploy -n "$1" -o none \
+      --issuer https://token.actions.githubusercontent.com --subject "$2" --audiences api://AzureADTokenExchange
+}
 for ENV in staging production; do
-  az identity federated-credential show -g rg-commit-shared --identity-name commit-github-deploy -n "github-$ENV" -o none 2>/dev/null || \
-    az identity federated-credential create -g rg-commit-shared --identity-name commit-github-deploy -n "github-$ENV" -o none \
-      --issuer https://token.actions.githubusercontent.com --subject "repo:$REPO:environment:$ENV" --audiences api://AzureADTokenExchange
+  fed "github-$ENV" "repo:$REPO:environment:$ENV"
+  [ "$OWNER_ID" != null ] && [ "$REPO_ID" != null ] && fed "github-$ENV-ids" "repo:${REPO%%/*}@$OWNER_ID/${REPO#*/}@$REPO_ID:environment:$ENV"
 done
 grant() { az role assignment create --assignee-object-id "$SP" --assignee-principal-type ServicePrincipal --role "$1" --scope "$2" -o none; }
 for rg in rg-commit-staging rg-commit-prod; do grant Contributor "/subscriptions/$SUB/resourceGroups/$rg"; done
