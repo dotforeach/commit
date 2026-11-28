@@ -184,3 +184,18 @@
   color: var(--mat-sys-on-secondary-container);
   font: var(--mat-sys-body-medium);
 }
+
+/* Carga visible (arranque en frío del backend) */
+.boot {
+  display: grid; justify-items: center; gap: 8px; padding: 64px 24px; text-align: center;
+  color: var(--mat-sys-on-surface-variant);
+  p { margin: 0; max-width: 340px; }
+  .hint { font: var(--mat-sys-body-small); }
+}
+.spinner {
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 4px solid var(--mat-sys-surface-container-high); border-top-color: var(--mat-sys-primary);
+  animation: spin 0.9s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .spinner { animation-duration: 3s; } }

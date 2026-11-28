@@ -1,10 +1,10 @@
-import { Component, computed, inject, isDevMode, signal } from '@angular/core';
+import { Component, computed, DestroyRef, inject, isDevMode, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { filter, map } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { AccountService } from './core/auth/account.service';
 import { AuthService } from './core/auth/auth.service';
@@ -15,6 +15,8 @@ import { APP_VERSION } from './core/version';
 import { ThemeService } from './core/theme/theme.service';
 import { OfflineCacheService } from './core/offline/offline-cache.service';
 import { NotificationsBell } from './features/notifications/notifications-bell';
+import { BackendWake } from './core/net/wake-retry.interceptor';
+import { AppUpdateService } from './core/update/app-update.service';
 
 interface NavItem {
   path: string;
@@ -67,6 +69,45 @@ export class App {
   protected readonly navDesktop = NAV.filter((i) => !i.mobileOnly);
   private readonly url = toSignal(inject(Router).events.pipe(filter((e) => e instanceof NavigationEnd), map((e) => e.urlAfterRedirects)), { initialValue: '' });
   protected readonly moreOpen = signal(false);
+
+  /**
+   * Carga visible: mientras se resuelve la primera pantalla (se recupera la sesión) o una
+   * navegación tarda más de 400 ms, se muestra "Conectando…" en vez de un espacio vacío.
+   * Si el backend estaba dormido (arranque en frío), el texto lo explica.
+   */
+  protected readonly booted = signal(false);
+  protected readonly slowNavigation = signal(false);
+  protected readonly longWait = signal(false);
+  protected readonly wake = inject(BackendWake);
+  protected readonly loading = computed(() => !this.booted() || this.slowNavigation());
+
+  constructor() {
+    inject(AppUpdateService).start();
+    let slowTimer: ReturnType<typeof setTimeout> | undefined;
+    let longTimer: ReturnType<typeof setTimeout> | undefined;
+    const clear = () => {
+      clearTimeout(slowTimer);
+      clearTimeout(longTimer);
+      this.slowNavigation.set(false);
+      this.longWait.set(false);
+    };
+    longTimer = setTimeout(() => this.longWait.set(true), 4000);
+    const sub = this.router.events.subscribe((e) => {
+      if (e instanceof NavigationStart) {
+        clearTimeout(slowTimer);
+        clearTimeout(longTimer);
+        slowTimer = setTimeout(() => this.slowNavigation.set(true), 400);
+        longTimer = setTimeout(() => this.longWait.set(true), 4000);
+      } else if (e instanceof NavigationEnd || e instanceof NavigationCancel || e instanceof NavigationError) {
+        clear();
+        if (e instanceof NavigationEnd) this.booted.set(true);
+      }
+    });
+    inject(DestroyRef).onDestroy(() => {
+      sub.unsubscribe();
+      clear();
+    });
+  }
   protected readonly inSecondary = computed(() => this.navSecondary.some((i) => this.url().startsWith(i.path)));
 
   async resendVerification() {

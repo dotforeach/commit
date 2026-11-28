@@ -35,7 +35,7 @@
       <button mat-icon-button (click)="theme.cycle()" [attr.aria-label]="t('nav.theme.' + theme.preference())" [attr.title]="t('nav.theme.' + theme.preference())" data-testid="theme-toggle" class="hide-xs">
         <mat-icon fontSet="material-symbols-outlined">{{ theme.icon() }}</mat-icon>
       </button>
-    } @else if (!auth.isAuthenticated()) {
+    } @else if (booted() && !auth.isAuthenticated()) {
       <span class="spacer"></span>
       <nav class="guest-nav" [attr.aria-label]="t('nav.main')">
         <button mat-icon-button (click)="theme.cycle()" [attr.aria-label]="t('nav.theme.' + theme.preference())" [attr.title]="t('nav.theme.' + theme.preference())" data-testid="theme-toggle">
@@ -61,7 +61,14 @@
       <span class="material-symbols-outlined" aria-hidden="true">cloud_off</span>{{ t('offline') }}
     </p>
   }
-  <main [class.with-bottom-nav]="vault.isUnlocked()">
+  <main [class.with-bottom-nav]="vault.isUnlocked()" [attr.aria-busy]="loading()">
+    @if (loading()) {
+      <div class="boot" role="status" aria-live="polite" data-testid="app-loading">
+        <span class="spinner" aria-hidden="true"></span>
+        <p>{{ t(wake.waking() || longWait() ? 'boot.waking' : 'boot.connecting') }}</p>
+        @if (wake.waking() || longWait()) { <p class="hint">{{ t('boot.wakingHint') }}</p> }
+      </div>
+    }
     <router-outlet />
   </main>
   @if (vault.isUnlocked()) {
