@@ -73,6 +73,7 @@ jobs:
           VAPID_PUBLIC_KEY: ${{ secrets.VAPID_PUBLIC_KEY }}
           VAPID_PRIVATE_KEY: ${{ secrets.VAPID_PRIVATE_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
         run: infra/scripts/deploy.sh
       - name: Prueba de humo
         run: infra/scripts/smoke.sh https://staging-commit.atheneox.com https://api-staging-commit.atheneox.com
@@ -106,6 +107,7 @@ jobs:
           VAPID_PUBLIC_KEY: ${{ secrets.VAPID_PUBLIC_KEY }}
           VAPID_PRIVATE_KEY: ${{ secrets.VAPID_PRIVATE_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
         run: infra/scripts/deploy.sh
       - name: Prueba de humo
         run: infra/scripts/smoke.sh https://commit.atheneox.com https://api-commit.atheneox.com

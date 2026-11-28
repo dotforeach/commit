@@ -97,10 +97,13 @@ cd backend && node -e "import('web-push').then(w => console.log(w.generateVAPIDK
 |---|---|---|---|
 | `WHATSAPP_VERIFY_TOKEN`, `WHATSAPP_APP_SECRET`, `WHATSAPP_TOKEN`, `WHATSAPP_PHONE_NUMBER_ID` | vacías | Sí | Credenciales de Meta (ver [facturas-whatsapp.md](facturas-whatsapp.md)) |
 | `WHATSAPP_DISPLAY_NUMBER` | vacía | Sí | Número público, solo dígitos (link `wa.me`) |
-| `ANTHROPIC_API_KEY` | vacía | Sí | Extracción con IA |
+| `ANTHROPIC_API_KEY` | vacía | Sí | Extracción con IA (Anthropic directo) |
+| `OPENROUTER_API_KEY` | vacía | Sí | Extracción con IA a través de OpenRouter (exige proveedores con retención cero) |
+| `AI_PROVIDER` | `auto` | Sí | `auto` (Anthropic si hay su clave, si no OpenRouter), `anthropic` u `openrouter` |
+| `OPENROUTER_MODEL` | `anthropic/claude-opus-5.5` | Sí | Modelo en OpenRouter (ID fijo; tiene que soportar salida estructurada) |
 | `OCR_URL` | vacía | Sí | `http://ocr:8000` con el perfil `ocr` levantado |
 | `SUBSCRIPTIONS_ENFORCED` | `false` | Sí | `true` en producción para exigir suscripción |
-| `EXTRACTION_MODEL` | `claude-opus-5-5` | Sí | Modelo de extracción |
+| `EXTRACTION_MODEL` | `claude-opus-5-5` | Sí | Modelo de extracción con Anthropic directo |
 | `RECEIPTS_MONTHLY_LIMIT` | `100` | Sí | Comprobantes por persona y mes |
 | `PHONE_HASH_KEY` | derivada de `JWT_SECRET` | Sí | Clave del HMAC del número. Cambiarla desvincula los números ya vinculados |
 | `WHATSAPP_GRAPH_VERSION` | `v23.0` | Sí | Versión de la Graph API de Meta |

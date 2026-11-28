@@ -33,7 +33,7 @@ flowchart LR
 | Webhook | `backend/src/receipts/receipts.controller.ts` | `GET/POST /api/webhooks/whatsapp`: verificación y mensajes de Meta (firma `X-Hub-Signature-256`) |
 | Vinculación | `receipts.service.ts` | Código `COMMIT-123456` de un solo uso (Redis, 10 min) que la persona envía por WhatsApp |
 | Procesamiento | `receipts.processor.ts` (cola `receipts`) | Descarga la foto, OCR, extracción con IA, sellado, respuesta por WhatsApp y push |
-| Extracción | `extractor.service.ts`, `receipt.schema.ts` | Claude con salida estructurada (Zod): tipo de documento, comercio, fecha, total, ITBMS, medio de pago, últimos 4 dígitos, categoría genérica, productos |
+| Extracción | `extractor.service.ts`, `openrouter.client.ts`, `receipt.schema.ts` | Claude con salida estructurada (Zod), por Anthropic directo u OpenRouter: tipo de documento, comercio, fecha, total, ITBMS, medio de pago, últimos 4 dígitos, categoría genérica, productos |
 | OCR | `ocr/` (perfil `ocr`) | RapidOCR (modelos de PaddleOCR sobre ONNX Runtime), `POST /ocr` → texto |
 | Bandeja | `frontend/src/app/features/receipts/` | *Por revisar*: abre lo sellado, recomienda (`recommend.ts`) y crea el movimiento o el pago de deuda |
 
@@ -67,10 +67,20 @@ WHATSAPP_APP_SECRET=...
 WHATSAPP_TOKEN=...
 WHATSAPP_PHONE_NUMBER_ID=...
 WHATSAPP_DISPLAY_NUMBER=5076xxxxxxx      # solo dígitos, para el link wa.me
-ANTHROPIC_API_KEY=...
+ANTHROPIC_API_KEY=...                    # o, en su lugar, OPENROUTER_API_KEY=... (ver abajo)
 OCR_URL=http://ocr:8000                  # y: docker compose --profile ocr up -d ocr
 SUBSCRIPTIONS_ENFORCED=true              # en producción
 ```
+
+### Con OpenRouter en vez de Anthropic
+
+Con `OPENROUTER_API_KEY` (y sin `ANTHROPIC_API_KEY`, o con `AI_PROVIDER=openrouter`) la extracción va por OpenRouter con `OPENROUTER_MODEL` (por defecto `anthropic/claude-opus-5.5`). Cada pedido exige:
+
+- `zdr: true`: solo proveedores con **retención cero** de datos.
+- `data_collection: "deny"`: ninguno que use los datos.
+- `require_parameters: true`: solo los que soportan la respuesta estructurada.
+
+Si en ese momento ningún proveedor del modelo cumple, el pedido falla y el comprobante queda con error para reintentar: nunca se envía a uno que guarde datos. La respuesta se valida siempre con el mismo esquema Zod.
 
 Las respuestas de Commit van dentro de la ventana de 24 h que abre el mensaje de la persona. Verifica las tarifas vigentes de Meta para Panamá.
 

@@ -37,6 +37,11 @@ export const envSchema = z.object({
   /** Clave de la API de Claude para extraer y clasificar. */
   ANTHROPIC_API_KEY: z.string().default(''),
   EXTRACTION_MODEL: z.string().default('claude-opus-5-5'),
+  /** Proveedor de IA para la extracción: auto = Anthropic si hay ANTHROPIC_API_KEY, si no OpenRouter. */
+  AI_PROVIDER: z.enum(['auto', 'anthropic', 'openrouter']).default('auto'),
+  OPENROUTER_API_KEY: z.string().default(''),
+  /** Modelo en OpenRouter (ID fijo, no un alias "latest", para que no cambie sin aviso). */
+  OPENROUTER_MODEL: z.string().default('anthropic/claude-opus-5.5'),
   RECEIPTS_MONTHLY_LIMIT: z.coerce.number().int().positive().default(100),
   /** Exigir suscripción activa para procesar facturas (en desarrollo, false). */
   SUBSCRIPTIONS_ENFORCED: z.stringbool().default(false),
