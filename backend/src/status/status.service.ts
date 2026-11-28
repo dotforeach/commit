@@ -1,6 +1,7 @@
 import { InjectQueue } from '@nestjs/bullmq';
 import { Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { resolveProvider } from '../receipts/extractor.service.js';
 import type { Queue } from 'bullmq';
 import type { Redis } from 'ioredis';
 import type { Env } from '../config/env.schema.js';
@@ -103,7 +104,11 @@ export class StatusService {
       { id: 'queues', ...queues },
       { id: 'ocr', ...ocr },
       { id: 'whatsapp', state: whatsapp ? 'configured' : 'disabled', latencyMs: null, details: { number: get('WHATSAPP_DISPLAY_NUMBER') || null } },
-      { id: 'ai', state: get('ANTHROPIC_API_KEY') ? 'configured' : 'disabled', latencyMs: null, details: { model: get('EXTRACTION_MODEL') } },
+      (() => {
+        const provider = resolveProvider(get('AI_PROVIDER') as 'auto' | 'anthropic' | 'openrouter', { anthropic: get('ANTHROPIC_API_KEY'), openrouter: get('OPENROUTER_API_KEY') });
+        const model = provider === 'openrouter' ? get('OPENROUTER_MODEL') : provider === 'anthropic' ? get('EXTRACTION_MODEL') : null;
+        return { id: 'ai', state: provider ? 'configured' : 'disabled', latencyMs: null, details: { provider, model } } as const;
+      })(),
       { id: 'rates', ...rates, state: rates.state === 'up' && Object.keys(rates.details).length === 0 ? 'disabled' : rates.state },
       { id: 'push', state: get('VAPID_PUBLIC_KEY') ? 'configured' : 'disabled', latencyMs: null, details: {} },
     ];

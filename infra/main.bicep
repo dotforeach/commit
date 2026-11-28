@@ -50,6 +50,10 @@ param vapidPrivateKey string = ''
 @secure()
 param anthropicApiKey string = ''
 @secure()
+param openRouterApiKey string = ''
+@allowed(['auto', 'anthropic', 'openrouter'])
+param aiProvider string = 'auto'
+@secure()
 param whatsappToken string = ''
 @secure()
 param whatsappAppSecret string = ''
@@ -133,6 +137,7 @@ var optional = [
   { secret: 'vapid-public', env: 'VAPID_PUBLIC_KEY', value: vapidPublicKey }
   { secret: 'vapid-private', env: 'VAPID_PRIVATE_KEY', value: vapidPrivateKey }
   { secret: 'anthropic-key', env: 'ANTHROPIC_API_KEY', value: anthropicApiKey }
+  { secret: 'openrouter-key', env: 'OPENROUTER_API_KEY', value: openRouterApiKey }
   { secret: 'wa-token', env: 'WHATSAPP_TOKEN', value: whatsappToken }
   { secret: 'wa-app-secret', env: 'WHATSAPP_APP_SECRET', value: whatsappAppSecret }
   { secret: 'wa-verify-token', env: 'WHATSAPP_VERIFY_TOKEN', value: whatsappVerifyToken }
@@ -164,6 +169,7 @@ var backendEnv = concat([
   { name: 'CORS_ORIGINS', value: appUrl }
   { name: 'VAPID_SUBJECT', value: 'mailto:no-reply@atheneox.com' }
   { name: 'SUBSCRIPTIONS_ENFORCED', value: string(subscriptionsEnforced) }
+  { name: 'AI_PROVIDER', value: aiProvider }
   // Los dispara una tarea programada (abajo), no el backend
   { name: 'REMINDERS_JOB', value: 'false' }
   { name: 'RATES_REFRESH', value: 'false' }

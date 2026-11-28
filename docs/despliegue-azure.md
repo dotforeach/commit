@@ -136,7 +136,8 @@ Crea los ambientes **`staging`** y **`production`** y en cada uno:
 | Secreto | `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_SUBSCRIPTION_ID` | Los imprime `bootstrap.sh` |
 | Secreto | `DB_PASSWORD`, `JWT_SECRET`, `STATUS_TOKEN` | De `infra/.secrets.<env>.env` (distintos por ambiente) |
 | Secreto | `SMTP_URL` | `smtps://resend:<API_KEY>@smtp.resend.com:465` |
-| Secreto (opcional) | `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `ANTHROPIC_API_KEY` | Push e IA |
+| Secreto (opcional) | `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY` | Notificaciones push |
+| Secreto (opcional) | `ANTHROPIC_API_KEY` u `OPENROUTER_API_KEY` | IA de las facturas (con solo una, se usa esa) |
 | Solo production | Secreto `PG_ADMIN_PASSWORD` y variable `BACKUP_AGE_RECIPIENT` | Para el respaldo diario (`infra/.secrets.shared.env` y la clave pública que imprime `bootstrap.sh`) |
 
 En **production**, activa **Required reviewers**: cada pase a producción espera tu aprobación.

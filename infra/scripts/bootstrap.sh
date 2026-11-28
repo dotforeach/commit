@@ -31,6 +31,7 @@ SMTP_URL=${SMTP_URL:-}
 VAPID_PUBLIC_KEY=
 VAPID_PRIVATE_KEY=
 ANTHROPIC_API_KEY=
+OPENROUTER_API_KEY=
 S
 done
 # Clave de los respaldos: la pública cifra en Azure; la PRIVADA solo existe acá (guárdala fuera de línea)

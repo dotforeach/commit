@@ -24,6 +24,9 @@ x-backend-env: &backend-env
   OCR_URL: ${OCR_URL:-}
   # Con valor por defecto explícito: una variable vacía no activaría el default del backend.
   EXTRACTION_MODEL: ${EXTRACTION_MODEL:-claude-opus-5-5}
+  AI_PROVIDER: ${AI_PROVIDER:-auto}
+  OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
+  OPENROUTER_MODEL: ${OPENROUTER_MODEL:-anthropic/claude-opus-5.5}
   RECEIPTS_MONTHLY_LIMIT: ${RECEIPTS_MONTHLY_LIMIT:-100}
   PHONE_HASH_KEY: ${PHONE_HASH_KEY:-}
   WHATSAPP_GRAPH_VERSION: ${WHATSAPP_GRAPH_VERSION:-v23.0}
