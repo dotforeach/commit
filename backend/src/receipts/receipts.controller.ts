@@ -113,7 +113,12 @@ export class WhatsappWebhookController {
   @HttpCode(200)
   async receive(@Req() req: Request & { rawBody?: Buffer }, @Headers('x-hub-signature-256') signature: string | undefined) {
     if (!this.whatsapp.verifySignature(req.rawBody, signature)) throw new BadRequestException('Firma inválida');
-    for (const msg of extractMessages(req.body)) await this.handle(msg).catch(() => undefined);
+    for (const msg of extractMessages(req.body)) {
+      // Meta reenvía el mismo mensaje si no recibe respuesta a tiempo (p. ej. mientras el backend
+      // despierta): cada mensaje se procesa una sola vez.
+      if (!(await this.receipts.firstDelivery(msg.id))) continue;
+      await this.handle(msg).catch(() => undefined);
+    }
     return { ok: true };
   }
 
@@ -147,7 +152,8 @@ export class WhatsappWebhookController {
   }
 }
 
-type IncomingMessage = { from: string; type: 'text'; text: string } | { from: string; type: 'image'; mediaId: string };
+/** `id`: identificador del mensaje en WhatsApp (wamid), para no procesar dos veces un reenvío de Meta. */
+type IncomingMessage = { id?: string; from: string } & ({ type: 'text'; text: string } | { type: 'image'; mediaId: string });
 
 /** Extrae los mensajes de texto e imagen del payload de Meta (ignora estados y otros tipos). */
 export function extractMessages(body: unknown): IncomingMessage[] {
@@ -158,10 +164,11 @@ export function extractMessages(body: unknown): IncomingMessage[] {
       for (const m of c.value?.messages ?? []) {
         const from = typeof m['from'] === 'string' ? m['from'] : null;
         if (!from) continue;
-        if (m['type'] === 'text') out.push({ from, type: 'text', text: String((m['text'] as { body?: string })?.body ?? '') });
+        const id = typeof m['id'] === 'string' ? m['id'] : undefined;
+        if (m['type'] === 'text') out.push({ id, from, type: 'text', text: String((m['text'] as { body?: string })?.body ?? '') });
         if (m['type'] === 'image') {
-          const id = (m['image'] as { id?: string })?.id;
-          if (id) out.push({ from, type: 'image', mediaId: id });
+          const mediaId = (m['image'] as { id?: string })?.id;
+          if (mediaId) out.push({ id, from, type: 'image', mediaId });
         }
       }
   return out;

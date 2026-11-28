@@ -84,6 +84,14 @@ Si en ese momento ningún proveedor del modelo cumple, el pedido falla y el comp
 
 Las respuestas de Commit van dentro de la ventana de 24 h que abre el mensaje de la persona. Verifica las tarifas vigentes de Meta para Panamá.
 
+### Reenvíos de Meta
+
+Si Meta no recibe respuesta a tiempo (por ejemplo, mientras el backend despierta), reenvía el mismo mensaje. Cada mensaje se procesa **una sola vez**: su id (`wamid`) se guarda 24 h en Redis.
+
+### En Azure
+
+Variables por ambiente en GitHub (secretos `WHATSAPP_TOKEN`, `WHATSAPP_APP_SECRET`, `WHATSAPP_VERIFY_TOKEN`, `PHONE_HASH_KEY`; variables `WHATSAPP_PHONE_NUMBER_ID`, `WHATSAPP_DISPLAY_NUMBER`). Ver [despliegue-azure.md](despliegue-azure.md).
+
 ## Probar sin Meta ni IA (desarrollo)
 
 Fuera de producción existen dos atajos, bloqueados en producción:

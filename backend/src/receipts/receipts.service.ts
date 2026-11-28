@@ -135,6 +135,15 @@ export class ReceiptsService {
 
   // ── Procesamiento ───────────────────────────────────────────────────────────
   /** Foto → OCR (si hay) → IA → resultado sellado en la bandeja. La foto se descarta. */
+  /**
+   * ¿Es la primera vez que llega este mensaje de WhatsApp? Guarda su id 24 h en Redis (SET NX).
+   * Sin id (no debería pasar) se procesa igual.
+   */
+  async firstDelivery(messageId: string | undefined): Promise<boolean> {
+    if (!messageId) return true;
+    return (await this.redis.set(`wa:msg:${messageId}`, '1', 'EX', 86_400, 'NX')) === 'OK';
+  }
+
   async process(userId: string, image: Buffer, mimeType: string, source: SealedReceipt['source']): Promise<ReceiptExtraction> {
     try {
       let extraction: ReceiptExtraction;

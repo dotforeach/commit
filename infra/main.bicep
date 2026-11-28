@@ -61,6 +61,9 @@ param whatsappAppSecret string = ''
 param whatsappVerifyToken string = ''
 param whatsappPhoneNumberId string = ''
 param whatsappDisplayNumber string = ''
+@secure()
+@description('Clave del HMAC de los números de WhatsApp (sin ella se deriva de JWT_SECRET)')
+param phoneHashKey string = ''
 param subscriptionsEnforced bool = env == 'prod'
 
 var names = loadJsonContent('names.json')
@@ -141,6 +144,7 @@ var optional = [
   { secret: 'wa-token', env: 'WHATSAPP_TOKEN', value: whatsappToken }
   { secret: 'wa-app-secret', env: 'WHATSAPP_APP_SECRET', value: whatsappAppSecret }
   { secret: 'wa-verify-token', env: 'WHATSAPP_VERIFY_TOKEN', value: whatsappVerifyToken }
+  { secret: 'phone-hash-key', env: 'PHONE_HASH_KEY', value: phoneHashKey }
 ]
 var present = filter(optional, o => !empty(o.value))
 

@@ -84,6 +84,19 @@ describe('Facturas por WhatsApp (e2e)', () => {
     await request(app.getHttpServer()).get('/api/webhooks/whatsapp').query({ 'hub.mode': 'subscribe', 'hub.verify_token': 'otro', 'hub.challenge': '42' }).expect(400);
   });
 
+  it('un reenvío de Meta (mismo id de mensaje) se procesa una sola vez', async () => {
+    const phone = `5076${Math.floor(1_000_000 + Math.random() * 8_999_999)}`;
+    const id = `wamid.test-${Date.now()}-${Math.random()}`;
+    const payload = { entry: [{ changes: [{ value: { messages: [{ id, from: phone, type: 'text', text: { body: 'hola' } }] } }] }] };
+    await webhook(payload).expect(200);
+    await webhook(payload).expect(200); // Meta reintenta: responde 200 pero no vuelve a procesar
+    expect(wa.sent.filter((s) => s.to === phone)).toHaveLength(1);
+    // Otro mensaje (otro id) sí se procesa
+    const other = { entry: [{ changes: [{ value: { messages: [{ id: `${id}-2`, from: phone, type: 'text', text: { body: 'hola' } }] } }] }] };
+    await webhook(other).expect(200);
+    expect(wa.sent.filter((s) => s.to === phone)).toHaveLength(2);
+  });
+
   it('rechaza mensajes sin la firma de Meta', async () => {
     await webhook(textMessage('50761111111', 'hola'), 'sha256=00').expect(400);
   });

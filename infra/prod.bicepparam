@@ -20,3 +20,16 @@ param vapidPublicKey = readEnvironmentVariable('VAPID_PUBLIC_KEY', '')
 param vapidPrivateKey = readEnvironmentVariable('VAPID_PRIVATE_KEY', '')
 param anthropicApiKey = readEnvironmentVariable('ANTHROPIC_API_KEY', '')
 param openRouterApiKey = readEnvironmentVariable('OPENROUTER_API_KEY', '')
+
+// Facturas por WhatsApp (Meta). Vacías = función desactivada.
+param whatsappToken = readEnvironmentVariable('WHATSAPP_TOKEN', '')
+param whatsappAppSecret = readEnvironmentVariable('WHATSAPP_APP_SECRET', '')
+param whatsappVerifyToken = readEnvironmentVariable('WHATSAPP_VERIFY_TOKEN', '')
+param whatsappPhoneNumberId = readEnvironmentVariable('WHATSAPP_PHONE_NUMBER_ID', '')
+param whatsappDisplayNumber = readEnvironmentVariable('WHATSAPP_DISPLAY_NUMBER', '')
+param phoneHashKey = readEnvironmentVariable('PHONE_HASH_KEY', '')
+
+// Beta gratis hasta integrar un proveedor de pagos: no se exige suscripción (sí el límite mensual).
+param subscriptionsEnforced = false
+// OCR propio: a la IA le llega solo el texto, no la foto (escala a cero).
+param enableOcr = true

@@ -74,6 +74,12 @@ jobs:
           VAPID_PRIVATE_KEY: ${{ secrets.VAPID_PRIVATE_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          WHATSAPP_TOKEN: ${{ secrets.WHATSAPP_TOKEN }}
+          WHATSAPP_APP_SECRET: ${{ secrets.WHATSAPP_APP_SECRET }}
+          WHATSAPP_VERIFY_TOKEN: ${{ secrets.WHATSAPP_VERIFY_TOKEN }}
+          PHONE_HASH_KEY: ${{ secrets.PHONE_HASH_KEY }}
+          WHATSAPP_PHONE_NUMBER_ID: ${{ vars.WHATSAPP_PHONE_NUMBER_ID }}
+          WHATSAPP_DISPLAY_NUMBER: ${{ vars.WHATSAPP_DISPLAY_NUMBER }}
         run: infra/scripts/deploy.sh
       - name: Prueba de humo
         run: infra/scripts/smoke.sh https://staging-commit.atheneox.com https://api-staging-commit.atheneox.com
@@ -108,6 +114,12 @@ jobs:
           VAPID_PRIVATE_KEY: ${{ secrets.VAPID_PRIVATE_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          WHATSAPP_TOKEN: ${{ secrets.WHATSAPP_TOKEN }}
+          WHATSAPP_APP_SECRET: ${{ secrets.WHATSAPP_APP_SECRET }}
+          WHATSAPP_VERIFY_TOKEN: ${{ secrets.WHATSAPP_VERIFY_TOKEN }}
+          PHONE_HASH_KEY: ${{ secrets.PHONE_HASH_KEY }}
+          WHATSAPP_PHONE_NUMBER_ID: ${{ vars.WHATSAPP_PHONE_NUMBER_ID }}
+          WHATSAPP_DISPLAY_NUMBER: ${{ vars.WHATSAPP_DISPLAY_NUMBER }}
         run: infra/scripts/deploy.sh
       - name: Prueba de humo
         run: infra/scripts/smoke.sh https://commit.atheneox.com https://api-commit.atheneox.com

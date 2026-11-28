@@ -20,7 +20,8 @@ export class OcrClient {
       method: 'POST',
       headers: { 'content-type': 'application/octet-stream' },
       body: new Uint8Array(image),
-      signal: AbortSignal.timeout(60_000),
+      // En Azure el OCR escala a cero: el primer pedido tras un rato espera a que arranque
+      signal: AbortSignal.timeout(150_000),
     });
     if (!res.ok) throw new Error(`OCR: HTTP ${res.status}`);
     const { text } = (await res.json()) as { text: string };

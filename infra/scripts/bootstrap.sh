@@ -32,6 +32,12 @@ VAPID_PUBLIC_KEY=
 VAPID_PRIVATE_KEY=
 ANTHROPIC_API_KEY=
 OPENROUTER_API_KEY=
+WHATSAPP_TOKEN=
+WHATSAPP_APP_SECRET=
+WHATSAPP_VERIFY_TOKEN=
+WHATSAPP_PHONE_NUMBER_ID=
+WHATSAPP_DISPLAY_NUMBER=
+PHONE_HASH_KEY=$(openssl rand -base64 32 | tr -d '\n')
 S
 done
 # Clave de los respaldos: la pública cifra en Azure; la PRIVADA solo existe acá (guárdala fuera de línea)

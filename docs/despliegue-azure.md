@@ -138,6 +138,12 @@ Crea los ambientes **`staging`** y **`production`** y en cada uno:
 | Secreto | `SMTP_URL` | `smtps://resend:<API_KEY>@smtp.resend.com:465` |
 | Secreto (opcional) | `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY` | Notificaciones push |
 | Secreto (opcional) | `ANTHROPIC_API_KEY` u `OPENROUTER_API_KEY` | IA de las facturas (con solo una, se usa esa) |
+| Secreto (WhatsApp) | `WHATSAPP_TOKEN`, `WHATSAPP_APP_SECRET`, `WHATSAPP_VERIFY_TOKEN`, `PHONE_HASH_KEY` | Token permanente de Meta, App Secret, token de verificación del webhook (lo inventas) y clave del HMAC de los números |
+| Variable (WhatsApp) | `WHATSAPP_PHONE_NUMBER_ID`, `WHATSAPP_DISPLAY_NUMBER` | Phone Number ID de Meta y número público (solo dígitos) |
+
+Webhook en Meta: `https://api-commit.atheneox.com/api/webhooks/whatsapp` (producción) o `https://api-staging-commit.atheneox.com/api/webhooks/whatsapp` (staging; requiere una segunda app de Meta, una URL por app). Campo **messages**.
+
+Producción: **beta gratis** (`subscriptionsEnforced = false` en `prod.bicepparam`) hasta integrar un proveedor de pagos, con el límite mensual de comprobantes; y **OCR propio activo** (`enableOcr = true`, escala a cero; el primer comprobante tras un rato espera a que arranque).
 | Solo production | Secreto `PG_ADMIN_PASSWORD` y variable `BACKUP_AGE_RECIPIENT` | Para el respaldo diario (`infra/.secrets.shared.env` y la clave pública que imprime `bootstrap.sh`) |
 
 En **production**, activa **Required reviewers**: cada pase a producción espera tu aprobación.
