@@ -173,3 +173,16 @@
     margin: 40px 0 12px;
   }
 }
+
+.tips {
+  margin-top: 32px;
+  h3 { margin: 0 0 4px; }
+  h4 { margin: 16px 0 6px; font: var(--mat-sys-title-small); color: var(--mat-sys-primary); }
+  ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 8px; }
+  li {
+    display: flex; gap: 8px; align-items: flex-start; padding: 10px 12px; border-radius: 12px;
+    background: var(--mat-sys-surface-container-low); font: var(--mat-sys-body-medium);
+    .material-symbols-outlined { color: var(--mat-sys-tertiary); font-size: 20px; }
+    a { color: var(--mat-sys-primary); white-space: nowrap; }
+  }
+}

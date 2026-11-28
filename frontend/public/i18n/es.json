@@ -1363,7 +1363,9 @@
     "notFound": "No encontramos ese artículo.",
     "cta": "Lleva esto a la práctica con tus propios números.",
     "ctaButton": "Crear cuenta gratis",
-    "disclaimer": "Contenido educativo general, no asesoramiento financiero, legal ni impositivo. Montos, tasas y normas pueden cambiar: verifica los valores vigentes con las entidades oficiales o un profesional."
+    "disclaimer": "Contenido educativo general, no asesoramiento financiero, legal ni impositivo. Montos, tasas y normas pueden cambiar: verifica los valores vigentes con las entidades oficiales o un profesional.",
+    "tipsTitle": "Consejos rápidos",
+    "tipMore": "Leer más"
   },
   "landing": {
     "hero": {
@@ -1950,6 +1952,7 @@
   "boot": {
     "connecting": "Conectando…",
     "waking": "Despertando el servidor…",
-    "wakingHint": "Si nadie usó Commit en un rato, el servidor tarda hasta 30 segundos en arrancar. No cierres la app."
+    "wakingHint": "No es un error: si nadie usó Commit en un rato, el servidor tarda hasta 30 segundos en despertar. No cierres la app.",
+    "tip": "Mientras tanto, un consejo"
   }
 }
