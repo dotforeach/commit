@@ -1946,5 +1946,10 @@
       "start": "Empieza con montos pequeños y prueba retirar antes de mover más dinero."
     },
     "disclaimer": "Contenido informativo, sin afiliación ni recomendación de inversión. Datos revisados el {{date}}: las condiciones cambian, confírmalas en el sitio oficial de cada empresa."
+  },
+  "boot": {
+    "connecting": "Conectando…",
+    "waking": "Despertando el servidor…",
+    "wakingHint": "Si nadie usó Commit en un rato, el servidor tarda hasta 30 segundos en arrancar. No cierres la app."
   }
 }
