@@ -57,5 +57,8 @@ export const guestGuard: CanActivateFn = async () => {
 export const landingGuard: CanActivateFn = async () => {
   const auth = inject(AuthService);
   const router = inject(Router);
+  // Visitante (este navegador nunca inició sesión): la landing se muestra al instante, sin
+  // esperar al backend. Quien sí tenía sesión pasa por el refresh y va a Inicio.
+  if (!auth.isAuthenticated() && !auth.mightHaveSession()) return true;
   return (await auth.ensureSession()) ? router.createUrlTree(['/inicio']) : true;
 };

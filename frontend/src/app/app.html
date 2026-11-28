@@ -66,7 +66,13 @@
       <div class="boot" role="status" aria-live="polite" data-testid="app-loading">
         <span class="spinner" aria-hidden="true"></span>
         <p>{{ t(wake.waking() || longWait() ? 'boot.waking' : 'boot.connecting') }}</p>
-        @if (wake.waking() || longWait()) { <p class="hint">{{ t('boot.wakingHint') }}</p> }
+        @if (wake.waking() || longWait()) {
+          <p class="hint">{{ t('boot.wakingHint') }}</p>
+          <aside class="boot-tip" data-testid="boot-tip">
+            <strong>💡 {{ t('boot.tip') }}</strong>
+            <span>{{ tip.text }}</span>
+          </aside>
+        }
       </div>
     }
     <router-outlet />

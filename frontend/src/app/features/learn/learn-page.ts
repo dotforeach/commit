@@ -6,6 +6,7 @@ import { RouterLink } from '@angular/router';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { LEVELS, TOPICS, readingMinutes, type Level, type Topic } from './article.model';
 import { ARTICLES } from './articles';
+import { TIPS } from './tips';
 
 /** "Aprendé": artículos de educación financiera, públicos (no hace falta cuenta). */
 @Component({
@@ -20,5 +21,7 @@ export class LearnPage {
   readonly topic = signal<Topic | null>(null);
   readonly level = signal<Level | null>(null);
   readonly minutes = readingMinutes;
+  /** Consejos rápidos del tema elegido (o de todos), agrupados por tema. */
+  readonly tipGroups = computed(() => (this.topic() ? [this.topic()!] : this.topics).map((topic) => ({ topic, tips: TIPS[topic] })));
   readonly articles = computed(() => ARTICLES.filter((a) => (this.topic() === null || a.topic === this.topic()) && (this.level() === null || a.level === this.level())));
 }

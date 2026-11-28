@@ -17,6 +17,7 @@ import { OfflineCacheService } from './core/offline/offline-cache.service';
 import { NotificationsBell } from './features/notifications/notifications-bell';
 import { BackendWake } from './core/net/wake-retry.interceptor';
 import { AppUpdateService } from './core/update/app-update.service';
+import { randomTip } from './features/learn/tips';
 
 interface NavItem {
   path: string;
@@ -79,6 +80,8 @@ export class App {
   protected readonly slowNavigation = signal(false);
   protected readonly longWait = signal(false);
   protected readonly wake = inject(BackendWake);
+  /** Un consejo para la espera (cambia en cada carga de la app). */
+  protected readonly tip = randomTip();
   protected readonly loading = computed(() => !this.booted() || this.slowNavigation());
 
   constructor() {
