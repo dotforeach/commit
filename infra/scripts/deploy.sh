@@ -27,6 +27,16 @@ FIRST=true
 az containerapp job show -g "$RG" -n "$JOB" -o none 2>/dev/null && FIRST=false
 $FIRST || migrate
 
+# Certificados ya emitidos para los dominios (los crea domains.sh la primera vez): se pasan al template
+# para que el despliegue mantenga los dominios en vez de quitarlos.
+ENV_NAME="${RG#rg-commit-}"
+if [ "$ENV_NAME" = prod ]; then WEB_HOST=commit.atheneox.com; API_HOST=api-commit.atheneox.com
+else WEB_HOST=staging-commit.atheneox.com; API_HOST=api-staging-commit.atheneox.com; fi
+cert() { az containerapp env certificate list -g Noxi -n noxi-env --query "[?properties.subjectName=='$1'] | [0].id" -o tsv 2>/dev/null; }
+export WEB_CERT_ID API_CERT_ID
+WEB_CERT_ID=$(cert "$WEB_HOST"); API_CERT_ID=$(cert "$API_HOST")
+echo "  dominios: $WEB_HOST ${WEB_CERT_ID:+(certificado ok)} · $API_HOST ${API_CERT_ID:+(certificado ok)}"
+
 echo "▶ Infraestructura y apps ($RG, $IMAGE_TAG)"
 # Un reintento: ARM a veces falla al leer un recurso recién creado (ResourceNotFound transitorio)
 az deployment group create -g "$RG" -f infra/main.bicep -p "$PARAMS" --name "commit-${IMAGE_TAG:0:40}" -o none || {
