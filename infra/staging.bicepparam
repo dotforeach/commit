@@ -5,6 +5,8 @@ param location = 'northcentralus'
 param imageTag = readEnvironmentVariable('IMAGE_TAG', 'latest')
 param webDomain = 'staging-commit.atheneox.com'
 param apiDomain = 'api-staging-commit.atheneox.com'
+param webCertificateId = readEnvironmentVariable('WEB_CERT_ID', '')
+param apiCertificateId = readEnvironmentVariable('API_CERT_ID', '')
 param mailFrom = 'Commit Staging <no-reply@atheneox.com>'
 
 // Secretos: variables de entorno (CI: secretos del ambiente "staging" en GitHub)

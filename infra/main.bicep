@@ -16,6 +16,9 @@ param imageTag string = 'latest'
 @description('Dominios públicos (vacío = todavía sin dominio propio)')
 param webDomain string = ''
 param apiDomain string = ''
+@description('Certificado administrado ya emitido para cada dominio (lo busca deploy.sh). Sin él, el dominio no se declara.')
+param webCertificateId string = ''
+param apiCertificateId string = ''
 
 param enableOcr bool = false
 @description('Cada cuánto se revisan los recordatorios vencidos (cron, UTC)')
@@ -181,7 +184,14 @@ resource api 'Microsoft.App/containerApps@2024-03-01' = {
     workloadProfileName: 'Consumption'
     configuration: {
       activeRevisionsMode: 'Single'
-      ingress: { external: true, targetPort: 3000, transport: 'auto', allowInsecure: false }
+      ingress: {
+        external: true
+        targetPort: 3000
+        transport: 'auto'
+        allowInsecure: false
+        // Declarar los dominios: si no, cada despliegue los quita
+        customDomains: empty(apiDomain) || empty(apiCertificateId) ? [] : [{ name: apiDomain, certificateId: apiCertificateId, bindingType: 'SniEnabled' }]
+      }
       registries: registries
       secrets: backendSecrets
     }
@@ -227,7 +237,13 @@ resource web 'Microsoft.App/containerApps@2024-03-01' = {
     managedEnvironmentId: cae.id
     workloadProfileName: 'Consumption'
     configuration: {
-      ingress: { external: true, targetPort: 8080, transport: 'auto', allowInsecure: false }
+      ingress: {
+        external: true
+        targetPort: 8080
+        transport: 'auto'
+        allowInsecure: false
+        customDomains: empty(webDomain) || empty(webCertificateId) ? [] : [{ name: webDomain, certificateId: webCertificateId, bindingType: 'SniEnabled' }]
+      }
       registries: registries
     }
     template: {

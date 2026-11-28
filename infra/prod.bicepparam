@@ -5,6 +5,8 @@ param location = 'northcentralus'
 param imageTag = readEnvironmentVariable('IMAGE_TAG', 'latest')
 param webDomain = 'commit.atheneox.com'
 param apiDomain = 'api-commit.atheneox.com'
+param webCertificateId = readEnvironmentVariable('WEB_CERT_ID', '')
+param apiCertificateId = readEnvironmentVariable('API_CERT_ID', '')
 param mailFrom = 'Commit <no-reply@atheneox.com>'
 
 // Secretos: variables de entorno (CI: secretos del ambiente "production" en GitHub)
